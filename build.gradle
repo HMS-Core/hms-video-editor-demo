@@ -1,0 +1,68 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        maven { url 'https://developer.huawei.com/repo/' }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.4.3'
+        classpath 'com.huawei.agconnect:agcp:1.4.2.300'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven { url 'https://developer.huawei.com/repo/' }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext {
+
+    //*******************************项目依赖版本********************************
+    //sdk发布版本号
+    ve_sdk_versionCode = '10000300'
+    ve_sdk_versionName = '1.0.0.300'
+
+    ve_apk_versionCode = '10000300'
+    ve_apk_versionName= '1.0.0.300'
+
+}
+
+//sdk
+if ( null != System.getenv('ve_versionCode') && (!System.getenv('ve_versionCode').isEmpty())) {
+    ext.ve_sdk_versionCode = System.getenv('ve_versionCode')
+}
+
+if ( null != System.getenv('ve_versionName') && (!System.getenv('ve_versionName').isEmpty())) {
+    ext.ve_sdk_versionName = System.getenv('ve_versionName')
+}
+
+if ( null != System.getenv('ve_versionCode') && (!System.getenv('ve_versionCode').isEmpty())) {
+    ext.ve_apk_versionCode = System.getenv('ve_versionCode')
+}
+
+if ( null != System.getenv('ve_versionName') && (!System.getenv('ve_versionName').isEmpty())) {
+    ext.ve_apk_versionName = System.getenv('ve_versionName')
+}
+
+if (null != System.getenv('needHwSign') && (!System.getenv('needHwSign').isEmpty())) {
+    ext.needHwSign = System.getenv('needHwSign')
+}
+
+if (null != System.getenv('useRemoteImplementation') && (!System.getenv('useRemoteImplementation').isEmpty())) {
+    ext.useRemoteImplementation = System.getenv('useRemoteImplementation')
+}
+
+if (null != System.getenv('ve_Common_model') && (!System.getenv('ve_Common_model').isEmpty())) {
+    ext.ve_Common_model = System.getenv('ve_Common_model')
+}

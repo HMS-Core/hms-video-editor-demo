@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MLTimelineView">
+        <attr name="maxTime" format="integer" />
+        <!--文字颜色-->
+        <attr name="textColor" format="color" />
+    </declare-styleable>
+    <declare-styleable name="NormalTrackView">
+        <!--文字颜色-->
+        <attr name="paintColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="MySeekBar">
+        <attr name="main_bg" format="color" />
+        <attr name="line_bg" format="color" /> <!--滑动条背景色-->
+        <attr name="value_bg" format="color" />
+        <attr name="line_width" format="dimension" />
+        <attr name="progress_min" format="integer" />
+        <attr name="progress_max" format="integer" />
+        <attr name="progress" format="integer" />
+        <attr name="progress_anchor" format="integer" />
+        <attr name="step" format="integer" />
+        <attr name="show_text" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="HiBanner">
+        <attr name="autoPlay" format="boolean" />
+        <attr name="loop" format="boolean" />
+        <attr name="intervalTime" format="integer|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="RoundAngleImageView">
+        <attr name="roundWidth" format="dimension" />
+        <attr name="roundHeight" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="DonutProgress">
+        <attr name="donut_progress" format="float" />
+        <attr name="donut_max" format="integer" />
+
+        <attr name="donut_unfinished_color" format="color" />
+        <attr name="donut_finished_color" format="color" />
+
+        <attr name="donut_finished_stroke_width" format="dimension" />
+        <attr name="donut_unfinished_stroke_width" format="dimension" />
+
+        <attr name="donut_text_size" format="dimension" />
+        <attr name="donut_text_color" format="color" />
+
+        <attr name="donut_prefix_text" format="string" />
+        <attr name="donut_suffix_text" format="string" />
+        <attr name="donut_text" format="string" />
+
+        <attr name="donut_background_color" format="color" />
+
+        <attr name="donut_inner_bottom_text" format="string" />
+        <attr name="donut_inner_bottom_text_size" format="dimension" />
+        <attr name="donut_inner_bottom_text_color" format="color" />
+
+        <attr name="donut_circle_starting_degree" format="integer" />
+        <attr name="donut_show_text" format="boolean" />
+        <attr name="donut_inner_drawable" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="RoundImage">
+        <attr name="radius" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="Banner">
+        <attr name="delay_time" format="integer" />
+        <attr name="scroll_time" format="integer" />
+        <attr name="is_auto_play" format="boolean" />
+        <attr name="title_background" format="color|reference" />
+        <attr name="title_textcolor" format="color" />
+        <attr name="title_textsize" format="dimension" />
+        <attr name="title_height" format="dimension" />
+        <attr name="indicator_width" format="dimension" />
+        <attr name="indicator_height" format="dimension" />
+        <attr name="indicator_selected_width" format="dimension" />
+        <attr name="indicator_selected_height" format="dimension" />
+        <attr name="indicator_margin" format="dimension" />
+        <attr name="indicator_drawable_selected" format="reference" />
+        <attr name="indicator_drawable_unselected" format="reference" />
+        <attr name="banner_layout" format="reference" />
+        <attr name="banner_default_image" format="reference" />
+        <attr name="image_scale_type" format="enum">
+            <enum name="center" value="0" />
+            <enum name="center_crop" value="1" />
+            <enum name="center_inside" value="2" />
+            <enum name="fit_center" value="3" />
+            <enum name="fit_end" value="4" />
+            <enum name="fit_start" value="5" />
+            <enum name="fit_xy" value="6" />
+            <enum name="matrix" value="7" />
+        </attr>
+        <!--<attr name="indicator_animator" format="reference" />-->
+        <!--<attr name="indicator_animator_reverse" format="reference" />-->
+    </declare-styleable>
+
+
+    <declare-styleable name="AudioColumnView">
+        <attr name="column_height" format="integer" />
+    </declare-styleable>
+
+    <!-- 录音控件属性 -->
+    <declare-styleable name="RecordAudioView">
+        <attr name="min_audio_time" format="integer" />
+        <attr name="max_audio_time" format="integer" />
+        <attr name="audio_type" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="AudioWaveView">
+        <attr name="waveColor" format="color" />
+        <attr name="texture_bg_waveColor" format="color" />
+        <attr name="wave_Offset" format="dimension" />
+        <attr name="wave_Count" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="RecordAudioWaveView">
+        <attr name="min_dbs" format="integer" />
+
+    </declare-styleable>
+
+    <declare-styleable name="TagFlowLayout">
+        <attr name="maxSelect" format="integer" />
+        <attr name="tagGravity">
+            <enum name="left" value="-1" />
+            <enum name="center" value="0" />
+            <enum name="right" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="SpeedBar">
+        <!--刻度值-->
+        <attr name="speed_degreeCount" format="integer" />
+        <!--文字颜色-->
+        <attr name="speed_textColor" format="color" />
+        <!--刻度线颜色-->
+        <attr name="speed_degreeColor" format="color" />
+        <!--刻度线宽度-->
+        <attr name="speed_degreeWidth" format="dimension" />
+        <!--文字尺寸-->
+        <attr name="speed_textSize" format="dimension" />
+        <!--thumb尺寸-->
+        <attr name="speed_thumbRadius" format="dimension" />
+        <!--thumber图片-->
+        <attr name="speed_thumb" format="reference" />
+        <!--刻度值长度-->
+        <attr name="speed_length" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="ClipImageView">
+        <attr name="civHeight" format="integer" />
+        <attr name="civWidth" format="integer" />
+        <attr name="civTipText" format="string" />
+        <attr name="civTipTextSize" format="dimension" />
+        <attr name="civMaskColor" format="color" />
+        <attr name="civClipPadding" format="dimension" />
+        <attr name="civClipRoundCorner" format="dimension|reference" />
+        <attr name="civClipCircle" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="BarrageView">
+        <attr name="maxSpeed" format="integer"/>
+        <attr name="minSpeed" format="integer"/>
+        <attr name="maxInterval" format="integer"/>
+        <attr name="minInterval" format="integer"/>
+        <attr name="maxTextSize" format="dimension"/>
+        <attr name="minTextSize" format="dimension"/>
+
+    </declare-styleable>
+
+    <declare-styleable name="ProgressCircle">
+        <!-- 如果圆的边框是有宽度(厚度)的, 那么 circleRadius特指该圆的外边框的半径, 实际在绘制该圆时,
+            绘制所用的半径是该 circleRadius减去圆边框厚度的 1/2后的值 -->
+        <attr name="circleOuterRadius" format="dimension"/>
+        <!-- 圆边框的宽度(厚度) -->
+        <attr name="circleBorderWidth" format="dimension" />
+        <!-- 圆边框的颜色 -->
+        <attr name="circleBorderColor" format="color"/>
+        <!-- 圆内扇形的颜色 -->
+        <attr name="innerPieColor" format="color" />
+        <!-- 绘制圆内扇形的起始角度 -->
+        <attr name="innerPieStartingAngle" format="float"/>
+        <!-- 绘制圆内扇形的最大进度 -->
+        <attr name="innerPieMaxProgress" format="integer"/>
+        <!-- 绘制圆内扇形的进度 -->
+        <attr name="innerPieProgress" format="integer"/>
+    </declare-styleable>
+
+
+    <declare-styleable name="AnimationBar">
+        <!--背景底板颜色-->
+        <attr name="anim_backColor" format="color"/>
+        <!--入场progress颜色-->
+        <attr name="anim_enterColor" format="color"/>
+        <!--出场progress颜色-->
+        <attr name="anim_leaveColor" format="color"/>
+        <!--文字颜色-->
+        <attr name="anim_textColor" format="color"/>
+        <!--thumb尺寸-->
+        <attr name="anim_thumbRadius" format="reference" />
+        <!--thumber入场图片-->
+        <attr name="anim_enterThumb" format="reference" />
+        <!--thumber出场图片-->
+        <attr name="anim_leaveThumb" format="reference" />
+        <!--文字尺寸-->
+        <attr name="anim_textSize" format="dimension" />
+        <!--progress线高-->
+        <attr name="anim_lineHeight" format="dimension" />
+        <!--progress线长-->
+        <attr name="anim_lineLength" format="dimension" />
+        <!--刻度值-->
+        <attr name="anim_degreeCount" format="integer" />
+    </declare-styleable>
+</resources>

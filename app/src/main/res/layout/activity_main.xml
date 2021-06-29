@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/setting"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_19"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/dp_14"
+        android:layout_marginEnd="@dimen/dp_18"
+        android:src="@mipmap/icon_setting" />
+
+    <LinearLayout
+        android:id="@+id/start_edit"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_below="@+id/setting"
+        android:layout_marginStart="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_14"
+        android:layout_marginEnd="@dimen/dp_15"
+        android:background="@mipmap/start_create">
+
+        <ImageView
+            android:layout_width="@dimen/dp_23"
+            android:layout_height="@dimen/dp_23"
+            android:layout_marginStart="@dimen/dp_17"
+            android:layout_marginTop="@dimen/dp_47"
+            android:src="@mipmap/edit" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_6"
+            android:layout_marginTop="@dimen/dp_46"
+            android:gravity="center"
+            android:text="@string/start_tv"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_17" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/text_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/start_edit"
+        android:layout_marginStart="@dimen/dp_17"
+        android:layout_marginTop="@dimen/dp_20"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="@dimen/dp_18"
+            android:layout_height="@dimen/dp_3"
+            android:layout_marginTop="@dimen/dp_2"
+            android:background="@drawable/background_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text" />
+
+    </LinearLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/draft_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_tips"
+        android:visibility="gone"
+        android:padding="@dimen/dp_12" />
+</RelativeLayout>

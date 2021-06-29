@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Video Editor Kit</string>
+    <string name="start_tv">开始创作</string>
+    <string name="version">版本:</string>
+    <string name="setting">设置</string>
+    <string name="cancels">取消</string>
+    <string name="back">返回</string>
+    <string name="permission_tips">示例应用程序需要存储和录音权限。</string>
+</resources>

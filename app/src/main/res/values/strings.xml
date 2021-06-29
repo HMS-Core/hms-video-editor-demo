@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">VideoEditDemo</string>
+    <string name="start_tv">Get started</string>
+    <string name="version">Version</string>
+    <string name="setting">Settings</string>
+    <string name="cancels">Cancel</string>
+    <string name="back">Back</string>
+    <string name="permission_tips">Please enable the Storage and Microphone permissions.</string>
+</resources>
