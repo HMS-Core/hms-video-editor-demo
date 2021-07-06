@@ -1,5 +1,4 @@
 # 华为视频剪辑服务示例代码
-[![License](https://img.shields.io/badge/Docs-hmsguides-brightgreen)](https://developer.huawei.com/consumer/cn/doc/development/HMS-Guides/ml-introduction-4)
 
 中文 | [English](README.md)
 
