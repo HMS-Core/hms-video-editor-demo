@@ -1,4 +1,4 @@
-# Video Editor Sample
+# HUAWEI Video Editor Kit Sample
 
 English | [中文](README_ZH.md)
 
