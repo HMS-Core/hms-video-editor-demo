@@ -7,7 +7,7 @@
  * [介绍](#介绍)
  * [工程目录结构](#工程目录结构)
  * [运行步骤](#运行步骤)
- * [支持的环境](#支持的环境)
+ * [环境要求](#环境要求)
  * [许可证](#许可证)
 
 
@@ -34,7 +34,7 @@
  - 将本代码库克隆到本地。
 
  - 如果您还没有注册成为开发者，请在[AppGalleryConnect上注册并创建应用](https://developer.huawei.com/consumer/cn/service/josp/agc/index.html)。
- - agconnect-services.json文件请从[华为开发者社区](https://developer.huawei.com/consumer/cn/doc/development/HMSCore-Guides/config-agc-0000001050990353)网站申请获取。
+ - agconnect-services.json文件请从[华为开发者联盟](https://developer.huawei.com/consumer/cn/doc/development/Media-Guides/config-agc-0000001101108580)网站申请获取。
  - 替换工程中的sample-agconnect-services.json文件。
  - 编译并且在安卓设备或模拟器上运行。
 
@@ -43,7 +43,7 @@
 该项目中的package name不能用于申请agconnect-services.json，您可以使用自定义package name来申请agconnect-services.json。
 您只需将应用级build.gradle中的applicationId修改为与所申请的agconnect-services.json相同的package name，即可体验Video Editor Kit提供的服务。
 
-## 要求环境
+## 环境要求
 推荐使用的AndroidSDK版本为21及以上，JDK版本为1.8及以上。
 
 ##  技术支持
@@ -60,5 +60,3 @@
 ##  许可证
 
 此示例代码已获得[Apache 2.0 license](https://www.apache.org/licenses/LICENSE-2.0)。
-
-

@@ -37,7 +37,7 @@ Huawei Video Editor Kit (Video Editor Kit) provides full video editing functions
 - Clone the code base to the local host.
 
 - If you haven't already registered as a developer, register and create an app on [AppGalleryConnect](https://developer.huawei.com/consumer/en/service/josp/agc/index.html).
-- Obtain the agconnect-services.json file from [HUAWEI Developers](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides/config-agc-0000001050990353).
+- Obtain the agconnect-services.json file from [HUAWEI Developers]([https://developer.huawei.com/consumer/en/doc/development/Media-Guides/config-agc-0000001101108580](javascript:;)).
 - Replace the sample-agconnect-services.json file in the project.
 - Compile and run on an Android device or emulator.
 
