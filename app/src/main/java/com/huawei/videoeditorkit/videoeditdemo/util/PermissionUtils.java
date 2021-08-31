@@ -16,9 +16,11 @@
 
 package com.huawei.videoeditorkit.videoeditdemo.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -28,12 +30,9 @@ import android.os.Build;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class PermissionUtils {
     /**
-     *  Check Permissions
+     * Check Permissions
      *
      * @return true：authorized； false：unauthorized；
      */
@@ -66,9 +65,12 @@ public class PermissionUtils {
      * Determine whether the permission has been denied.
      *
      * @return Returns the status of the permission
-     * @describe :This method returns true if the application has previously requested this permission but the user denies it.
-     * ----------- if an application request permission for that first time or a us denied permission request in the past,
-     * -----------If the Don't ask again option is selected in the permission request system dialog box, this method returns false.
+     * @describe :This method returns true if the application has previously requested this permission but the user
+     *           denies it.
+     *           ----------- if an application request permission for that first time or a us denied permission request
+     *           in the past,
+     *           -----------If the Don't ask again option is selected in the permission request system dialog box, this
+     *           method returns false.
      */
     public static boolean judgePermission(Context context, String permission) {
         return ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, permission);
@@ -77,9 +79,9 @@ public class PermissionUtils {
     /**
      * Detect Multiple Permissions
      *
-     * @param context     context
+     * @param context context
      * @param permissions Permission
-     * @param callBack    Callback Listening
+     * @param callBack Callback Listening
      */
     public static void checkManyPermissions(Context context, String[] permissions, PermissionCheckCallBack callBack) {
         List<String> permissionList = checkManyPermissions(context, permissions);
@@ -99,7 +101,8 @@ public class PermissionUtils {
                 // The user has rejected the permission application before.
                 callBack.onUserRejectAndDontAsk(unauthorizedMorePermissions);
             } else {
-                // The user has previously rejected and selected Do not ask, and the user applies for permission for the first time.
+                // The user has previously rejected and selected Do not ask, and the user applies for permission for the
+                // first time.
                 callBack.onUserHasReject(unauthorizedMorePermissions);
             }
         }
@@ -121,7 +124,7 @@ public class PermissionUtils {
                     break;
                 }
             }
-            //　Re-ask permission disabled
+            // Re-ask permission disabled
             if (isBannedPermission) {
                 callback.onUserRejectAndDontAsk(permissions);
             } else {

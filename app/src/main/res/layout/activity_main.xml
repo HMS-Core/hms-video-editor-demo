@@ -72,6 +72,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/text_tips"
-        android:visibility="gone"
         android:padding="@dimen/dp_12" />
 </RelativeLayout>

@@ -6,4 +6,5 @@
     <string name="cancels">Cancel</string>
     <string name="back">Back</string>
     <string name="permission_tips">Please enable the Storage and Microphone permissions.</string>
+    <string name="delete">Delete</string>
 </resources>

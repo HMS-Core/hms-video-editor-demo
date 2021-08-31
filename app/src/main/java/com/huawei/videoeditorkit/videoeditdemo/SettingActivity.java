@@ -17,7 +17,6 @@
 package com.huawei.videoeditorkit.videoeditdemo;
 
 import android.content.pm.PackageInfo;
-
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,9 +24,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-
 public class SettingActivity extends AppCompatActivity {
-    public static final String DEFAULT_VERSION = "1.0.0.300";
+    public static final String DEFAULT_VERSION = "1.1.0.301";
+
     private TextView mBack;
 
     @Override

@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:text="1.0.0.300"
+                android:text="1.1.0.300"
                 android:textColor="@color/white"
                 android:textSize="@dimen/dp_14" />
 

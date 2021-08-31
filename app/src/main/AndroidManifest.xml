@@ -2,27 +2,23 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.huawei.videoeditorkit.videoeditdemo">
 
-<!-- Vibrate -->
-<uses-permission android:name="android.permission.VIBRATE" />
-<!-- Microphone -->
-<uses-permission android:name="android.permission.RECORD_AUDIO" />
-<!-- Write into storage -->
-<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-<!-- Read from storage -->
-<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-<!-- Connect to Internet -->
-<uses-permission android:name="android.permission.INTERNET" />
-<!-- Listen for the network status -->
-<uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-<!-- Obtain the network status -->
-<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
+    <!--  允许程序振动 UI操作的震动反馈需要  -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!--  允许程序录音 音频录音功能需要  -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!--  允许程序写入外部存储, 素材存储，录音文件等本地存储需要 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!--  网络权限 素材下载特性使用 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/kit_logo"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.VideoEditDemo">
         <activity android:name=".SettingActivity"></activity>

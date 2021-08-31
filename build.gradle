@@ -30,11 +30,11 @@ ext {
 
     //*******************************项目依赖版本********************************
     //sdk发布版本号
-    ve_sdk_versionCode = '10000300'
-    ve_sdk_versionName = '1.0.0.300'
+    ve_sdk_versionCode = '10100301'
+    ve_sdk_versionName = '1.1.0.301'
 
-    ve_apk_versionCode = '10000300'
-    ve_apk_versionName= '1.0.0.300'
+    ve_apk_versionCode = '10100301'
+    ve_apk_versionName= '1.1.0.301'
 
 }
 

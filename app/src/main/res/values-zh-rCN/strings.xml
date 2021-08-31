@@ -6,4 +6,5 @@
     <string name="cancels">取消</string>
     <string name="back">返回</string>
     <string name="permission_tips">示例应用程序需要存储和录音权限。</string>
+    <string name="delete">删除</string>
 </resources>
