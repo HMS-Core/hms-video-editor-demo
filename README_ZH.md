@@ -35,7 +35,7 @@
 
  - 如果您还没有注册成为开发者，请在[AppGalleryConnect上注册并创建应用](https://developer.huawei.com/consumer/cn/service/josp/agc/index.html)。
  - agconnect-services.json文件请从[华为开发者联盟](https://developer.huawei.com/consumer/cn/doc/development/Media-Guides/config-agc-0000001101108580)网站申请获取。
- - 替换工程中的sample-agconnect-services.json文件。
+ - 将agconnect-services.json放在应用app目录下。
  - 编译并且在安卓设备或模拟器上运行。
 
 注意：
