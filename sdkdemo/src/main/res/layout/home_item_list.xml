@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_layout_home_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_home_clip_item">
+
+    <com.huawei.hms.videoeditor.ui.common.view.image.RoundImage
+        android:id="@+id/iv_content"
+        android:layout_width="@dimen/dp_72"
+        android:layout_height="@dimen/dp_72"
+        app:radius="@dimen/dp_8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:id="@+id/clip_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_6"
+        android:layout_marginBottom="@dimen/dp_6"
+        android:fontFamily="HarmonyHeiTi"
+        android:gravity="start|center_vertical"
+        android:textColor="#E6FFFFFF"
+        android:textDirection="locale"
+        android:textSize="@dimen/dp_10"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_content"
+        app:layout_constraintStart_toStartOf="@+id/iv_content"
+        tools:ignore="SpUsage" />
+
+    <TextView
+        android:id="@+id/clip_title"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_marginStart="@dimen/dp_8"
+        android:layout_marginEnd="@dimen/dp_8"
+        android:gravity="start|center_vertical"
+        android:singleLine="true"
+        android:textColor="#E6FFFFFF"
+        android:fontFamily="HarmonyHeiTi"
+        android:textSize="@dimen/dp_14"
+        app:layout_constraintStart_toEndOf="@+id/iv_content"
+        app:layout_constraintTop_toTopOf="@+id/iv_content"
+        app:layout_constraintEnd_toStartOf="@+id/clip_more"
+        tools:ignore="SpUsage" />
+
+    <com.huawei.hms.videoeditor.ui.common.view.EditorTextView
+        android:id="@+id/update_time"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_8"
+        android:layout_marginEnd="@dimen/dp_8"
+        android:layout_marginBottom="@dimen/dp_4"
+        android:singleLine="true"
+        android:fontFamily="HarmonyHeiTi"
+        android:gravity="start|center_vertical"
+        android:textColor="#99FFFFFF"
+        android:textDirection="locale"
+        android:textSize="@dimen/dp_10"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/clip_size"
+        app:layout_constraintEnd_toStartOf="@+id/clip_more"
+        app:layout_constraintStart_toEndOf="@+id/iv_content"
+        tools:ignore="SpUsage" />
+
+    <TextView
+        android:id="@+id/clip_size"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_8"
+        android:layout_marginEnd="@dimen/dp_8"
+        android:layout_marginBottom="@dimen/dp_6"
+        android:fontFamily="HarmonyHeiTi"
+        android:gravity="start|center_vertical"
+        android:textColor="@color/color_text_second_level"
+        android:textDirection="locale"
+        android:textSize="@dimen/dp_10"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_content"
+        app:layout_constraintEnd_toStartOf="@+id/clip_more"
+        app:layout_constraintStart_toEndOf="@+id/iv_content"
+        tools:ignore="SpUsage" />
+
+    <ImageView
+        android:id="@+id/clip_more"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:background="@drawable/clip_more"
+        android:layout_marginEnd="@dimen/dp_16"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/more"/>
+
+    <ImageView
+        android:id="@+id/clip_delete"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:background="@drawable/home_clips_select_delete_single_selector"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_20"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/include_color_picker"
+        layout="@layout/custom_operate_title"/>
+
+    <com.huawei.hms.videoeditor.ui.mediaeditor.preview.view.colorpicker.ColorPickerView
+        android:id="@+id/cpv_color_picker"
+        android:layout_width="match_parent"
+        android:layout_height="243dp"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_24"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginBottom="@dimen/dp_28"/>
+
+</LinearLayout>

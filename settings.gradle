@@ -1,2 +1,3 @@
-include ':app'
+include ':uidemo'
+include ':sdkdemo'
 rootProject.name = "VideoEditDemo"

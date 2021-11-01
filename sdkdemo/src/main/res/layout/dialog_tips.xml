@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/dp_16"
+    android:layout_marginEnd="@dimen/dp_16"
+    android:background="@drawable/a_background"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/dp_16"
+    android:paddingEnd="@dimen/dp_16"
+    android:paddingBottom="@dimen/dp_16">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_gravity="start"
+        android:layout_marginTop="@dimen/dp_40"
+        android:fontFamily="Helvetica"
+        android:gravity="center|start"
+        android:text="@string/fr_tips"
+        android:textColor="@color/color_fff_90"
+        android:textSize="@dimen/sp_20" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginBottom="@dimen/dp_40"
+        android:fontFamily="Helvetica"
+        android:text="@string/export_tips"
+        android:textColor="@color/color_fff_90"
+        android:textSize="@dimen/sp_16" />
+
+    <TextView
+        android:id="@+id/tv_close"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginStart="@dimen/dp_92"
+        android:layout_marginEnd="@dimen/dp_92"
+        android:layout_marginLeft="@dimen/dp_92"
+        android:layout_marginRight="@dimen/dp_92"
+        android:fontFamily="Helvetica"
+        android:gravity="center"
+        android:text="@string/export_close"
+        android:textColor="@color/color_text_focus"
+        android:background="@drawable/dialog_common_utils_bg"
+        android:textSize="@dimen/sp_16"
+        android:textAllCaps="true"/>
+
+
+</LinearLayout>

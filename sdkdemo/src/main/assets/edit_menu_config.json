@@ -1,0 +1,1081 @@
+{
+  "editMenu": [
+    {
+      "id": 101,
+      "name": "first_menu_cut",
+      "cnName": "剪辑",
+      "drawableName": "first_menu_cut_select_bg",
+      "parentId": 0,
+      "enable": 1,
+      "isAdvanced": 0,
+      "children": [
+        {
+          "id": 101201,
+          "name": "cut_second_menu_severing",
+          "cnName": "分割",
+          "drawableName": "edit_menu_division",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 101204,
+          "name": "cut_second_menu_speed_change",
+          "cnName": "变速",
+          "drawableName": "edit_menu_change_speed",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },{
+          "id": 101205,
+          "name": "cut_second_menu_animation",
+          "cnName": "动画",
+          "drawableName": "edit_menu_animation",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        },
+        {
+          "id": 101218,
+          "name": "first_menu_filter",
+          "cnName": "滤镜",
+          "drawableName": "edit_menu_filter",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        },
+        {
+          "id": 101220,
+          "name": "cut_second_menu_human_tracking",
+          "cnName": "人物追踪",
+          "drawableName": "edit_menu_human_tracking",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 101221,
+          "name": "cut_second_menu_ai_hair",
+          "cnName": "一键美发",
+          "drawableName": "edit_menu_ai_hair",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 101206,
+          "name": "cut_second_menu_delete",
+          "cnName": "删除",
+          "drawableName": "edit_menu_delete",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 101208,
+          "name": "cut_second_menu_copy",
+          "cnName": "复制",
+          "drawableName": "edit_menu_copy",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 101209,
+          "name": "cut_second_menu_replace",
+          "cnName": "替换",
+          "drawableName": "edit_menu_replace",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 101210,
+          "name": "cut_second_menu_mask",
+          "cnName": "蒙版",
+          "drawableName": "edit_menu_mask",
+          "parentId": 1001,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        },
+        {
+          "id": 101212,
+          "name": "cut_second_menu_mirror",
+          "cnName": "镜像",
+          "drawableName": "edit_menu_mirror",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 101213,
+          "name": "cut_second_menu_opaqueness",
+          "cnName": "不透明度",
+          "drawableName": "edit_menu_alpha",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 101214,
+          "name": "cut_second_menu_upend",
+          "cnName": "倒放",
+          "drawableName": "edit_menu_upend",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 101223,
+          "name": "cut_second_menu_fun",
+          "cnName": "AI趣玩",
+          "drawableName": "edit_menu_freeze_fun",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": 102,
+      "name": "first_menu_audio",
+      "cnName": "音频",
+      "drawableName": "first_menu_audio_select_bg",
+      "parentId": 0,
+      "enable": 1,
+      "isAdvanced": 0,
+      "children": [
+        {
+          "id": 102202,
+          "name": "audio_second_menu_music",
+          "cnName": "音乐",
+          "drawableName": "edit_menu_music",
+          "parentId": 102,
+          "enable": 1,
+          "isAdvanced": 0
+        },
+        {
+          "id": 102203,
+          "name": "audio_second_menu_sound_effect",
+          "cnName": "音效",
+          "drawableName": "edit_menu_sound_effect",
+          "parentId": 102,
+          "enable": 1,
+          "isAdvanced": 2
+        }
+      ]
+    },
+    {
+      "id": 103,
+      "name": "first_menu_sticker",
+      "cnName": "贴纸",
+      "drawableName": "first_menu_sticker_select_bg",
+      "parentId": 0,
+      "enable": 1,
+      "isAdvanced": 2,
+      "children": [
+        {
+          "id": 103201,
+          "name": "sticker_second_menu_add_sticker",
+          "cnName": "添加贴纸",
+          "drawableName": "edit_menu_add_sticker",
+          "parentId": 103,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": 104,
+      "name": "first_menu_text",
+      "cnName": "文字",
+      "drawableName": "first_menu_text_select_bg",
+      "parentId": 0,
+      "enable": 1,
+      "isAdvanced": 0,
+      "children": [
+        {
+          "id": 104201,
+          "name": "text_second_menu_add_text",
+          "cnName": "添加文本",
+          "drawableName": "edit_menu_text",
+          "parentId": 104,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": 105,
+      "name": "first_menu_pip",
+      "cnName": "画中画",
+      "drawableName": "first_menu_pip_select_bg",
+      "parentId": 0,
+      "enable": 1,
+      "isAdvanced": 2,
+      "children": [
+        {
+          "id": 105201,
+          "name": "pip_second_menu_add_pip",
+          "cnName": "添加画中画",
+          "drawableName": "edit_menu_add_pip",
+          "parentId": 105,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": 106,
+      "name": "first_menu_special",
+      "cnName": "特效",
+      "drawableName": "first_menu_special_select_bg",
+      "parentId": 0,
+      "enable": 1,
+      "isAdvanced": 0,
+      "children": [
+        {
+          "id": 106201,
+          "name": "special_second_menu_add_special",
+          "cnName": "添加特效",
+          "drawableName": "edit_menu_add_special",
+          "parentId": 106,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": 107,
+      "name": "first_menu_filter",
+      "cnName": "滤镜",
+      "drawableName": "first_menu_filter_select_bg",
+      "parentId": 0,
+      "enable": 1,
+      "isAdvanced": 2,
+      "children": [
+        {
+          "id": 107201,
+          "name": "filter_second_menu_add_filter",
+          "cnName": "添加滤镜",
+          "drawableName": "edit_menu_filter",
+          "parentId": 107,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        },
+        {
+          "id": 107203,
+          "name": "filter_second_menu_add_exclusive",
+          "cnName": "专属滤镜",
+          "drawableName": "edit_menu_exclusive",
+          "parentId": 107,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        },
+
+        {
+          "id": 107202,
+          "name": "filter_second_menu_add_adjust",
+          "cnName": "添加调节",
+          "drawableName": "edit_menu_adjust",
+          "parentId": 107,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": 108,
+      "name": "cut_second_menu_ratio",
+      "cnName": "比例",
+      "drawableName": "first_menu_ratio_select_bg",
+      "parentId": 0,
+      "enable": 1,
+      "isAdvanced": 2,
+      "children": []
+    },
+    {
+      "id": 109,
+      "name": "cut_second_menu_background",
+      "cnName": "背景",
+      "drawableName": "first_menu_canvas_select_bg",
+      "parentId": 0,
+      "enable": 1,
+      "isAdvanced": 2,
+      "children": []
+    }
+  ],
+  "operates": [
+    {
+      "id": 201,
+      "name": "",
+      "cnName": "剪辑操作菜单",
+      "drawableName": "",
+      "parentId": 0,
+      "enable": 1,
+      "isAdvanced": 0,
+      "children": [],
+      "operates": [
+        {
+          "id": 201101,
+          "name": "cut_second_menu_severing",
+          "cnName": "分割",
+          "drawableName": "edit_menu_division",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 201102,
+          "name": "cut_second_menu_speed_change",
+          "cnName": "变速",
+          "drawableName": "edit_menu_change_speed",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 201103,
+          "name": "cut_second_menu_volume",
+          "cnName": "音量",
+          "drawableName": "edit_menu_volume",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 201104,
+          "name": "cut_second_menu_animation",
+          "cnName": "动画",
+          "drawableName": "edit_menu_animation",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        },
+        {
+          "id": 201106,
+          "name": "cut_second_menu_delete",
+          "cnName": "删除",
+          "drawableName": "edit_menu_delete",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 201105,
+          "name": "first_menu_filter",
+          "cnName": "滤镜",
+          "drawableName": "edit_menu_filter",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 201108,
+          "name": "adjust",
+          "cnName": "调节",
+          "drawableName": "edit_menu_adjust",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        },
+        {
+          "id": 201109,
+          "name": "cut_second_menu_copy",
+          "cnName": "复制",
+          "drawableName": "edit_menu_copy",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 201110,
+          "name": "cut_second_menu_replace",
+          "cnName": "替换",
+          "drawableName": "edit_menu_replace",
+          "parentId": 1001,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 201111,
+          "name": "cut_second_menu_mask",
+          "cnName": "蒙版",
+          "drawableName": "edit_menu_mask",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        },
+        {
+          "id": 201113,
+          "name": "cut_second_menu_mirror",
+          "cnName": "镜像",
+          "drawableName": "edit_menu_mirror",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 201114,
+          "name": "cut_second_menu_opaqueness",
+          "cnName": "不透明度",
+          "drawableName": "edit_menu_alpha",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 201115,
+          "name": "cut_second_menu_upend",
+          "cnName": "倒放",
+          "drawableName": "edit_menu_upend",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 201119,
+          "name": "cut_second_menu_human_tracking",
+          "cnName": "人物追踪",
+          "drawableName": "edit_menu_human_tracking",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 201120,
+          "name": "cut_second_menu_ai_hair",
+          "cnName": "一键美发",
+          "drawableName": "edit_menu_ai_hair",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        },
+        {
+          "id": 201123,
+          "name": "cut_second_menu_fun",
+          "cnName": "AI趣玩",
+          "drawableName": "edit_menu_freeze_fun",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": 202,
+      "name": "",
+      "cnName": "音频操作菜单",
+      "drawableName": "",
+      "parentId": 0,
+      "enable": 1,
+      "isAdvanced": 0,
+      "children": [],
+      "operates": [
+        {
+          "id": 202108,
+          "name": "add_wza",
+          "cnName": "添加",
+          "drawableName": "edit_menu_music",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 202102,
+          "name": "cut_second_menu_volume",
+          "cnName": "音量",
+          "drawableName": "edit_menu_volume",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 202103,
+          "name": "cut_second_menu_speed_change",
+          "cnName": "变速",
+          "drawableName": "edit_menu_change_speed",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 202105,
+          "name": "cut_second_menu_delete",
+          "cnName": "删除",
+          "drawableName": "edit_menu_delete",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": 204,
+      "name": "",
+      "cnName": "贴纸操作菜单",
+      "drawableName": "",
+      "parentId": 0,
+      "enable": 1,
+      "isAdvanced": 0,
+      "children": [],
+      "operates": [
+        {
+          "id": 204106,
+          "name": "add_wza",
+          "cnName": "添加",
+          "drawableName": "edit_menu_add_sticker",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 204102,
+          "name": "cut_second_menu_replace",
+          "cnName": "替换",
+          "drawableName": "edit_menu_replace",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 204103,
+          "name": "cut_second_menu_animation",
+          "cnName": "动画",
+          "drawableName": "edit_menu_animation",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        },
+        {
+          "id": 204104,
+          "name": "cut_second_menu_copy",
+          "cnName": "复制",
+          "drawableName": "edit_menu_copy",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 204105,
+          "name": "cut_second_menu_delete",
+          "cnName": "删除",
+          "drawableName": "edit_menu_delete",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": 211,
+      "name": "",
+      "cnName": "涂鸦操作菜单",
+      "drawableName": "",
+      "parentId": 0,
+      "enable": 1,
+      "isAdvanced": 0,
+      "children": [],
+      "operates": [
+        {
+          "id": 211101,
+          "name": "cut_second_menu_delete",
+          "cnName": "删除",
+          "drawableName": "edit_menu_delete",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": 205,
+      "name": "",
+      "cnName": "文字操作菜单",
+      "drawableName": "",
+      "parentId": 0,
+      "enable": 1,
+      "isAdvanced": 0,
+      "children": [],
+      "operates": [
+        {
+          "id": 205106,
+          "name": "add_wza",
+          "cnName": "添加",
+          "drawableName": "edit_menu_text",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 205102,
+          "name": "edit",
+          "cnName": "编辑",
+          "drawableName": "edit_menu_text_edit",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 205103,
+          "name": "cut_second_menu_copy",
+          "cnName": "复制",
+          "drawableName": "edit_menu_copy",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 205104,
+          "name": "cut_second_menu_animation",
+          "cnName": "动画",
+          "drawableName": "edit_menu_animation",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        },
+        {
+          "id": 205105,
+          "name": "cut_second_menu_delete",
+          "cnName": "删除",
+          "drawableName": "edit_menu_delete",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": 206,
+      "name": "",
+      "cnName": "文字模板操作菜单",
+      "drawableName": "",
+      "parentId": 0,
+      "enable": 1,
+      "isAdvanced": 1,
+      "children": [],
+      "operates": [
+        {
+          "id": 206105,
+          "name": "add_wza",
+          "cnName": "添加",
+          "drawableName": "edit_menu_text_module",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 206101,
+          "name": "cut_second_menu_replace",
+          "cnName": "替换",
+          "drawableName": "edit_menu_replace",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 206103,
+          "name": "cut_second_menu_copy",
+          "cnName": "复制",
+          "drawableName": "edit_menu_copy",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 206104,
+          "name": "cut_second_menu_delete",
+          "cnName": "删除",
+          "drawableName": "edit_menu_delete",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": 207,
+      "name": "",
+      "cnName": "画中画操作菜单",
+      "drawableName": "",
+      "parentId": 0,
+      "enable": 1,
+      "isAdvanced": 2,
+      "children": [],
+      "operates": [
+        {
+          "id": 207118,
+          "name": "add_wza",
+          "cnName": "新增画中画",
+          "drawableName": "edit_menu_add_pip",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        },
+        {
+          "id": 207102,
+          "name": "cut_second_menu_speed_change",
+          "cnName": "变速",
+          "drawableName": "edit_menu_change_speed",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        },
+        {
+          "id": 207103,
+          "name": "cut_second_menu_volume",
+          "cnName": "音量",
+          "drawableName": "edit_menu_volume",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        },
+        {
+          "id": 207104,
+          "name": "cut_second_menu_animation",
+          "cnName": "动画",
+          "drawableName": "edit_menu_animation",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        },
+        {
+          "id": 207105,
+          "name": "first_menu_filter",
+          "cnName": "滤镜",
+          "drawableName": "edit_menu_filter",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        },
+        {
+          "id": 207106,
+          "name": "blend",
+          "cnName": "混合模式",
+          "drawableName": "edit_menu_mixes",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        },
+        {
+          "id": 207107,
+          "name": "cut_second_menu_delete",
+          "cnName": "删除",
+          "drawableName": "edit_menu_delete",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        },
+        {
+          "id": 207109,
+          "name": "adjust",
+          "cnName": "调节",
+          "drawableName": "edit_menu_adjust",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        },
+        {
+          "id": 207110,
+          "name": "cut_second_menu_copy",
+          "cnName": "复制",
+          "drawableName": "edit_menu_copy",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        },
+        {
+          "id": 207111,
+          "name": "cut_second_menu_replace",
+          "cnName": "替换",
+          "drawableName": "edit_menu_replace",
+          "parentId": 1001,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        },
+        {
+          "id": 207112,
+          "name": "cut_second_menu_mask",
+          "cnName": "蒙版",
+          "drawableName": "edit_menu_mask",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        },
+        {
+          "id": 207114,
+          "name": "cut_second_menu_mirror",
+          "cnName": "镜像",
+          "drawableName": "edit_menu_mirror",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        },
+        {
+          "id": 207115,
+          "name": "cut_second_menu_opaqueness",
+          "cnName": "不透明度",
+          "drawableName": "edit_menu_alpha",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        },
+        {
+          "id": 207117,
+          "name": "cut_second_menu_upend",
+          "cnName": "倒放",
+          "drawableName": "edit_menu_upend",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        },
+        {
+          "id": 207119,
+          "name": "cut_second_menu_human_tracking",
+          "cnName": "人物追踪",
+          "drawableName": "edit_menu_human_tracking",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        },
+        {
+          "id": 207120,
+          "name": "cut_second_menu_ai_hair",
+          "cnName": "一键美发",
+          "drawableName": "edit_menu_ai_hair",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        },
+        {
+          "id": 207123,
+          "name": "cut_second_menu_fun",
+          "cnName": "AI趣玩",
+          "drawableName": "edit_menu_freeze_fun",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": 208,
+      "name": "",
+      "cnName": "特效操作菜单",
+      "drawableName": "",
+      "parentId": 0,
+      "enable": 1,
+      "isAdvanced": 2,
+      "children": [],
+      "operates": [
+        {
+          "id": 208105,
+          "name": "add_wza",
+          "cnName": "添加",
+          "drawableName": "edit_menu_add_special",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 208101,
+          "name": "cut_second_menu_replace",
+          "cnName": "替换",
+          "drawableName": "edit_menu_replace",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 208103,
+          "name": "object",
+          "cnName": "作用对象",
+          "drawableName": "edit_menu_act_on",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 208104,
+          "name": "cut_second_menu_delete",
+          "cnName": "删除",
+          "drawableName": "edit_menu_delete",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": 209,
+      "name": "",
+      "cnName": "滤镜操作菜单",
+      "drawableName": "",
+      "parentId": 0,
+      "enable": 1,
+      "isAdvanced": 2,
+      "children": [],
+      "operates": [
+        {
+          "id": 209101,
+          "name": "cut_second_menu_replace",
+          "cnName": "替换",
+          "drawableName": "edit_menu_replace",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        },
+        {
+          "id": 209103,
+          "name": "object",
+          "cnName": "作用对象",
+          "drawableName": "edit_menu_act_on",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        },
+        {
+          "id": 209104,
+          "name": "cut_second_menu_delete",
+          "cnName": "删除",
+          "drawableName": "edit_menu_delete",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": 210,
+      "name": "",
+      "cnName": "新增调节操作菜单",
+      "drawableName": "",
+      "parentId": 0,
+      "enable": 1,
+      "isAdvanced": 2,
+      "children": [],
+      "operates": [
+        {
+          "id": 210101,
+          "name": "adjust",
+          "cnName": "调节",
+          "drawableName": "edit_menu_adjust",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        },
+        {
+          "id": 210102,
+          "name": "cut_second_menu_copy",
+          "cnName": "复制",
+          "drawableName": "edit_menu_copy",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        },
+        {
+          "id": 210103,
+          "name": "object",
+          "cnName": "作用对象",
+          "drawableName": "edit_menu_act_on",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        },
+        {
+          "id": 210104,
+          "name": "cut_second_menu_delete",
+          "cnName": "删除",
+          "drawableName": "edit_menu_delete",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/media_crop_background">
+
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_16"
+        android:src="@drawable/ic_cancel"
+        android:contentDescription="@string/tv_back"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:fontFamily="HarmonyHeiTi"
+        android:text="@string/video"
+        android:textColor="@color/color_fff_86"
+        android:textSize="@dimen/dp_16"
+        app:layout_constraintBottom_toBottomOf="@id/iv_back"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_back" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/choice_recyclerview"
+        android:layout_width="match_parent"
+        android:paddingStart="@dimen/dp_16"
+        android:paddingEnd="@dimen/dp_16"
+        android:layout_height="0dp"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        android:layout_marginTop="@dimen/dp_24"
+        app:layout_constraintTop_toBottomOf="@id/iv_back"
+        app:layout_constraintBottom_toTopOf="@id/tv_audio_extract"
+        tools:ignore="MissingConstraints"
+        android:layout_marginBottom="@dimen/dp_24"/>
+
+    <com.huawei.hms.videoeditor.ui.common.view.EditorTextView
+        android:id="@+id/tv_audio_extract"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/import_sound"
+        android:textSize="@dimen/dp_16"
+        android:maxLines="1"
+        android:textColor="#FFFFFFFF"
+        android:fontFamily="HarmonyHeiTi"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/background_card_selector"
+        android:paddingEnd="@dimen/dp_32"
+        android:paddingStart="@dimen/dp_32"
+        android:paddingBottom="@dimen/dp_9"
+        android:paddingTop="@dimen/dp_9"
+        android:layout_marginStart="@dimen/dp_24"
+        android:layout_marginEnd="@dimen/dp_24"
+        android:layout_marginBottom="@dimen/dp_24"
+        tools:ignore="SpUsage" />
+
+    <View
+        android:id="@+id/view_bg"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_0"
+        app:layout_constraintStart_toStartOf="@id/tv_audio_extract"
+        app:layout_constraintTop_toTopOf="@id/tv_audio_extract"
+        app:layout_constraintEnd_toEndOf="@id/tv_audio_extract"
+        app:layout_constraintBottom_toBottomOf="@id/tv_audio_extract"
+        android:background="#40ffffff"
+        android:visibility="gone"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

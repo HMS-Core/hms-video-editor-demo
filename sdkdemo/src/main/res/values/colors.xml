@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#181818</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="colorPrimary">#3C3F41</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="transparent">#00000000</color>
+    <color name="common_line_color">#D9D9D9</color>
+    <color name="launcher_color">#1C1926</color>
+
+    <color name="default_blue">#FF007DFF</color>
+    <color name="clr_normal">#1AFFFFFF</color>
+    <color name="pick_line_color">#707070</color>
+    <color name="pick_add_select_color">#FFFF7500</color>
+    <color name="color_90">#909090</color>
+    <color name="color_333">#333333</color>
+    <color name="color_666">#666666</color>
+    <color name="color_999">#999999</color>
+    <color name="color_ccc_20">#33000000</color>
+    <color name="color_ccc_70">#B3000000</color>
+    <color name="color_000_04">#A0000000</color>
+    <color name="color_fff_10">#1AFFFFFF</color>
+    <color name="color_fff_20">#33FFFFFF</color>
+    <color name="color_fff_40">#66FFFFFF</color>
+    <color name="color_fff_60">#99FFFFFF</color>
+    <color name="color_fff_86">#DBFFFFFF</color>
+    <color name="color_fff_90">#E6FFFFFF</color>
+    <color name="color_70">#707070</color>
+    <color name="color_d1">#D1D1D1</color>
+    <color name="title_tv">#DBFFFFFF</color>
+    <color name="red">#ffff0000</color>
+
+    <color name="video_edit_main_bg_color">#FF101010</color>
+
+    <color name="video_template_edit_main_bg_color">#00101010</color>
+
+    <color name="edit_background">#FF181818</color>
+
+    <color name="grey_text">#99FFFFFF</color>
+    <color name="tack_view_bg">#FF101010</color>
+    <color name="pure_black">#FF000000</color>
+    <color name="export_bg">#202020</color>
+
+    <color name="local_music_normal_color">#66FFFFFF</color>
+    <color name="color_26">#FF262626</color>
+    <color name="color_20">#FF2D2D2D</color>
+    <color name="color_20_70">#B3202020</color>
+    <color name="black_20">#33000000</color>
+    <color name="cancels">#1F69FF</color>
+    <color name="black_60">#99000000</color>
+    <color name="black_80">#FF000000</color>
+    <color name="speedBarTextColor">#DBFFFFFF</color>
+    <color name="launch_name_color">#FFFF7500</color>
+    <color name="launch_hint_title_color">#E6000000</color>
+    <color name="launch_hint_dialog_bg_color">#FFF6F6F6</color>
+    <color name="launch_hint_dialog_cancel_color">#CC000000</color>
+    <color name="launch_hint_dialog_affirm_color">#FFF3485D</color>
+
+    <color name="search_banner_bg">#44000000</color>
+    <color name="search_placeholder">#FFD7D7D7</color>
+
+    <color name="clip_color_E6000000">#E6000000</color>
+    <color name="clip_color_E6FFFFFF">#E6FFFFFF</color>
+    <color name="clip_color_0D000000">#0D000000</color>
+    <color name="clip_color_99000000">#99000000</color>
+    <color name="clip_color_FFFF7500">#FFFF7500</color>
+
+    <color name="emui_color_bg_translucent">#00FFFFFF</color>
+    <color name="emui_clickeffic_default_color">#19000000</color>
+
+    <color name="emui_color_fg">#E6000000</color>
+    <color name="window_background_color">#FFFFFFFF</color>
+    <color name="popup_window_bg">#FF262626</color>
+
+    <!--白色透明度-->
+    <color name="translucent_white_00">#FFFFFFFF</color>
+    <color name="translucent_white_05">#F2FFFFFF</color>
+    <color name="translucent_white_09">#17FFFFFF</color>
+    <color name="translucent_white_10">#E6FFFFFF</color>
+    <color name="translucent_white_14">#DBFFFFFF</color>
+    <color name="translucent_white_20">#CCFFFFFF</color>
+    <color name="translucent_white_40">#99FFFFFF</color>
+    <color name="translucent_white_60">#60FFFFFF</color>
+    <color name="translucent_white_80">#33FFFFFF</color>
+    <color name="translucent_white_90">#E6FFFFFF</color>
+    <color name="translucent_white_95">#0DFFFFFF</color>
+    <color name="translucent_white_100">#00FFFFFF</color>
+
+    <!--黑色透明度-->
+    <color name="translucent_black_05">#F2000000</color>
+    <color name="translucent_black_45">#8C000000</color>
+    <color name="translucent_black_60">#66000000</color>
+    <color name="filterdialog">#F6F6F6</color>
+    <color name="video_edit_photo">#FF2D2D2D</color>
+    <color name="color_FFF53F3F">#FFF53F3F</color>
+
+    <color name="app_main_color">#181818</color>
+    <color name="app_statusBarColor">#181818</color>
+    <color name="app_navigationBarColor">#FF181818</color>
+    <color name="video_photo_color">#FFD1D1D1</color>
+    <color name="video_clips_color">#101010</color>
+
+    <color name="color_grey_29">#4A000000</color>
+
+    <color name="entaerAnimColor">#FF12C287</color>
+    <color name="leaveAnimColor">#FF5A87FF</color>
+    <color name="animBackColor">#FF4C4C4C</color>
+    <color name="db_color">#DBDBDB</color>
+
+    <color name="wave_color_1">#FFB3C4BF</color>
+    <color name="wave_color_2">#FF89A59C</color>
+    <color name="wave_color_3">#FFB8ADC5</color>
+    <color name="wave_color_4">#86C5E3</color>
+    <color name="wave_color_5">#42CABE</color>
+    <color name="wave_color_6">#92C48D</color>
+
+    <color name="auto_text_track_color_1">#FFBEA389</color>
+    <color name="auto_text_track_color_2">#FFA1876D</color>
+    <color name="auto_music_text_track_color_1">#FFCFC9A6</color>
+    <color name="auto_music_text_track_color_2">#FFA1986D</color>
+    <color name="normal_text_track_color_1">#FFC4A296</color>
+    <color name="normal_text_track_color_2">#FFA37D72</color>
+
+    <color name="sticker_color_1">#FFC5ADAD</color>
+    <color name="sticker_color_2">#FFA58989</color>
+    <color name="sticker_color_3">#D28181</color>
+    <color name="graffiti_color_1">#FFAD95A3</color>
+    <color name="graffiti_color_2">#FF9A748A</color>
+
+    <color name="special_color_1">#FFA1B1D6</color>
+    <color name="special_color_2">#FF6F83B3</color>
+    <color name="special_color_3">#769AAB</color>
+
+    <color name="adjust_color_1">#FFC9BC75</color>
+    <color name="adjust_color_2">#FFAB9B41</color>
+
+    <color name="filter_color_1">#8989A5</color>
+    <color name="filter_color_2">#8989A5</color>
+    <color name="theme_color">#FFFF7500</color>
+    <color name="second_theme_color">#FFFF7500</color>
+    <color name="theme_color_4d">#4DF3485D</color>
+    <color name="theme_color_80">#80F3485D</color>
+
+    <color name="main_theme_color">#FF7500</color>
+    <color name="main_black_color">#1A1A1A</color>
+
+    <!--    文本颜色start-->
+    <!--    焦点色-->
+    <color name="color_text_focus">#FFB662D9</color>
+    <!--    文本背景颜色 -->
+    <color name="font_bg">#353535</color>
+    <!--    一级文本,90%不透明度-->
+    <color name="color_text_first_level">#E5FFFFFF</color>
+    <!--    二级文本,60%不透明度 -->
+    <color name="color_text_second_level">#99FFFFFF</color>
+    <!--    三级文本,45%不透明度-->
+    <color name="color_text_third_level">#73FFFFFF</color>
+    <!--    四级文本,20%不透明度-->
+    <color name="color_text_fourth_level">#33FFFFFF</color>
+
+    <!--    菜单文本选中状态-->
+    <color name="color_text_selected">#FFB662D9</color>
+    <!--    菜单文本未选中态-->
+    <color name="color_text_unselected">#E6FFFFFF</color>
+    <!--    焦点色为白色时,未选中态,45%不透明度-->
+    <color name="color_text_unselected_white_focus">#72FFFFFF</color>
+    <!--    文本颜色end-->
+    <color name="emui_mask_thin">#33000000</color>
+
+    <color name="color_dialog_background">#262626</color>
+    <color name="color_dialog_line_background">#1AFFFFFF</color>
+    <color name="color_dialog_pressed">#0DFFFFFF</color>
+
+    <!--    tab选中-->
+    <color name="tab_text_tint_color">#FFB662D9</color>
+    <!--    tab未选中-->
+    <color name="tab_text_default_color">#E6FFFFFF</color>
+
+    <!-- 视频裁剪用到 颜色 -->
+    <color name="crop_shadow_color">#CF000000</color>
+    <color name="crop_shadow_wp_color">#4F000000</color>
+    <color name="crop_wp_markers">#7FFFFFFF</color>
+
+    <color name="color_press_background">#0CFFFFFF</color>
+
+    <!--  红点颜色  -->
+    <color name="shape_red_point_color">#FFFA2A2D</color>
+
+    <!--    焦点色-->
+    <color name="color_focus">#FFFFFF</color>
+
+    <color name="color_ff0a59f7">#FF0A59F7</color>
+    <color name="color_e2e2e2">#E2E2E2</color>
+    
+        <!-- 新手引导页背景颜色 -->
+    <color name="guide_tip_bubble_color">#4D4D4D</color>
+    <color name="guide_tip_mask_color">#99000000</color>
+
+    <color name="color_music_hint_line_bg">#FF505050</color>
+
+
+    <color name="media_crop_background">#1A1A1A</color>
+
+    <color name="color_green_50">#7F5AADA0</color>
+    <color name="color_red_50">#7FC26246</color>
+
+    <color name="stop_service_dialog">#FA2A2D</color>
+
+    <color name="color_40">#FF404040</color>
+
+    <!--人脸遮罩 透明紫色-->
+    <color name="ai_blank_80">#7F000000</color>
+    <color name="purple_50">#7FB662D9</color>
+    <color name="color_ffd8d8d8">#FFD8D8D8</color>
+
+    <!--ai滤镜 重命名确定按钮字体的颜色-->
+    <color name="filter_rename_text_color">#66B662D9</color>
+    <!-- 人像分割 -->
+    <color name="loading_ai_dialog_bg">#99000000</color>
+
+    <!--    微电影弹框颜色-->
+    <color name="mini_movie_dialog_bg">#ffffff</color>
+    <color name="mini_movie_dialog_msg_text_color">#000000</color>
+    <color name="mini_movie_dialog_button_text_color">#3F97E9</color>
+    <color name="mini_movie_dialog_line">#514D4B</color>
+    <color name="mini_movie_dialog_button_color">#ffffff</color>
+
+    <color name="mini_movie_dialog_button_down_color">#F2F2F2</color>
+    <color name="home_color_FF181818">#FF181818</color>
+</resources>

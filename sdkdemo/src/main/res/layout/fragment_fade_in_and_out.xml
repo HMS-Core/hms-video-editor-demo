@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/custom_operate_title" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/seek_bar_in_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layoutDirection="ltr"
+        android:layout_marginTop="@dimen/dp_18"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include">
+
+        <com.huawei.hms.videoeditor.ui.common.view.EditorTextView
+            android:id="@+id/tv_in"
+            android:layout_width="@dimen/dp_64"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_marginBottom="@dimen/dp_3"
+            android:fontFamily="HarmonyHeiTi"
+            android:gravity="start|center_vertical"
+            android:maxWidth="@dimen/dp_64"
+            android:maxLines="2"
+            android:minWidth="@dimen/dp_24"
+            android:text="@string/fade_in"
+            android:textColor="@color/color_text_second_level"
+            android:textSize="@dimen/dp_14"
+            app:layout_constraintBottom_toBottomOf="@id/sb_items_in"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.huawei.hms.videoeditor.ui.mediaeditor.preview.view.MySeekBar
+            android:id="@+id/sb_items_in"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_45"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:paddingStart="@dimen/dp_5"
+            android:paddingEnd="@dimen/dp_10"
+            app:inner_circle_bg="@color/common_line_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_time_in"
+            app:layout_constraintStart_toEndOf="@id/tv_in"
+            app:layout_constraintTop_toTopOf="parent"
+            app:line_width="@dimen/dp_4"
+            app:thumb_radius="@dimen/dp_7"
+            app:progress="0"
+            app:progress_anchor="0"
+            app:progress_max="100"
+            app:progress_min="0"
+            app:show_text="true"
+            app:text_is_int="false"
+            app:text_multiple_relative_progress="10.0" />
+
+        <TextView
+            android:id="@+id/tv_time_in"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:fontFamily="HarmonyHeiTi"
+            android:textColor="@color/color_text_second_level"
+            android:textSize="@dimen/dp_14"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/sb_items_in"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/sb_items_in"
+            app:layout_constraintTop_toTopOf="@id/sb_items_in"
+            tools:ignore="SpUsage" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/seek_bar_out_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layoutDirection="ltr"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seek_bar_in_layout">
+
+        <com.huawei.hms.videoeditor.ui.common.view.EditorTextView
+            android:id="@+id/tv_out"
+            android:layout_width="@dimen/dp_64"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_marginBottom="@dimen/dp_3"
+            android:fontFamily="HarmonyHeiTi"
+            android:gravity="start|center_vertical"
+            android:maxWidth="@dimen/dp_64"
+            android:maxLines="2"
+            android:minWidth="@dimen/dp_24"
+            android:text="@string/fade_out"
+            android:textColor="@color/color_text_second_level"
+            android:textSize="@dimen/dp_14"
+            app:layout_constraintBottom_toBottomOf="@id/sb_items_out"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.huawei.hms.videoeditor.ui.mediaeditor.preview.view.MySeekBar
+            android:id="@+id/sb_items_out"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_45"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:paddingStart="@dimen/dp_5"
+            android:paddingEnd="@dimen/dp_10"
+            app:inner_circle_bg="@color/common_line_color"
+            app:layout_constraintEnd_toStartOf="@id/tv_time_out"
+            app:layout_constraintStart_toEndOf="@id/tv_out"
+            app:layout_constraintTop_toTopOf="parent"
+            app:line_width="@dimen/dp_4"
+            app:thumb_radius="@dimen/dp_7"
+            app:progress="0"
+            app:progress_anchor="0"
+            app:progress_max="100"
+            app:progress_min="0"
+            app:show_text="true"
+            app:text_is_int="false"
+            app:text_multiple_relative_progress="10.0" />
+
+        <TextView
+            android:id="@+id/tv_time_out"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:fontFamily="HWtext 55ST"
+            android:textColor="@color/color_text_second_level"
+            android:textSize="@dimen/dp_14"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/sb_items_out"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/sb_items_out"
+            app:layout_constraintTop_toTopOf="@id/sb_items_out" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

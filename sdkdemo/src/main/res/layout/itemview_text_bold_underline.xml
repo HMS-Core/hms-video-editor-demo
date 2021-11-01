@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.huawei.hms.videoeditor.ui.mediaeditor.texts.custom.CustomNestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_45"
+            android:layout_marginTop="@dimen/dp_66"
+            android:layout_marginBottom="@dimen/dp_30"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="@dimen/dp_36"
+                android:layout_height="@dimen/dp_36"
+                android:layout_marginEnd="@dimen/dp_50"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@+id/italics_layout"
+                app:layout_constraintEnd_toStartOf="@+id/italics_layout"
+                app:layout_constraintTop_toTopOf="@+id/italics_layout">
+
+                <ImageView
+                    android:id="@+id/img_bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/add_bold"
+                    android:src="@drawable/edit_text_bold_select" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/italics_layout"
+                android:layout_width="@dimen/dp_36"
+                android:layout_height="@dimen/dp_36"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/img_italics"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/italics"
+                    android:src="@drawable/edit_text_italic_select" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/dp_36"
+                android:layout_height="@dimen/dp_36"
+                android:layout_marginStart="@dimen/dp_50"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@+id/italics_layout"
+                app:layout_constraintStart_toEndOf="@+id/italics_layout"
+                app:layout_constraintTop_toTopOf="@+id/italics_layout">
+
+                <ImageView
+                    android:id="@+id/img_underline"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/underline"
+                    android:src="@drawable/edit_text_underline_select" />
+
+            </LinearLayout>
+            
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.huawei.hms.videoeditor.ui.mediaeditor.texts.custom.CustomNestedScrollView>
+    
+   
+
+</androidx.constraintlayout.widget.ConstraintLayout>

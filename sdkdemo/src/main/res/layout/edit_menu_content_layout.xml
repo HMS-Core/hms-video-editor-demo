@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    tools:ignore="MissingConstraints">
+
+    <LinearLayout
+        android:id="@+id/operate_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/dp_64"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/layout_back_operate"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_56"
+            android:layout_marginStart="@dimen/dp_8"
+            android:layout_marginEnd="@dimen/dp_8"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:alpha="0.6"
+            android:background="@drawable/item_back_shape">
+
+            <ImageView
+                android:id="@+id/iv_back_operate"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:src="@drawable/item_back"
+                android:contentDescription="@string/tv_back"/>
+            
+        </LinearLayout>
+        
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/operate_menu_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/dp_64"
+            android:layout_gravity="center"
+            android:scrollbars="none" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/second_menu_recyclerview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/dp_56"
+        android:visibility="gone"
+        android:scrollbars="none" />
+
+    <com.huawei.hms.videoeditor.ui.mediaeditor.menu.EditMenuFirstLayout
+        android:id="@+id/first_menu_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:minHeight="@dimen/dp_64"/>
+
+</LinearLayout>

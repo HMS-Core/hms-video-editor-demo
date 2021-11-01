@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/custom_operate_title" />
+
+    <RelativeLayout
+        android:layoutDirection="ltr"
+        android:id="@+id/video_truck"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_80"
+        android:layout_marginTop="@dimen/dp_64"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/include">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_split"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_64"
+            android:layout_centerHorizontal="true"
+            android:scrollbars="none" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="@dimen/dp_2"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:background="@drawable/round_line_bg" />
+
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

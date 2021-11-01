@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.huawei.hms.videoeditor.ui.mediaeditor.VideoClipsActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        tools:ignore="MissingConstraints">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/imageTrack_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_72"
+            android:clipChildren="false"
+            android:scrollbarAlwaysDrawHorizontalTrack="true"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            tools:ignore="MissingConstraints">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <ImageView
+        android:id="@+id/add_video"
+        android:layout_width="@dimen/dp_38"
+        android:layout_height="@dimen/dp_38"
+        android:layout_marginTop="@dimen/dp_17"
+        android:layout_marginEnd="@dimen/dp_8"
+        android:contentDescription="@string/add_video"
+        android:src="@drawable/icon_add_video"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="RtlSymmetry" />
+
+    <View
+        android:id="@+id/pick_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparent"
+        android:clickable="true"
+        android:visibility="gone" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

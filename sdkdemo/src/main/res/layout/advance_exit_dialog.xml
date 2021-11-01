@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_16"
+    android:background="@drawable/advance_export_dialog_bg"
+    tools:ignore="MissingConstraints">
+
+    <TextView
+        android:id="@+id/title_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="Helvetica"
+        android:gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_8"
+        android:text="@string/simple_save_to_video_edit"
+        android:textColor="@color/color_text_first_level"
+        android:textSize="@dimen/sp_16"/>
+    
+    <View
+        android:id="@+id/center_line"
+        android:layout_width="@dimen/dp_1"
+        android:layout_height="@dimen/dp_24"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/title_tv"
+        android:layout_marginTop="@dimen/dp_16"
+        android:background="@color/color_dialog_line_background"/>
+
+    <TextView
+        android:id="@+id/cancel_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_40"
+        android:fontFamily="Helvetica"
+        android:gravity="center"
+        android:background="@drawable/dialog_button_pressed_selector_bg"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/title_tv"
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_toStartOf="@+id/center_line"
+        android:layout_marginEnd="@dimen/dp_8"
+        android:text="@string/is_give_up_no"
+        android:textColor="@color/color_text_focus"
+        android:textSize="@dimen/sp_16"/>
+
+    <TextView
+        android:id="@+id/confirm_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_40"
+        android:fontFamily="Helvetica"
+        android:gravity="center"
+        android:background="@drawable/dialog_button_pressed_selector_bg"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/title_tv"
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_toEndOf="@+id/center_line"
+        android:layout_marginStart="@dimen/dp_8"
+        android:text="@string/save_wza"
+        android:textColor="@color/color_text_focus"
+        android:textSize="@dimen/sp_16"/>
+
+</RelativeLayout>

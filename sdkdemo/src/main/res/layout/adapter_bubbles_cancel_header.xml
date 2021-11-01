@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_head"
+    android:layout_width="@dimen/dp_32"
+    android:layout_height="@dimen/dp_32"
+    android:background="@drawable/edit_text_style_shape"
+    tools:ignore="MissingConstraints">
+
+    <ImageView
+        android:id="@+id/item_image_view"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:layout_centerInParent="true"
+        android:src="@drawable/icon_cancel_wu"
+        android:contentDescription="@string/no"/>
+    
+</RelativeLayout>

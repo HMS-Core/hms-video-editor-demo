@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/fetch_music_item_index_btn_selected" android:state_selected="true" />
+    <item android:drawable="@drawable/media_bg_preview_item_index_btn_un_selected" android:state_selected="false" />
+</selector>

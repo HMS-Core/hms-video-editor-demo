@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <include
+        android:id="@+id/top_layout"
+        layout="@layout/custom_operate_title"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_color_cut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/dp_16"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top_layout" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_25"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recycler_view_color_cut">
+
+        <TextView
+            android:id="@+id/tv_reset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_marginBottom="@dimen/dp_2"
+            android:drawablePadding="@dimen/dp_4"
+            android:fontFamily="HarmonyHeiTi"
+            android:gravity="center_vertical"
+            android:text="@string/reset"
+            android:textColor="@drawable/shape_mask_reverse_selector"
+            android:textSize="@dimen/dp_12"
+            app:drawableStartCompat="@drawable/icon_small_reset"
+            tools:ignore="SpUsage" />
+
+        <TextView
+            android:id="@+id/tv_intensity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="@dimen/dp_25"
+            android:layout_marginBottom="@dimen/dp_2"
+            android:gravity="center_vertical"
+            android:fontFamily="HarmonyHeiTi"
+            android:text="@string/strength"
+            android:textColor="#DBFFFFFF"
+            android:textSize="@dimen/dp_12"
+            android:visibility="invisible" />
+
+        <com.huawei.hms.videoeditor.ui.mediaeditor.preview.view.MySeekBar
+            android:id="@+id/myseekbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_45"
+            android:paddingStart="@dimen/dp_13"
+            android:paddingEnd="@dimen/dp_19"
+            android:visibility="invisible"
+            app:line_width="@dimen/dp_4"
+            app:progress="0"
+            app:progress_anchor="0"
+            app:progress_max="100"
+            app:progress_min="0"
+            app:thumb_radius="6dp"
+            app:show_text="true" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

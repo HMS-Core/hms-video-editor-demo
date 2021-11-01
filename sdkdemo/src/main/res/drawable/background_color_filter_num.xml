@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/tab_text_tint_color" />
+    <corners
+        android:bottomLeftRadius="@dimen/dp_5"
+        android:topRightRadius="@dimen/dp_5" />
+</shape>

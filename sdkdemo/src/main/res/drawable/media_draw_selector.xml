@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/media_draw_icon" android:state_selected="true" />
+    <item android:drawable="@drawable/media_draw_icon_normal" android:state_selected="false" />
+</selector>

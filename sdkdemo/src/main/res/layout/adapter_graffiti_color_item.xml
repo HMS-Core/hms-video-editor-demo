@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/dp_32"
+    android:layout_height="@dimen/dp_32">
+
+
+    <View
+        android:id="@+id/item_normal_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:background="@drawable/gratifi_color_normal_bg" />
+
+    <View
+        android:id="@+id/item_select_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gratifi_color_select_bg"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/image_graffiti_color"
+        android:layout_width="@dimen/dp_18"
+        android:layout_height="@dimen/dp_18"
+        android:layout_centerInParent="true"
+        android:src="@drawable/giffiti_fresh"
+        android:contentDescription="@string/undo"/>
+
+</RelativeLayout>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="MissingConstraints">
+
+    <androidx.constraintlayout.utils.widget.ImageFilterView
+        android:id="@+id/item_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:round="@dimen/dp_4"/>
+    
+    <View
+        android:id="@+id/item_select_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/sticker_special_select_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/item_download_view"
+        android:layout_width="@dimen/dp_14"
+        android:layout_height="@dimen/dp_14"
+        android:src="@drawable/icon_small_download"
+        app:layout_constraintEnd_toEndOf="@id/item_image_view"
+        app:layout_constraintTop_toTopOf="@id/item_image_view"
+        android:contentDescription="@string/download"/>
+
+
+    <ProgressBar
+        android:id="@+id/item_progress"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_gravity="center"
+        android:contentDescription="@string/downloading"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/progress_center_iv"
+        android:layout_width="@dimen/dp_8"
+        android:layout_height="@dimen/dp_1"
+        android:src="@drawable/sticker_progress_waiting"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/item_progress"
+        app:layout_constraintEnd_toEndOf="@+id/item_progress"
+        app:layout_constraintStart_toStartOf="@+id/item_progress"
+        app:layout_constraintTop_toTopOf="@+id/item_progress"
+        tools:ignore="MissingConstraints"
+        android:contentDescription="@string/downloading"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

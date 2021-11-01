@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_88"
+    tools:ignore="ContentDescription,MissingConstraints">
+
+    <com.huawei.hms.videoeditor.ui.common.view.image.RoundImage
+        android:id="@+id/iv_media"
+        android:layout_width="@dimen/dp_64"
+        android:layout_height="@dimen/dp_64"
+        android:layout_marginStart="@dimen/dp_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:scaleType="centerCrop"
+        app:radius="@dimen/dp_8" />
+
+    <TextView
+        android:id="@+id/tv_folder_name"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="wrap_content"
+        android:fontFamily="Helvetica"
+        android:gravity="start"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_media"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="@dimen/dp_12"
+        android:layout_marginTop="@dimen/dp_23"
+        android:layout_marginEnd="@dimen/dp_24"
+        android:singleLine="true"
+        android:maxLines="1"
+        android:textColor="@color/color_text_first_level"
+        android:textSize="@dimen/sp_16" />
+
+    <TextView
+        android:id="@+id/tv_media_count"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="wrap_content"
+        android:fontFamily="Helvetica"
+        android:gravity="start"
+        app:layout_constraintTop_toBottomOf="@+id/tv_folder_name"
+        app:layout_constraintStart_toEndOf="@+id/iv_media"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="@dimen/dp_12"
+        android:layout_marginTop="@dimen/dp_2"
+        android:layout_marginEnd="@dimen/dp_24"
+        android:singleLine="true"
+        android:maxLines="1"
+        android:textColor="@color/color_text_second_level"
+        android:textSize="@dimen/sp_14" />
+    
+    <View
+        android:id="@+id/bottom_line"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_1"
+        android:background="#1AFFFFFF"
+        android:visibility="invisible"
+        android:layout_marginStart="@dimen/dp_4"
+        android:layout_marginEnd="@dimen/dp_24"
+        app:layout_constraintStart_toEndOf="@+id/tv_folder_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+    
+</androidx.constraintlayout.widget.ConstraintLayout>

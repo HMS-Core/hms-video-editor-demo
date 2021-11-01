@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_parent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/edit_background"
+    android:paddingBottom="@dimen/dp_20">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/custom_operate_title" />
+
+    <RelativeLayout
+        android:id="@+id/recyclertimeline"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_67"
+        android:layout_marginTop="39dp"
+        app:layout_constraintEnd_toEndOf="@+id/include"
+        app:layout_constraintStart_toStartOf="@+id/include"
+        app:layout_constraintTop_toBottomOf="@+id/include">
+
+        <com.huawei.hms.videoeditor.ui.common.view.AiTrackView
+            android:id="@+id/ai_track_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/dp_18"
+            android:layout_marginEnd="@dimen/dp_18"/>
+
+        <com.huawei.hms.videoeditor.ui.common.view.FaceVideoCropView
+            android:id="@+id/crop_video_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_video_time"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_weight="1"
+        android:fontFamily="Helvetica"
+        android:gravity="center"
+        android:textColor="#FFFFFFFF"
+        android:textSize="@dimen/dp_12"
+        app:layout_constraintEnd_toEndOf="@+id/recyclertimeline"
+        app:layout_constraintStart_toStartOf="@+id/recyclertimeline"
+        app:layout_constraintTop_toBottomOf="@+id/recyclertimeline"
+        tools:ignore="SpUsage" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

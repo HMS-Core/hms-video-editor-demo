@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/item_image_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription"
+        android:background="@drawable/text_font_normal_bg"/>
+
+    <View
+        android:id="@+id/item_select_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/sticker_special_select_bg"
+        app:layout_constraintBottom_toBottomOf="@id/item_image_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/item_download_view"
+        android:layout_width="@dimen/dp_16"
+        android:layout_height="@dimen/dp_16"
+        android:contentDescription="@string/download"
+        android:src="@drawable/icon_small_download"
+        app:layout_constraintEnd_toEndOf="@+id/item_image_view"
+        app:layout_constraintTop_toTopOf="@+id/item_image_view"
+        tools:ignore="ContentDescription" />
+
+    <ProgressBar
+        android:id="@+id/item_progress"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:contentDescription="@string/downloading"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/item_image_view"
+        app:layout_constraintEnd_toEndOf="@+id/item_image_view"
+        app:layout_constraintStart_toStartOf="@+id/item_image_view"
+        app:layout_constraintTop_toTopOf="@+id/item_image_view"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/item_name"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_14"
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_marginBottom="@dimen/dp_4"
+        android:fontFamily="HarmonyHeiTi"
+        android:gravity="center"
+        android:textColor="@color/color_text_first_level"
+        android:textSize="@dimen/sp_10"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@+id/item_image_view"
+        app:layout_constraintStart_toStartOf="@+id/item_image_view"
+        app:layout_constraintTop_toBottomOf="@+id/item_image_view"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:ignore="SpUsage" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

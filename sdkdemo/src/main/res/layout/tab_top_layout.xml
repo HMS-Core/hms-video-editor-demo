@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true">
+        
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:fontFamily="HarmonyHeiTi"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textColor="@color/color_fff_86"
+            android:textSize="@dimen/sp_16" />
+
+        <ImageView
+            android:id="@+id/iv_tab_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="@dimen/dp_60"
+            android:layout_gravity="right|center_vertical"
+            android:scaleType="fitCenter"
+            android:visibility="gone"
+            android:src="@drawable/icon_filter_ai"
+            tools:srcCompat="@tools:sample/avatars" />
+
+    </FrameLayout>
+
+    <View
+        android:id="@+id/tab_top_indicator"
+        android:layout_width="@dimen/dp_12"
+        android:layout_height="2dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dp_5"
+        android:background="@drawable/background_tab_view" />
+
+
+</RelativeLayout>
+
+
+
+
+

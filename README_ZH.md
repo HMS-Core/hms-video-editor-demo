@@ -12,22 +12,23 @@
 
 
 ## 介绍
-华为视频剪辑服务（Video Editor Kit） 提供视频剪辑全量功能，为开发者应用视频剪辑能力开发各类应用提供优质体验。本示例代码目的是为了介绍Video Editor Kit SDK的使用。
+视频编辑服务（Video Editor Kit）是华为快速构建视频编辑能力的服务，提供两种集成方式：
 
-- 支持多视频、多图片快速删除、混合导入，可自由调整片段排放顺序和时长，快速进入编辑界面。为了更好的体验，建议导入1080p及以下的视频。 
-- 支持剪辑基本操作，包括分割、删除、音量、比例、变速、画布、旋转、裁剪、动画、蒙版、镜像、复制、替换。 支持添加滤镜，可自由调整亮度、对比度、饱和度、色调、色温、锐化等参数。 
-- 支持画中画功能，在视频中插入另一视频，使原视频全屏播出的同时，在画面的小面积区域上同时播出插入的另一视频。 
-- 支持添加背景音乐、音效；支持录音功能。 
-- 支持导出视频，可抽取视频中任意一帧画面或导入相册中的图片作为封面，设置导出视频的分辨率（最高支持1080p）后，最终打包生成为MP4格式的视频。
-- 提供丰富的素材库供开发者使用，后续会不断丰富更新，并且会有一定数量的免费内容给开发者使用。 
+- 视频编辑UI SDK，提供产品级UI界面，集成简单。
+- 视频编辑原子能力SDK，提供数百个底层能力接口，包含多个AI算法能力接口，可根据业务场景灵活选择。
+
+这两种方式均提供导入、编辑、渲染、导出、媒体资源管理等一站式视频编辑能力，为您提供性能优异、简单易用、高兼容性的接口，帮助您轻松地构建应用。
+
+您可根据使用场景选择不同的集成方式获取视频编辑能力。但您只能选择其中一种方式集成，不可同时使用。
+
+本示例代码目的是为了介绍Video Editor Kit SDK的使用，提供了两种集成方式示例代码。
 
 ## 工程目录结构
 
 ```
 |-- com.huawei.videoeditorkit.videoeditdemo
-	|-- Activity
-		|-- MainActivity // Video Editor UI SDK 入口
-		|-- SettingActivity  // Demo基本信息
+	|--sdkdemo 原子能力SDK集成demo
+	|--uidemo UI SDk集成demo
 ```
 
 ## 运行步骤
@@ -35,7 +36,8 @@
 
  - 如果您还没有注册成为开发者，请在[AppGalleryConnect上注册并创建应用](https://developer.huawei.com/consumer/cn/service/josp/agc/index.html)。
  - agconnect-services.json文件请从[华为开发者联盟](https://developer.huawei.com/consumer/cn/doc/development/Media-Guides/config-agc-0000001101108580)网站申请获取。
- - 将agconnect-services.json放在应用app目录下。
+ - 将agconnect-services.json文件拷贝到应用级根目录下。
+ - 如果您需要使用云侧服务的能力，需要您使用agconnect-services.json里的api_key值，在应用初始化时调用MediaApplication.getInstance().setApiKey(String apiKey)。
  - 编译并且在安卓设备或模拟器上运行。
 
 注意：

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/dp_58"
+    android:layout_height="@dimen/dp_75">
+
+    <ImageView
+        android:id="@+id/item_image_view_mask_header"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:layout_centerInParent="true"
+        android:background="@drawable/icon_cancel_wu"
+        android:contentDescription="@string/no"
+        app:layout_constraintBottom_toBottomOf="@+id/rl_cancel_mask_header"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/rl_cancel_mask_header"
+        android:layout_width="@dimen/dp_57"
+        android:layout_height="@dimen/dp_57"
+        android:background="@drawable/filter_add_header_bg_selector"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/text_mask_header"/>
+
+    <TextView
+        android:id="@+id/text_mask_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="Helvetica"
+        android:gravity="center"
+        android:text="@string/none"
+        android:textColor="#DBFFFFFF"
+        android:textSize="@dimen/dp_10"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/item_image_view_mask_header"
+        app:layout_constraintStart_toStartOf="@+id/item_image_view_mask_header" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

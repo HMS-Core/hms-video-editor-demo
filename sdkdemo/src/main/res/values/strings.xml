@@ -1,0 +1,750 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="start_tv">Get started</string>
+    <!-- 视频格式不支持弹的toast提示语-->
+    <plurals name="error_file_tips">
+        <item quantity="one" priority="translator">File error. Unable to add %1$d item.</item>
+        <item quantity="zero">File error. Unable to add %1$d item</item>
+        <item quantity="two">File error. Unable to add %1$d item</item>
+        <item quantity="few">File error. Unable to add %1$d item</item>
+        <item quantity="many">File error. Unable to add %1$d item</item>
+        <item quantity="other" priority="translator">File error. Unable to add %1$d items.</item>
+    </plurals>
+    <string name="error_file_tips_single_video" priority="translator">Unsupported or corrupted file. Unable to edit.</string>
+    <string name="setting_text" priority="LT">Settings</string>
+    <string name="main_template_guide_text" priority="LT">Tutorials</string>
+    <string name="home_start_clip" priority="LT">Get started</string>
+    <string name="des_title_cut" priority="LT">Projects</string>
+    <string name="main_update_text" priority="LT">Last edited: %s</string>
+    <string name="home_tab1" priority="LT">Templates</string>
+    <string name="home_select_all" priority="LT">Select all</string>
+    <string name="home_select_all_deselect" priority="LT">Deselect all</string>
+    <string name="home_select_delete_cancel">cancel</string>
+    <string name="home_select_delete_video" priority="LT">Delete all selected videos?</string>
+    <string name="home_select_delete_title" priority="LT">Rename</string>
+    <string name="home_select_delete_copy" priority="translator">Copy</string>
+    <string name="home_select_delete_copy_success" priority="translator">Copied.</string>
+    <string name="home_select_delete_copy_fail" priority="translator">Unable to copy.</string>
+    <string name="home_select_delete_copy_name" priority="translator">"Copies"</string>
+    <plurals name="home_select_num3">
+        <item quantity="one" priority="LT">%d item selected</item>
+        <item quantity="zero">%d item selected</item>
+        <item quantity="two">%d items selected</item>
+        <item quantity="few">%d items selected</item>
+        <item quantity="many">%d items selected</item>
+        <item quantity="other" priority="LT">%d items selected</item>
+    </plurals>
+    <string name="home_select_num4" priority="translator">No items selected.</string>
+    <string name="home_select_num5" priority="LT">Nothing here yet</string>
+    <plurals name="count_study">
+        <item quantity="one" priority="translator">%d view</item>
+        <item quantity="zero">%d secondary learning</item>
+        <item quantity="two">%d secondary learning</item>
+        <item quantity="few">%d secondary learning</item>
+        <item quantity="many">%d secondary learning</item>
+        <item quantity="other" priority="LT">%d views</item>
+    </plurals>
+    <!--设置相关 APK下-->
+    <string name="mine_trailer" priority="LT">Add outro</string>
+    <string name="mine_clean" priority="LT">Clear cache</string>
+    <string name="mine_about" priority="translator">About</string>
+    <string name="mine_clean_done" priority="translator">Cache cleared.</string>
+    <string name="mine_clean_message_box" priority="translator">Clearing the cache won\'t affect your drafts.</string>
+    <string name="about_version" priority="LT">Version %s</string>
+    <string name="about_license" priority="LT">Open Source Licenses</string>
+    <string name="about_copyright" priority="translator">Petal Clip. All rights reserved. ©%d</string>
+    <string name="about_service" priority="translator">This service will no longer be available. Disable anyway?</string>
+    <string name="about_stop" priority="translator">Disable</string>
+    <string name="about_text" priority="translator">About</string>
+    <string name="about_and" priority="translator">and</string>
+    <!-- 隐私相关-->
+    <string name="no_network" priority="translator">No Internet connection. Check your network settings.</string>
+    <string name="video_edit_service_msg" priority="translator">Edit and create your own videos.</string>
+    <string name="video_edit_service_title" priority="translator">Petal Clip</string>
+    <string name="video_edit_service_sub_msg" priority="translator">This service requires Internet access. By touching AGREE, you grant this permission and agree to the %1$s and %2$s.</string>
+    <string name="dialog_button_agree" priority="translator">Agree</string>
+    <!--    遗漏-->
+    <string name="mine_update" priority="translator">Check for updates</string>
+    <string name="music_style_ballads" priority="translator">Folk</string>
+    <string name="music_style_modern" priority="translator">Modern</string>
+    <string name="music_style_piano" priority="translator">Piano</string>
+    <string name="music_style_sport" priority="translator">Tempo</string>
+    <string name="music_style_afternoon" priority="translator">Relaxed</string>
+
+    <!--slogan-->
+    <string name="slogan_one" priority="translator">Edit like a pro</string>
+    <string name="slogan_two" priority="translator">Unleash your creativity</string>
+    <string name="slogan_three" priority="translator">See what you can create.</string>
+
+    <!--欢迎页-->
+    <string name="welcome_to" priority="LT">Welcome to</string>
+    <string name="china_wecome_tips">Enjoy Smart Clips</string>
+    <string name="welcome_to_agree" priority="LT">Agree</string>
+    <string name="welcome_to_oversea_disagree" priority="translator">Disagree</string>
+    <string name="welcome_to_oversea_notes" priority="translator">This service needs to connect to the Internet and access device, app, and network information, as well as other data you submit. If you are a minor, you must obtain your parent/guardian\'s consent to use this service. By touching AGREE, you indicate that you grant the above permissions and accept the terms of the %1$s and %2$s.</string>
+    <string name="welcome_to_china_notes" priority="translator">This service requires access to storage and microphone permissions to obtain device, application, and network information, and to read images and audio and video information for video editing. By clicking Agree, you agree to the above content and %1$s and %2$s.</string>
+
+    <string name="china_clip_privacy" priority="LT">Statement About Petal Clip and Privacy</string>
+    <string name="china_clip_agreement" priority="LT">Petal Clip User Agreement</string>
+    <string name="china_networking" priority="translator">Internet</string>
+
+
+    <!--欢迎页亚非拉-->
+    <string name="aala_one" priority="translator">This service requires an &lt;b&gt;Internet&lt;/b&gt; connection and needs to access device, app, and network information, as well as data you actively upload.</string>
+    <string name="aala_two" priority="translator">If you are a minor, you must obtain your parent/guardian\'s consent to use this service.</string>
+    <string name="aala_three" priority="translator">By touching AGREE, you agree to these terms as well as the %1$s and %2$s.</string>
+    <string name="aala_privacy" priority="translator">Statement About Petal Clip and Privacy</string>
+    <string name="aala_user" priority="translator">Petal Clip User Agreement</string>
+
+    <!--欧洲区欢迎页-->
+    <string name="europe_tips" priority="translator">The following categories of information will be collected and used to provide this service:</string>
+    <string name="europe_title_one" priority="translator">· Device information</string>
+    <string name="europe_title_two" priority="translator">· Network information</string>
+    <string name="europe_title_three" priority="translator">· App usage information</string>
+    <string name="europe_title_four" priority="translator">· Basic system information</string>
+    <string name="europe_title_five" priority="translator">· Basic app information</string>
+    <string name="europe_content_one" priority="translator">Such as device identifier (UUID), model, and type</string>
+    <string name="europe_content_two" priority="translator">Such as requested URLs and request type</string>
+    <string name="europe_content_three" priority="translator">Such as app launch time and performance data</string>
+    <string name="europe_content_four" priority="translator">Such as screen resolution and language settings</string>
+    <string name="europe_content_five" priority="translator">Such as app name, package name, and version number</string>
+    <string name="europe_tips_two" priority="translator">The data controller is Aspiegel SE, a subsidiary of Huawei in Ireland. Your data will also be used for the purpose of service improvement.</string>
+    <string name="europe_tips_three" priority="translator">For more information on how we process your data and about your rights, including the right to object, touch %s.</string>
+    <string name="europe_here" priority="translator">here</string>
+    <string name="europe_tips_four" priority="translator">This service requires the following permissions:</string>
+    <string name="europe_next_title_one" priority="translator">· Storage</string>
+    <string name="europe_next_title_two" priority="translator">· Internet</string>
+    <string name="europe_next_title_three" priority="translator">· Microphone</string>
+    <string name="europe_next_title_four" priority="translator">· Phone</string>
+    <string name="europe_next_content_one" priority="translator">To allow us to save audio and video files</string>
+    <string name="europe_next_content_two" priority="translator">To allow you to access online resources</string>
+    <string name="europe_next_content_three" priority="translator">To allow you to use recordings as audio resources</string>
+    <string name="europe_next_content_four" priority="translator">For us to obtain device information</string>
+    <string name="europe_description" priority="translator">If you are a minor, you must obtain your parent/guardian\'s consent to use this service.</string>
+    <string name="europe_privacy_related" priority="translator">By touching AGREE, you indicate that you grant the above permissions and accept the terms of the %1$s.</string>
+    <string name="europe_privacy_link" priority="translator">Petal Clip User Agreement</string>
+    <string name="europe_next" priority="translator">Next</string>
+    <!--海外版关于-->
+    <string name="overseas_about" priority="translator">Share device and app usage data</string>
+    <string name="overseas_about_content" priority="translator">Your data will be used to help improve this service.</string>
+    <string name="app_permission" priority="translator">Permissions required</string>
+
+    <string name="name_can_not_be_empty" priority="translator">Name cannot be left blank.</string>
+    <!--    资源选择-->
+    <string name="select_media_recent_projects" priority="LT">Recent</string>
+    <string name="media_video" priority="LT">All videos</string>
+    <string name="media_picture" priority="LT">All images</string>
+    <string name="material_library" priority="translator">Library</string>
+    <string name="media_import" priority="LT">Import (%d)</string>
+    <string name="media_import_new" priority="translator">Import</string>
+    <string name="select_media_total_time" priority="LT">Total: %s</string>
+    <string name="select_media_has_select" priority="LT">Selected: %s</string>
+    <string name="media_imported" priority="translator">Imported</string>
+    <string name="media_cropped" priority="translator">Cropped</string>
+    <string name="press_drag_to_sort" priority="translator">Drag items to rearrange</string>
+    <string name="video" priority="LT">Videos</string>
+    <string name="picture" priority="LT">Images</string>
+    <string name="HD_image_quality" priority="LT">HD quality</string>
+    <string name="app_name" priority="translator">VideoEditorTest</string>
+
+    <plurals name="add_video_num">
+        <item priority="LT" quantity="one">%d video</item>
+        <item priority="LT" quantity="other">%d videos</item>
+    </plurals>
+
+    <plurals name="add_image_num">
+        <item priority="LT" quantity="one">%d image</item>
+        <item priority="LT" quantity="other">%d images</item>
+    </plurals>
+
+    <!--    片尾-->
+    <string name="add_tail" priority="translator">Add outro</string>
+    <string name="tail" priority="translator">Outro</string>
+    <string name="edit_tail" priority="translator">Touch to edit text</string>
+    <!--    一键成片-->
+    <string name="choice_template" priority="translator">Select theme</string>
+    <string name="recommend_template" priority="translator">Recommended templates</string>
+    <string name="auto_template" priority="translator">Auto-create</string>
+    <string name="auto_template_none" priority="translator">None</string>
+    <string name="auto_template_custom" priority="translator">Custom</string>
+    <string name="auto_template_landscape" priority="translator">Scenery</string>
+    <string name="auto_template_gourmet" priority="translator">Food</string>
+    <string name="auto_template_party" priority="translator">Party</string>
+    <string name="auto_template_family" priority="translator">Family</string>
+    <string name="auto_template_travel" priority="translator">Travel</string>
+    <string name="auto_template_sport" priority="translator">Sports</string>
+    <string name="auto_template_city" priority="translator">Urban</string>
+    <string name="auto_template_culture" priority="translator">Culture</string>
+    <string name="auto_template_night" priority="translator">Night</string>
+    <string name="auto_template_vintage" priority="translator">Retro</string>
+    <string name="manual_template" priority="translator">Edit</string>
+    <string name="auto_template_back_tip" priority="translator">Apply this theme?</string>
+    <string name="auto_template_back_po" priority="translator">Yes</string>
+    <string name="auto_template_back_na" priority="translator">No</string>
+    <string name="auto_template_galley" priority="translator">Gallery</string>
+    <string name="auto_template_highlight" priority="translator">Highlights</string>
+    <string name="export_toast_tips" priority="translator">Saved to Video Editor album.</string>
+    <string name="export_loading" priority="translator">Exporting…</string>
+    <string name="export_fail_simple" priority="translator">Unable to export</string>
+    <!--    返回-->
+    <string name="is_give_up_edit" priority="translator">Discard changes?</string>
+    <string name="is_give_up_yes" priority="translator">Yes</string>
+    <string name="is_give_up_no" priority="translator">No</string>
+    <string name="simple_save_to_video_edit" priority="translator">Save video to Petal Clip album?</string>
+    <string name="simple_back_to_photo_library" priority="translator">Back to Gallery</string>
+    <!--    引导-->
+    <string name="a_key_piece_tips" priority="LT">Automatically create a video with AI.</string>
+    <string name="simple_model_advance_tips" priority="translator">Explore advanced features.</string>
+    <string name="add_key_frame_tips" priority="LT">Touch to add keyframe.</string>
+    <string name="add_transition_tips" priority="translator">Touch to add transition.</string>
+    <string name="guide_finger_zoom_rotate" priority="LT">Use two fingers to zoom or rotate.</string>
+    <string name="guide_finger_drag" priority="LT">Drag from ends to change clip length.</string>
+    <string name="guide_long_pressed_drag" priority="translator">Drag clips to rearrange them.</string>
+    <string name="guide_long_pressed_move" priority="translator">Drag clips to move them.</string>
+    <!--编辑一级菜单-->
+    <string name="first_menu_cut" priority="LT">Edit</string>
+    <string name="first_menu_audio" priority="LT">Sound</string>
+    <string name="first_menu_sticker" priority="LT">Stickers</string>
+    <string name="first_menu_text" priority="LT">Text</string>
+    <string name="first_menu_pip" priority="LT">PIP</string>
+    <string name="first_menu_special" priority="LT">Effects</string>
+    <string name="first_menu_filter" priority="LT">Filters</string>
+    <string name="first_menu_advanced" priority="translator">Advanced</string>
+    <!--剪辑二级菜单-->
+    <string name="cut_second_menu_severing" priority="LT">Split</string>
+    <string name="cut_second_menu_ratio" priority="LT">Aspect ratio</string>
+    <string name="cut_second_menu_background" priority="LT">Background</string>
+    <string name="cut_second_menu_speed_change" priority="LT">Speed</string>
+    <string name="cut_second_menu_volume" priority="translator">Volume</string>
+    <string name="cut_second_menu_animation" priority="LT">Animations</string>
+    <string name="cut_second_menu_delete" priority="LT">Delete</string>
+    <string name="cut_second_menu_crop" priority="LT">Crop</string>
+    <string name="cut_second_menu_copy" priority="LT">Copy</string>
+    <string name="cut_second_menu_replace" priority="LT">Replace</string>
+    <string name="cut_second_menu_mask" priority="LT">Mask</string>
+    <string name="cut_second_menu_color_cutout" priority="LT">Chroma key</string>
+    <string name="cut_second_menu_mirror" priority="LT">Mirror</string>
+    <string name="cut_second_menu_opaqueness" priority="LT">Opacity</string>
+    <string name="cut_second_menu_upend" priority="LT">Reverse</string>
+    <string name="cut_second_menu_freezes" priority="translator">Freeze</string>
+    <string name="cut_second_menu_single_frame_export" priority="LT">Export frame</string>
+    <string name="cut_second_menu_fun" priority="translator">AI fun</string>
+    <!--音频二级菜单-->
+    <string name="audio_second_menu_music" priority="LT">Music</string>
+    <string name="audio_second_menu_sound_effect" priority="LT">Sound effects</string>
+    <string name="audio_second_menu_record" priority="LT">Record</string>
+    <string name="audio_second_extract" priority="LT">Extract audio</string>
+    <!--贴纸二级菜单-->
+    <string name="sticker_second_menu_add_sticker" priority="LT">Add sticker</string>
+    <string name="sticker_second_menu_add_scrawl" priority="translator">Add drawing</string>
+    <!--文字二级菜单-->
+    <string name="text_second_menu_add_text" priority="LT">Add text</string>
+    <string name="text_second_menu_text_template" priority="LT">Templates</string>
+    <!--画中画二级菜单-->
+    <string name="pip_second_menu_add_pip" priority="LT">Add PIP</string>
+    <!--特效二级菜单-->
+    <string name="special_second_menu_add_special" priority="LT">Add effects</string>
+    <!--滤镜二级菜单-->
+    <string name="filter_second_menu_add_filter" priority="LT">Add filter</string>
+    <string name="filter_second_menu_add_adjust" priority="LT">Adjust</string>
+    <!--    其他操作菜单-->
+    <string name="object" priority="LT">Apply to</string>
+    <string name="blend" priority="translator">Blend</string>
+    <string name="edit_item2_19" priority="LT">Gradual speed change</string>
+    <!--导出相关 UISDK-->
+    <string name="export_success" priority="LT">Export successful</string>
+    <string name="export_no_lock" priority="LT">Don\'t lock the device or switch apps during the export.</string>
+    <string name="export_done" priority="LT">Finish</string>
+    <string name="export_share" priority="LT">Share</string>
+    <string name="export_resolution" priority="LT">Resolution</string>
+    <string name="px_prompt" priority="LT">Videos look better in HD</string>
+    <string name="export_frame_rate" priority="LT">Frame rate</string>
+    <string name="fps_prompt" priority="LT">NTSC standard</string>
+    <string name="export_desc1" priority="LT">Videos take up about %s less space, but may not play on other devices.</string>
+    <string name="export_size" priority="translator">Estimated size: %d MB</string>
+    <string name="confirm_export" priority="LT">Export</string>
+    <string name="export_tips" priority="translator">Videos are exported to H.264 format in Compatibility mode, and H.265 format in Compression mode.\nA H.265 format video is about half the size of the same video in H.264 format, while maintaining a similar level of quality. This means that H.265 videos require less bandwidth to stream or download, without compromising video quality.</string>
+    <string name="export_close" priority="LT">OK</string>
+    <string name="export_progressing" priority="LT">Exporting %s</string>
+    <string name="video_edit_export_msg" priority="LT">Are you sure you want to stop the export?</string>
+    <string name="video_edit_export_cancel" priority="translator">Cancel</string>
+    <string name="video_edit_export_stop" priority="translator">Stop</string>
+    <string name="select_text" priority="LT">Select</string>
+    <string name="cover_image_edit_desc" priority="LT">Drag or pinch to select part of the image</string>
+    <!--轨道相关 UISDK-->
+    <string name="filter_adjust" priority="translator">Custom filter</string>
+    <string name="main" priority="LT">Main</string>
+    <string name="paint" priority="translator">PIP</string>
+    <string name="global" priority="translator">All</string>
+    <string name="re_export" priority="translator">Retry</string>
+    <string name="is_shortcut" priority="translator">Add Petal Clip to the home screen?</string>
+    <string name="add_video_short" priority="translator">Add</string>
+    <string name="add_desktop" priority="translator">Add Petal Clip to home screen</string>
+    <string name="high_mode" priority="LT">Efficient video format</string>
+    <string name="fr_tips" priority="translator">Note</string>
+    <string name="reverse_success" priority="translator">Video reversed.</string>
+    <string name="reverse_fail" priority="translator">Unable to reverse.</string>
+    <string name="reverse_cancel" priority="translator">Video is no longer reversed.</string>
+    <string name="reverse_assset_tips" priority="translator">Select a clip to reverse.</string>
+    <string name="reverse_assset_error_tips" priority="translator">Only videos can be reversed.</string>
+    <string name="reverse_dialog_tips" priority="translator">Reversing…</string>
+    <string name="add_music" priority="LT">Add music</string>
+    <string name="no_switch" priority="LT">Unmute</string>
+    <string name="off_switch" priority="LT">Mute</string>
+    <string name="export" priority="LT">Export</string>
+    <string name="undo" priority="translator">Undo: %s.</string>
+    <string name="redo" priority="translator">Redo: %s.</string>
+    <string name="fragmentsorting" priority="translator">Adjust order</string>
+    <string name="dragmove" priority="translator">Drag the segments to change their order.</string>
+    <string name="duration" priority="translator">Duration</string>
+    <string name="trans_time" priority="translator">Duration</string>
+    <string name="trans_title" priority="translator">Transitions</string>
+    <string name="mask" priority="LT">Mask</string>
+    <string name="reversal" priority="LT">Invert</string>
+    <string name="none" priority="LT">None</string>
+    <string name="linear" priority="translator">Linear</string>
+    <string name="mirror" priority="translator">Mirror</string>
+    <string name="cycle" priority="translator">Circular</string>
+    <string name="heart" priority="translator">Heart</string>
+    <string name="star" priority="translator">Star</string>
+    <string name="flower" priority="translator">Flower</string>
+    <string name="rectangle" priority="translator">Rectangle</string>
+    <string name="edit_item2_17" priority="LT">Chroma key</string>
+    <string name="color_picker" priority="LT">Color picker</string>
+    <string name="strength" priority="LT">Level</string>
+    <string name="reset" priority="LT">Reset</string>
+    <string name="result_illegal" priority="translator">Network error. Please try again.</string>
+    <string name="apply_to_all" priority="LT">Apply to all</string>
+    <string name="applied_to_all" priority="LT">Applied to all.</string>
+    <string name="filter_brightness" priority="LT">Brightness</string>
+    <string name="filter_contrast" priority="LT">Contrast</string>
+    <string name="filter_saturation" priority="LT">Saturation</string>
+    <string name="filter_hue" priority="LT">Hue</string>
+    <string name="filter_temperature" priority="LT">Temperature</string>
+    <string name="filter_sharpening" priority="LT">Sharpness</string>
+    <string name="filter_exposure" priority="LT">Exposure</string>
+    <string name="filter_highlights" priority="LT">Highlight</string>
+    <string name="filter_shadow" priority="LT">Shadow</string>
+    <string name="filter_fade" priority="LT">Fade</string>
+    <string name="filter_vignette" priority="LT">Vignette</string>
+    <string name="filter_grain" priority="LT">Grain</string>
+    <string name="filter_title" priority="LT">Adjust</string>
+    <string name="filter_subtitle" priority="translator">Apply to all</string>
+    <string name="download_failed" priority="translator">Unable to download %s. Please try again.</string>
+
+    <string name="general_speed" priority="LT">Playback speed</string>
+    <!--曲线变速-->
+    <string name="speed_edit" priority="LT">Edit</string>
+    <string name="custom" priority="LT">Custom</string>
+    <string name="add_point" priority="translator">Add point</string>
+    <string name="delete_point" priority="translator">Delete</string>
+    <string name="edit_item10_4" priority="LT">Background</string>
+    <string name="edit_item10_1" priority="LT">Color</string>
+    <string name="edit_item10_2" priority="LT">Style</string>
+    <string name="edit_item10_3" priority="LT">Blur</string>
+    <string name="select_image_text" priority="translator">Select image</string>
+    <string name="free" priority="LT">Freeform</string>
+    <string name="full" priority="LT">Full screen</string>
+    <string name="crop_rotate" priority="LT">Rotate</string>
+    <string name="set_cover_title" priority="LT">Set cover</string>
+    <string name="sticker" priority="translator">Stickers</string>
+    <string name="tuya_name" priority="translator">Draw</string>
+    <string name="left_right_move_select" priority="LT">Swipe left or right to select a cover</string>
+    <string name="video_frame" priority="LT">Video frame</string>
+    <string name="picture_import" priority="LT">Import</string>
+    <string name="no_cover_text" priority="LT">No cover</string>
+    <string name="set_cover_for_gallery" priority="translator">Import from Gallery</string>
+    <string name="picture_click_replace" priority="LT">Replace</string>
+    <string name="lowvideo" priority="translator">Video too short to add transition.</string>
+    <!--文字-->
+    <string name="edit_item2_1_2" priority="LT">Style</string>
+    <string name="edit_item2_13" priority="translator">Animations</string>
+    <string name="edit_item2_1_12" priority="LT">Bubbles</string>
+    <string name="edit_item2_1_13" priority="LT">Text art</string>
+    <string name="edit_item2_1_4" priority="LT">Recent</string>
+    <string name="edit_item2_1_5" priority="LT">Font</string>
+    <string name="edit_item2_1_6" priority="LT">Color</string>
+    <string name="edit_item2_1_7" priority="LT">Outline</string>
+    <string name="edit_item2_1_8" priority="LT">Shadow</string>
+    <string name="edit_item2_1_9" priority="LT">Background</string>
+    <string name="edit_item2_1_10" priority="LT">Alignment</string>
+    <string name="edit_item2_1_11" priority="LT">Italic</string>
+    <string name="transparency" priority="LT">Transparency</string>
+    <string name="thickness" priority="translator">Weight</string>
+    <string name="seek_angle" priority="translator">Rotation</string>
+    <string name="seek_blur" priority="translator">Blur</string>
+    <string name="seekbar_distance" priority="translator">Distance</string>
+    <string name="word_spacing" priority="LT">Character spacing</string>
+    <string name="word_leading" priority="LT">Line spacing</string>
+    <string name="inputtext" priority="LT">Enter text</string>
+    <!--贴纸动画-->
+    <string name="sticker_animation" priority="LT">Sticker animation</string>
+    <!--录音-->
+    <string name="edit_item8_3" priority="LT">Record</string>
+    <string name="restart_record" priority="LT">Re-record</string>
+    <string name="click_record" priority="LT">Touch to record</string>
+    <string name="recording" priority="LT">Recording…</string>
+    <!--淡化-->
+    <string name="edit_item8_0_14" priority="translator">Fade</string>
+    <string name="fade_in" priority="translator">Fade in</string>
+    <string name="fade_out" priority="translator">Fade out</string>
+    <!--踩点-->
+    <string name="edit_item8_0_10" priority="translator">Mark points</string>
+    <string name="edit_item8_0_11" priority="translator">Add point</string>
+    <string name="edit_item8_0_12" priority="translator">Remove point</string>
+    <!--音效-->
+    <string name="use_music_text" priority="translator">Add</string>
+    <!--音频提取-->
+    <string name="import_sound" priority="translator">Import audio only</string>
+    <string name="audio_extract_success" priority="translator">Audio extracted.</string>
+    <string name="in_audio_extraction" priority="translator">Extracting audio…</string>
+    <plurals name="crop_select">
+        <item priority="translator" quantity="one">%ss selected</item>
+        <item priority="translator" quantity="other">%ss selected</item>
+    </plurals>
+    <!--无障碍-->
+    <string name="tv_back" priority="translator">Go back</string>
+    <string name="refresh" priority="translator">Refresh</string>
+    <string name="xiangpicha" priority="translator">Eraser</string>
+    <string name="reset_add_framekey" priority="translator">Undo adding keyframe</string>
+    <string name="redo_key_frame" priority="translator">Redo adding keyframe</string>
+    <string name="close" priority="translator">Close</string>
+    <string name="setting" priority="translator">Settings</string>
+    <string name="play" priority="translator">Play</string>
+    <string name="confirm" priority="translator">Confirm</string>
+    <string name="download" priority="translator">Download</string>
+    <string name="downloading" priority="translator">Downloading</string>
+    <string name="no" priority="translator">None</string>
+    <string name="edit" priority="translator">Edit</string>
+    <string name="clear" priority="translator">Clear</string>
+    <string name="add_video" priority="translator">Add video</string>
+    <string name="download_music" priority="translator">Download music</string>
+    <string name="music" priority="translator">Music</string>
+    <string name="check_ok" priority="translator">Selected</string>
+    <string name="record" priority="translator">Start recording</string>
+    <string name="wxts" priority="translator">Note</string>
+    <string name="screen_all" priority="translator">Full screen</string>
+    <string name="add_bold" priority="translator">Bold</string>
+    <string name="italics" priority="translator">Italic</string>
+    <string name="underline" priority="translator">Underline</string>
+    <string name="transpance_seekbar" priority="translator">Transparency level adjustment bar</string>
+    <string name="style_left" priority="translator">Horizontal alignment, left</string>
+    <string name="style_center" priority="translator">Horizontal alignment, center</string>
+    <string name="style_right" priority="translator">Horizontal alignment, right</string>
+    <string name="style_top_verical" priority="translator">Vertical alignment, top</string>
+    <string name="style_center_verical" priority="translator">Vertical alignment, middle</string>
+    <string name="style_bottom_verical" priority="translator">Vertical alignment, bottom</string>
+    <string name="more" priority="translator">More</string>
+    <string name="cavas_color" priority="translator">Canvas color</string>
+    <string name="pick_sticker" priority="translator">Select from Gallery</string>
+    <string name="zyqx" priority="translator">Freestyle</string>
+    <string name="circle" priority="translator">Circle</string>
+    <string name="angle" priority="translator">Triangle</string>
+    <string name="line" priority="translator">Straight line</string>
+    <string name="fivestar" priority="translator">Star</string>
+    <string name="arrow" priority="translator">Arrow</string>
+    <string name="fiveshape" priority="translator">Pentagon</string>
+    <string name="add_wza" priority="translator">Add</string>
+    <string name="cancel_wza" priority="translator">Cancel</string>
+    <string name="save_wza" priority="translator">Save</string>
+    <string name="back_start_wza" priority="translator">Skip to start</string>
+    <string name="forword_end_wza" priority="translator">Skip to end</string>
+    <string name="add_music_wza" priority="translator">Add music</string>
+    <string name="stop_record" priority="translator">Stop recording</string>
+    <string name="play_pause" priority="translator">Pause</string>
+    <string name="play_second" priority="translator">seconds</string>
+    <string name="filter_strength" priority="translator">Filter level</string>
+    <string name="no_filter" priority="translator">No filter</string>
+    <string name="cancel_screeen_all" priority="translator">Exit full screen</string>
+    <string name="voice_current" priority="translator">Current volume</string>
+    <string name="check_out" priority="translator">Deselect</string>
+    <string name="pip_track" priority="translator">Picture-in-picture track</string>
+    <string name="track_time" priority="translator">Duration</string>
+    <string name="track_main" priority="translator">Main track</string>
+    <string name="track_text" priority="translator">Text track</string>
+    <string name="checked" priority="translator">Selected</string>
+    <string name="change_screen" priority="translator">Change screen orientation</string>
+    <!--    遗漏-->
+    <string name="export_cancel" priority="translator">Export cancelled.</string>
+    <string name="load_project_error_file_delete" priority="LT">Template contains deleted files. Unable to load.</string>
+    <string name="set_cover_fail" priority="translator">Unable to set cover. Please try again.</string>
+    <string name="lastvideo" priority="translator">At least one video clip is required.</string>
+    <string name="rotationdegree" priority="translator">Rotate: %s°</string>
+    <string name="openmirror" priority="LT">Mirroring enabled.</string>
+    <string name="closemirror" priority="LT">Mirroring disabled.</string>
+    <string name="pic_save_sucess" priority="LT">Image saved.</string>
+    <string name="create_folder_failer" priority="translator">Unable to create directory.</string>
+    <string name="nodivision" priority="LT">Unable to split at this location</string>
+    <string name="replacefailed" priority="translator">Unable to replace.</string>
+    <string name="copyfailed" priority="translator">Unable to copy resource.</string>
+    <string name="novolume" priority="translator">Volume can\'t be set.</string>
+    <string name="nofilter" priority="LT">Filter can\'t be added at this location.</string>
+    <string name="noeffect" priority="LT">Effect can\'t be added at this location.</string>
+    <string name="noadjust" priority="LT">Unable to adjust here.</string>
+    <string name="recordfailed" priority="LT">Recording failed.</string>
+    <string name="result_empty" priority="translator">No data</string>
+    <string name="set_seeped_fail" priority="translator">Unable to change speed.</string>
+    <string name="loading" priority="translator">Loading…</string>
+    <string name="noallowed" priority="translator">Unable to use.</string>
+    <string name="deletetemplatefailed" priority="translator">Unable to delete template.</string>
+    <string name="module_compose" priority="translator">Processing effect…</string>
+    <string name="template_not_support" priority="translator">Update the app to use this template.</string>
+    <plurals name="media_max_send_images_or_videos_format">
+        <item priority="translator" quantity="one">You can only select up to %1$d media file.</item>
+        <item priority="translator" quantity="other">You can only select up to %1$d media files.</item>
+    </plurals>
+    <string name="musiccollection" priority="translator">Music collection</string>
+    <string name="video_duration_too_short_text" priority="translator">Video is too short. Unable to import.</string>
+    <string name="media_not_select" priority="translator">No images selected.</string>
+    <string name="template_resource_generate_error" priority="LT">Unable to process resource.</string>
+    <string name="mirror_ver" priority="translator">Vertical</string>
+    <string name="mirror_hor" priority="translator">Horizontal</string>
+    <string name="stop_service" priority="translator">Disable service</string>
+    <string name="adjust" priority="translator">Adjust</string>
+    <string name="loading_model" priority="translator">Initializing…</string>
+    <string name="animation_time" priority="LT">Animation duration</string>
+    <string name="alltrack" priority="LT">All</string>
+    <!--  裁剪-->
+    <plurals name="preview_select">
+        <item priority="LT" quantity="one">%ss selected</item>
+        <item priority="LT" quantity="other">%ss selected</item>
+    </plurals>
+    <!--撤销/恢复-->
+    <string name="redo_failed" priority="LT">Unable to redo.</string>
+    <string name="undo_failed" priority="translator">Unable to undo.</string>
+    <string name="action_1" priority="translator">Add sticker</string>
+    <string name="action_2" priority="translator">Add video</string>
+    <string name="action_3" priority="translator">Add music</string>
+    <string name="action_4" priority="translator">Add outro</string>
+    <string name="action_5" priority="translator">Move</string>
+    <string name="action_6" priority="LT">Change speed</string>
+    <string name="action_7" priority="translator">Modify gradual speed</string>
+    <string name="action_8" priority="translator">Modify video speed</string>
+    <string name="action_9" priority="translator">Modify volume</string>
+    <string name="action_10" priority="translator">Copy</string>
+    <string name="action_11" priority="translator">Crop</string>
+    <string name="action_12" priority="translator">Delete</string>
+    <string name="action_13" priority="LT">Freeze</string>
+    <string name="action_14" priority="translator">Mirror horizontally</string>
+    <string name="action_15" priority="translator">Drag</string>
+    <string name="action_16" priority="translator">Soundtrack settings</string>
+    <string name="action_17" priority="translator">Transparency</string>
+    <string name="action_18" priority="translator">Delete outro</string>
+    <string name="action_19" priority="translator">Clip order</string>
+    <string name="action_20" priority="LT">Split audio</string>
+    <string name="action_21" priority="LT">Split sticker</string>
+    <string name="action_22" priority="LT">Split video</string>
+    <string name="action_23" priority="translator">Switch</string>
+    <string name="action_25" priority="translator">Mirror vertically</string>
+    <string name="action_26" priority="translator">Edit text</string>
+    <string name="action_27" priority="translator">Add animation</string>
+    <string name="action_28" priority="translator">Add effect</string>
+    <string name="action_31" priority="translator">Add transition</string>
+    <string name="action_32" priority="translator">Copy</string>
+    <string name="action_33" priority="LT">Delete effect</string>
+    <string name="action_34" priority="translator">Edit mask</string>
+    <string name="action_36" priority="translator">Delete transition</string>
+    <string name="action_37" priority="LT">Reverse</string>
+    <string name="action_38" priority="translator">Apply to object</string>
+    <string name="action_40" priority="LT">Set canvas</string>
+    <string name="action_41" priority="translator">Blend</string>
+    <string name="action_42" priority="translator">Canvas aspect ratio</string>
+    <string name="action_43" priority="LT">Replace</string>
+    <string name="action_44" priority="translator">Add keyframe</string>
+    <string name="action_45" priority="translator">Cover settings</string>
+    <string name="action_46" priority="translator">Order</string>
+    <string name="action_53" priority="translator">Add face masking</string>
+    <string name="action_54" priority="translator">Clear face masking</string>
+    <string name="action_56" priority="translator">Reset tracking</string>
+    <string name="action_70" priority="translator">Color hair</string>
+    <string name="action_71" priority="translator">Color hair</string>
+
+    <!--    2021-05-27后增加-->
+    <string name="dialog_music_hint" priority="LT">Allow this app to open HUAWEI Music?</string>
+    <string name="dialog_music_hint_allow" priority="translator">Allow</string>
+    <string name="sampling_tips" priority="LT">Compressing…</string>
+    <string name="default_font_style" priority="LT">Default</string>
+    <string name="audio_effect" priority="LT">Unable to add sound effects at the current location.</string>
+    <string name="audio_music" priority="LT">Unable to add music at the current location.</string>
+    <string name="audio_recording" priority="LT">Unable to add recordings at the current location.</string>
+    <string name="hw_music_version_too_low" priority="translator">HUAWEI Music needs to be updated first. Go to AppGallery?</string>
+    <string name="forward_to_market" priority="translator">Go</string>
+    <string name="most_text" priority="translator">Text too long. Maximum of %s characters.</string>
+    <string name="pip_lane_out_of_size" priority="translator">Maximum number of PIP tracks reached.</string>
+    <string name="audio_lane_out_of_size" priority="translator">Maximum number of audio tracks reached.</string>
+    <string name="keybaord" priority="LT">Keyboard</string>
+    <string name="action_add_in_anim" priority="LT">Add intro animation</string>
+    <string name="action_add_out_anim" priority="LT">Add outro animation</string>
+    <string name="action_add_mask" priority="translator">Add mask</string>
+    <string name="action_delete_filter" priority="translator">Delete filter</string>
+    <string name="action_delete_adjust" priority="translator">Delete adjustment</string>
+    <string name="extracting_music" priority="translator">Extracted audio %d</string>
+    <plurals name="seconds_time">
+        <item priority="LT" quantity="one">%ss</item>
+        <item priority="LT" quantity="other">%ss</item>
+    </plurals>
+
+    <string name="template_video_crop_tip" priority="translator">Drag to select or pinch to zoom</string>
+    <string name="selected_upper_limit" priority="LT">Maximum number of items selected.</string>
+
+    <!-- 7月1日后新增 -->
+    <string name="video_run_backward" priority="translator">Reversing…</string>
+
+    <!-- 7月7日后新增 -->
+    <string name="filter_second_menu_add_exclusive" priority="translator">AI filter</string>
+    <string name="exclusive_filter_tip_text1" priority="translator">AI filter</string>
+    <string name="exclusive_filter_tip_text2" priority="translator">Tip: Filter cloning works best when you upload both the original and filtered images.</string>
+    <string name="exclusive_filter_tip_text3" priority="translator">Touch to create a custom filter.</string>
+    <string name="exclusive_filter_tip_text4" priority="translator">Enter filter name</string>
+    <string name="exclusive_filter_tip_text5" priority="translator">Filter created.</string>
+    <string name="exclusive_filter_tip_text6" priority="translator">Touch and hold to rename or delete.</string>
+    <string name="exclusive_filter_tip_text7" priority="translator">Delete this filter?\n\nThis filter will also be removed from any unfinished draft projects.</string>
+    <string name="exclusive_filter_create" priority="LT">Add</string>
+    <string name="exclusive_filter_clone" priority="LT">Clone</string>
+    <string name="exclusive_filter_mimics" priority="LT">Extract</string>
+    <string name="exclusive_filter_original" priority="translator">Original</string>
+    <string name="exclusive_filter_rendering" priority="translator">Filtered image</string>
+    <string name="exclusive_filter_button_create" priority="translator">Create</string>
+    <string name="exclusive_filter_rename" priority="translator">Rename</string>
+    <string name="exclusive_filter_photo" priority="translator">Recent</string>
+    <string name="exclusive_filter_creating" priority="translator">Creating filter…</string>
+    <string name="exclusive_filter_tip_text11" priority="translator">Maximum of %d characters</string>
+    <string name="exclusive_filter_tip_text12" priority="translator">Unable to create item. Check your network settings.</string>
+    <string name="exclusive_filter_tip_text13" priority="translator">Unable to create item. Maximum number of items reached.</string>
+    <string name="exclusive_filter_tip_text14" priority="translator">Unable to add custom filters here.</string>
+    <string name="exclusive_filter_untitled" priority="translator">"Untitled"</string>
+    <!-- 编辑页返回键提示 -->
+    <string name="save_toast" priority="translator">Saved to projects.</string>
+
+    <!--人脸遮挡新增-->
+    <string name="cut_second_menu_block_face" priority="translator">Mask faces</string>
+    <string name="identify_interrupts" priority="translator">Face detection canceled.</string>
+    <string name="identify_failed" priority="translator">No faces found.</string>
+    <string name="clean_stickers" priority="translator">Clear stickers</string>
+    <string name="face_identifying" priority="translator">Processing…</string>
+    <string name="face_blocking_success" priority="translator">Face masked.</string>
+    <string name="choose_blocking_face" priority="translator">Select face</string>
+    <string name="choose_face_blocking_sticker" priority="translator">Stickers</string>
+    <string name="fragment_capture" priority="translator">Select segment</string>
+    <string name="delete_other_sticker_first" priority="translator">Delete some imported stickers first.</string>
+    <plurals name="face_blocking_max_face">
+        <item priority="translator" quantity="one">A maximum of %d face can be masked.</item>
+        <item priority="translator" quantity="other">A maximum of %d faces can be masked.</item>
+    </plurals>
+    <string name="ai_face_create_fail" priority="translator">Unable to create sticker. Maximum number of stickers reached.</string>
+    <string name="ai_not_wifi_attention" priority="translator">No Wi-Fi connection. Currently using mobile data.</string>
+    <string name="ai_download_fail" priority="translator">Download failed. Please try again.</string>
+    <string name="face_sticker_del_title" priority="translator">Delete this sticker?</string>
+    <string name="face_sticker_del_text" priority="translator">Any faces masked using this item in your draft projects will be unmasked.</string>
+    <string name="ai_button_ok" priority="translator">OK</string>
+    <string name="ai_button_cancel" priority="translator">Cancel</string>
+    <string name="ai_cropping" priority="translator">Crop</string>
+    <string name="ai_cropping_text" priority="translator">Drag or pinch to select part of the image</string>
+
+    <!--混合模式-->
+    <string name="mix_mode1" priority="translator">Normal</string>
+    <string name="mix_mode2" priority="translator">Darken</string>
+    <string name="mix_mode3" priority="translator">Screen</string>
+    <string name="mix_mode4" priority="translator">Overlay</string>
+    <string name="mix_mode5" priority="translator">Multiply</string>
+    <string name="mix_mode6" priority="translator">Lighten</string>
+    <string name="mix_mode7" priority="translator">Strong light</string>
+    <string name="mix_mode8" priority="translator">Soft light</string>
+    <string name="mix_mode9" priority="translator">Linear burn</string>
+    <string name="mix_mode10" priority="translator">Color burn</string>
+    <string name="mix_mode11" priority="translator">Color dodge</string>
+
+    <!--人物追踪新增-->
+    <string name="cut_second_menu_human_tracking" priority="translator">Track person</string>
+    <string name="click_the_person_to_follow" priority="translator">Select a person to track.</string>
+    <string name="swipe_to_select_frame" priority="translator">Swipe left or right to select a frame.</string>
+    <string name="intelligent_processing" priority="translator">Processing…</string>
+    <string name="no_person_selected" priority="translator">Select a person first.</string>
+    <string name="people_tracking" priority="translator">Tracking…</string>
+    <string name="tracking_cancel" priority="translator">Tracking canceled.</string>
+    <string name="tracking_success" priority="translator">Tracking enabled.</string>
+    <string name="no_person_tracked" priority="translator">Unable to track. Please try again.</string>
+    <string name="confirm_you_tracking_click" priority="translator">This will cancel the previous tracking task. Continue?</string>
+    <string name="ai_exception" priority="translator">Processing exception.</string>
+    <string name="overwrite_original_tracking_result" priority="translator">This will overwrite previous tracking effects.</string>
+
+    <!--一键美发-->
+    <string name="cut_second_menu_ai_hair" priority="translator">Color hair</string>
+    <string name="ai_hair_fail" priority="translator">Hair coloring failed.</string>
+
+    <!--撤销or恢复-->
+    <string name="action_add_mask_undo" priority="translator">Undo: Add mask.</string>
+    <string name="action_add_mask_redo" priority="translator">Redo: Add mask.</string>
+    <string name="action_delete_filter_undo" priority="translator">Undo: Delete filter.</string>
+    <string name="action_delete_filter_redo" priority="translator">Redo: Delete filter.</string>
+    <string name="action_delete_adjust_undo" priority="translator">Undo: Delete adjustment.</string>
+    <string name="action_delete_adjust_redo" priority="translator">Redo: Delete adjustment.</string>
+    <string name="action_add_cycle_anim_undo" priority="translator">Undo: Add loop animation</string>
+    <string name="action_add_cycle_anim" priority="translator">Redo: Add loop animation</string>
+    <string name="action_add_combine_anim_undo" priority="translator">Undo: Add combo animation</string>
+    <string name="action_add_combine_anim" priority="translator">Redo: Add combo animation</string>
+
+    <string name="cut_second_menu_block" priority="translator">AI remove</string>
+    <string name="block_description" priority="translator">Selected content will be uploaded to the cloud for processing. This content will not be saved on the cloud.</string>
+
+    <!--AI趣玩-->
+    <string name="motion_photo_fail" priority="translator">Unable to generate moving picture.</string>
+    <string name="ai_color_fail" priority="translator">Unable to generate ai color.</string>
+    <string name="fun_description" priority="translator">Experiment and have fun with a range of AI features. Selected content will be uploaded to the cloud for processing. This content will not be saved on the cloud.</string>
+    <string name="motion_photo_success" priority="translator">Moving picture generated.</string>
+    <string name="ai_color_success" priority="translator">The AI color is generated successfully.</string>
+    <string name="motion_photo" priority="translator">Moving picture</string>
+    <string name="ai_color" priority="translator">AI color</string>
+    <string name="motion_photo_generated" priority="translator">Generating moving picture…</string>
+    <string name="ai_color_generated" priority="translator">Generating ai color…</string>
+    <string name="ai_hair_generated" priority="translator">Generating hari dying…</string>
+
+    <!--旋转角度下拉-->
+    <string-array name="rotation_menu">
+        <item priority="translator">All</item>
+        <item priority="translator">Portrait</item>
+        <item priority="translator">Landscape</item>
+    </string-array>
+
+    <string name="music_library">Music library</string>
+    <string name="music_local">Local</string>
+    <string name="music_hot" priority="translator">Hot</string>
+    <string name="app_confirm" priority="translator">"OK"</string>
+    <string name="app_cancel" priority="translator">"Cancel"</string>
+
+    <string name="next_step_text" priority="translator">"Next"</string>
+    <string name="is_give_up_edit_t" priority="translator">"Are you sure you want to cancel the creation?"</string>
+    <string name="is_give_up_yes_t" priority="translator">"Abandon"</string>
+    <string name="is_give_up_edit_t1" priority="translator">"Abandon editing?"</string>
+
+
+    <string name="media_max_send_images_or_videos_format">A maximum of %d images/videos can be selected.</string>
+    <string name="export_return">Cancel</string>
+    <string name="picture_video">Photo Video</string>
+    <string name="export_video">Video export</string>
+    <string name="export_progress">%</string>
+    <string name="fetch_music_text">Extracting Music</string>
+    <string name="edit_item3">text</string>
+
+    <string name="total_time_init">00:00</string>
+    <string name="running_time_init">00:00</string>
+    <!--无障碍-->
+    <string name="close_wza">Close</string>
+    <string name="back_wza">Return</string>
+    <string name="confirm_wza">Confirms</string>
+
+    <string name="need_permission">This function can be used only after the following permissions are enabled. Do you want to configure it now?</string>
+    <string name="permission_storage">· Storage</string>
+    <string name="you_can_close_permissino">You can disable the above permissions at any time in the app settings.</string>
+    <string name="dialog_left_btn">Cancel</string>
+    <string name="dialog_right_btn">Go to Settings</string>
+
+    <string name="ai_color_cancel" priority="translator">Cancel ai color</string>
+    <string name="ai_hair_cancel" priority="translator">Cancel ai hair</string>
+    <string name="motion_photo_cancel" priority="translator">Cancel motion photo</string>
+    <string name="ai_limit" priority="translator">Only one AI function can be used at the same time.</string>
+    <string name="license_invalid" priority="translator">License verification failed.</string>
+    <string name="ai_color_limit" priority="translator">AI color supports only videos less than 100M.</string>
+    <string name="cpu_limit" priority="translator">The 32-bit system does not support the AI function.</string>
+    <string name="reenact_limit" priority="translator">This function supports only images.</string>
+</resources>

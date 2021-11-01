@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_48"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:ignore="MissingConstraints">
+
+    <ImageView
+        android:id="@+id/iv_bottom_play_pause"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="@dimen/dp_16"
+        android:src="@drawable/media_edit_play_btn_selector"
+        android:contentDescription="@string/play" />
+
+    <SeekBar
+        android:id="@+id/seek_bar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_16"
+        android:layout_marginStart="@dimen/dp_4"
+        android:layout_marginEnd="@dimen/dp_4"
+        app:layout_constraintStart_toEndOf="@+id/iv_bottom_play_pause"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/iv_bottom_full_screen"
+        style="@style/SeekBarStylePreCrop" />
+
+    <TextView
+        android:id="@+id/tv_bottom_current_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_16"
+        app:layout_constraintTop_toBottomOf="@+id/seek_bar"
+        app:layout_constraintStart_toEndOf="@+id/iv_bottom_play_pause"
+        android:fontFamily="Helvetica"
+        android:gravity="center"
+        android:text="@string/running_time_init"
+        android:textColor="@color/color_text_first_level"
+        android:textSize="@dimen/sp_10" />
+
+    <TextView
+        android:id="@+id/tv_bottom_total_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp_16"
+        app:layout_constraintTop_toBottomOf="@+id/seek_bar"
+        app:layout_constraintEnd_toStartOf="@+id/iv_bottom_full_screen"
+        android:fontFamily="Helvetica"
+        android:gravity="center"
+        android:text="@string/running_time_init"
+        android:textColor="@color/color_text_first_level"
+        android:textSize="@dimen/sp_10" />
+    
+    <ImageView
+        android:id="@+id/iv_bottom_voice"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:layout_marginStart="@dimen/dp_3"
+        android:visibility="gone"
+        android:src="@drawable/media_edit_voice_btn_selector"
+        android:contentDescription="@string/cut_second_menu_volume"/>
+
+    <ImageView
+        android:id="@+id/iv_bottom_full_screen"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:contentDescription="@string/edit"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

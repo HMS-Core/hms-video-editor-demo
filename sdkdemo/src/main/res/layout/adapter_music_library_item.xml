@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_56"
+    android:paddingStart="@dimen/dp_16"
+    android:paddingEnd="@dimen/dp_16">
+
+    <ImageView
+        android:id="@+id/music_icon"
+        android:layout_width="@dimen/dp_56"
+        android:layout_height="@dimen/dp_56"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/mask_view"
+        android:layout_width="@dimen/dp_56"
+        android:layout_height="@dimen/dp_56"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/music_icon"
+        app:layout_constraintStart_toStartOf="@+id/music_icon"
+        app:layout_constraintEnd_toEndOf="@+id/music_icon"
+        app:layout_constraintTop_toTopOf="@+id/music_icon"
+        android:background="@drawable/color_ccc_20_8_bg" />
+    
+    <com.huawei.hms.videoeditor.ui.common.view.audio.AudioColumnView
+        android:id="@+id/audio_column_view"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
+        app:column_height="16"
+        app:layout_constraintBottom_toBottomOf="@+id/music_icon"
+        app:layout_constraintStart_toStartOf="@+id/music_icon"
+        app:layout_constraintEnd_toEndOf="@+id/music_icon"
+        app:layout_constraintTop_toTopOf="@+id/music_icon"
+        tools:ignore="MissingConstraints" />
+    
+    <TextView
+        android:id="@+id/music_name_tv"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_12"
+        android:layout_marginTop="@dimen/dp_2"
+        android:layout_marginEnd="@dimen/dp_12"
+        android:ellipsize="end"
+        android:fontFamily="HWtext 55ST"
+        android:gravity="center_vertical|start"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintEnd_toStartOf="@+id/music_favorite_icon"
+        app:layout_constraintStart_toEndOf="@+id/music_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpUsage"
+        tools:text="@string/fetch_music_text" />
+
+    <TextView
+        android:id="@+id/music_singer_tv"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_12"
+        android:layout_marginTop="@dimen/dp_2"
+        android:layout_marginEnd="@dimen/dp_12"
+        android:ellipsize="end"
+        android:fontFamily="HWtext 55ST"
+        android:gravity="center_vertical|start"
+        android:singleLine="true"
+        android:textColor="@color/color_text_second_level"
+        android:textSize="@dimen/sp_10"
+        app:layout_constraintEnd_toStartOf="@+id/music_favorite_icon"
+        app:layout_constraintStart_toEndOf="@+id/music_icon"
+        app:layout_constraintTop_toBottomOf="@+id/music_name_tv"
+        tools:ignore="SpUsage"
+        tools:text="@string/fetch_music_text" />
+
+    <TextView
+        android:id="@+id/local_duration_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_12"
+        android:layout_marginTop="@dimen/dp_2"
+        android:fontFamily="HWtext 55ST"
+        android:singleLine="true"
+        android:textColor="@color/color_text_second_level"
+        android:textSize="@dimen/sp_10"
+        app:layout_constraintStart_toEndOf="@+id/music_icon"
+        app:layout_constraintTop_toBottomOf="@+id/music_singer_tv"
+        tools:ignore="SpUsage"
+        tools:text="@string/fetch_music_text" />
+
+    <ImageView
+        android:id="@+id/music_favorite_icon"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:visibility="invisible"
+        android:src="@drawable/music_favorites_normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/music_use_layout"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <FrameLayout
+        android:id="@+id/music_use_layout"
+        android:layout_width="@dimen/dp_48"
+        android:layout_height="@dimen/dp_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/music_use_tv"
+            android:layout_width="@dimen/dp_48"
+            android:layout_height="@dimen/dp_24"
+            android:fontFamily="HWtext 55ST"
+            android:gravity="center"
+            android:text="@string/use_music_text"
+            android:background="@drawable/background_gradient"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_14"
+            android:visibility="gone"
+            tools:ignore="SpUsage" />
+
+        <ImageView
+            android:id="@+id/music_download_icon"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_gravity="center"
+            android:src="@drawable/music_download"
+            android:contentDescription="@string/download_music"/>
+
+        <FrameLayout
+            android:id="@+id/music_download_progress_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_24"
+            android:layout_gravity="center"
+            android:visibility="gone">
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:max="100"
+                android:progress="40"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:progressDrawable="@drawable/audio_download_progress_color"
+                android:contentDescription="@string/downloading"/>
+
+            <TextView
+                android:id="@+id/progress_value_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="HWtext 55S"
+                android:gravity="center"
+                android:visibility="visible"
+                android:textColor="#FFFFFF99"
+                android:textSize="@dimen/sp_10"
+                tools:ignore="SpUsage" />
+            
+        </FrameLayout>
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

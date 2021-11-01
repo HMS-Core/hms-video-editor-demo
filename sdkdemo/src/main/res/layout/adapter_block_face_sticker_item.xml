@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/dp_60"
+    android:layout_height="@dimen/dp_60"
+    android:id="@+id/rootLayout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:ignore="MissingConstraints">
+
+    <FrameLayout
+        android:layout_marginTop="@dimen/dp_2"
+        android:layout_marginEnd="@dimen/dp_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_gravity="center"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_60">
+
+            <com.huawei.hms.videoeditor.ui.common.view.image.RoundImage
+                android:id="@+id/item_image_view"
+                android:layout_width="@dimen/dp_56"
+                android:layout_height="@dimen/dp_56"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:scaleType="centerInside"
+                android:padding="@dimen/dp_2"
+                android:background="@drawable/blur_no_bg_selector"
+                app:radius="@dimen/dp_4" />
+
+            <ImageView
+                android:id="@+id/item_download_view"
+                android:layout_width="@dimen/dp_14"
+                android:layout_height="@dimen/dp_14"
+                android:src="@drawable/icon_small_download"
+                android:layout_marginEnd="@dimen/dp_1"
+                android:layout_marginTop="@dimen/dp_1"
+                app:layout_constraintEnd_toEndOf="@id/item_image_view"
+                app:layout_constraintTop_toTopOf="@id/item_image_view" />
+
+            <com.huawei.hms.videoeditor.ui.common.view.loading.DonutProgress
+                android:id="@+id/item_progress"
+                android:layout_width="@dimen/dp_16"
+                android:layout_height="@dimen/dp_16"
+                android:visibility="gone"
+                app:donut_background_color="@color/transparent"
+                app:donut_finished_color="@color/pick_add_select_color"
+                app:donut_finished_stroke_width="@dimen/dp_1"
+                app:donut_progress="0"
+                app:donut_show_text="false"
+                app:donut_unfinished_color="#99FFFFFF"
+                app:donut_unfinished_stroke_width="@dimen/dp_1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints" />
+
+            <ImageView
+                android:id="@+id/progress_center_iv"
+                android:layout_width="@dimen/dp_8"
+                android:layout_height="@dimen/dp_1"
+                android:src="@drawable/sticker_progress_waiting"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/item_progress"
+                app:layout_constraintEnd_toEndOf="@+id/item_progress"
+                app:layout_constraintStart_toStartOf="@+id/item_progress"
+                app:layout_constraintTop_toTopOf="@+id/item_progress"
+                tools:ignore="MissingConstraints" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/view_no_click"
+            android:layout_width="@dimen/dp_54"
+            android:layout_height="@dimen/dp_54"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_no_click" />
+
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/iv_delete"
+        android:src="@drawable/iv_sticker_delete"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:visibility="invisible"
+        android:layout_width="@dimen/dp_14"
+        android:layout_height="@dimen/dp_14"/>
+
+</RelativeLayout>

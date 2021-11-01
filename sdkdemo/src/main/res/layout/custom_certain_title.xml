@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="@dimen/dp_40">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/title_tv"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_certain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/icon_top_queding"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/confirm"/>
+
+    <CheckBox
+        android:visibility="gone"
+        android:id="@+id/cb_apply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/apply_to_all"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/iv_certain"
+        android:layout_marginEnd="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_12"
+        style="@style/Widget.AppCompat.CompoundButton.RadioButton"
+        android:textColor="@color/title_tv"
+        android:drawablePadding="8dp"
+        android:theme="@style/CheckBox"
+       />
+
+    <TextView
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_16"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_certain"
+        app:layout_constraintTop_toTopOf="@id/iv_certain"
+        app:layout_constraintEnd_toStartOf="@id/iv_certain"
+        android:layout_marginEnd="@dimen/dp_24"
+        android:textSize="@dimen/sp_12"
+        android:textColor="@color/color_text_second_level"
+        android:visibility="gone"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/clr_normal"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_56">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/local_cv"
+        android:layout_width="@dimen/dp_48"
+        android:layout_height="@dimen/dp_48"
+        android:elevation="0dp"
+        android:visibility="invisible"
+        app:cardBackgroundColor="#1AFFFFFF"
+        app:cardCornerRadius="@dimen/dp_4"
+        app:cardElevation="@dimen/dp_0"
+        app:cardUseCompatPadding="false"
+        android:layout_marginStart="@dimen/dp_16"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints,RtlSymmetry">
+
+        <ImageView
+            android:id="@+id/local_icon"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_gravity="center"
+            android:src="@drawable/music_placeholder_new" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/local_play_cv"
+        android:layout_width="@dimen/dp_48"
+        android:layout_height="@dimen/dp_48"
+        android:elevation="0dp"
+        app:cardBackgroundColor="#1AFFFFFF"
+        app:cardCornerRadius="@dimen/dp_4"
+        app:cardElevation="@dimen/dp_0"
+        app:cardUseCompatPadding="false"
+        android:layout_marginStart="@dimen/dp_16"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints,RtlSymmetry">
+
+
+        <com.huawei.hms.videoeditor.ui.common.view.audio.AudioColumnView
+            android:id="@+id/audio_column_view"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            app:column_height="12"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"
+            tools:ignore="MissingConstraints" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <TextView
+        android:id="@+id/local_name_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_12"
+        android:fontFamily="Helvetica"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:gravity="center_vertical|start"
+        android:text="@string/fetch_music_text"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_14"
+        android:layout_marginEnd="@dimen/dp_16"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline"
+        app:layout_constraintStart_toEndOf="@+id/local_cv"
+        app:layout_constraintEnd_toStartOf="@+id/local_use_tv"
+        tools:ignore="SpUsage" />
+
+    <TextView
+        android:id="@+id/local_duration_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_12"
+        android:layout_marginTop="@dimen/dp_2"
+        android:fontFamily="Helvetica"
+        android:singleLine="true"
+        android:text="@string/fetch_music_text"
+        android:textColor="@color/color_text_second_level"
+        android:textSize="@dimen/sp_10"
+        app:layout_constraintStart_toEndOf="@+id/local_cv"
+        app:layout_constraintTop_toBottomOf="@+id/local_name_tv"
+        tools:ignore="SpUsage" />
+
+    <TextView
+        android:id="@+id/local_use_tv"
+        android:layout_width="@dimen/dp_48"
+        android:layout_height="@dimen/dp_24"
+        android:background="@drawable/background_gradient"
+        android:fontFamily="Helvetica"
+        android:gravity="center"
+        android:text="@string/use_music_text"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_14"
+        android:layout_marginEnd="@dimen/dp_16"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpUsage" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

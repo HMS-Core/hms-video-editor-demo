@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_home_clip_popup_dialog"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/line1_clip_popup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="@dimen/dp_156"
+            android:background="@drawable/bg_clip_popup_selector_top"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/clip_popup_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_48"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_4"
+                android:drawablePadding="@dimen/dp_8"
+                android:fontFamily="HarmonyHeiTi"
+                android:gravity="start|center_vertical"
+                android:text="@string/home_select_delete_title"
+                android:textColor="@color/translucent_white_10"
+                android:textSize="@dimen/sp_16_home"
+                android:textAllCaps="true"
+                app:drawableStartCompat="@drawable/home_clip_icon_rename"
+                tools:ignore="SpUsage" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <View
+            android:id="@+id/clip_popup_divider1"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_1"
+            android:layout_marginStart="@dimen/dp_48"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:background="@drawable/bg_home_clip_popup_divider"
+            android:layout_alignStart="@id/line1_clip_popup"
+            android:layout_alignEnd="@id/line1_clip_popup"
+            android:layout_below="@id/line1_clip_popup"
+            app:layout_constraintTop_toBottomOf="@+id/line1_clip_popup"
+            app:layout_constraintStart_toStartOf="@+id/line1_clip_popup"
+            app:layout_constraintEnd_toEndOf="@+id/line1_clip_popup"/>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/line2_clip_popup"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_48"
+            android:minWidth="@dimen/dp_156"
+            android:background="@drawable/bg_clip_popup_selector_1"
+            android:gravity="center_vertical"
+            android:layout_alignStart="@id/line1_clip_popup"
+            android:layout_alignEnd="@id/line1_clip_popup"
+            android:layout_below="@id/clip_popup_divider1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/clip_popup_divider1">
+
+            <TextView
+                android:id="@+id/clip_popup_draft_copy"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_48"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:drawablePadding="@dimen/dp_8"
+                android:fontFamily="HarmonyHeiTi"
+                android:textDirection="locale"
+                android:gravity="start|center_vertical"
+                android:text="@string/home_select_delete_copy"
+                android:textColor="@color/translucent_white_10"
+                android:textSize="@dimen/sp_16_home"
+                android:textAllCaps="true"
+                app:drawableStartCompat="@drawable/home_clip_icon_copy"
+                tools:ignore="SpUsage" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <View
+            android:id="@+id/clip_popup_divider2"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_1"
+            android:layout_marginStart="@dimen/dp_48"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:background="@drawable/bg_home_clip_popup_divider"
+            android:layout_alignStart="@id/line2_clip_popup"
+            android:layout_alignEnd="@id/line2_clip_popup"
+            android:layout_below="@id/line2_clip_popup"
+            app:layout_constraintEnd_toEndOf="@+id/line2_clip_popup"
+            app:layout_constraintStart_toStartOf="@+id/line2_clip_popup"
+            app:layout_constraintTop_toBottomOf="@+id/line2_clip_popup" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/line3_clip_popup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="@dimen/dp_156"
+            android:background="@drawable/bg_clip_popup_selector_bottom"
+            android:layout_alignStart="@id/line2_clip_popup"
+            android:layout_alignEnd="@id/line2_clip_popup"
+            android:layout_below="@id/clip_popup_divider2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/clip_popup_divider2"
+            app:layout_constraintVertical_bias="0.0">
+
+            <TextView
+                android:id="@+id/clip_popup_del"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_48"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:layout_marginBottom="@dimen/dp_4"
+                android:drawablePadding="@dimen/dp_8"
+                android:fontFamily="HarmonyHeiTi"
+                android:textDirection="locale"
+                android:gravity="start|center_vertical"
+                android:text="@string/cut_second_menu_delete"
+                android:textColor="@color/translucent_white_10"
+                android:textSize="@dimen/sp_16_home"
+                android:textAllCaps="true"
+                app:drawableStartCompat="@drawable/home_clip_delete_selected_icon"
+                tools:ignore="SpUsage" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#202020">
+
+    <LinearLayout
+        android:id="@+id/fetch_layout"
+        android:layout_width="@dimen/dp_50"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/dp_24"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:gravity="center_horizontal"
+        tools:ignore="MissingConstraints">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:elevation="0dp"
+            app:cardBackgroundColor="#1AFFFFFF"
+            app:cardCornerRadius="@dimen/dp_20"
+            app:cardElevation="@dimen/dp_0"
+            app:cardUseCompatPadding="false"
+            tools:ignore="MissingConstraints,RtlSymmetry">
+
+            <ImageView
+                android:id="@+id/fetch_icon"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:layout_gravity="center"
+                android:src="@drawable/music_fetch_normal" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/fetch_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_7"
+            android:fontFamily="HWtext 55ST"
+            android:singleLine="true"
+            android:textColor="@color/local_music_normal_color"
+            android:textSize="@dimen/sp_12"
+            tools:ignore="SpUsage" />
+        
+    </LinearLayout>
+    
+
+    <LinearLayout
+        android:id="@+id/local_layout"
+        android:layout_width="@dimen/dp_50"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/fetch_layout"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/dp_24"
+        android:layout_marginEnd="@dimen/dp_30"
+        android:visibility="gone"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/local_cv"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:elevation="0dp"
+            app:cardBackgroundColor="#1AFFFFFF"
+            app:cardCornerRadius="@dimen/dp_20"
+            app:cardElevation="@dimen/dp_0"
+            app:cardUseCompatPadding="false"
+            tools:ignore="MissingConstraints,RtlSymmetry">
+
+            <ImageView
+                android:id="@+id/local_icon"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:layout_gravity="center"
+                android:src="@drawable/music_local_select" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/local_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_7"
+            android:fontFamily="HWtext 55ST"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_12"
+            tools:ignore="SpUsage" />
+        
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/link_layout"
+        android:layout_width="@dimen/dp_50"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/fetch_layout"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_24"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:ignore="MissingConstraints">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/link_cv"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:elevation="0dp"
+            app:cardBackgroundColor="#1AFFFFFF"
+            app:cardCornerRadius="@dimen/dp_20"
+            app:cardElevation="@dimen/dp_0"
+            app:cardUseCompatPadding="false"
+            tools:ignore="MissingConstraints,RtlSymmetry">
+
+            <ImageView
+                android:id="@+id/link_icon"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:layout_gravity="center"
+                android:src="@drawable/music_link_normal" />
+
+        </androidx.cardview.widget.CardView>
+
+
+        <TextView
+            android:id="@+id/link_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_7"
+            android:fontFamily="HWtext 55ST"
+            android:singleLine="true"
+            android:textColor="#66FFFFFF"
+            android:textSize="@dimen/sp_12"
+            tools:ignore="SpUsage" />
+    </LinearLayout>
+    
+
+    <FrameLayout
+        android:id="@+id/fragment_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/dp_16"
+        android:background="@color/color_20"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/local_layout"
+        tools:ignore="MissingConstraints" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

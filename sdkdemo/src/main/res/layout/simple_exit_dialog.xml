@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dp_16"
+    android:background="@drawable/advance_export_dialog_bg"
+    tools:ignore="MissingConstraints">
+
+    <TextView
+        android:id="@+id/tv_exit_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_8"
+        android:fontFamily="Helvetica"
+        android:gravity="center"
+        android:text="@string/is_give_up_edit"
+        android:textColor="@color/color_text_first_level"
+        android:textSize="@dimen/sp_16"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <View
+        android:id="@+id/center_line"
+        android:layout_width="@dimen/dp_1"
+        android:layout_height="@dimen/dp_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_exit_tips"
+        android:layout_marginTop="@dimen/dp_16"
+        android:background="@color/color_dialog_line_background"/>
+
+    <TextView
+        android:id="@+id/tv_exit_no"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_40"
+        app:layout_constraintEnd_toStartOf="@+id/center_line"
+        app:layout_constraintTop_toTopOf="@id/center_line"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/center_line"
+        android:gravity="center"
+        android:fontFamily="Helvetica"
+        android:textColor="@color/color_text_focus"
+        android:background="@drawable/dialog_button_pressed_selector_bg"
+        android:textSize="@dimen/sp_16"
+        android:text="@string/is_give_up_no" />
+
+    <TextView
+        android:id="@+id/tv_exit_yes"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_40"
+        app:layout_constraintStart_toEndOf="@+id/center_line"
+        app:layout_constraintTop_toTopOf="@id/center_line"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/center_line"
+        android:gravity="center"
+        android:background="@drawable/dialog_button_pressed_selector_bg"
+        android:fontFamily="Helvetica"
+        android:textColor="@color/color_text_focus"
+        android:textSize="@dimen/sp_16"
+        android:text="@string/is_give_up_yes" />
+   
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/fragmentsorting"
+            android:textColor="@color/white" />
+
+        <ImageView
+            android:id="@+id/confirm"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:src="@drawable/top_confirm"
+            android:contentDescription="@string/confirm_wza"/>
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/clr_normal"
+        app:layout_constraintTop_toBottomOf="@+id/top_layout" />
+
+
+    <TextView
+        android:id="@+id/tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dp_18"
+        android:text="@string/dragmove"
+        android:textColor="#808080"
+        android:textSize="@dimen/dp_11"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tips" />
+
+    <RelativeLayout
+        android:id="@+id/seek_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_24"
+        android:orientation="horizontal"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/seek_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="@string/duration"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_12" />
+
+        <TextView
+            android:id="@+id/seek_time"
+            android:layout_width="@dimen/dp_36"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:gravity="right|center_vertical"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_12" />
+
+        <com.huawei.hms.videoeditor.ui.mediaeditor.preview.view.MySeekBar
+            android:id="@+id/seekbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_20"
+            android:paddingStart="@dimen/dp_16"
+            android:paddingEnd="@dimen/dp_8"
+            android:layout_toStartOf="@id/seek_time"
+            android:layout_toEndOf="@id/seek_name"
+            android:layout_centerVertical="true"
+            app:outer_circle_bg="@color/color_000_04"
+            app:inner_circle_bg="@color/white"
+            app:thumb_radius="@dimen/dp_7"
+            app:line_width="@dimen/dp_4"
+            app:line_bg="@color/clr_normal"
+            app:value_bg="@color/color_text_focus"
+            app:progress="0"
+            app:progress_anchor="0"
+            app:progress_max="100"
+            app:progress_min="0"
+            app:show_text="false" />
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_328">
+
+    <include
+        android:id="@+id/top_layout"
+        layout="@layout/custom_operate_title"/>
+
+    <com.huawei.hms.videoeditor.ui.common.view.tab.TabTopLayout
+        android:id="@+id/tab_top_layout"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_36"
+        android:layout_marginStart="@dimen/dp_8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top_layout" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rl_pic"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_76"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tab_top_layout" />
+
+    <LinearLayout
+        android:id="@+id/line_transition"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/apply_to_all"
+        app:layout_constraintTop_toBottomOf="@id/rl_pic"
+        android:layoutDirection="ltr"
+        android:orientation="horizontal">
+
+        <com.huawei.hms.videoeditor.ui.common.view.EditorTextView
+            android:id="@+id/duration_transition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_marginBottom="@dimen/dp_3"
+            android:layout_gravity="bottom"
+            android:fontFamily="HarmonyHeiTi"
+            android:gravity="start|center_vertical"
+            android:maxWidth="@dimen/dp_64"
+            android:maxLines="1"
+            android:minWidth="@dimen/dp_36"
+            android:text="@string/trans_time"
+            android:textColor="#DBFFFFFF"
+            android:textSize="@dimen/sp_12"
+            android:visibility="invisible"
+            tools:ignore="SpUsage" />
+
+        <com.huawei.hms.videoeditor.ui.mediaeditor.preview.view.TransitionSeekBar
+            android:id="@+id/sb_items"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_45"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:paddingStart="@dimen/dp_10"
+            android:paddingEnd="@dimen/dp_10"
+            android:visibility="invisible"
+            app:line_width="4dp"
+            app:thumb_radius="@dimen/dp_7"
+            app:progress="0"
+            app:progress_anchor="0"
+            app:progress_max="100"
+            app:progress_min="0"
+            app:show_text="true" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/apply_to_all"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginBottom="24dp"
+        android:drawablePadding="@dimen/dp_4"
+        android:text="@string/apply_to_all"
+        android:textColor="@drawable/icon_apply_all_text_selector"
+        android:textSize="@dimen/dp_12"
+        android:textAllCaps="true"
+        app:drawableStartCompat="@drawable/icon_apply_all_selector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.huawei.hms.videoeditor.ui.common.view.loading.LoadingIndicatorView
+        android:id="@+id/indicator"
+        android:layout_width="@dimen/dp_75"
+        android:layout_height="@dimen/dp_75"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RelativeLayout
+        android:id="@+id/error_layout"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_0"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toBottomOf="@+id/top_layout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/error_image"
+            android:layout_width="@dimen/dp_48"
+            android:layout_height="@dimen/dp_48"
+            android:layout_centerHorizontal="true"
+            android:alpha="0.6"
+            android:src="@drawable/pic_error" />
+
+        <TextView
+            android:id="@+id/error_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/error_image"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_8"
+            android:fontFamily="HYQiHei 55S"
+            android:gravity="start"
+            android:text="@string/result_illegal"
+            android:textColor="#99FFFFFF"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

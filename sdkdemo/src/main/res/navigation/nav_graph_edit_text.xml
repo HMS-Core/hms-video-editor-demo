@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:startDestination="@id/keyboard_fragment">
+
+    <fixfragment
+        android:id="@+id/keyboard_fragment"
+        android:name="com.huawei.hms.videoeditor.ui.mediaeditor.texts.fragment.KeyBoardFragment"></fixfragment>
+
+    <fixfragment
+        android:id="@+id/style_fragment"
+        android:name="com.huawei.hms.videoeditor.ui.mediaeditor.texts.fragment.EditTextStyleFragment">
+        
+    </fixfragment>
+
+    <fixfragment
+        android:id="@+id/animate_fragment"
+        android:name="com.huawei.hms.videoeditor.ui.mediaeditor.texts.fragment.EditTextAnimateFragment">
+        
+    </fixfragment>
+
+    <fixfragment
+        android:id="@+id/bubbles_fragment"
+        android:name="com.huawei.hms.videoeditor.ui.mediaeditor.texts.fragment.EditTextBubblesFragment">
+        
+    </fixfragment>
+
+    <fixfragment
+        android:id="@+id/flower_fragment"
+        android:name="com.huawei.hms.videoeditor.ui.mediaeditor.texts.fragment.EditTextFlowerFragment">
+
+    </fixfragment>
+
+    <action
+        android:id="@+id/action_to_keyboard_fragment"
+        app:destination="@id/keyboard_fragment" />
+
+
+    <action
+        android:id="@+id/action_to_style_fragment"
+        app:destination="@id/style_fragment" />
+    
+    <action
+        android:id="@+id/action_to_animate_fragment"
+        app:destination="@id/animate_fragment" />
+
+    <action
+        android:id="@+id/action_to_bubbles_fragment"
+        app:destination="@id/bubbles_fragment" />
+
+    <action
+        android:id="@+id/action_to_flower_fragment"
+        app:destination="@id/flower_fragment" />
+    
+</navigation>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.huawei.hms.videoeditor.ui.mediaeditor.texts.custom.CustomNestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycleview"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:layout_marginTop="@dimen/dp_8"
+                android:clipChildren="false" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_45"
+                android:layout_marginTop="@dimen/dp_55"
+                android:layout_marginBottom="@dimen/dp_30"
+                android:orientation="horizontal">
+
+                <com.huawei.hms.videoeditor.ui.common.view.EditorTextView
+                    android:id="@+id/text_layout_trans_seek_bar"
+                    android:layout_width="@dimen/dp_64"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp_3"
+                    android:fontFamily="HarmonyHeiTi"
+                    android:gravity="start|center_vertical"
+                    android:maxWidth="@dimen/dp_64"
+                    android:maxLines="2"
+                    android:minWidth="@dimen/dp_36"
+                    android:text="@string/transparency"
+                    android:textColor="#99FFFFFF"
+                    android:textSize="@dimen/sp_14"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:ignore="SpUsage" />
+
+                <com.huawei.hms.videoeditor.ui.mediaeditor.preview.view.MySeekBar
+                    android:id="@+id/seekbar"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="@dimen/dp_45"
+                    android:paddingStart="@dimen/dp_10"
+                    android:paddingEnd="@dimen/dp_16"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/text_layout_trans_seek_bar"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:line_width="@dimen/dp_4"
+                    app:progress="100"
+                    app:progress_anchor="0"
+                    app:thumb_radius="7dp"
+                    app:progress_max="100"
+                    app:progress_min="0"
+                    app:show_text="true" />
+                
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            
+        </LinearLayout>
+        
+    </com.huawei.hms.videoeditor.ui.mediaeditor.texts.custom.CustomNestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

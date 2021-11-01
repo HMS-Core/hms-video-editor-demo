@@ -12,33 +12,29 @@ English | [中文](README_ZH.md)
 
 
 ## Introduction
-Huawei Video Editor Kit (Video Editor Kit) provides full video editing functions to provide high-quality experience for developers to use video editing capabilities to develop various applications.This sample code is used to describe how to use the Video Editor Kit SDK.
+Huawei Video Editor Kit (Video Editor Kit) provided by Huawei to quickly build video editing capabilities. It provides two integration modes.
 
-- Allows your users to delete videos and images in batches, import both videos and images at a time, adjust the sequence and duration of video clips, and easily access the editing screen. Videos with a resolution of 1080p or lower are recommended for better experience. 
-- Supports basic editing operations, including video splitting/deletion, volume/aspect ratio/playback speed adjustment, adding canvases/animations/masks, rotation, cropping, mirroring, copying, and replacement. 
-- Allows your users to customize filters by modifying parameters like brightness, contrast, saturation, hue, color temperature, and sharpening. 
-- Supports picture-in-picture. Your users can overlay a video into another video so that the video added will appear in a small window floating on the original video in full-screen mode. 
-- Supports background music, sound effects, and recording. 
-- Allows your users to export videos in MP4 format, extract any frame from a video or import a image from the photo albums as its cover, and set the resolution of the exported video (1080p at most). 
-- Offers diverse material libraries which are constantly enriched and updated and some of which will be free to you. 
+- Video editor UI SDK, which provides product-level UIs and easy integration.
+
+- Video editor atomic capability SDK, which provides hundreds of underlying capability interfaces, including multiple AI algorithm capability interfaces, which can be flexibly selected based on service scenarios.
+
+Both modes provide one-stop video editing capabilities, such as import, editing, rendering, export, and media resource management. These two modes provide high-performance, easy-to-use, and highly compatible interfaces, helping you easily build applications.
 
 ## Project directory structure
 
 ```
 |-- com.huawei.videoeditorkit.videoeditdemo
-	|-- Activity
-		|-- MainActivity // Video Editor UI SDK entry
-		|-- SettingActivity // Basic Demo information
+	|--sdkdemo  atomic capability SDK demo
+	|--uidemo   UI SDk demo
 ```
-
-
 
 ## Running Procedure
 - Clone the code base to the local host.
 
 - If you haven't already registered as a developer, register and create an app on [AppGalleryConnect](https://developer.huawei.com/consumer/en/service/josp/agc/index.html).
 - Obtain the agconnect-services.json file from [HUAWEI Developers]([https://developer.huawei.com/consumer/en/doc/development/Media-Guides/config-agc-0000001101108580](javascript:;)).
-- Place the agconnect-services.json file in the app directory.
+- Place the agconnect-services.json file in the root directory of the demo.
+- If you need to use cloud-side service capabilities, you need to use the api_key value in agconnect-services.json to call MediaApplication.getInstance().setApiKey(String apiKey) during application initialization.
 - Compile and run on an Android device or emulator.
 
 Note:

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_video_clips_nav_bar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/sp_12">
+
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="@dimen/dp_16"
+        android:contentDescription="@string/tv_back"
+        android:src="@drawable/white_back_icon"
+        tools:ignore="ContentDescription" />
+    <!--    保存/导出/其他、使用文字形式-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        tools:ignore="RelativeOverlap">
+
+        <com.huawei.hms.videoeditor.ui.common.view.EditorTextView
+            android:id="@+id/tv_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:background="@drawable/bg_export_selector"
+            android:ellipsize="end"
+            android:fontFamily="HWtext 65ST"
+            android:gravity="center"
+            android:maxWidth="122dp"
+            android:maxLines="1"
+            android:paddingStart="@dimen/dp_8"
+            android:paddingTop="@dimen/dp_3"
+            android:paddingEnd="@dimen/dp_8"
+            android:paddingBottom="@dimen/dp_3"
+            android:text="@string/export"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_14"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints"
+            android:textAllCaps="true"/>
+        <!--    保存，图标形式-->
+
+        <ImageView
+            android:id="@+id/iv_save"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:contentDescription="@string/save_wza"
+            android:src="@drawable/ic_full_screen_save"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription,MissingConstraints" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>

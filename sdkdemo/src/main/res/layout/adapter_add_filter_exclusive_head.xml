@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:id="@+id/rl_cancel"
+        android:layout_width="@dimen/dp_56"
+        android:layout_height="@dimen/dp_56"
+        android:background="@drawable/filter_add_header_bg_selector"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:contentDescription="@string/no"
+            android:src="@drawable/icon_cancel_wu" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_5"
+        android:fontFamily="PingFangSC"
+        android:text="@string/none"
+        android:textColor="@color/translucent_white_10"
+        android:textSize="@dimen/sp_10"
+        app:layout_constraintEnd_toEndOf="@id/rl_cancel"
+        app:layout_constraintStart_toStartOf="@id/rl_cancel"
+        app:layout_constraintTop_toBottomOf="@id/rl_cancel" />
+
+
+    <LinearLayout
+        android:id="@+id/rl_add"
+        android:layout_width="@dimen/dp_56"
+        android:layout_height="@dimen/dp_56"
+        android:layout_marginStart="@dimen/dp_8"
+        android:background="@drawable/filter_add_header_bg_selector"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintStart_toEndOf="@id/rl_cancel"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_mark_position"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:contentDescription="@string/no"
+            android:src="@drawable/ic_exclusive_filter_create" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_5"
+        android:fontFamily="PingFangSC"
+        android:text="@string/exclusive_filter_create"
+        android:textColor="@color/translucent_white_10"
+        android:textSize="@dimen/sp_10"
+        app:layout_constraintEnd_toEndOf="@id/rl_add"
+        app:layout_constraintStart_toStartOf="@id/rl_add"
+        app:layout_constraintTop_toBottomOf="@id/rl_add" />
+</androidx.constraintlayout.widget.ConstraintLayout>

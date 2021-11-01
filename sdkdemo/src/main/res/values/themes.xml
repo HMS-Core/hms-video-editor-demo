@@ -1,0 +1,14 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+
+    <!-- 隐私协议页面主题色 -->
+    <color name="about_background">#FFFFFF</color>
+    <color name="about_title">#000000</color>
+    <color name="about_title_background">#FFFFFF</color>
+    <color name="about_button">#F2F2F2</color>
+    <color name="about_dialog">#FFFFFF</color>
+    <color name="about_line">#FFD0D0D0</color>
+    <color name="about_prompt">#FF000000</color>
+    <color name="about_confirm">#E84026</color>
+    <color name="about_dialog_button">#FFE5E5E5</color>
+</resources>

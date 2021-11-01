@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_508"
+    android:orientation="vertical"
+    android:background="@drawable/dialog_music_hint_bg"
+    android:layout_marginLeft="@dimen/dp_16"
+    android:layout_marginRight="@dimen/dp_16"
+    android:layout_gravity="center">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_24"
+        android:fontFamily="HarmonyHeiTi"
+        android:text="@string/exclusive_filter_tip_text1"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_20" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_24"
+        android:layout_marginRight="@dimen/dp_24"
+        android:fontFamily="HarmonyHeiTi"
+        android:gravity="left|center_vertical"
+        android:text="@string/exclusive_filter_tip_text2"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_16"
+        android:layout_marginTop="@dimen/dp_24"/>
+
+    <ImageView
+        android:id="@+id/iv_vide_guide"
+        android:layout_width="@dimen/dp_280"
+        android:layout_height="@dimen/dp_280"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_24"/>
+
+    <Button
+        android:id="@+id/certain"
+        android:layout_width="@dimen/dp_192"
+        android:layout_height="@dimen/dp_40"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/dialog_export_close_bg"
+        android:fontFamily="HarmonyHeiTi"
+        android:text="@string/export_close"
+        android:textColor="@color/white"
+        android:layout_marginTop="@dimen/dp_24"/>
+
+</LinearLayout>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_main_color"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_16"
+        android:background="@drawable/white_back_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_16"
+        android:fontFamily="HWtext 55ST"
+        android:singleLine="true"
+        android:text="@string/add_music"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_18"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_back"
+        app:layout_constraintStart_toEndOf="@+id/iv_back"
+        app:layout_constraintTop_toTopOf="@+id/iv_back"
+        tools:ignore="SpUsage" />
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_search"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_30"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_24"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:elevation="0dp"
+        app:cardBackgroundColor="#1AFFFFFF"
+        app:cardCornerRadius="@dimen/dp_15"
+        app:cardElevation="@dimen/dp_0"
+        app:cardUseCompatPadding="false"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@+id/cancel_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title"
+        tools:ignore="RtlSymmetry">
+
+        <ImageView
+            android:layout_width="@dimen/dp_14"
+            android:layout_height="@dimen/dp_14"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/dp_13"
+            android:src="@drawable/ic_realsearch" />
+
+        <EditText
+            android:id="@+id/tv_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/dp_32"
+            android:layout_marginEnd="@dimen/dp_32"
+            android:background="@null"
+            android:fontFamily="HYQiHei-FES"
+            android:gravity="center_vertical|start"
+            android:singleLine="true"
+            android:textColorHint="@color/color_fff_20"
+            android:textSize="@dimen/sp_14"
+            tools:ignore="UseCompatTextViewDrawableXml" />
+
+        <ImageView
+            android:id="@+id/delete_iv"
+            android:layout_width="@dimen/dp_14"
+            android:layout_height="@dimen/dp_14"
+            android:layout_gravity="center_vertical|end"
+            android:layout_marginEnd="@dimen/dp_13"
+            android:src="@drawable/music_search_close"
+            android:visibility="invisible" />
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/cancel_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:fontFamily="Huawei Sans"
+        android:gravity="center"
+        android:text="@string/export_return"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_14"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/cv_search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/cv_search" />
+
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_36"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title"
+        app:tabGravity="center"
+        app:tabIndicatorColor="@color/white"
+        app:tabIndicatorFullWidth="false"
+        app:tabIndicatorHeight="@dimen/dp_2"
+        app:tabInlineLabel="true"
+        app:tabMode="scrollable"
+        android:background="@color/app_main_color"
+        app:tabRippleColor="@android:color/transparent"
+        app:tabSelectedTextColor="@color/color_fff_86"
+        app:tabTextColor="@color/color_fff_86"
+        app:tabUnboundedRipple="true"
+        tools:ignore="MissingConstraints" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#33FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/tab_layout"
+        tools:ignore="MissingConstraints" />
+
+
+    <FrameLayout
+        android:id="@+id/fragment_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tab_layout"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/dp_8"
+        android:background="#202020"
+        android:scrollbars="none"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cv_search"
+        tools:ignore="MissingConstraints" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

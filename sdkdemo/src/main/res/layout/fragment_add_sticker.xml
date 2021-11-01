@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:ignore="MissingConstraints">
+
+    <include
+        android:id="@+id/include_tem_text"
+        layout="@layout/custom_operate_title" />
+
+    <RelativeLayout
+        android:id="@+id/loading_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:visibility="gone">
+
+        <com.huawei.hms.videoeditor.ui.common.view.loading.LoadingIndicatorView
+            android:id="@+id/indicator"
+            android:layout_width="@dimen/dp_75"
+            android:layout_height="@dimen/dp_75"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+
+    <com.huawei.hms.videoeditor.ui.common.view.tab.TabTopLayout
+        android:id="@+id/tab_top_layout"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_48"
+        app:layout_constraintBottom_toTopOf="@id/viewpager"
+        app:layout_constraintTop_toBottomOf="@id/include_tem_text" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0"
+        android:layout_marginTop="@dimen/dp_8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tab_top_layout" />
+
+    <RelativeLayout
+        android:id="@+id/error_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:layout_marginTop="@dimen/dp_48"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/error_image"
+            android:layout_width="@dimen/dp_48"
+            android:layout_height="@dimen/dp_48"
+            android:layout_centerHorizontal="true"
+            android:alpha="0.6"
+            android:src="@drawable/pic_error" />
+
+        <TextView
+            android:id="@+id/error_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/error_image"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_8"
+            android:fontFamily="HYQiHei 55S"
+            android:gravity="start"
+            android:text="@string/result_illegal"
+            android:textColor="#99FFFFFF"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

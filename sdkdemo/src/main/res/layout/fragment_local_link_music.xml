@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" 
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:background="#202020">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_search"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_36"
+        android:layout_marginStart="@dimen/dp_31"
+        android:layout_marginEnd="@dimen/dp_8"
+        android:elevation="0dp"
+        app:cardBackgroundColor="#1AFFFFFF"
+        app:cardCornerRadius="@dimen/dp_18"
+        app:cardElevation="@dimen/dp_0"
+        app:cardUseCompatPadding="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/download_cv"
+        tools:ignore="MissingConstraints,RtlSymmetry">
+
+
+        <EditText
+            android:id="@+id/ed_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/dp_7"
+            android:layout_marginEnd="@dimen/dp_39"
+            android:background="@null"
+            android:fontFamily="HYQiHei-FES"
+            android:gravity="center_vertical|start"
+            android:singleLine="true"
+            android:textColorHint="@color/color_fff_20"
+            android:textSize="@dimen/sp_14"
+            tools:ignore="UseCompatTextViewDrawableXml" />
+
+        <ImageView
+            android:id="@+id/delete_iv"
+            android:layout_width="@dimen/dp_18"
+            android:layout_height="@dimen/dp_18"
+            android:layout_gravity="center_vertical|end"
+            android:layout_marginEnd="@dimen/dp_12"
+            android:src="@drawable/music_search_close"
+            android:visibility="invisible" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/download_cv"
+        android:layout_width="@dimen/dp_36"
+        android:layout_height="@dimen/dp_36"
+        android:elevation="0dp"
+        app:cardBackgroundColor="@color/color_fff_10"
+        app:cardCornerRadius="@dimen/dp_36"
+        app:cardElevation="@dimen/dp_0"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/dp_31"
+        app:cardUseCompatPadding="false"
+        tools:ignore="MissingConstraints,RtlSymmetry">
+
+        <ImageView
+            android:id="@+id/download_iv"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_gravity="center"
+            android:src="@drawable/music_download_normal" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0"
+        android:layout_marginTop="@dimen/dp_24"
+        app:layout_constraintTop_toBottomOf="@+id/download_cv"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:scrollbars="none"
+        tools:ignore="MissingConstraints" />
+    
+</androidx.constraintlayout.widget.ConstraintLayout>

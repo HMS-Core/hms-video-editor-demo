@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 顶部带圆角 白色背景 灰色边框 无下边框 长方体 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="@dimen/dp_15" />
+
+    <solid android:color="@color/translucent_white_05" />
+    <size
+        android:width="@dimen/dp_64"
+        android:height="@dimen/dp_30" />
+</shape>
+

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/coverImageHomeFragment"
+    tools:ignore="UnusedNavigation">
+
+    <fixfragment
+        android:id="@+id/coverImageHomeFragment"
+        android:name="com.huawei.hms.videoeditor.ui.mediaeditor.cover.CoverImageHomeFragment"
+        android:label="CoverImageHomeFragment">
+
+        <action
+            android:id="@+id/action_HomeToEditFragment"
+            app:destination="@id/coverImageEditFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out" />
+       
+
+    </fixfragment>
+    
+    <fixfragment
+        android:id="@+id/coverImageEditFragment"
+        android:name="com.huawei.hms.videoeditor.ui.mediaeditor.cover.CoverImageEditFragment"
+        android:label="CoverImageEditFragment">
+        
+    </fixfragment>
+    
+
+</navigation>

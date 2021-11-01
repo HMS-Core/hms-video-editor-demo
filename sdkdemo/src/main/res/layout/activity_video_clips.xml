@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/edit_background">
+
+    <FrameLayout
+        android:id="@+id/id_edit_play_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <fragment
+            android:id="@+id/id_edit_play_fragment"
+            android:name="com.huawei.hms.videoeditor.ui.mediaeditor.menu.VideoClipsPlayFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            tools:ignore="MissingConstraints" />
+
+    </FrameLayout>
+
+    <fragment
+        android:id="@+id/id_material_edit_fragment"
+        android:name="com.huawei.hms.videoeditor.ui.mediaeditor.materialedit.MaterialEditFragment"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_0"
+        app:layout_constraintStart_toStartOf="@+id/id_edit_play_layout"
+        app:layout_constraintTop_toTopOf="@+id/id_edit_play_layout"
+        app:layout_constraintEnd_toEndOf="@+id/id_edit_play_layout"
+        app:layout_constraintBottom_toBottomOf="@+id/id_edit_play_layout"
+        android:layout_marginBottom="@dimen/dp_32"/>
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.575" />
+
+    <FrameLayout
+        android:id="@+id/id_edit_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0"
+        android:layout_marginBottom="133dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/dp_36"
+        app:layout_constraintTop_toBottomOf="@+id/guideline">
+
+        <fragment
+            android:id="@+id/id_edit_preview_fragment"
+            android:name="com.huawei.hms.videoeditor.ui.mediaeditor.trackview.fragment.EditPreviewFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:ignore="MissingConstraints" />
+
+    </FrameLayout>
+
+    <fragment
+        android:id="@+id/id_menu_fragment"
+        android:name="com.huawei.hms.videoeditor.ui.mediaeditor.menu.MenuFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <include layout="@layout/video_clips_nav_bar" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.38" />
+
+    <Button
+        android:id="@+id/btn_lock"
+        android:layout_width="@dimen/dp_50"
+        android:layout_height="@dimen/dp_24"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:background="@drawable/btn_unlock"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline2"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/iv_face_compare"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:background="@drawable/btn_face_compare"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline2"
+        tools:ignore="ContentDescription" />
+
+    <include
+        android:id="@+id/include_edit"
+        layout="@layout/layout_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

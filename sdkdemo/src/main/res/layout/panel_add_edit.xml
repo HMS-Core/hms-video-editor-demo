@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_335"
+    android:background="@color/color_20"
+    android:tag="addTextSticker"
+    tools:ignore="MissingConstraints">
+
+    <RelativeLayout
+        android:id="@+id/rl_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_8">
+
+        <LinearLayout
+            android:id="@+id/layout_certain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:layout_gravity="center"
+                android:contentDescription="@string/confirm_wza"
+                android:src="@drawable/icon_top_queding" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/edit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_40"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:layout_toStartOf="@id/layout_certain"
+            android:background="@drawable/bg_edit"
+            android:hint="@string/inputtext"
+            android:paddingStart="@dimen/dp_17"
+            android:textColor="@color/white"
+            android:textColorHint="@color/color_fff_20"
+            android:textCursorDrawable="@drawable/color_edit"
+            android:textSize="@dimen/sp_16" />
+
+    </RelativeLayout>
+
+
+    <com.huawei.hms.videoeditor.ui.common.view.tab.TabTopLayout
+        android:id="@+id/tab_top_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_48"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rl_edit" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="#5291ff"
+        app:layout_constraintBottom_toBottomOf="@+id/tab_top_layout"
+        android:visibility="gone"/>
+
+    <fragment
+        android:id="@+id/style_fragment_container"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tab_top_layout" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

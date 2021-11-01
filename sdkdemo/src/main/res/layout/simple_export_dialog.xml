@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_88"
+    android:background="@drawable/advance_export_dialog_bg"
+    android:paddingStart="@dimen/dp_24"
+    android:paddingEnd="@dimen/dp_24"
+    tools:ignore="MissingConstraints">
+
+    <TextView
+        android:id="@+id/tv_export_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_22"
+        android:fontFamily="Helvetica"
+        android:text="@string/export_loading"
+        android:textColor="@color/color_text_first_level"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_export_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_22"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:fontFamily="Helvetica"
+        android:textColor="@color/color_text_first_level"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintEnd_toStartOf="@+id/iv_close"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_close"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:src="@drawable/export_close_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/close_wza"/>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_export_tips"
+        app:layout_constraintEnd_toStartOf="@+id/iv_close"
+        android:layout_marginTop="@dimen/dp_7"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:max="100"
+        android:progress="0"
+        android:indeterminateOnly="false"
+        android:progressDrawable="@drawable/progress_color_bg"
+        style="@android:style/Widget.ProgressBar.Horizontal"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

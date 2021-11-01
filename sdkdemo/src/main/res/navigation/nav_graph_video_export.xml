@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:startDestination="@id/videoExportSettingFragment">
+
+    <fixfragment
+        android:id="@+id/videoExportSettingFragment"
+        android:name="com.huawei.hms.videoeditor.ui.mediaexport.VideoExportSettingFragment">
+
+        <action android:id="@+id/export_fail"
+            app:destination="@id/videoExportFailFragment"/>
+
+<!--        <action android:id="@+id/export_done"-->
+<!--            app:destination="@id/videoExportDoneFragment"/>-->
+    </fixfragment>
+
+
+    <fixfragment
+        android:id="@+id/videoExportFailFragment"
+        android:name="com.huawei.hms.videoeditor.ui.mediaexport.VideoExportFailFragment">
+
+<!--        <action-->
+<!--            android:id="@+id/action_videoExportFailFragment_to_videoExportDoneFragment"-->
+<!--            app:destination="@id/videoExportDoneFragment" />-->
+    </fixfragment>
+
+
+<!--    <fixfragment-->
+<!--        android:id="@+id/videoExportDoneFragment"-->
+<!--        android:name="com.huawei.hms.videoeditor.ui.mediaexport.VideoExportDoneFragment">-->
+
+<!--    </fixfragment>-->
+</navigation>

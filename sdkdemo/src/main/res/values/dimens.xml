@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <dimen name="dp_0">0dp</dimen>
+    <dimen name="dp_1">1dp</dimen>
+    <dimen name="dp_2">2dp</dimen>
+    <dimen name="dp_3">3dp</dimen>
+    <dimen name="dp_4">4dp</dimen>
+    <dimen name="dp_5">5dp</dimen>
+    <dimen name="dp_6">6dp</dimen>
+    <dimen name="dp_7">7dp</dimen>
+    <dimen name="dp_8">8dp</dimen>
+    <dimen name="dp_9">9dp</dimen>
+    <dimen name="dp_10">10dp</dimen>
+    <dimen name="dp_11">11dp</dimen>
+    <dimen name="dp_12">12dp</dimen>
+    <dimen name="dp_13">13dp</dimen>
+    <dimen name="dp_14">14dp</dimen>
+    <dimen name="dp_15">15dp</dimen>
+    <dimen name="dp_16">16dp</dimen>
+    <dimen name="dp_17">17dp</dimen>
+    <dimen name="dp_18">18dp</dimen>
+    <dimen name="dp_19">19dp</dimen>
+    <dimen name="dp_20">20dp</dimen>
+    <dimen name="dp_21">21dp</dimen>
+    <dimen name="dp_22">22dp</dimen>
+    <dimen name="dp_23">23dp</dimen>
+    <dimen name="dp_24">24dp</dimen>
+    <dimen name="dp_25">25dp</dimen>
+    <dimen name="dp_26">26dp</dimen>
+    <dimen name="dp_27">27dp</dimen>
+    <dimen name="dp_28">28dp</dimen>
+    <dimen name="dp_29">29dp</dimen>
+    <dimen name="dp_30">30dp</dimen>
+    <dimen name="dp_31">31dp</dimen>
+    <dimen name="dp_32">32dp</dimen>
+    <dimen name="dp_33">33dp</dimen>
+    <dimen name="dp_34">34dp</dimen>
+    <dimen name="dp_35">35dp</dimen>
+    <dimen name="dp_36">36dp</dimen>
+    <dimen name="dp_37">37dp</dimen>
+    <dimen name="dp_38">38dp</dimen>
+    <dimen name="dp_39">39dp</dimen>
+    <dimen name="dp_40">40dp</dimen>
+    <dimen name="dp_41">41dp</dimen>
+    <dimen name="dp_42">42dp</dimen>
+    <dimen name="dp_44">44dp</dimen>
+    <dimen name="dp_45">45dp</dimen>
+    <dimen name="dp_46">46dp</dimen>
+    <dimen name="dp_47">47dp</dimen>
+    <dimen name="dp_48">48dp</dimen>
+    <dimen name="dp_50">50dp</dimen>
+    <dimen name="dp_51">51dp</dimen>
+    <dimen name="dp_52">52dp</dimen>
+    <dimen name="dp_53">53dp</dimen>
+    <dimen name="dp_54">54dp</dimen>
+    <dimen name="dp_55">55dp</dimen>
+    <dimen name="dp_56">56dp</dimen>
+    <dimen name="dp_57">57dp</dimen>
+    <dimen name="dp_58">58dp</dimen>
+    <dimen name="dp_60">60dp</dimen>
+    <dimen name="dp_62">62dp</dimen>
+    <dimen name="dp_64">64dp</dimen>
+    <dimen name="dp_65">65dp</dimen>
+    <dimen name="dp_66">66dp</dimen>
+    <dimen name="dp_67">67dp</dimen>
+    <dimen name="dp_68">68dp</dimen>
+    <dimen name="dp_70">70dp</dimen>
+    <dimen name="dp_72">72dp</dimen>
+    <dimen name="dp_73">73dp</dimen>
+    <dimen name="dp_74">74dp</dimen>
+    <dimen name="dp_75">75dp</dimen>
+    <dimen name="dp_76">76dp</dimen>
+    <dimen name="dp_78">78dp</dimen>
+    <dimen name="dp_79">79dp</dimen>
+    <dimen name="dp_80">80dp</dimen>
+    <dimen name="dp_77">77dp</dimen>
+    <dimen name="dp_84">84dp</dimen>
+    <dimen name="dp_86">86dp</dimen>
+    <dimen name="dp_88">88dp</dimen>
+    <dimen name="dp_90">90dp</dimen>
+    <dimen name="dp_82">82dp</dimen>
+    <dimen name="dp_92">92dp</dimen>
+    <dimen name="dp_94">94dp</dimen>
+    <dimen name="dp_96">96dp</dimen>
+    <dimen name="dp_98">98dp</dimen>
+    <dimen name="dp_100">100dp</dimen>
+    <dimen name="dp_102">102dp</dimen>
+    <dimen name="dp_103">103dp</dimen>
+    <dimen name="dp_104">104dp</dimen>
+    <dimen name="dp_106">106dp</dimen>
+    <dimen name="dp_112">112dp</dimen>
+    <dimen name="dp_120">120dp</dimen>
+    <dimen name="dp_124">124dp</dimen>
+    <dimen name="dp_126">126dp</dimen>
+    <dimen name="dp_128">128dp</dimen>
+    <dimen name="dp_130">130dp</dimen>
+    <dimen name="dp_132">132dp</dimen>
+    <dimen name="dp_136">136dp</dimen>
+    <dimen name="dp_140">140dp</dimen>
+    <dimen name="dp_144">144dp</dimen>
+    <dimen name="dp_150">150dp</dimen>
+    <dimen name="dp_156">156dp</dimen>
+    <dimen name="dp_160">160dp</dimen>
+    <dimen name="dp_168">168dp</dimen>
+    <dimen name="dp_170">170dp</dimen>
+    <dimen name="dp_176">176dp</dimen>
+    <dimen name="dp_178">178dp</dimen>
+    <dimen name="dp_116">116dp</dimen>
+    <dimen name="dp_148">148dp</dimen>
+
+    <dimen name="dp_190">190dp</dimen>
+    <dimen name="dp_180">180dp</dimen>
+    <dimen name="dp_183">183dp</dimen>
+    <dimen name="dp_189">189dp</dimen>
+    <dimen name="dp_200">200dp</dimen>
+    <dimen name="dp_208">208dp</dimen>
+    <dimen name="dp_219">219dp</dimen>
+    <dimen name="dp_220">220dp</dimen>
+    <dimen name="dp_235">235dp</dimen>
+    <dimen name="dp_240">240dp</dimen>
+    <dimen name="dp_248">248dp</dimen>
+    <dimen name="dp_250">250dp</dimen>
+    <dimen name="dp_255">255dp</dimen>
+    <dimen name="dp_260">260dp</dimen>
+    <dimen name="dp_272">272dp</dimen>
+    <dimen name="dp_328">328dp</dimen>
+    <dimen name="dp_290">290dp</dimen>
+    <dimen name="dp_300">300dp</dimen>
+    <dimen name="dp_335">335dp</dimen>
+    <dimen name="dp_192">192dp</dimen>
+    <dimen name="dp_280">280dp</dimen>
+    <dimen name="dp_508">508dp</dimen>
+    <dimen name="dp_224">224dp</dimen>
+    <dimen name="sp_8">8dp</dimen>
+    <dimen name="sp_9">9dp</dimen>
+    <dimen name="sp_10">10dp</dimen>
+    <dimen name="sp_11">11dp</dimen>
+    <dimen name="sp_12">12dp</dimen>
+    <dimen name="sp_14">14dp</dimen>
+    <dimen name="sp_16">16dp</dimen>
+    <dimen name="sp_18">18dp</dimen>
+    <dimen name="sp_20">20dp</dimen>
+    <dimen name="sp_24">24dp</dimen>
+
+    <dimen name="dp_26_half">26.5dp</dimen>
+
+    <dimen name="sp_10_home">10dp</dimen>
+    <dimen name="sp_12_home">12dp</dimen>
+    <dimen name="sp_14_home">14dp</dimen>
+    <dimen name="sp_16_home">16dp</dimen>
+    <dimen name="sp_18_home">18dp</dimen>
+    <dimen name="sp_20_home">20dp</dimen>
+
+    <dimen name="text_size_primary">16dp</dimen>
+    <dimen name="text_height_primary">22dp</dimen>
+
+    <item name="mirrorScaleX" format="float" type="integer">1</item>
+    <!--
+    Because the window insets on round devices are larger than 15dp, this padding only applies
+    to square screens.
+    -->
+    <dimen name="box_inset_layout_padding">0dp</dimen>
+
+    <!--
+    This padding applies to both square and round screens. The total padding between the buttons
+    and the window insets is box_inset_layout_padding (above variable) on square screens and
+    inner_frame_layout_padding (below variable) on round screens.
+    -->
+    <dimen name="inner_frame_layout_padding">5dp</dimen>
+    
+        <!--    裁剪-->
+    <dimen name="preview_margin">0dp</dimen>
+    <dimen name="crop_min_side">45dp</dimen>
+    <dimen name="crop_touch_tolerance">20dp</dimen>
+    <dimen name="wp_selector_dash_length">4dp</dimen>
+    <dimen name="wp_selector_off_length">4dp</dimen>
+    <dimen name="crop_indicator_size">24dp</dimen>
+    <dimen name="crop_aspect_text_size">15sp</dimen>
+
+    <!--新手引导页气泡圆角-->
+    <dimen name="guide_bubble_radius">8dp</dimen>
+
+    <dimen name="dp_1_half">1.5dp</dimen>
+    <dimen name="dp_16_half">16.5dp</dimen>
+
+    <!--   微电影字体-->
+    <dimen name="mini_movie_sp_10">10sp</dimen>
+    <dimen name="mini_movie_sp_11">11sp</dimen>
+    <dimen name="mini_movie_sp_12">12sp</dimen>
+    <dimen name="mini_movie_sp_14">14sp</dimen>
+    <dimen name="mini_movie_sp_16">16sp</dimen>
+    <dimen name="mini_movie_sp_18">18sp</dimen>
+    <dimen name="mini_movie_sp_20">20sp</dimen>
+</resources>

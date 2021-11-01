@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_176"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginBottom="@dimen/dp_16"
+        android:background="@drawable/bg_home_clip_delete_dialog"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/home_clip_rename_dialog_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="@dimen/dp_24"
+            android:layout_marginTop="@dimen/dp_18"
+            android:fontFamily="HarmonyHeiTi"
+            android:text="@string/home_select_delete_title"
+            android:textColor="@color/translucent_white_90"
+            android:textSize="@dimen/dp_20"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SpUsage" />
+
+        <EditText
+            android:id="@+id/home_clip_rename_dialog_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_27"
+            android:layout_marginEnd="@dimen/dp_24"
+            android:background="@null"
+            android:gravity="start|center_vertical"
+            android:inputType="text"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:textColorHint="@color/translucent_white_60"
+            android:textColor="#FFFFFFFF"
+            android:fontFamily="HarmonyHeiTi"
+            android:textCursorDrawable="@drawable/home_clips_color_cursor"
+            android:textSize="@dimen/dp_20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/home_clip_rename_dialog_title"
+            app:layout_constraintTop_toBottomOf="@+id/home_clip_rename_dialog_title"
+            tools:ignore="SpUsage" />
+
+        <TextView
+            android:id="@+id/home_clip_rename_dialog_divider"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_1"
+            android:layout_marginTop="@dimen/dp_13"
+            android:background="#59FFFFFF"
+            app:layout_constraintEnd_toEndOf="@+id/home_clip_rename_dialog_name"
+            app:layout_constraintStart_toStartOf="@+id/home_clip_rename_dialog_name"
+            app:layout_constraintTop_toBottomOf="@+id/home_clip_rename_dialog_name" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_16"
+            android:layout_marginBottom="@dimen/dp_16"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/home_clip_rename_dialog_name"
+            app:layout_constraintStart_toStartOf="@+id/home_clip_rename_dialog_name"
+            app:layout_constraintTop_toBottomOf="@+id/home_clip_rename_dialog_divider">
+
+            <TextView
+                android:id="@+id/home_clip_rename_dialog_cancel"
+                android:layout_width="@dimen/dp_120"
+                android:layout_height="@dimen/dp_40"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:background="@drawable/home_rename_bt_bg_selector"
+                android:fontFamily="HarmonyHeiTi"
+                android:gravity="center"
+                android:text="@string/video_edit_export_cancel"
+                android:textColor="@color/color_text_focus"
+                android:textSize="@dimen/dp_16"
+                tools:ignore="SpUsage" />
+
+            <TextView
+                android:layout_width="@dimen/dp_1"
+                android:layout_height="@dimen/dp_24"
+                android:background="#33FFFFFF" />
+
+            <TextView
+                android:id="@+id/home_clip_rename_dialog_ok"
+                android:layout_width="@dimen/dp_120"
+                android:layout_height="@dimen/dp_40"
+                android:layout_marginStart="@dimen/dp_16"
+                android:background="@drawable/home_rename_bt_bg_selector"
+                android:fontFamily="HarmonyHeiTi"
+                android:gravity="center"
+                android:text="@string/app_confirm"
+                android:textColor="@color/color_text_focus"
+                android:textSize="@dimen/dp_16"
+                tools:ignore="SpUsage" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

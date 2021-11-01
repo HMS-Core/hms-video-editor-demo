@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootview"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/dp_30">
+
+    <ImageView
+        android:id="@+id/item_image_view"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:background="@drawable/crop_9_16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_4"
+        android:fontFamily="Helvetica"
+        android:textColor="@drawable/text_item_crop_adapter_tv_selector"
+        android:textSize="@dimen/dp_10"
+        app:layout_constraintEnd_toEndOf="@id/item_image_view"
+        app:layout_constraintStart_toStartOf="@id/item_image_view"
+        app:layout_constraintTop_toBottomOf="@id/item_image_view"
+        tools:ignore="MissingConstraints,SpUsage" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

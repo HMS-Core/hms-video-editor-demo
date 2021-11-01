@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/custom_certain_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/blend_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include" />
+
+    <TextView
+        android:id="@+id/normal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="@dimen/dp_4"
+        android:fontFamily="Helvetica"
+        android:text="@string/cut_second_menu_opaqueness"
+        android:textColor="@color/color_text_second_level"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/sb_items"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <com.huawei.hms.videoeditor.ui.mediaeditor.preview.view.MySeekBar
+        android:id="@+id/sb_items"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_45"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="@dimen/dp_13"
+        android:layout_marginEnd="40dp"
+        android:paddingStart="@dimen/dp_5"
+        android:paddingEnd="@dimen/dp_5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/normal"
+        app:layout_constraintTop_toBottomOf="@id/blend_list"
+        app:line_width="@dimen/dp_4"
+        app:progress="0"
+        app:progress_anchor="0"
+        app:progress_max="100"
+        app:progress_min="0"
+        app:show_text="true"
+        app:thumb_radius="@dimen/dp_7" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

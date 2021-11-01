@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+ Copyright 2017 The Android Open Source Project
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+<resources>
+    <attr name="hwSeekBarStyle" format="reference" />
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="launcher" parent="AppTheme">
+<!--        <item name="android:background">@drawable/start_bg</item>-->
+        <item name="android:windowBackground">@color/black</item>
+        <item name="android:navigationBarColor">@color/pure_black</item>
+    </style>
+    
+    <style name="MainTheme" parent="AppTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:animationDuration">0</item>
+        <item name="android:windowDisablePreview">true</item>
+    </style>
+    
+    <style name="DialogTheme" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.5</item>
+    </style>
+
+    <style name="PopupAnimation" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/z_push_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/z_push_bottom_out</item>
+    </style>
+
+    <style name="CheckBox" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/color_fff_86</item>
+        <item name="colorControlActivated">@color/color_text_focus</item>
+        <item name="android:layout_weight">@dimen/dp_18</item>
+        <item name="android:layout_height">@dimen/dp_18</item>
+    </style>
+
+    <style name="LaunchDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowBackground">@drawable/bg_launch_hint_dialog</item>
+    </style>
+    <style name="DialogProgress" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowBackground">@color/emui_mask_thin</item>
+    </style>
+    <!--    纯色icon图片style-->
+    <style name="iconSolidColorStyle">
+        <item name="android:tintMode">src_in</item>
+        <item name="android:tint">@color/emui_color_fg</item>
+    </style>
+
+    <style name="textAppearanceListItem" parent="android:TextAppearance">
+        <item name="android:textSize">@dimen/text_size_primary</item>
+        <item name="android:height">@dimen/text_height_primary</item>
+    </style>
+
+    <style name="Dialog" parent="android:style/Theme.Dialog">
+        <item name="android:background">#00000000</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+
+    <style name="CustomBottomSheetDialogTheme" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item><!--边框-->
+        <item name="android:windowFrame">@null</item><!--边框-->
+        <item name="android:windowIsFloating">false</item><!--是否浮现在activity之上-->
+        <item name="android:windowNoTitle">true</item><!--无标题-->
+        <item name="android:windowBackground">@android:color/transparent</item><!--背景透明-->
+        <item name="android:backgroundDimEnabled">false</item><!--模糊-->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+    </style>
+
+    <!-- 带动画的底部弹出dialog-->
+    <style name="BottomDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/dialog_slid_up</item>
+        <item name="android:windowExitAnimation">@anim/dialog_slid_down</item>
+    </style>
+
+    <style name="textAppearanceListItemTertiaryInverse" parent="android:TextAppearance.Inverse">
+        <item name="android:textSize">@dimen/dp_10</item>
+        <item name="android:height">@dimen/dp_13</item>
+        <item name="android:textColor">?android:textColorTertiaryInverse</item>
+    </style>
+
+    <style name="textAppearanceListItemTertiaryDark" parent="textAppearanceListItemTertiaryInverse" />
+
+    <style name="SeekBarStylePreCrop">
+        <item name="android:maxHeight">4dp</item>
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:indeterminateDrawable">@color/color_text_focus</item>
+        <item name="android:progressDrawable">@drawable/seek_bar_pre_crop_bg_gradient</item>
+        <item name="android:thumb">@drawable/ic_icon_circle_pre_crop</item>
+    </style>
+
+    <declare-styleable name="ProgressView">
+        <attr name="firstColor" format="color" />
+        <attr name="secondColor" format="color" />
+        <attr name="lineColor" format="color" />
+    </declare-styleable>
+
+    <!-- 圆角图片 -->
+    <style name="roundedCornerStyle">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+
+    <style name="CheckboxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/shortcut_checkbox_selector</item>
+    </style>
+</resources>

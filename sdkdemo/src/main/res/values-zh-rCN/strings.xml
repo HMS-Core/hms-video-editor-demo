@@ -1,0 +1,658 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="start_tv">开始创作</string>
+    <!--    首页-->
+    <string name="main_template_guide_text" priority="translator">"教程"</string>
+
+    <!--    资源选择-->
+    <string name="select_media_recent_projects" priority="translator">"最近项目"</string>
+    <string name="media_video" priority="translator">"全部视频"</string>
+    <string name="media_picture" priority="translator">"全部图片"</string>
+    <string name="material_library" priority="translator">"素材库"</string>
+    <string name="media_import" priority="translator">"导入 (%d)"</string>
+    <string name="media_import_new" priority="translator">导入</string>
+    <string name="select_media_total_time" priority="translator">"总时长：%s"</string>
+    <string name="select_media_has_select" priority="translator">"已选：%s"</string>
+    <string name="media_imported" priority="translator">"已导入"</string>
+    <string name="media_cropped" priority="translator">"已剪裁"</string>
+    <string name="press_drag_to_sort" priority="translator">"按住并拖动以重新排序"</string>
+    <string name="video" priority="translator">"视频"</string>
+    <string name="picture" priority="translator">"照片"</string>
+    <string name="HD_image_quality" priority="translator">"高清画质"</string>
+    <string name="app_name" priority="translator">VideoEditorTest</string>
+    <plurals name="add_video_num">
+        <item priority="translator" quantity="other">"%d 视频"</item>
+    </plurals>
+
+    <plurals name="add_image_num">
+        <item priority="translator" quantity="other">"%d 照片"</item>
+    </plurals>
+
+    <!--    片尾-->
+    <string name="add_tail" priority="translator">"添加片尾"</string>
+    <string name="tail" priority="translator">"片尾"</string>
+    <string name="edit_tail" priority="translator">"点击编辑文字"</string>
+
+    <!--    一键成片-->
+    <string name="choice_template" priority="translator">"主题选择"</string>
+    <string name="recommend_template" priority="translator">"推荐模板"</string>
+    <string name="auto_template" priority="translator">"一键成片"</string>
+    <string name="auto_template_none" priority="translator">"无"</string>
+    <string name="auto_template_custom" priority="translator">"定制"</string>
+    <string name="auto_template_landscape" priority="translator">"风光"</string>
+    <string name="auto_template_gourmet" priority="translator">"食物"</string>
+    <string name="auto_template_party" priority="translator">"聚会"</string>
+    <string name="auto_template_family" priority="translator">"亲子"</string>
+    <string name="auto_template_travel" priority="translator">"旅行"</string>
+    <string name="auto_template_sport" priority="translator">"运动"</string>
+    <string name="auto_template_city" priority="translator">"城市"</string>
+    <string name="auto_template_culture" priority="translator">"人文"</string>
+    <string name="auto_template_night" priority="translator">"夜幕"</string>
+    <string name="auto_template_vintage" priority="translator">"复古"</string>
+    <string name="manual_template" priority="translator">"手动编辑"</string>
+    <string name="auto_template_back_tip" priority="translator">"是否应用当前主题?"</string>
+    <string name="auto_template_back_po" priority="translator">"是"</string>
+    <string name="auto_template_back_na" priority="translator">"否"</string>
+    <string name="auto_template_galley" priority="translator">"图库"</string>
+    <string name="auto_template_highlight" priority="translator">"时刻"</string>
+    <string name="export_toast_tips" priority="translator">"视频已保存到“视频编辑”相册"</string>
+    <string name="export_loading" priority="translator">"导出中…"</string>
+    <string name="export_fail_simple" priority="translator">"导出失败"</string>
+
+    <!--    返回-->
+    <string name="is_give_up_edit" priority="translator">"是否放弃编辑？"</string>
+    <string name="is_give_up_yes" priority="translator">"是"</string>
+    <string name="is_give_up_no" priority="translator">"否"</string>
+    <string name="simple_save_to_video_edit" priority="translator">"保存作品到花瓣剪辑"</string>
+    <string name="simple_back_to_photo_library" priority="translator">"返回图库编辑台"</string>
+
+
+    <!--    引导-->
+    <string name="a_key_piece_tips" priority="translator">"一键快速制作成片"</string>
+    <string name="simple_model_advance_tips" priority="translator">"更多高级功能"</string>
+    <string name="add_key_frame_tips" priority="translator">"点击给片段添加关键帧"</string>
+    <string name="add_transition_tips" priority="translator">"点击添加转场"</string>
+    <string name="guide_finger_zoom_rotate" priority="translator">"双指缩放或旋转画面"</string>
+    <string name="guide_finger_drag" priority="translator">"拖拽两端裁剪片段"</string>
+    <string name="guide_long_pressed_drag" priority="translator">"长按拖动改变片段顺序"</string>
+    <string name="guide_long_pressed_move" priority="translator">"长按拖拽移动位置"</string>
+
+    <!--编辑一级菜单-->
+    <string name="first_menu_cut" priority="translator">"剪辑"</string>
+    <string name="first_menu_audio" priority="translator">"音频"</string>
+    <string name="first_menu_sticker" priority="translator">"贴纸"</string>
+    <string name="first_menu_text" priority="translator">"文字"</string>
+    <string name="first_menu_pip" priority="translator">"画中画"</string>
+    <string name="first_menu_special" priority="translator">"特效"</string>
+    <string name="first_menu_filter" priority="translator">"滤镜"</string>
+    <string name="first_menu_advanced" priority="translator">"高级"</string>
+
+    <!--剪辑二级菜单-->
+    <string name="cut_second_menu_severing" priority="translator">"分割"</string>
+    <string name="cut_second_menu_ratio" priority="translator">"比例"</string>
+    <string name="cut_second_menu_background" priority="translator">"背景"</string>
+    <string name="cut_second_menu_speed_change" priority="translator">"变速"</string>
+    <string name="cut_second_menu_volume" priority="translator">"音量"</string>
+    <string name="cut_second_menu_animation" priority="translator">"动画"</string>
+    <string name="cut_second_menu_delete" priority="translator">"删除"</string>
+    <string name="cut_second_menu_crop" priority="translator">"裁剪"</string>
+    <string name="cut_second_menu_copy" priority="translator">"复制"</string>
+    <string name="cut_second_menu_replace" priority="translator">"替换"</string>
+    <string name="cut_second_menu_mask" priority="translator">"蒙版"</string>
+    <string name="cut_second_menu_color_cutout" priority="translator">"色度抠图"</string>
+    <string name="cut_second_menu_mirror" priority="translator">"镜像"</string>
+    <string name="cut_second_menu_opaqueness" priority="translator">"不透明度"</string>
+    <string name="cut_second_menu_upend" priority="translator">"倒放"</string>
+    <string name="cut_second_menu_freezes" priority="translator">"定格"</string>
+    <string name="cut_second_menu_single_frame_export" priority="translator">"单帧导出"</string>
+    <string name="cut_second_menu_fun" priority="translator">"AI趣玩"</string>
+
+    <!--音频二级菜单-->
+    <string name="audio_second_menu_music" priority="translator">"音乐"</string>
+    <string name="audio_second_menu_sound_effect" priority="translator">"音效"</string>
+    <string name="audio_second_menu_record" priority="translator">"录音"</string>
+    <string name="audio_second_extract" priority="translator">"音频提取"</string>
+
+    <!--贴纸二级菜单-->
+    <string name="sticker_second_menu_add_sticker" priority="translator">"添加贴纸"</string>
+    <string name="sticker_second_menu_add_scrawl" priority="translator">"添加涂鸦"</string>
+
+    <!--文字二级菜单-->
+    <string name="text_second_menu_add_text" priority="translator">"添加文本"</string>
+    <string name="text_second_menu_text_template" priority="translator">"文字模板"</string>
+
+    <!--画中画二级菜单-->
+    <string name="pip_second_menu_add_pip" priority="translator">"添加画中画"</string>
+
+    <!--特效二级菜单-->
+    <string name="special_second_menu_add_special" priority="translator">"添加特效"</string>
+
+    <!--滤镜二级菜单-->
+    <string name="filter_second_menu_add_filter" priority="translator">"添加滤镜"</string>
+    <string name="filter_second_menu_add_adjust" priority="translator">"添加调节"</string>
+    <string name="filter_second_menu_add_exclusive" priority="translator">"专属滤镜"</string>
+    <!--    其他操作菜单-->
+    <string name="object" priority="translator">"作用对象"</string>
+    <string name="blend" priority="translator">"混合模式"</string>
+    <string name="edit_item2_19" priority="translator">曲线变速</string>
+
+    <!--导出相关 UISDK-->
+    <string name="export_success" priority="translator">"导出成功"</string>
+    <string name="export_no_lock" priority="translator">"导出过程中请勿锁屏或切换应用程序"</string>
+    <string name="export_done" priority="translator">"完成"</string>
+    <string name="export_share" priority="translator">"分享"</string>
+    <string name="export_resolution" priority="translator">分辨率</string>
+    <string name="px_prompt" priority="translator">"高清视频，观感更好"</string>
+    <string name="export_frame_rate" priority="translator">帧率</string>
+    <string name="fps_prompt" priority="translator">"NTSC 标准"</string>
+    <string name="export_desc1" priority="translator">"可节省 %s 空间，您可能在其他设备上无法播放此格式视频"</string>
+    <string name="export_size" priority="translator">视频大小约 %d MB</string>
+    <string name="confirm_export" priority="translator">确认导出</string>
+    <string name="export_tips" priority="translator">"“高兼容”代表 H264 编码格式。\n“高压缩”代表 H265 编码格式。\n相比 H264，H265 能在有限带宽下传输更高质量的网络视频，即只需原先 H264 编码的一半带宽， 就可传输相同质量的视频。"</string>
+    <string name="export_close" priority="translator">"知道了"</string>
+    <string name="export_progressing" priority="translator">"导出中 %s"</string>
+    <string name="video_edit_export_msg" priority="translator">"确定停止导出？"</string>
+    <string name="video_edit_export_cancel" priority="translator">"取消"</string>
+    <string name="video_edit_export_stop" priority="translator">"停止"</string>
+    <string name="select_text" priority="translator">"选择"</string>
+    <string name="cover_image_edit_desc" priority="translator">"拖动或双指缩放选择图片区域"</string>
+
+    <!--轨道相关 UISDK-->
+    <string name="filter_adjust" priority="translator">"滤镜调节"</string>
+    <string name="main" priority="translator">"主"</string>
+    <string name="paint" priority="translator">"画"</string>
+    <string name="global" priority="translator">"全"</string>
+
+    <string name="re_export" priority="translator">"重新导出"</string>
+    <string name="is_shortcut" priority="translator">"是否在桌面添加花瓣剪辑快捷方式？"</string>
+    <string name="add_video_short" priority="translator">"添加"</string>
+    <string name="add_desktop" priority="translator">"在桌面添加花瓣剪辑快捷方式"</string>
+    <string name="high_mode" priority="translator">"高效视频模式"</string>
+    <string name="fr_tips" priority="translator">"温馨提示"</string>
+
+    <string name="reverse_success" priority="translator">"倒放成功"</string>
+    <string name="reverse_fail" priority="translator">"倒放失败"</string>
+    <string name="reverse_cancel" priority="translator">"倒放取消"</string>
+    <string name="reverse_assset_tips" priority="translator">"请选择要倒放的资源"</string>
+    <string name="reverse_assset_error_tips" priority="translator">"目前仅支持视频倒放"</string>
+    <string name="reverse_dialog_tips" priority="translator">"视频倒放中"</string>
+
+    <string name="add_music" priority="translator">添加音乐</string>
+    <string name="no_switch" priority="translator">开启原声</string>
+    <string name="off_switch" priority="translator">关闭原声</string>
+    <string name="export" priority="translator">导出</string>
+    <string name="undo" priority="translator">撤销：%s</string>
+    <string name="redo" priority="translator">重做：%s</string>
+    <string name="fragmentsorting" priority="translator">"片段排序"</string>
+    <string name="dragmove" priority="translator">"长按拖动改变播放顺序"</string>
+    <string name="duration" priority="translator">"时长"</string>
+
+    <string name="trans_time" priority="translator">"转场时间"</string>
+    <string name="trans_title" priority="translator">"转场"</string>
+    <string name="mask" priority="translator">"蒙版"</string>
+    <string name="reversal" priority="translator">反转</string>
+
+    <string name="none" priority="translator">无</string>
+    <string name="linear" priority="translator">线性</string>
+    <string name="mirror" priority="translator">镜面</string>
+    <string name="cycle" priority="translator">"圆形"</string>
+    <string name="heart" priority="translator">"心型"</string>
+    <string name="star" priority="translator">"星型"</string>
+    <string name="flower" priority="translator">"花朵"</string>
+    <string name="rectangle" priority="translator">矩形</string>
+    <string name="edit_item2_17" priority="translator">"色度抠图"</string>
+    <string name="color_picker" priority="translator">"取色器"</string>
+    <string name="strength" priority="translator">强度</string>
+
+    <string name="reset" priority="translator">重置</string>
+    <string name="result_illegal" priority="translator">"网络异常，请重试"</string>
+    <string name="apply_to_all" priority="translator">应用到全部</string>
+    <string name="applied_to_all" priority="translator">已应用到全部</string>
+
+    <string name="filter_brightness" priority="translator">"亮度"</string>
+    <string name="filter_contrast" priority="translator">"对比度"</string>
+    <string name="filter_saturation" priority="translator">"饱和度"</string>
+    <string name="filter_hue" priority="translator">"色调"</string>
+    <string name="filter_temperature" priority="translator">"色温"</string>
+    <string name="filter_sharpening" priority="translator">"锐化"</string>
+
+    <string name="filter_exposure" priority="translator">"光感"</string>
+    <string name="filter_highlights" priority="translator">"高光"</string>
+    <string name="filter_shadow" priority="translator">"阴影"</string>
+    <string name="filter_fade" priority="translator">"褪色"</string>
+    <string name="filter_vignette" priority="translator">"暗角"</string>
+    <string name="filter_grain" priority="translator">"颗粒"</string>
+    <string name="filter_title" priority="translator">"参数调节"</string>
+    <string name="filter_subtitle" priority="translator">"应用到全部"</string>
+
+    <string name="download_failed" priority="translator">%s下载失败，请重试</string>
+
+    <string name="general_speed" priority="translator">"常规变速"</string>
+
+    <!--曲线变速-->
+    <string name="speed_edit" priority="translator">"点击编辑"</string>
+    <string name="custom" priority="translator">"自定义"</string>
+
+    <string name="add_point" priority="translator">"添加点"</string>
+    <string name="delete_point" priority="translator">"删除点"</string>
+
+    <string name="edit_item10_4" priority="translator">"画布背景"</string>
+    <string name="edit_item10_1" priority="translator">"画布颜色"</string>
+    <string name="edit_item10_2" priority="translator">"画布样式"</string>
+    <string name="edit_item10_3" priority="translator">"画布模糊"</string>
+
+    <string name="select_image_text" priority="translator">"选择图片"</string>
+    <string name="free" priority="translator">"自由"</string>
+
+    <string name="full" priority="translator">"全屏"</string>
+    <string name="crop_rotate" priority="translator">"旋转"</string>
+    <string name="set_cover_title" priority="translator">设置封面</string>
+    <string name="sticker" priority="translator">"贴纸"</string>
+    <string name="tuya_name" priority="translator">"涂鸦"</string>
+    <string name="left_right_move_select" priority="translator">"左右滑动可选择封面"</string>
+    <string name="video_frame" priority="translator">"视频帧"</string>
+    <string name="picture_import" priority="translator">"相册导入"</string>
+    <string name="no_cover_text" priority="translator">"无封面"</string>
+    <string name="set_cover_for_gallery" priority="translator">"相册导入"</string>
+
+    <string name="picture_click_replace" priority="translator">"点击替换"</string>
+    <string name="lowvideo" priority="translator">"视频太短，不支持添加转场"</string>
+
+    <!--文字-->
+    <string name="edit_item2_1_2" priority="translator">"样式"</string>
+    <string name="edit_item2_13" priority="translator">"动画"</string>
+    <string name="edit_item2_1_12" priority="translator">"气泡"</string>
+    <string name="edit_item2_1_13" priority="translator">"花字"</string>
+    <string name="edit_item2_1_4" priority="translator">"常用"</string>
+    <string name="edit_item2_1_5" priority="translator">"字体"</string>
+    <string name="edit_item2_1_6" priority="translator">"颜色"</string>
+    <string name="edit_item2_1_7" priority="translator">"描边"</string>
+    <string name="edit_item2_1_8" priority="translator">"阴影"</string>
+    <string name="edit_item2_1_9" priority="translator">"背景"</string>
+    <string name="edit_item2_1_10" priority="translator">"排列"</string>
+    <string name="edit_item2_1_11" priority="translator">"粗斜体"</string>
+    <string name="transparency" priority="translator">"透明度"</string>
+    <string name="thickness" priority="translator">"粗细"</string>
+    <string name="seek_angle" priority="translator">"角度"</string>
+    <string name="seek_blur" priority="translator">"模糊度"</string>
+    <string name="seekbar_distance" priority="translator">"距离"</string>
+    <string name="word_spacing" priority="translator">"字间距"</string>
+    <string name="word_leading" priority="translator">"字行距"</string>
+    <string name="inputtext" priority="translator">"输入文字"</string>
+
+    <!--贴纸动画-->
+    <string name="sticker_animation" priority="translator">"贴纸动画"</string>
+
+
+    <!--录音-->
+    <string name="edit_item8_3" priority="translator">"录音"</string>
+    <string name="restart_record" priority="translator">"重新录制"</string>
+    <string name="click_record" priority="translator">"点击录音"</string>
+    <string name="recording" priority="translator">"录音中…"</string>
+
+    <!--淡化-->
+    <string name="edit_item8_0_14" priority="translator">"淡化"</string>
+    <string name="fade_in" priority="translator">"淡入"</string>
+    <string name="fade_out" priority="translator">"淡出"</string>
+
+    <!--踩点-->
+    <string name="edit_item8_0_10" priority="translator">"踩点"</string>
+    <string name="edit_item8_0_11" priority="translator">"添加点"</string>
+    <string name="edit_item8_0_12" priority="translator">"删除点"</string>
+
+    <!--音效-->
+    <string name="use_music_text" priority="translator">"使用"</string>
+
+    <!--音频提取-->
+    <string name="import_sound" priority="translator">"仅导入视频的声音"</string>
+    <string name="audio_extract_success" priority="translator">"音频提取成功"</string>
+    <string name="in_audio_extraction" priority="translator">"音频提取中"</string>
+    <plurals name="crop_select">
+        <item priority="translator" quantity="other">"已选取 %ss"</item>
+    </plurals>
+
+    <!--无障碍-->
+    <string name="tv_back" priority="translator">"返回"</string>
+    <string name="refresh" priority="translator">"刷新"</string>
+    <string name="xiangpicha" priority="translator">"橡皮擦"</string>
+    <string name="reset_add_framekey" priority="translator">"撤销增加关键帧"</string>
+    <string name="redo_key_frame" priority="translator">"重做增加关键帧"</string>
+    <string name="close" priority="translator">"关闭"</string>
+    <string name="setting" priority="translator">"设置"</string>
+    <string name="play" priority="translator">"播放"</string>
+    <string name="confirm" priority="translator">"确认"</string>
+    <string name="download" priority="translator">"下载"</string>
+    <string name="downloading" priority="translator">"下载中"</string>
+    <string name="no" priority="translator">"无"</string>
+    <string name="edit" priority="translator">"编辑"</string>
+    <string name="clear" priority="translator">"清除"</string>
+    <string name="add_video" priority="translator">"新增视频"</string>
+    <string name="download_music" priority="translator">"下载音乐"</string>
+    <string name="music" priority="translator">"音乐"</string>
+    <string name="check_ok" priority="translator">"选中"</string>
+    <string name="record" priority="translator">"开始录音"</string>
+    <string name="wxts" priority="translator">"温馨提示"</string>
+    <string name="screen_all" priority="translator">"全屏"</string>
+    <string name="add_bold" priority="translator">"加粗"</string>
+    <string name="italics" priority="translator">"倾斜"</string>
+    <string name="underline" priority="translator">"下滑线"</string>
+    <string name="transpance_seekbar" priority="translator">"透明度进度条"</string>
+    <string name="style_left" priority="translator">"横向左边排列"</string>
+    <string name="style_center" priority="translator">"横向中间排列"</string>
+    <string name="style_right" priority="translator">"横向右边排列"</string>
+    <string name="style_top_verical" priority="translator">"竖向排列居上"</string>
+    <string name="style_center_verical" priority="translator">"竖向排列居中"</string>
+    <string name="style_bottom_verical" priority="translator">"竖向排列居下"</string>
+    <string name="more" priority="translator">"更多"</string>
+    <string name="cavas_color" priority="translator">"画布颜色"</string>
+    <string name="pick_sticker" priority="translator">"从图库选择"</string>
+    <string name="zyqx" priority="translator">"自由曲线"</string>
+    <string name="circle" priority="translator">"圆形"</string>
+    <string name="angle" priority="translator">"三角形"</string>
+    <string name="line" priority="translator">"直线"</string>
+    <string name="fivestar" priority="translator">"五角星"</string>
+    <string name="arrow" priority="translator">"箭头"</string>
+    <string name="fiveshape" priority="translator">"五边形"</string>
+    <string name="add_wza" priority="translator">"添加"</string>
+    <string name="cancel_wza" priority="translator">"取消"</string>
+    <string name="save_wza" priority="translator">"保存"</string>
+    <string name="back_start_wza" priority="translator">"回到片头"</string>
+    <string name="forword_end_wza" priority="translator">"回到片尾"</string>
+    <string name="add_music_wza" priority="translator">"新增音乐"</string>
+    <string name="stop_record" priority="translator">"停止录音"</string>
+    <string name="play_pause" priority="translator">"暂停"</string>
+    <string name="play_second" priority="translator">"秒"</string>
+    <string name="filter_strength" priority="translator">"滤镜强度"</string>
+    <string name="no_filter" priority="translator">"无滤镜"</string>
+    <string name="cancel_screeen_all" priority="translator">"取消全屏"</string>
+    <string name="voice_current" priority="translator">"当前音量"</string>
+    <string name="check_out" priority="translator">"取消选择"</string>
+    <string name="pip_track" priority="translator">"画中画轨道"</string>
+    <string name="track_time" priority="translator">"时长"</string>
+    <string name="track_main" priority="translator">"主轨道"</string>
+    <string name="track_text" priority="translator">"文字轨道"</string>
+    <string name="checked" priority="translator">"已选中"</string>
+    <string name="change_screen" priority="translator">"切换屏幕"</string>
+
+    <!--    遗漏-->
+    <string name="export_cancel" priority="translator">"取消导出"</string>
+    <string name="load_project_error_file_delete" priority="translator">"模板存在被删除的文件，无法加载"</string>
+    <string name="set_cover_fail" priority="translator">"设置封面失败，请重试"</string>
+    <string name="lastvideo" priority="translator">至少保留一段视频</string>
+    <string name="rotationdegree" priority="translator">"旋转：%s°"</string>
+    <string name="openmirror" priority="translator">开启镜像</string>
+    <string name="closemirror" priority="translator">关闭镜像</string>
+    <string name="pic_save_sucess" priority="translator">"图片保存成功"</string>
+    <string name="create_folder_failer" priority="translator">"目录创建失败"</string>
+    <string name="nodivision" priority="translator">"当前位置不可分割"</string>
+    <string name="replacefailed" priority="translator">"替换资源失败"</string>
+    <string name="copyfailed" priority="translator">"复制资源失败"</string>
+    <string name="novolume" priority="translator">"当前不支持设置音量"</string>
+    <string name="nofilter" priority="translator">"当前位置不可添加滤镜"</string>
+    <string name="noeffect" priority="translator">"当前位置不可添加特效"</string>
+    <string name="noadjust" priority="translator">"当前位置不可新增调节"</string>
+    <string name="recordfailed" priority="translator">"录制失败"</string>
+    <string name="result_empty" priority="translator">"暂无数据"</string>
+    <string name="set_seeped_fail" priority="translator">"变速失败"</string>
+    <string name="loading" priority="translator">"加载中…"</string>
+    <string name="noallowed" priority="translator">"不允许使用"</string>
+    <string name="deletetemplatefailed" priority="translator">"删除模板失败"</string>
+    <string name="module_compose" priority="translator">"合成效果中"</string>
+    <string name="template_not_support" priority="translator">"不支持当前模板，请下载最新 App 体验"</string>
+    <plurals name="media_max_send_images_or_videos_format">
+        <item priority="translator" quantity="other">"最多可选 %1$d 个图片/视频"</item>
+    </plurals>
+    <string name="musiccollection" priority="translator">"音乐合集"</string>
+    <string name="video_duration_too_short_text" priority="translator">"视频过短，无法导入"</string>
+    <string name="media_not_select" priority="translator">"未选择图片"</string>
+    <string name="template_resource_generate_error" priority="translator">"资源处理失败"</string>
+    <string name="mirror_ver" priority="translator">"垂直"</string>
+    <string name="mirror_hor" priority="translator">"水平"</string>
+    <string name="stop_service" priority="translator">"停止服务"</string>
+    <string name="adjust" priority="translator">"调节"</string>
+    <string name="loading_model" priority="translator">"资源初始化中"</string>
+    <string name="animation_time" priority="translator">"动画时长"</string>
+    <string name="alltrack" priority="translator">"所有轨道"</string>
+
+    <!--  裁剪-->
+    <plurals name="preview_select">
+        <item priority="translator" quantity="other">"选取 %ss"</item>
+    </plurals>
+
+    <!--撤销/恢复-->
+    <string name="redo_failed" priority="translator">重做失败</string>
+    <string name="undo_failed" priority="translator">撤销失败</string>
+    <string name="action_1" priority="translator">添加贴纸</string>
+    <string name="action_2" priority="translator">添加视频</string>
+    <string name="action_3" priority="translator">添加音乐</string>
+    <string name="action_4" priority="translator">添加片尾</string>
+    <string name="action_5" priority="translator">位置变动</string>
+    <string name="action_6" priority="translator">变速</string>
+    <string name="action_7" priority="translator">修改视频曲线速度</string>
+    <string name="action_8" priority="translator">修改视频速度</string>
+    <string name="action_9" priority="translator">修改音量</string>
+    <string name="action_10" priority="translator">复制</string>
+    <string name="action_11" priority="translator">裁剪</string>
+    <string name="action_12" priority="translator">删除</string>
+    <string name="action_13" priority="translator">定格</string>
+    <string name="action_14" priority="translator">水平镜像</string>
+    <string name="action_15" priority="translator">拖移</string>
+    <string name="action_16" priority="translator">原声设置</string>
+    <string name="action_17" priority="translator">透明度</string>
+    <string name="action_18" priority="translator">删除片尾</string>
+    <string name="action_19" priority="translator">片段排序</string>
+    <string name="action_20" priority="translator">分割音频</string>
+    <string name="action_21" priority="translator">分割贴纸</string>
+    <string name="action_22" priority="translator">分割视频</string>
+    <string name="action_23" priority="translator">切换</string>
+    <string name="action_25" priority="translator">垂直镜像</string>
+    <string name="action_26" priority="translator">编辑文本</string>
+    <string name="action_27" priority="translator">添加动画</string>
+    <string name="action_28" priority="translator">添加特效</string>
+    <string name="action_31" priority="translator">添加转场</string>
+    <string name="action_32" priority="translator">复制</string>
+    <string name="action_33" priority="translator">删除特效</string>
+    <string name="action_34" priority="translator">蒙版编辑</string>
+    <string name="action_36" priority="translator">移除转场</string>
+    <string name="action_37" priority="translator">倒放</string>
+    <string name="action_38" priority="translator">作用对象</string>
+    <string name="action_40" priority="translator">设置画布</string>
+    <string name="action_41" priority="translator">混合模式</string>
+    <string name="action_42" priority="translator">画布比例</string>
+    <string name="action_43" priority="translator">替换资源</string>
+    <string name="action_44" priority="translator">增加关键帧</string>
+    <string name="action_45" priority="translator">封面设置</string>
+    <string name="action_46" priority="translator">排序</string>
+    <string name="action_53" priority="translator">添加人脸遮挡</string>
+    <string name="action_54" priority="translator">清除人脸遮挡</string>
+    <string name="action_56" priority="translator">"人物追踪重置"</string>
+    <string name="action_70" priority="translator">"一键染发"</string>
+    <string name="action_71" priority="translator">一键染发</string>
+
+    <!--    2021-05-27后增加-->
+    <string name="dialog_music_hint" priority="translator">"更多资源将由“华为音乐”提供。 是否允许？"</string>
+    <string name="dialog_music_hint_allow" priority="translator">"允许"</string>
+    <string name="sampling_tips" priority="translator">"视频压缩中"</string>
+    <string name="default_font_style" priority="translator">"默认"</string>
+    <string name="pip_lane_out_of_size" priority="translator">"画中画轨道已达上限"</string>
+    <string name="audio_lane_out_of_size" priority="translator">"音频轨道已达上限"</string>
+    <string name="most_text" priority="translator">"文本过长，最多 %s 字"</string>
+    <string name="audio_effect" priority="translator">"当前位置不可添加音效"</string>
+    <string name="audio_music" priority="translator">"当前位置不可添加音乐"</string>
+    <string name="audio_recording" priority="translator">"当前位置不可添加录音"</string>
+    <string name="hw_music_version_too_low" priority="translator">"当前华为音乐版本过低，无法使用。请前往应用市场更新。"</string>
+    <string name="forward_to_market" priority="translator">"前往"</string>
+    <string name="action_add_in_anim" priority="translator">"添加入场动画"</string>
+    <string name="action_add_out_anim" priority="translator">"添加出场动画"</string>
+    <string name="action_add_mask" priority="translator">"添加蒙版"</string>
+    <string name="action_delete_filter" priority="translator">"删除滤镜"</string>
+    <string name="action_delete_adjust" priority="translator">"删除调节"</string>
+    <string name="keybaord" priority="translator">"键盘"</string>
+    <string name="extracting_music" priority="translator">"提取音乐 %d"</string>
+
+    <plurals name="seconds_time">
+        <item priority="translator" quantity="other">"%ss"</item>
+    </plurals>
+    <string name="template_video_crop_tip" priority="translator">"拖动或双指缩放选择视频显示区域"</string>
+    <string name="selected_upper_limit" priority="translator">"已选素材数量达到上限"</string>
+
+    <!-- 7月1日后新增 -->
+    <string name="video_run_backward" priority="translator">"倒放中"</string>
+
+    <!-- 7月7日后新增 -->
+    <string name="exclusive_filter_tip_text1" priority="translator">"AI 专属滤镜小技巧"</string>
+    <string name="exclusive_filter_tip_text2" priority="translator">"克隆滤镜同时上传原图与效果图，AI 滤镜复用效果更好哦"</string>
+    <string name="exclusive_filter_tip_text3" priority="translator">"点击创建你想要的滤镜效果"</string>
+    <string name="exclusive_filter_tip_text4" priority="translator">"请为该滤镜命名"</string>
+    <string name="exclusive_filter_tip_text5" priority="translator">"专属滤镜，创建成功"</string>
+    <string name="exclusive_filter_tip_text6" priority="translator">"长按可进行重命名与删除操作"</string>
+    <string name="exclusive_filter_tip_text7" priority="translator">"确定删除该滤镜效果？\n草稿工程中已使用的该滤镜效果将丢失"</string>
+    <string name="exclusive_filter_create" priority="translator">"创建滤镜"</string>
+    <string name="exclusive_filter_clone" priority="translator">"克隆滤镜"</string>
+    <string name="exclusive_filter_mimics" priority="translator">"单图模仿"</string>
+    <string name="exclusive_filter_original" priority="translator">"原图"</string>
+    <string name="exclusive_filter_rendering" priority="translator">"滤镜效果图"</string>
+    <string name="exclusive_filter_button_create" priority="translator">"创建"</string>
+    <string name="exclusive_filter_rename" priority="translator">"重命名"</string>
+    <string name="exclusive_filter_photo" priority="translator">"最近相册"</string>
+    <string name="exclusive_filter_creating" priority="translator">"滤镜创建中"</string>
+    <string name="exclusive_filter_tip_text11" priority="translator">"最多可输入 %d 个字符"</string>
+    <string name="exclusive_filter_tip_text12" priority="translator">"创建失败，请检查网络后重试"</string>
+    <string name="exclusive_filter_tip_text13" priority="translator">"创建失败，创建数量已超上限"</string>
+    <string name="exclusive_filter_tip_text14" priority="translator">"当前位置不可添加专属滤镜"</string>
+    <string name="exclusive_filter_untitled" priority="translator">"未命名"</string>
+    <!-- 编辑页返回键提示 -->
+    <string name="save_toast" priority="translator">"已保存至创作作品"</string>
+
+    <!--人脸遮挡新增-->
+    <string name="cut_second_menu_block_face" priority="translator">人脸遮挡</string>
+    <string name="identify_interrupts" priority="translator">已取消人脸识别</string>
+    <string name="identify_failed" priority="translator">没有发现人脸</string>
+    <string name="clean_stickers" priority="translator">清除贴纸</string>
+    <string name="face_identifying" priority="translator">人脸识别中…</string>
+    <string name="face_blocking_success" priority="translator">人脸遮挡成功</string>
+    <string name="choose_blocking_face" priority="translator">人脸选择</string>
+    <string name="choose_face_blocking_sticker" priority="translator">遮挡贴纸</string>
+    <string name="fragment_capture" priority="translator">片段截取</string>
+    <string name="delete_other_sticker_first" priority="translator">"请先删除其他导入的贴纸再添加"</string>
+    <plurals name="face_blocking_max_face">
+        <item priority="translator" quantity="one">仅支持最多%d张人脸遮挡</item>
+        <item priority="translator" quantity="other">"仅支持最多 %d 张人脸遮挡"</item>
+    </plurals>
+    <string name="ai_face_create_fail" priority="translator">创建失败，贴纸数量已超过上限</string>
+    <string name="ai_not_wifi_attention" priority="translator">"当前非 Wi-Fi 环境，请注意流量消耗"</string>
+    <string name="ai_download_fail" priority="translator">下载失败，请重试</string>
+    <string name="face_sticker_del_title" priority="translator">"确定删除此贴纸？"</string>
+    <string name="face_sticker_del_text" priority="translator">草稿箱中已使用的人脸遮挡效果将丢失</string>
+    <string name="ai_button_ok" priority="translator">确定</string>
+    <string name="ai_button_cancel" priority="translator">取消</string>
+    <string name="ai_cropping" priority="translator">裁剪</string>
+    <string name="ai_cropping_text" priority="translator">拖动或双指缩放选择图片区域</string>
+
+    <!-- 混合模式-->
+    <string name="mix_mode1" priority="translator">正常</string>
+    <string name="mix_mode2" priority="translator">变暗</string>
+    <string name="mix_mode3" priority="translator">滤色</string>
+    <string name="mix_mode4" priority="translator">叠加</string>
+    <string name="mix_mode5" priority="translator">正片叠底</string>
+    <string name="mix_mode6" priority="translator">变亮</string>
+    <string name="mix_mode7" priority="translator">强光</string>
+    <string name="mix_mode8" priority="translator">柔光</string>
+    <string name="mix_mode9" priority="translator">线性加深</string>
+    <string name="mix_mode10" priority="translator">颜色加深</string>
+    <string name="mix_mode11" priority="translator">颜色减淡</string>
+    <!--人物追踪新增-->
+    <string name="cut_second_menu_human_tracking" priority="translator">人物追踪</string>
+    <string name="click_the_person_to_follow" priority="translator">请点击人物进行追踪</string>
+    <string name="swipe_to_select_frame" priority="translator">左右滑动选择帧</string>
+    <string name="intelligent_processing" priority="translator">智能处理中…</string>
+    <string name="no_person_selected" priority="translator">未选中人物，请重试</string>
+    <string name="people_tracking" priority="translator">人物追踪中</string>
+    <string name="tracking_cancel" priority="translator">取消人物追踪</string>
+    <string name="tracking_success" priority="translator">人物追踪成功</string>
+    <string name="no_person_tracked" priority="translator">未追踪到人物，请重试</string>
+    <string name="confirm_you_tracking_click" priority="translator">再次点击会取消上次的追踪，请确认</string>
+    <string name="ai_exception" priority="translator">啊哦~处理异常</string>
+    <string name="overwrite_original_tracking_result" priority="translator">"此操作会覆盖原有追踪结果"</string>
+
+    <!--一键美发-->
+    <string name="cut_second_menu_ai_hair" priority="translator">一键染发</string>
+    <string name="ai_hair_fail" priority="translator">染发失败</string>
+
+    <!--撤销or恢复-->
+    <string name="action_add_mask_undo" priority="translator">"撤销：添加蒙版"</string>
+    <string name="action_add_mask_redo" priority="translator">"重做：添加蒙版"</string>
+    <string name="action_delete_filter_undo" priority="translator">"撤销：删除滤镜"</string>
+    <string name="action_delete_filter_redo" priority="translator">"重做：删除滤镜"</string>
+    <string name="action_delete_adjust_undo" priority="translator">"撤销：删除调节"</string>
+    <string name="action_delete_adjust_redo" priority="translator">"重做：删除调节"</string>
+    <string name="action_add_cycle_anim_undo" priority="translator">"撤销：添加循环动画"</string>
+    <string name="action_add_cycle_anim" priority="translator">"重做：添加循环动画"</string>
+    <string name="action_add_combine_anim_undo" priority="translator">"撤销：添加组合动画"</string>
+    <string name="action_add_combine_anim" priority="translator">"重做：添加组合动画"</string>
+
+    <string name="cut_second_menu_block" priority="translator">AI 去遮挡</string>
+    <string name="block_description" priority="translator">将所选素材上传至云端处理，以获得最佳遮挡效果，处理完成后云端不会存储。</string>
+    <!--AI趣玩-->
+    <string name="motion_photo_fail" priority="translator">"动态照片生成失败"</string>
+    <string name="ai_color_fail" priority="translator">"AI着色生成失败"</string>
+    <string name="fun_description" priority="translator">"本服务提供最新奇有趣的 AI 玩法。您所选的素材会上传至云端处理，处理完成后云端不会储存。"</string>
+    <string name="motion_photo_success" priority="translator">动态照片生成成功</string>
+    <string name="ai_color_success" priority="translator">AI着色生成成功</string>
+    <string name="motion_photo" priority="translator">动态照片</string>
+    <string name="ai_color" priority="translator">AI着色</string>
+    <string name="motion_photo_generated" priority="translator">动态照片生成中</string>
+    <string name="ai_color_generated" priority="translator">AI着色生成中</string>
+    <string name="ai_hair_generated" priority="translator">一键染发生成中</string>
+    <string name="ai_color_cancel" priority="translator">取消AI着色</string>
+    <string name="ai_hair_cancel" priority="translator">取消一键染发</string>
+    <string name="motion_photo_cancel" priority="translator">取消动态照片</string>
+    <string name="ai_limit" priority="translator">仅支持同时使用一种AI功能</string>
+
+    <!--旋转角度下拉-->
+    <string-array name="rotation_menu">
+        <item priority="translator">"全部"</item>
+        <item priority="translator">"竖屏"</item>
+        <item priority="translator">"横屏"</item>
+    </string-array>
+
+    <string name="music_library">曲库</string>
+    <string name="music_local">本地</string>
+    <string name="app_confirm" priority="translator">"确定"</string>
+    <string name="app_cancel" priority="translator">"取消"</string>
+    <string name="next_step_text" priority="translator">"下一步"</string>
+    <string name="is_give_up_edit_t" priority="translator">"确定放弃创作？"</string>
+    <string name="is_give_up_yes_t" priority="translator">"放弃"</string>
+    <string name="is_give_up_edit_t1" priority="translator">"是否放弃编辑？"</string>
+
+    <string name="music_hot" priority="translator">热点</string>
+
+    <string name="media_max_send_images_or_videos_format">最多只能选择%d个图片/视频</string>
+    <string name="export_return">取消</string>
+    <string name="picture_video">照片视频</string>
+    <string name="export_video">视频导出</string>
+    <string name="export_progress">%</string>
+    <string name="fetch_music_text">提取音乐</string>
+    <string name="edit_item3">文字</string>
+
+    <string name="total_time_init">00:00</string>
+    <string name="running_time_init">00:00</string>
+    <!--无障碍-->
+    <string name="close_wza">关闭</string>
+    <string name="back_wza">返回</string>
+    <string name="confirm_wza">确定</string>
+
+    <string name="app_permission">应用权限</string>
+    <string name="need_permission">该功能需要开启如下权限才能使用，是否现在设置？</string>
+    <string name="permission_storage">·存储</string>
+    <string name="you_can_close_permissino">您随时可在应用设置中，关闭以上权限。</string>
+    <string name="dialog_left_btn">取消</string>
+    <string name="dialog_right_btn">前往设置</string>
+
+    <string name="home_start_clip" priority="translator">"开始创作"</string>
+    <string name="des_title_cut" priority="translator">"创作作品"</string>
+    <string name="license_invalid" priority="translator">License校验失败</string>
+    <string name="ai_color_limit" priority="translator">AI着色仅支持100M以下视频</string>
+    <string name="cpu_limit" priority="translator">32位系统不支持AI相关功能</string>
+    <string name="reenact_limit" priority="translator">该功能仅支持图片</string>
+</resources>

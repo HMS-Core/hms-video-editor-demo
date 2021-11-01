@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/export_bg"
+    android:paddingTop="@dimen/dp_16">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_export"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/dp_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:id="@+id/resolution_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="start|center_vertical"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@string/export_resolution"
+                    android:textColor="@color/color_fff_90"
+                    android:textSize="@dimen/sp_14"
+                    android:fontFamily="HarmonyHeiTi" />
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="end|center_vertical"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@string/px_prompt"
+                    android:textColor="@color/color_fff_60"
+                    android:textSize="@dimen/sp_10"
+                    android:fontFamily="HarmonyHeiTi" />
+
+            </LinearLayout>
+
+            <SeekBar
+                android:id="@+id/seek_bar_resolution"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_4"
+                android:max="3"
+                android:maxHeight="4dp"
+                android:minHeight="4dp"
+                android:progressDrawable="@drawable/seekbar_progress_drawable"
+                android:progressTint="@color/color_text_focus"
+                android:thumb="@drawable/seek_bar_white_thumb"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/resolution_view" />
+
+            <!-- 正常分辨率 -->
+            <LinearLayout
+                android:id="@+id/resolution_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_4"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/seek_bar_resolution" >
+
+                <TextView
+                    android:id="@+id/text_720P"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="start|center_vertical"
+                    android:textColor="@color/color_fff_60"
+                    android:fontFamily="HarmonyHeiTi"
+                    android:textDirection="locale"
+                    android:textSize="@dimen/sp_10" />
+
+                <TextView
+                    android:id="@+id/text_1080P"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:textColor="@color/color_text_focus"
+                    android:fontFamily="HarmonyHeiTi"
+                    android:textSize="@dimen/sp_10" />
+
+                <TextView
+                    android:id="@+id/text_2K"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:textColor="@color/color_fff_60"
+                    android:fontFamily="HarmonyHeiTi"
+                    android:textSize="@dimen/sp_10" />
+
+                <TextView
+                    android:id="@+id/text_4K"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end|center_vertical"
+                    android:textColor="@color/color_fff_60"
+                    android:fontFamily="HarmonyHeiTi"
+                    android:textDirection="locale"
+                    android:textSize="@dimen/sp_10" />
+
+            </LinearLayout>
+
+            <!-- 低内存分辨率 -->
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/resolution_layout_low"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_4"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/seek_bar_resolution" >
+
+                <TextView
+                    android:id="@+id/text_720P_low"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="start|center_vertical"
+                    android:textColor="@color/color_fff_60"
+                    android:fontFamily="HarmonyHeiTi"
+                    android:textDirection="locale"
+                    android:textSize="@dimen/sp_10" />
+
+                <TextView
+                    android:id="@+id/text_1080P_low"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end|center_vertical"
+                    android:textColor="@color/color_text_focus"
+                    android:fontFamily="HarmonyHeiTi"
+                    android:textDirection="locale"
+                    android:textSize="@dimen/sp_10" />
+
+            </LinearLayout>
+
+            <!-- nava9分辨率 -->
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/resolution_layout_nava9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_4"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/seek_bar_resolution" >
+
+                <TextView
+                    android:id="@+id/text_720P_nava9"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="start|center_vertical"
+                    android:textColor="@color/color_fff_60"
+                    android:fontFamily="HarmonyHeiTi"
+                    android:textDirection="locale"
+                    android:textSize="@dimen/sp_10" />
+
+                <TextView
+                    android:id="@+id/text_1080P_nava9"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="@color/color_fff_60"
+                    android:fontFamily="HarmonyHeiTi"
+                    android:textDirection="locale"
+                    android:textSize="@dimen/sp_10" />
+
+                <TextView
+                    android:id="@+id/text_2K_nava9"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end|center_vertical"
+                    android:textColor="@color/color_text_focus"
+                    android:fontFamily="HarmonyHeiTi"
+                    android:textDirection="locale"
+                    android:textSize="@dimen/sp_10" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/frame_rate_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_60"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/resolution_view">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="start|center_vertical"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@string/export_frame_rate"
+                    android:textColor="@color/color_fff_90"
+                    android:textSize="@dimen/sp_14"
+                    android:fontFamily="HarmonyHeiTi" />
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="end|center_vertical"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@string/fps_prompt"
+                    android:textColor="@color/color_fff_60"
+                    android:textSize="@dimen/sp_10"
+                    android:fontFamily="HarmonyHeiTi" />
+
+            </LinearLayout>
+
+            <SeekBar
+                android:id="@+id/seek_bar_frame_rate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_4"
+                android:max="4"
+                android:maxHeight="4dp"
+                android:minHeight="4dp"
+                android:progressDrawable="@drawable/seekbar_progress_drawable"
+                android:progressTint="@color/color_text_focus"
+                android:thumb="@drawable/seek_bar_white_thumb"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/frame_rate_view" />
+
+            <!-- 正常帧率 -->
+            <LinearLayout
+                android:id="@+id/frame_rate_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_4"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/seek_bar_frame_rate" >
+
+                <TextView
+                    android:id="@+id/text_24"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="start|center_vertical"
+                    android:textColor="@color/color_fff_60"
+                    android:fontFamily="HarmonyHeiTi"
+                    android:textDirection="locale"
+                    android:textSize="@dimen/sp_10" />
+
+                <TextView
+                    android:id="@+id/text_25"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:textColor="@color/color_fff_60"
+                    android:fontFamily="HarmonyHeiTi"
+                    android:textSize="@dimen/sp_10" />
+
+                <TextView
+                    android:id="@+id/text_30"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:textColor="@color/color_text_focus"
+                    android:fontFamily="HarmonyHeiTi"
+                    android:textSize="@dimen/sp_10" />
+
+                <TextView
+                    android:id="@+id/text_50"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:textColor="@color/color_fff_60"
+                    android:fontFamily="HarmonyHeiTi"
+                    android:textSize="@dimen/sp_10" />
+
+                <TextView
+                    android:id="@+id/text_60"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end|center_vertical"
+                    android:textColor="@color/color_fff_60"
+                    android:fontFamily="HarmonyHeiTi"
+                    android:textDirection="locale"
+                    android:textSize="@dimen/sp_10" />
+
+            </LinearLayout>
+
+            <!-- 低内存帧率 -->
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/frame_rate_layout_low"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_4"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/seek_bar_frame_rate" >
+
+                <TextView
+                    android:id="@+id/text_24_low"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="start|center_vertical"
+                    android:textColor="@color/color_fff_60"
+                    android:fontFamily="HarmonyHeiTi"
+                    android:textDirection="locale"
+                    android:textSize="@dimen/sp_10" />
+
+                <TextView
+                    android:id="@+id/text_25_low"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="@color/color_fff_60"
+                    android:fontFamily="HarmonyHeiTi"
+                    android:textSize="@dimen/sp_10" />
+
+                <TextView
+                    android:id="@+id/text_30_low"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end|center_vertical"
+                    android:textColor="@color/color_text_focus"
+                    android:fontFamily="HarmonyHeiTi"
+                    android:textDirection="locale"
+                    android:textSize="@dimen/sp_10" />
+
+            </LinearLayout>
+
+            <TextView
+                android:visibility="invisible"
+                android:id="@+id/tv_high_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:text="@string/high_mode"
+                android:textColor="@color/color_fff_90"
+                android:fontFamily="HarmonyHeiTi"
+                android:textSize="@dimen/sp_14"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/ic_high_mode_desc"
+                app:layout_constraintBottom_toBottomOf="@id/ic_high_mode_desc" />
+
+            <ImageView
+                android:visibility="invisible"
+                android:id="@+id/ic_high_mode_desc"
+                android:layout_width="@dimen/dp_25"
+                android:layout_height="@dimen/dp_25"
+                android:layout_marginTop="@dimen/dp_60"
+                android:layout_marginStart="@dimen/dp_8"
+                android:contentDescription="@string/wxts"
+                android:src="@drawable/ic_export_desc"
+                app:layout_constraintStart_toEndOf="@id/tv_high_mode"
+                app:layout_constraintTop_toBottomOf="@id/frame_rate_view" />
+
+            <Switch
+                android:visibility="invisible"
+                android:id="@+id/switch_high_video_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="16dp"
+                android:thumb="@drawable/thumb_normal"
+                android:track="@drawable/track_selector"
+                app:layout_constraintBottom_toBottomOf="@+id/ic_high_mode_desc"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/ic_high_mode_desc"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+            <TextView
+                android:id="@+id/tv_tip2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_2"
+                android:fontFamily="HarmonyHeiTi"
+                android:visibility="invisible"
+                android:text="@string/export_desc1"
+                android:textColor="@color/color_fff_60"
+                android:textSize="@dimen/sp_10"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ic_high_mode_desc" />
+
+            <Button
+                android:id="@+id/export"
+                android:layout_width="@dimen/dp_192"
+                android:layout_height="@dimen/dp_40"
+                android:layout_marginTop="@dimen/dp_62"
+                android:paddingStart="@dimen/dp_8"
+                android:paddingEnd="@dimen/dp_8"
+                android:background="@drawable/background_card_selector"
+                android:text="@string/confirm_export"
+                android:textColor="@color/translucent_white_14"
+                android:fontFamily="HarmonyHeiTi"
+                android:gravity="center"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textSize="@dimen/sp_16"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_tip2" />
+
+
+            <TextView
+                android:id="@+id/tv_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dp_40"
+                android:text="@string/export_size"
+                android:textColor="@color/color_fff_60"
+                android:fontFamily="HarmonyHeiTi"
+                android:textSize="@dimen/sp_10"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_tip2" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <!--底部-->
+    <TextView
+        android:id="@+id/tv_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_60"
+        android:text="@string/export_no_lock"
+        android:textColor="@color/translucent_white_60"
+        android:fontFamily="HarmonyHeiTi"
+        android:textSize="@dimen/sp_12"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

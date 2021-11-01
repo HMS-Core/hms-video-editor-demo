@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cl_parent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/dp_12"
+    android:layout_marginEnd="@dimen/dp_12"
+    android:layout_marginBottom="@dimen/dp_16"
+    android:background="@drawable/dialog_music_hint_bg"
+    android:paddingBottom="@dimen/dp_25">
+
+    <TextView
+        android:id="@+id/tv_title_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_24"
+        android:gravity="center"
+        android:ellipsize="end"
+        android:paddingStart="@dimen/dp_24"
+        android:paddingEnd="@dimen/dp_24"
+        android:text="@string/dialog_music_hint"
+        android:textColor="@color/translucent_white_90"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_cancel"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_15"
+        android:layout_marginEnd="@dimen/dp_8"
+        android:background="@drawable/dialog_common_utils_bg"
+        android:fontFamily="HarmonyHeiTi"
+        android:gravity="center"
+        android:paddingTop="@dimen/dp_9"
+        android:paddingBottom="@dimen/dp_9"
+        android:text="@string/video_edit_export_cancel"
+        android:textColor="@color/color_text_focus"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:textAllCaps="true"
+        app:layout_constraintEnd_toStartOf="@id/view_line"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_hint" />
+
+    <View
+        android:id="@+id/view_line"
+        android:layout_width="@dimen/dp_1"
+        android:layout_height="@dimen/dp_23"
+        android:layout_marginTop="@dimen/dp_24"
+        android:background="@color/color_music_hint_line_bg"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_hint" />
+
+    <TextView
+        android:id="@+id/tv_allow"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_8"
+        android:layout_marginEnd="@dimen/dp_20"
+        android:background="@drawable/dialog_common_utils_bg"
+        android:fontFamily="HarmonyHeiTi"
+        android:gravity="center"
+        android:paddingTop="@dimen/dp_9"
+        android:paddingBottom="@dimen/dp_9"
+        android:text="@string/dialog_music_hint_allow"
+        android:textColor="@color/color_text_focus"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        app:layout_constraintBottom_toBottomOf="@id/tv_cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/view_line"
+        app:layout_constraintTop_toTopOf="@id/tv_cancel" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="@dimen/dp_16"
+    android:layout_marginTop="@dimen/dp_24"
+    android:layout_marginEnd="@dimen/dp_16"
+    android:layout_marginBottom="@dimen/dp_24"
+    android:clickable="true"
+    android:focusable="true">
+
+    <TextureView
+        android:id="@+id/page_video"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/iv_video_first_bitmap"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <RelativeLayout
+        android:id="@+id/rl_video_play_button_page"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <RelativeLayout
+        android:id="@+id/play_layout"
+        android:layout_width="@dimen/dp_132"
+        android:layout_height="@dimen/dp_132"
+        android:layout_centerInParent="true"
+        android:background="@drawable/video_detail_play_bg"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="@dimen/dp_31"
+            android:layout_height="@dimen/dp_36"
+            android:layout_centerInParent="true"
+            android:src="@drawable/video_detail_play"
+            android:contentDescription="@string/play"/>
+
+    </RelativeLayout>
+    
+</RelativeLayout>

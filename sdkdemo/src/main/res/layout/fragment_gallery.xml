@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:ignore="MissingConstraints">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/choice_video_picture"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_56"
+        android:layout_marginStart="@dimen/dp_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/vertical_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <TextView
+            android:id="@+id/tv_video"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_22"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_18"
+            android:layout_marginEnd="@dimen/dp_8"
+            android:fontFamily="HarmonyHeiTi"
+            android:gravity="end|center_vertical"
+            android:minWidth="@dimen/dp_32"
+            android:singleLine="true"
+            android:text="@string/video"
+            android:textColor="@color/tab_text_tint_color"
+            android:textSize="@dimen/sp_16"
+            app:layout_constraintEnd_toStartOf="@+id/vertical_guideline"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SpUsage" />
+
+        <View
+            android:id="@+id/indicator_video"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="2dp"
+            android:layout_marginTop="@dimen/dp_6"
+            android:background="@color/tab_text_tint_color"
+            android:minWidth="@dimen/dp_32"
+            app:layout_constraintEnd_toEndOf="@+id/tv_video"
+            app:layout_constraintStart_toStartOf="@+id/tv_video"
+            app:layout_constraintTop_toBottomOf="@+id/tv_video" />
+
+        <TextView
+            android:id="@+id/tv_picture"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_22"
+            android:layout_marginStart="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_18"
+            android:fontFamily="HarmonyHeiTi"
+            android:gravity="start|center_vertical"
+            android:minWidth="@dimen/dp_32"
+            android:singleLine="true"
+            android:text="@string/picture"
+            android:textColor="@color/translucent_white_90"
+            android:textSize="@dimen/sp_16"
+            app:layout_constraintStart_toEndOf="@+id/vertical_guideline"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/indicator_picture"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="2dp"
+            android:layout_marginTop="@dimen/dp_6"
+            android:background="@color/tab_text_tint_color"
+            android:minWidth="@dimen/dp_32"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="@+id/tv_picture"
+            app:layout_constraintStart_toStartOf="@+id/tv_picture"
+            app:layout_constraintTop_toBottomOf="@+id/tv_picture" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/rotation_select_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/choice_video_picture"
+        app:layout_constraintBottom_toBottomOf="@id/choice_video_picture">
+
+        <TextView
+            android:id="@+id/rotation_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/dp_22"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:fontFamily="HarmonyHeiTi"
+            android:singleLine="true"
+            android:textColor="@color/color_fff_90"
+            android:textSize="@dimen/sp_16"
+            tools:ignore="SpUsage" />
+
+        <ImageView
+            android:layout_width="@dimen/dp_16"
+            android:layout_height="@dimen/dp_16"
+            android:layout_marginStart="@dimen/dp_7"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/icon_spinner_bottom"
+            tools:ignore="ContentDescription" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fragment_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_marginEnd="@dimen/dp_16"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/choice_video_picture"
+        tools:ignore="MissingConstraints" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

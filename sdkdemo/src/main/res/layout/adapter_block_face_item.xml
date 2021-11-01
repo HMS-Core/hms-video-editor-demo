@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayout"
+    android:layout_width="@dimen/dp_56"
+    android:layout_height="@dimen/dp_56"
+    tools:ignore="MissingConstraints">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.huawei.hms.videoeditor.ui.common.view.image.RoundImage
+            android:id="@+id/item_image_view"
+            android:layout_width="@dimen/dp_56"
+            android:layout_height="@dimen/dp_56"
+            android:scaleType="centerCrop"
+            app:radius="@dimen/dp_4" />
+
+        <View
+            android:id="@+id/view_select_face"
+            android:layout_width="@dimen/dp_56"
+            android:layout_height="@dimen/dp_56"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:background="@drawable/bg_select_face" />
+
+        <com.huawei.hms.videoeditor.ui.common.view.image.RoundImage
+            android:id="@+id/iv_sticker"
+            android:scaleType="centerCrop"
+            android:layout_gravity="center"
+            android:layout_width="@dimen/dp_48"
+            android:layout_height="@dimen/dp_48"
+            app:radius="@dimen/dp_4" />
+
+        <com.huawei.hms.videoeditor.ui.common.view.image.RoundImage
+            android:id="@+id/iv_blur"
+            android:scaleType="centerCrop"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:src="@drawable/bg_face_add_mosaic"
+            app:radius="@dimen/dp_4" />
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:button="@drawable/bg_choose_face"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:focusable="false"
+            android:clickable="false"
+            android:layout_gravity="bottom|end" />
+
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

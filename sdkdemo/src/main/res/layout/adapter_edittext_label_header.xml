@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/dp_40"
+    android:layout_height="@dimen/dp_40"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/filter_add_header_bg"
+    tools:ignore="MissingConstraints"
+    android:id="@+id/layout_head">
+
+    <View
+        android:id="@+id/bg_view_head"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:visibility="gone"
+        android:background="@drawable/canvas_no_bg_white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+       />
+
+
+    <ImageView
+        android:id="@+id/item_image_view"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:layout_centerInParent="true"
+        android:src="@drawable/icon_cancel_wu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/no"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout >

@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include
+        android:id="@+id/include_canvas_background"
+        layout="@layout/custom_operate_title"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/canvas_scrollview"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_0"
+        android:layout_marginBottom="@dimen/dp_48"
+        android:scrollbars="none"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include_canvas_background">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_15">
+
+            <TextView
+                android:id="@+id/canvas_blur_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:fontFamily="HarmonyHeiTi"
+                android:text="@string/edit_item10_3"
+                android:textColor="@color/color_999"
+                android:textSize="@dimen/dp_12"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SpUsage" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/rl_layout_canvas_bur"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_8"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/canvas_blur_text">
+
+                <ImageView
+                    android:id="@+id/rl_add"
+                    android:layout_width="@dimen/dp_48"
+                    android:layout_height="@dimen/dp_48"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:background="@drawable/blur_no_bg_selector"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/icon_cancel_wu"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:contentDescription="@string/no"/>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/rl_custom"
+                    android:layout_width="@dimen/dp_48"
+                    android:layout_height="@dimen/dp_48"
+                    android:layout_marginStart="@dimen/dp_8"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:background="@drawable/blur_no_bg_selector"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/rl_add"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/item_custom_view"
+                        android:layout_width="@dimen/dp_28"
+                        android:layout_height="@dimen/dp_8"
+                        android:src="@drawable/icon_custom" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/item_custom_view"
+                        android:layout_marginStart="@dimen/dp_2"
+                        android:layout_marginEnd="@dimen/dp_2"
+                        android:layout_marginTop="@dimen/dp_3"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:text="@string/custom"
+                        android:textColor="@color/db_color"
+                        android:textSize="@dimen/dp_10"
+                        tools:ignore="SpUsage" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/blue_recycler_view"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="@dimen/dp_48"
+                    android:layout_marginStart="@dimen/dp_8"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/rl_custom"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.huawei.hms.videoeditor.ui.mediaeditor.preview.view.MySeekBar
+                    android:id="@+id/blur_custom_seek"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="@dimen/dp_45"
+                    android:layout_marginStart="@dimen/dp_8"
+                    android:layout_marginEnd="@dimen/dp_12"
+                    android:layout_marginBottom="@dimen/dp_8"
+                    android:paddingStart="@dimen/dp_4"
+                    android:paddingEnd="@dimen/dp_4"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toEndOf="@+id/rl_custom"
+                    app:layout_constraintTop_toTopOf="@+id/rl_custom"
+                    app:layout_constraintBottom_toBottomOf="@+id/rl_layout_canvas_bur"
+                    app:layout_constraintEnd_toEndOf="@+id/rl_layout_canvas_bur"
+                    app:line_width="4dp"
+                    app:progress="0"
+                    app:thumb_radius="@dimen/dp_7"
+                    app:outer_circle_bg="@color/white"
+                    app:inner_circle_bg="@color/white"
+                    app:line_bg="@color/color_fff_10"
+                    app:seek_text_color="@color/white"
+                    app:value_bg="@color/color_text_focus"
+                    app:progress_anchor="0"
+                    app:progress_max="100"
+                    app:progress_min="0"
+                    app:show_text="true" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/canvas_color_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_16"
+                android:fontFamily="HarmonyHeiTi"
+                android:text="@string/edit_item10_1"
+                android:textColor="@color/color_999"
+                android:textSize="@dimen/dp_12"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rl_layout_canvas_bur"
+                tools:ignore="SpUsage" />
+
+            <ImageView
+                android:id="@+id/custom_color"
+                android:layout_width="@dimen/dp_36"
+                android:layout_height="@dimen/dp_36"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_8"
+                android:background="@drawable/icon_seban"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/canvas_color_text"
+                android:contentDescription="@string/cavas_color"/>
+
+            <View
+                android:id="@+id/custom_color_bg"
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:background="@drawable/blur_no_bg_white"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/custom_color"
+                app:layout_constraintEnd_toEndOf="@+id/custom_color"
+                app:layout_constraintStart_toStartOf="@+id/custom_color"
+                app:layout_constraintTop_toTopOf="@+id/custom_color" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/color_recycler_view"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_0"
+                android:layout_marginStart="@dimen/dp_8"
+                app:layout_constraintBottom_toBottomOf="@+id/custom_color_bg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/custom_color_bg"
+                app:layout_constraintTop_toTopOf="@+id/custom_color_bg" />
+
+            <TextView
+                android:id="@+id/canvas_style_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_16"
+                android:fontFamily="HarmonyHeiTi"
+                android:text="@string/edit_item10_2"
+                android:textColor="@color/color_999"
+                android:textSize="@dimen/dp_12"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/custom_color"
+                tools:ignore="SpUsage" />
+
+            <RelativeLayout
+                android:id="@+id/rl_fragment_canvas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/canvas_style_text">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/loading_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:background="@color/color_20"
+                    android:visibility="gone">
+
+                    <com.huawei.hms.videoeditor.ui.common.view.loading.LoadingIndicatorView
+                        android:id="@+id/indicator"
+                        android:layout_width="@dimen/dp_75"
+                        android:layout_height="@dimen/dp_75"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/style_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:layout_marginEnd="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/error_layout"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/canvas_style_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:gravity="center_vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/error_image"
+                    android:layout_width="@dimen/dp_48"
+                    android:layout_height="@dimen/dp_48"
+                    android:layout_centerHorizontal="true"
+                    android:alpha="0.6"
+                    android:src="@drawable/pic_error"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/error_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/error_image"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:fontFamily="HYQiHei 55S"
+                    android:gravity="start"
+                    android:text="@string/result_illegal"
+                    android:textColor="#99FFFFFF"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <TextView
+        android:id="@+id/canvas_color_all"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_16"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_15"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginBottom="@dimen/dp_15"
+        android:drawablePadding="@dimen/dp_4"
+        android:text="@string/apply_to_all"
+        android:textColor="@drawable/icon_apply_all_text_selector"
+        android:textSize="@dimen/dp_12"
+        android:textAllCaps="true"
+        app:drawableStartCompat="@drawable/icon_apply_all_selector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/canvas_scrollview"
+        tools:ignore="SpUsage" />
+</androidx.constraintlayout.widget.ConstraintLayout>

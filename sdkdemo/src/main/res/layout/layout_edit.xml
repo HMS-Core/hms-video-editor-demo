@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_56"
+    android:paddingTop="@dimen/dp_8"
+    android:paddingBottom="@dimen/dp_8"
+    android:background="@color/export_bg">
+
+    <EditText
+        android:id="@+id/edit_text_template"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_toStartOf="@id/img_certain"
+        android:background="@drawable/bg_edit"
+        android:hint="@string/inputtext"
+        android:maxLength="50"
+        android:paddingStart="@dimen/dp_17"
+        android:paddingEnd="@dimen/dp_17"
+        android:textColor="@color/white"
+        android:textColorHint="@color/color_fff_20"
+        android:textCursorDrawable="@drawable/color_edit"
+        android:textSize="@dimen/sp_16" />
+
+    <ImageView
+        android:id="@+id/img_certain"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/confirm_wza"
+        android:src="@drawable/icon_top_queding" />
+    
+</RelativeLayout>

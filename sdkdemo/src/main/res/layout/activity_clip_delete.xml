@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/dp_112"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginBottom="@dimen/dp_16"
+        android:background="@drawable/bg_home_clip_delete_dialog"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/dp_16"
+            android:paddingEnd="@dimen/dp_16"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_24"
+            android:textColor="@color/translucent_white_90"
+            android:fontFamily="HarmonyHeiTi"
+            android:text="@string/home_select_delete_video"
+            android:textSize="@dimen/dp_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SpUsage" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_16"
+            android:layout_marginBottom="@dimen/dp_16"
+            android:layout_gravity="bottom"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/home_clip_delete_dialog_cancel"
+                android:layout_width="@dimen/dp_136"
+                android:layout_height="@dimen/dp_40"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:background="@drawable/home_rename_bt_bg_selector"
+                android:fontFamily="HarmonyHeiTi"
+                android:gravity="center"
+                android:text="@string/video_edit_export_cancel"
+                android:textColor="@color/color_text_focus"
+                android:textSize="@dimen/dp_16"
+                android:textAllCaps="true"
+                tools:ignore="SpUsage" />
+
+            <View
+                android:layout_width="@dimen/dp_1"
+                android:layout_height="@dimen/dp_24"
+                android:background="#33FFFFFF" />
+
+            <TextView
+                android:id="@+id/home_clip_delete_dialog_ok"
+                android:layout_width="@dimen/dp_136"
+                android:layout_height="@dimen/dp_40"
+                android:layout_marginStart="@dimen/dp_16"
+                android:background="@drawable/home_rename_bt_bg_selector"
+                android:fontFamily="HarmonyHeiTi"
+                android:gravity="center"
+                android:text="@string/cut_second_menu_delete"
+                android:textColor="@color/color_text_focus"
+                android:textSize="@dimen/dp_16"
+                android:textAllCaps="true"
+                tools:ignore="SpUsage" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- 下拉菜单弹窗 -->
+    <LinearLayout
+        android:id="@+id/rotation_group"
+        android:layout_width="@dimen/dp_144"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rotation_dialog"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:id="@+id/rotation_child_full"
+            android:layout_width="@dimen/dp_144"
+            android:layout_height="@dimen/dp_48"
+            android:background="@drawable/bg_rotation_popup_selector_top"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/dp_16"
+                android:layout_height="@dimen/dp_16"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginEnd="@dimen/dp_8"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/icon_full_screen_spinner"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/rotation_full_screen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:fontFamily="HarmonyHeiTi"
+                android:singleLine="true"
+                android:textColor="@color/color_fff_90"
+                android:textSize="@dimen/sp_16"
+                tools:ignore="SpUsage" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/translucent_white_95"/>
+
+        <LinearLayout
+            android:id="@+id/rotation_child_portrait"
+            android:layout_width="@dimen/dp_144"
+            android:layout_height="@dimen/dp_48"
+            android:background="@drawable/bg_rotation_popup_selector"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/dp_16"
+                android:layout_height="@dimen/dp_16"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginEnd="@dimen/dp_8"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/icon_portrait_screen_spinner"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/rotation_portrait_screen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:fontFamily="HarmonyHeiTi"
+                android:singleLine="true"
+                android:textColor="@color/color_fff_90"
+                android:textSize="@dimen/sp_16"
+                tools:ignore="SpUsage" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/translucent_white_95"/>
+
+        <LinearLayout
+            android:id="@+id/rotation_child_land"
+            android:layout_width="@dimen/dp_144"
+            android:layout_height="@dimen/dp_48"
+            android:background="@drawable/bg_rotation_popup_selector_bottom"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/dp_16"
+                android:layout_height="@dimen/dp_16"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginEnd="@dimen/dp_8"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/icon_landscape_spinner"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/rotation_landscape"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:fontFamily="HarmonyHeiTi"
+                android:singleLine="true"
+                android:textColor="@color/color_fff_90"
+                android:textSize="@dimen/sp_16"
+                tools:ignore="SpUsage" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

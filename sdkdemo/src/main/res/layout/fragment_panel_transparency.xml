@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/custom_operate_title" />
+
+    <TextView
+        android:id="@+id/seek_total_0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textSize="@dimen/dp_14"
+        android:textColor="#FFFFFFFF"
+        android:fontFamily="Helvetica"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/sb_items"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginBottom="@dimen/dp_3" />
+
+    <com.huawei.hms.videoeditor.ui.mediaeditor.preview.view.MySeekBar
+        android:id="@+id/sb_items"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_45"
+        android:layout_marginStart="@dimen/dp_8"
+        android:layout_marginTop="@dimen/dp_11"
+        android:layout_marginEnd="@dimen/dp_8"
+        android:layout_marginBottom="@dimen/dp_28"
+        android:paddingStart="@dimen/dp_5"
+        android:paddingEnd="@dimen/dp_5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/seek_total"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toEndOf="@+id/seek_total_0"
+        app:layout_constraintTop_toBottomOf="@id/include"
+        app:line_width="@dimen/dp_4"
+        app:thumb_radius="@dimen/dp_7"
+        app:progress="50"
+        app:progress_anchor="0"
+        app:progress_max="100"
+        app:progress_min="0"
+        app:show_text="true" />
+
+    <TextView
+        android:id="@+id/seek_total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginBottom="@dimen/dp_3"
+        android:fontFamily="Helvetica"
+        android:text="100"
+        android:textColor="#FFFFFFFF"
+        android:textSize="@dimen/dp_14"
+        app:layout_constraintBottom_toBottomOf="@id/sb_items"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

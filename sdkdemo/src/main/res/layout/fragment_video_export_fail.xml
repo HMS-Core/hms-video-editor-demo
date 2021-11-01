@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/export_bg">
+
+
+    <Button
+        android:id="@+id/back"
+        android:layout_width="@dimen/dp_180"
+        android:layout_height="@dimen/dp_36"
+        android:layout_marginBottom="@dimen/dp_16"
+        android:background="@drawable/background_card_selector"
+        android:onClick="finishClick"
+        android:text="@string/export_return"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/export_again"
+        android:layout_width="@dimen/dp_180"
+        android:layout_height="@dimen/dp_36"
+        android:layout_marginBottom="@dimen/dp_12"
+        android:background="@drawable/background_card_selector"
+        android:text="@string/re_export"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_30"
+        android:text="@string/export_fail_simple"
+        android:textColor="@color/translucent_white_10"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

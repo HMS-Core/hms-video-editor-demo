@@ -27,42 +27,9 @@ task clean(type: Delete) {
 }
 
 ext {
-
-    //*******************************项目依赖版本********************************
-    //sdk发布版本号
     ve_sdk_versionCode = '10100301'
     ve_sdk_versionName = '1.1.0.301'
 
     ve_apk_versionCode = '10100301'
     ve_apk_versionName= '1.1.0.301'
-
-}
-
-//sdk
-if ( null != System.getenv('ve_versionCode') && (!System.getenv('ve_versionCode').isEmpty())) {
-    ext.ve_sdk_versionCode = System.getenv('ve_versionCode')
-}
-
-if ( null != System.getenv('ve_versionName') && (!System.getenv('ve_versionName').isEmpty())) {
-    ext.ve_sdk_versionName = System.getenv('ve_versionName')
-}
-
-if ( null != System.getenv('ve_versionCode') && (!System.getenv('ve_versionCode').isEmpty())) {
-    ext.ve_apk_versionCode = System.getenv('ve_versionCode')
-}
-
-if ( null != System.getenv('ve_versionName') && (!System.getenv('ve_versionName').isEmpty())) {
-    ext.ve_apk_versionName = System.getenv('ve_versionName')
-}
-
-if (null != System.getenv('needHwSign') && (!System.getenv('needHwSign').isEmpty())) {
-    ext.needHwSign = System.getenv('needHwSign')
-}
-
-if (null != System.getenv('useRemoteImplementation') && (!System.getenv('useRemoteImplementation').isEmpty())) {
-    ext.useRemoteImplementation = System.getenv('useRemoteImplementation')
-}
-
-if (null != System.getenv('ve_Common_model') && (!System.getenv('ve_Common_model').isEmpty())) {
-    ext.ve_Common_model = System.getenv('ve_Common_model')
 }

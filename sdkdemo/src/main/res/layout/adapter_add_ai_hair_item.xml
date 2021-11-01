@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/dp_58"
+    android:layout_height="@dimen/dp_75"
+    tools:ignore="MissingConstraints">
+
+    <ImageView
+        android:id="@+id/item_image_view_ai_hair"
+        android:layout_width="@dimen/dp_56"
+        android:layout_height="@dimen/dp_56"
+        app:layout_constraintBottom_toBottomOf="@+id/item_select_view_ai_hair"
+        app:layout_constraintEnd_toEndOf="@+id/item_select_view_ai_hair"
+        app:layout_constraintStart_toStartOf="@+id/item_select_view_ai_hair"
+        app:layout_constraintTop_toTopOf="@+id/item_select_view_ai_hair" />
+
+    <ImageView
+        android:id="@+id/item_download_view_ai_hair"
+        android:layout_width="@dimen/dp_16"
+        android:layout_height="@dimen/dp_16"
+        android:contentDescription="@string/download"
+        android:src="@drawable/icon_small_download"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@+id/item_select_view_ai_hair"
+        app:layout_constraintTop_toTopOf="@+id/item_select_view_ai_hair" />
+
+    <TextView
+        android:id="@+id/item_name_ai_hair"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="HarmonyHeiTi"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textSize="@dimen/dp_10"
+        android:gravity="center"
+        android:textColor="#DBFFFFFF"
+        app:layout_constraintEnd_toEndOf="@+id/item_image_view_ai_hair"
+        app:layout_constraintStart_toStartOf="@+id/item_image_view_ai_hair"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:ignore="SpUsage" />
+
+    <View
+        android:id="@+id/item_select_view_ai_hair"
+        android:layout_width="@dimen/dp_57"
+        android:layout_height="@dimen/dp_57"
+        android:background="@drawable/filter_bg_selector"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/item_name_ai_hair"/>
+
+    <ProgressBar
+        android:id="@+id/item_progress_ai_hair"
+        android:layout_width="@dimen/dp_16"
+        android:layout_height="@dimen/dp_16"
+        android:layout_gravity="center"
+        android:contentDescription="@string/downloading"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/item_name_ai_hair"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

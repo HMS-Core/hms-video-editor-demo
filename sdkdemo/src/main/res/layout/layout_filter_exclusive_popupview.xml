@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dp_156"
+    android:layout_height="@dimen/dp_104"
+    android:gravity="center_vertical"
+    android:background="@drawable/bg_home_clip_popup_dialog"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_clone_filter"
+        android:layout_width="@dimen/dp_156"
+        android:layout_height="@dimen/dp_48"
+        android:background="@drawable/bg_clip_popup_selector_top"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_exclusive_filter_clone" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/dp_8"
+            android:fontFamily="HarmonyHeiTi"
+            android:text="@string/exclusive_filter_clone"
+            android:textColor="@color/color_fff_90"
+            android:textSize="@dimen/sp_16" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_imitation_filter"
+        android:layout_width="@dimen/dp_156"
+        android:layout_height="@dimen/dp_48"
+        android:background="@drawable/bg_clip_popup_selector_bottom"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_exclusive_filter_imitation" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/dp_8"
+            android:fontFamily="HarmonyHeiTi"
+            android:text="@string/exclusive_filter_mimics"
+            android:textColor="@color/color_fff_90"
+            android:textSize="@dimen/sp_16" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_rename"
+        android:layout_width="@dimen/dp_156"
+        android:layout_height="@dimen/dp_48"
+        android:background="@drawable/bg_clip_popup_selector_top"
+        android:visibility="gone"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_rename_exclusive_filter" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/dp_8"
+            android:fontFamily="HarmonyHeiTi"
+            android:text="@string/exclusive_filter_rename"
+            android:textColor="@color/color_fff_90"
+            android:textSize="@dimen/sp_16" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_delete"
+        android:layout_width="@dimen/dp_156"
+        android:layout_height="@dimen/dp_48"
+        android:visibility="gone"
+        android:background="@drawable/bg_clip_popup_selector_bottom"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_delete_exclusive_filter" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/dp_8"
+            android:fontFamily="HarmonyHeiTi"
+            android:text="@string/action_12"
+            android:textColor="@color/color_fff_90"
+            android:textSize="@dimen/sp_16" />
+    </LinearLayout>
+
+</LinearLayout>

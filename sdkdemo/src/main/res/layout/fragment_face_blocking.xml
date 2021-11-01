@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/edit_background"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/include"
+            layout="@layout/custom_operate_title" />
+
+        <com.huawei.hms.videoeditor.ui.mediaeditor.texts.custom.CustomNestedScrollView
+            android:id="@+id/custom_scrollview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true"
+            app:layout_constraintTop_toBottomOf="@+id/include"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/ll_face_tip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@+id/include"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <TextView
+                        android:textSize="@dimen/dp_12"
+                        android:textColor="@color/color_fff_60"
+                        android:text="@string/choose_blocking_face"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:text=" ("
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/dp_12"
+                        android:textColor="@color/color_fff_60"
+                        tools:ignore="SpUsage" />
+
+                    <TextView
+                        android:id="@+id/tv_face_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="@dimen/dp_12"
+                        android:textColor="@color/color_fff_60"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:ignore="SpUsage" />
+
+                    <TextView
+                        android:text="/"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/dp_12"
+                        android:textColor="@color/color_fff_60"
+                        tools:ignore="SpUsage" />
+
+                    <TextView
+                        android:id="@+id/tv_max_face"
+                        android:text="20"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/dp_12"
+                        android:textColor="@color/color_fff_60"
+                        tools:ignore="SpUsage" />
+
+                    <TextView
+                        android:text=")"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/dp_12"
+                        android:textColor="@color/color_fff_60"
+                        tools:ignore="SpUsage" />
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView_face"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_56"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:layout_marginStart="@dimen/dp_16" />
+
+                <TextView
+                    android:id="@+id/tv_sticker_tip"
+                    android:text="@string/choose_face_blocking_sticker"
+                    android:textSize="@dimen/dp_12"
+                    android:textColor="@color/color_fff_60"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:ignore="SpUsage" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_sticker_tip">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/loading_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:visibility="gone">
+
+                        <com.huawei.hms.videoeditor.ui.common.view.loading.LoadingIndicatorView
+                            android:id="@+id/indicator"
+                            android:layout_width="@dimen/dp_60"
+                            android:layout_height="@dimen/dp_60"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerView_sticker"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_60"
+                        android:layout_marginStart="@dimen/dp_16"
+                        android:layout_marginTop="@dimen/dp_4"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <RelativeLayout
+                        android:id="@+id/error_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_60"
+                        android:gravity="center_vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/error_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="@dimen/dp_8"
+                            android:fontFamily="HYQiHei 55S"
+                            android:gravity="start"
+                            android:text="@string/result_illegal"
+                            android:textColor="#99FFFFFF"
+                            android:textSize="16sp" />
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_reset"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/clean_stickers"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:textSize="@dimen/dp_12"
+                    android:layout_marginTop="@dimen/dp_40"
+                    android:layout_marginBottom="@dimen/dp_16"
+                    android:gravity="center"
+                    android:drawablePadding="@dimen/dp_4"
+                    android:textColor="@color/color_fff_60"
+                    tools:ignore="SpUsage"
+                    app:drawableStartCompat="@drawable/ic_reset" />
+
+            </LinearLayout>
+        </com.huawei.hms.videoeditor.ui.mediaeditor.texts.custom.CustomNestedScrollView>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include android:id="@+id/include_panel_filter_adjust"
+        layout="@layout/custom_operate_title"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/adjust_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0"
+        android:layout_marginBottom="@dimen/dp_48"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include_panel_filter_adjust">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dp_12">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rl_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_28"
+                android:layout_marginEnd="@dimen/dp_28"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.huawei.hms.videoeditor.ui.mediaeditor.preview.view.FilterSeekBar
+                android:id="@+id/sb_items"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_60"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_14"
+                android:paddingStart="@dimen/dp_5"
+                android:paddingEnd="@dimen/dp_5"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rl_type"
+                app:speed_degreeCount="50"
+                app:speed_show_text="false"
+                app:speed_thumb="@drawable/circlethumb" />
+
+            <View
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sb_items"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_10"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <TextView
+        android:id="@+id/reset_filter_adjust"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_16"
+        android:drawablePadding="@dimen/dp_4"
+        android:fontFamily="PingFangSC"
+        android:gravity="center"
+        android:text="@string/reset"
+        android:textColor="#E6FFFFFF"
+        android:textSize="@dimen/dp_12"
+        android:visibility="invisible"
+        app:drawableStartCompat="@drawable/icon_small_reset"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/adjust_scrollview"
+        tools:ignore="SpUsage" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" 
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/music_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_16"
+        android:fontFamily="HWtext 55ST"
+        android:gravity="center_vertical|start"
+        android:singleLine="true"
+        android:text="@string/music_hot"
+        android:textColor="#DBFFFFFF"
+        android:textSize="@dimen/sp_16"/>
+    
+</FrameLayout>

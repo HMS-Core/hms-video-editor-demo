@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.huawei.hms.videoeditor.ui.mediaeditor.texts.custom.CustomNestedScrollView
+        android:id="@+id/custom_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RadioGroup
+                android:id="@+id/rg_type"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_40"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    android:id="@+id/set_type_left"
+                    android:layout_width="@dimen/dp_24"
+                    android:layout_height="@dimen/dp_24"
+                    android:layout_marginStart="@dimen/dp_0"
+                    android:background="@drawable/edtext_settype_left_bg"
+                    android:button="@null"
+                    android:checked="false"
+                    android:contentDescription="@string/style_left" />
+
+                <RadioButton
+                    android:id="@+id/set_type_hor_center"
+                    android:layout_width="@dimen/dp_24"
+                    android:layout_height="@dimen/dp_24"
+                    android:layout_marginStart="@dimen/dp_25"
+                    android:background="@drawable/edtext_settype_horcen_bg"
+                    android:button="@null"
+                    android:checked="true"
+                    android:contentDescription="@string/style_center" />
+
+                <RadioButton
+                    android:id="@+id/set_type_right"
+                    android:layout_width="@dimen/dp_24"
+                    android:layout_height="@dimen/dp_24"
+                    android:layout_marginStart="@dimen/dp_25"
+                    android:background="@drawable/edtext_settype_right_bg"
+                    android:button="@null"
+                    android:contentDescription="@string/style_right" />
+
+                <RadioButton
+                    android:id="@+id/set_type_top"
+                    android:layout_width="@dimen/dp_24"
+                    android:layout_height="@dimen/dp_24"
+                    android:layout_marginStart="@dimen/dp_25"
+                    android:background="@drawable/edtext_settype_top_bg"
+                    android:button="@null"
+                    android:contentDescription="@string/style_top_verical" />
+
+                <RadioButton
+                    android:id="@+id/set_type_ver_center"
+                    android:layout_width="@dimen/dp_24"
+                    android:layout_height="@dimen/dp_24"
+                    android:layout_marginStart="@dimen/dp_25"
+                    android:background="@drawable/edtext_settype_vercen_bg"
+                    android:button="@null"
+                    android:contentDescription="@string/style_center_verical" />
+
+                <RadioButton
+                    android:id="@+id/set_type_bottom"
+                    android:layout_width="@dimen/dp_24"
+                    android:layout_height="@dimen/dp_24"
+                    android:layout_marginStart="@dimen/dp_25"
+                    android:background="@drawable/edtext_settype_bottom_bg"
+                    android:button="@null"
+                    android:contentDescription="@string/style_bottom_verical" />
+
+            </RadioGroup>
+
+            <include
+                layout="@layout/layout_seekbar_spacing"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_45"
+                android:layout_marginTop="@dimen/dp_5" />
+
+            <include
+                layout="@layout/layout_seekbar_leading"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_45"
+                android:layout_marginTop="@dimen/dp_5" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_30" />
+
+        </LinearLayout>
+
+    </com.huawei.hms.videoeditor.ui.mediaeditor.texts.custom.CustomNestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

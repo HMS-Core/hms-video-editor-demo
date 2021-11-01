@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/launch_hint_dialog_cancel_color" android:state_pressed="false" />
+    <item android:color="@color/launch_hint_dialog_affirm_color" android:state_pressed="true" />
+</selector>

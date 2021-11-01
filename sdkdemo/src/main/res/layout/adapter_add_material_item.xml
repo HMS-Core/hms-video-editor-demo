@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/content_layout"
+    tools:ignore="MissingConstraints, SpUsage">
+
+    <androidx.constraintlayout.utils.widget.ImageFilterView
+        android:id="@+id/item_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        app:round="@dimen/dp_8" />
+
+    <TextView
+        android:id="@+id/tv_has_import"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_4"
+        android:layout_marginEnd="@dimen/dp_4"
+        android:background="@drawable/has_choice_bg"
+        android:fontFamily="Helvetica"
+        android:gravity="center"
+        android:paddingStart="@dimen/dp_4"
+        android:paddingTop="@dimen/dp_1"
+        android:paddingEnd="@dimen/dp_4"
+        android:paddingBottom="@dimen/dp_1"
+        android:text="@string/media_imported"
+        android:textColor="@color/color_text_first_level"
+        android:textSize="@dimen/sp_8"
+        android:visibility="gone"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        tools:ignore="SpUsage" />
+
+    <androidx.constraintlayout.utils.widget.ImageFilterView
+        android:id="@+id/if_full"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="@dimen/dp_6"
+        android:layout_marginTop="@dimen/dp_6"
+        android:contentDescription="@string/screen_all"
+        android:src="@drawable/media_pick_full"
+        app:round="@dimen/dp_4"
+        />
+
+    <View
+        android:id="@+id/mask_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="ContentDescription" />
+    
+    <TextView
+        android:id="@+id/tv_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/has_choice_bg"
+        android:fontFamily="Helvetica"
+        android:paddingStart="@dimen/dp_4"
+        android:paddingEnd="@dimen/dp_4"
+        android:paddingTop="@dimen/dp_2"
+        android:paddingBottom="@dimen/dp_2"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="@dimen/dp_4"
+        android:layout_marginBottom="@dimen/dp_4"
+        android:gravity="center"
+        android:textColor="@color/color_text_first_level"
+        android:textSize="@dimen/sp_10"
+        tools:ignore="RelativeOverlap" />
+
+    <TextView
+        android:id="@+id/tv_index"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/dp_6"
+        android:layout_marginBottom="@dimen/dp_6"
+        android:fontFamily="Helvetica"
+        android:gravity="center"
+        android:textColor="@color/color_text_first_level"
+        android:textSize="@dimen/sp_14" />
+
+    <ImageView
+        android:id="@+id/item_download_view"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_4"
+        android:layout_marginEnd="@dimen/dp_4"
+        android:src="@drawable/material_download_icon"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        tools:ignore="ContentDescription"
+        android:contentDescription="@string/download"/>
+
+    <ProgressBar
+        android:id="@+id/item_progress"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:contentDescription="@string/downloading"
+        tools:ignore="MissingConstraints" />
+    
+</RelativeLayout>

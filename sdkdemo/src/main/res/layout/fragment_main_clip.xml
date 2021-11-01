@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/home_color_FF181818">
+
+    <TextView
+        android:id="@+id/home_select_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_14"
+        android:drawablePadding="@dimen/dp_16"
+        android:fontFamily="HarmonyHeiTi"
+        android:gravity="start|center_vertical"
+        android:textColor="@color/translucent_white_90"
+        android:textSize="@dimen/dp_20"
+        android:visibility="gone"
+        app:drawableStartCompat="@drawable/home_cancel_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpUsage" />
+
+    <com.huawei.hms.videoeditor.ui.common.view.EditorTextView
+        android:id="@+id/home_notice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_23"
+        android:layout_marginBottom="@dimen/dp_24"
+        android:fontFamily="HarmonyHeiTi"
+        android:gravity="start|center_vertical"
+        android:maxWidth="312dp"
+        android:maxLines="2"
+        android:text="@string/first_menu_cut"
+        android:textColor="#FFFFFFFF"
+        android:textSize="@dimen/dp_30"
+        app:layout_constraintBottom_toTopOf="@+id/card_upload"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_select_num"
+        tools:ignore="SpUsage" />
+
+    <LinearLayout
+        android:id="@+id/card_upload"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        app:layout_constraintEnd_toStartOf="@+id/card_one"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_notice"
+        android:layout_marginStart="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_14"
+        android:layout_marginEnd="@dimen/dp_15"
+        android:background="@drawable/start_create">
+
+        <ImageView
+            android:layout_width="@dimen/dp_23"
+            android:layout_height="@dimen/dp_23"
+            android:layout_marginStart="@dimen/dp_17"
+            android:layout_marginTop="@dimen/dp_47"
+            android:src="@drawable/edit" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_6"
+            android:layout_marginTop="@dimen/dp_46"
+            android:gravity="center"
+            android:text="@string/start_tv"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_17" />
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_one"
+        android:visibility="gone"
+        android:layout_width="@dimen/dp_120"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_8"
+        android:layout_marginTop="@dimen/dp_24"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:foreground="?attr/selectableItemBackground"
+        android:orientation="horizontal"
+        app:cardBackgroundColor="@color/transparent"
+        app:cardElevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/card_upload"
+        app:layout_constraintTop_toBottomOf="@+id/home_notice"
+        tools:ignore="MissingConstraints">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/home_one_media_bg" />
+
+        <com.huawei.hms.videoeditor.ui.common.view.EditorTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawableTop="@drawable/home_one_icon"
+            android:drawablePadding="@dimen/dp_2"
+            android:fontFamily="HarmonyHeiTi"
+            android:gravity="center"
+            android:maxWidth="@dimen/dp_280"
+            android:maxLines="2"
+            android:shadowColor="#B662D9"
+            android:shadowDx="0"
+            android:shadowDy="2"
+            android:shadowRadius="3"
+            android:text="@string/auto_template"
+            android:textColor="#FFFFFFFF"
+            android:textSize="@dimen/dp_16"
+            tools:ignore="SpUsage" />
+    </androidx.cardview.widget.CardView>
+
+    <com.huawei.hms.videoeditor.ui.common.view.EditorTextView
+        android:id="@+id/home_draft_clip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_24"
+        android:layout_marginEnd="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_25"
+        android:fontFamily="HarmonyHeiTi"
+        android:gravity="start|center_vertical"
+        android:maxWidth="312dp"
+        android:maxLines="2"
+        android:text="@string/des_title_cut"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp_16"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card_upload"
+        tools:ignore="SpUsage" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/content_list"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_18"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:background="@color/transparent"
+        android:orientation="vertical"
+        android:overScrollMode="never"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/home_select_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_draft_clip" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/home_select_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/home_select_delete"
+            android:layout_width="@dimen/dp_80"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_16"
+            android:layout_marginBottom="@dimen/dp_16"
+            android:drawablePadding="@dimen/dp_2"
+            android:fontFamily="HarmonyHeiTi"
+            android:gravity="center"
+            android:text="@string/cut_second_menu_delete"
+            android:textColor="@drawable/home_clips_text_color_selector"
+            android:textSize="@dimen/dp_10"
+            app:drawableTopCompat="@drawable/home_clips_delete_selector"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/home_select_all"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SpUsage" />
+
+        <TextView
+            android:id="@+id/home_select_all"
+            android:layout_width="@dimen/dp_80"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_16"
+            android:layout_marginBottom="@dimen/dp_16"
+            android:drawablePadding="@dimen/dp_2"
+            android:fontFamily="HarmonyHeiTi"
+            android:gravity="center"
+            android:text="@string/home_select_all"
+            android:textColor="@drawable/home_clips_text_color_selector"
+            android:textSize="@dimen/dp_10"
+            app:drawableTopCompat="@drawable/home_clips_select_delete_selector"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/home_select_delete"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SpUsage" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/home_draft_no_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="@dimen/dp_8"
+        android:fontFamily="HarmonyHeiTi"
+        android:gravity="center"
+        android:text="@string/home_select_num5"
+        android:textColor="@color/translucent_white_60"
+        android:textSize="@dimen/dp_14"
+        android:visibility="visible"
+        app:drawableTopCompat="@drawable/icon_home_empty"
+        app:layout_constraintBottom_toTopOf="@+id/home_select_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_draft_clip"
+        tools:ignore="SpUsage" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
