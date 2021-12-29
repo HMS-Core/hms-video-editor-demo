@@ -75,7 +75,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/resolution_view" />
 
-            <!-- 正常分辨率 -->
             <LinearLayout
                 android:id="@+id/resolution_layout"
                 android:layout_width="match_parent"
@@ -132,7 +131,6 @@
 
             </LinearLayout>
 
-            <!-- 低内存分辨率 -->
             <LinearLayout
                 android:visibility="gone"
                 android:id="@+id/resolution_layout_low"
@@ -170,7 +168,6 @@
 
             </LinearLayout>
 
-            <!-- nava9分辨率 -->
             <LinearLayout
                 android:visibility="gone"
                 android:id="@+id/resolution_layout_nava9"
@@ -275,7 +272,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/frame_rate_view" />
 
-            <!-- 正常帧率 -->
             <LinearLayout
                 android:id="@+id/frame_rate_layout"
                 android:layout_width="match_parent"
@@ -342,7 +338,6 @@
 
             </LinearLayout>
 
-            <!-- 低内存帧率 -->
             <LinearLayout
                 android:visibility="gone"
                 android:id="@+id/frame_rate_layout_low"
@@ -485,7 +480,6 @@
 
     </androidx.core.widget.NestedScrollView>
 
-    <!--底部-->
     <TextView
         android:id="@+id/tv_tip"
         android:layout_width="wrap_content"

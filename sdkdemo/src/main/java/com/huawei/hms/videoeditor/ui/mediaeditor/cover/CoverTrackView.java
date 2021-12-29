@@ -1,17 +1,17 @@
 /*
- *  Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
+ *   Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
  *
- *     Licensed under the Apache License, Version 2.0 (the "License");
- *     you may not use this file except in compliance with the License.
- *     You may obtain a copy of the License at
+ *      Licensed under the Apache License, Version 2.0 (the "License");
+ *      you may not use this file except in compliance with the License.
+ *      You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- *     Unless required by applicable law or agreed to in writing, software
- *     distributed under the License is distributed on an "AS IS" BASIS,
- *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *     See the License for the specific language governing permissions and
- *     limitations under the License.
+ *      Unless required by applicable law or agreed to in writing, software
+ *      distributed under the License is distributed on an "AS IS" BASIS,
+ *      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *      See the License for the specific language governing permissions and
+ *      limitations under the License.
  */
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.cover;
@@ -106,7 +106,6 @@ public class CoverTrackView extends View {
         drawBitmaps(canvas);
     }
 
-    // 绘制缩略图
     private void drawBitmaps(Canvas canvas) {
         int lastDrawX = startIndex * imageWidth;
         try {
@@ -118,7 +117,6 @@ public class CoverTrackView extends View {
                     }
 
                     if (BigDecimalUtils.compareTo(lastDrawX + imageWidth, maxWidth)) {
-                        // 最后一帧显示不全裁剪显示
                         int width = (int) Math.floor(maxWidth - lastDrawX);
                         if (width <= 0) {
                             break;
@@ -137,7 +135,6 @@ public class CoverTrackView extends View {
             } else if (imageAssetBitmap != null && !imageAssetBitmap.isRecycled()) {
                 for (int i = startIndex; i < endIndex; i++) {
                     if (BigDecimalUtils.compareTo(lastDrawX + imageWidth, maxWidth)) {
-                        // 最后一帧显示不全裁剪显示
                         int width = (int) Math.floor(maxWidth - lastDrawX);
                         if (width <= 0) {
                             break;
@@ -170,12 +167,6 @@ public class CoverTrackView extends View {
         return lastBitmap;
     }
 
-    /**
-     * 按目标宽高获取缩放后的bitmap
-     *
-     * @param bitmap 原始缩略图
-     * @return 缩放后的缩略图
-     */
     private Bitmap getScaleBitmap(Bitmap bitmap) {
         int width = bitmap.getWidth();
         int height = bitmap.getHeight();
@@ -189,9 +180,6 @@ public class CoverTrackView extends View {
         return bitmap;
     }
 
-    /**
-     * 裁剪bitmap的结束
-     */
     private Bitmap getCutEndBitmap(Bitmap bitmap, int cutWidth) {
         Bitmap newBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, false);
         newBitmap = Bitmap.createBitmap(newBitmap, 0, 0, cutWidth, bitmap.getHeight(), null, false);
@@ -213,7 +201,6 @@ public class CoverTrackView extends View {
     }
 
     public void prepareFileList(String filePath) {
-        // 封面缩略图不可裁剪，但list装填逻辑与主泳道的保持一致
         if (trimInPathList.size() < getTrimInImageCount()) {
             trimInPathList.add(filePath);
         } else if (realPathList.size() < getMaxImageCount()) {
@@ -237,8 +224,6 @@ public class CoverTrackView extends View {
                 @Override
                 public void onImagePathAvailable(String filePath, long timeStamp) {
                     prepareFileList(filePath);
-                    // api小于24,view post内存泄漏; api大于24，view post必须在add view之后才能执行run
-                    // 用handler替换view post来线程通信
                     if (mHandler != null) {
                         mHandler.post(mCheckReDraw);
                     }

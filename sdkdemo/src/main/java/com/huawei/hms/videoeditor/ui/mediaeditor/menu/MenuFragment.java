@@ -1,18 +1,18 @@
 
 /*
- *  Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
+ *   Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
  *
- *     Licensed under the Apache License, Version 2.0 (the "License");
- *     you may not use this file except in compliance with the License.
- *     You may obtain a copy of the License at
+ *      Licensed under the Apache License, Version 2.0 (the "License");
+ *      you may not use this file except in compliance with the License.
+ *      You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- *     Unless required by applicable law or agreed to in writing, software
- *     distributed under the License is distributed on an "AS IS" BASIS,
- *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *     See the License for the specific language governing permissions and
- *     limitations under the License.
+ *      Unless required by applicable law or agreed to in writing, software
+ *      distributed under the License is distributed on an "AS IS" BASIS,
+ *      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *      See the License for the specific language governing permissions and
+ *      limitations under the License.
  */
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.menu;
@@ -96,10 +96,9 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 public class MenuFragment extends Fragment {
-
     private static final String TAG = "MenuFragment";
 
-    private static final String EDIT_PANEL_FRAGMENT_TAG = "addTextSticker"; // 添加文字页面标识
+    private static final String EDIT_PANEL_FRAGMENT_TAG = "addTextSticker";
 
     protected ViewModelProvider.AndroidViewModelFactory mFactory;
 
@@ -107,7 +106,6 @@ public class MenuFragment extends Fragment {
 
     private int mCurrentViewId = EDIT_VIDEO_STATE;
 
-    // 菜单
     private EditMenuContentLayout menuContentLayout;
 
     private ViewGroup baseViewGroup;
@@ -220,9 +218,6 @@ public class MenuFragment extends Fragment {
         initMenu();
     }
 
-    /**
-     * 初始化菜单
-     */
     private void initMenu() {
         mUnVisibleIds.clear();
         MenuConfig.getInstance().initMenuConfig(mActivity);
@@ -259,7 +254,7 @@ public class MenuFragment extends Fragment {
                     return;
                 }
                 mActivity.pauseTimeLine();
-                popView();// 先把当前面板或者操作菜单出栈
+                popView();
                 mCurrentViewId = firstMenu.getId();
                 if (mCurrentViewId == -1 || mMaterialEditViewModel == null || mEditPreviewViewModel == null) {
                     return;
@@ -273,7 +268,6 @@ public class MenuFragment extends Fragment {
                 mEditViewModel.getItemsFirstSelected().postValue(firstMenu);
 
                 if (mCurrentViewId == EDIT_RATIO_STATE || mCurrentViewId == EDIT_BACKGROUND_STATE) {
-                    // 比例、背景拉起面板
                     MenuClickManager.getInstance().handlerClickEvent(mCurrentViewId);
                 }
             }
@@ -285,7 +279,7 @@ public class MenuFragment extends Fragment {
                 }
                 mActivity.pauseTimeLine();
                 mEditViewModel.getItemsSecondSelected().postValue(secondMenu);
-                // 拉起面板
+
                 MenuClickManager.getInstance().handlerClickEvent(secondMenu.getId());
                 if (mask_container_view != null) {
                     mask_container_view.setVisibility(secondMenu.getId() == EDIT_VIDEO_STATE_MASK ? VISIBLE : GONE);
@@ -343,8 +337,6 @@ public class MenuFragment extends Fragment {
         mMaterialEditViewModel.getStickerEdit().observe(getViewLifecycleOwner(), new Observer<MaterialEditData>() {
             @Override
             public void onChanged(MaterialEditData data) {
-
-                // 贴纸添加动画前 需要先将添加贴纸页面关闭
                 if (getViewStack() != null && !getViewStack().isEmpty()) {
                     MenuControlViewRouter.Panel panel = getViewStack().lastElement();
                     if (panel.object instanceof BaseFragment) {
@@ -522,6 +514,7 @@ public class MenuFragment extends Fragment {
                 if (mCurrentViewId != -1) {
                     if (mEditPreviewViewModel.isEditTextStatus() || mEditPreviewViewModel.isEditTextTemplateStatus()
                         || mEditPreviewViewModel.isEditStickerStatus() || mEditPreviewViewModel.isTrailerStatus()
+                        || mEditPreviewViewModel.isFaceBlockingStatus()
                         || mEditPreviewViewModel.isPersonTrackingStatus()) {
                         menuContentLayout.hideOperateMenu();
                         return;
@@ -757,12 +750,6 @@ public class MenuFragment extends Fragment {
 
     private void initAnimation() {
         LayoutTransition layoutTransition = new LayoutTransition();
-        Animator animatorIn = ObjectAnimator.ofFloat(null, "translateY", 0f, 1f);
-        animatorIn.setDuration(300);
-        Animator animatorOut = ObjectAnimator.ofFloat(null, "translateY", 1f, 0f);
-        animatorOut.setDuration(300);
-        layoutTransition.setAnimator(LayoutTransition.DISAPPEARING, animatorOut);
-        layoutTransition.setAnimator(LayoutTransition.APPEARING, animatorIn);
         layoutTransition.addTransitionListener(new LayoutTransition.TransitionListener() {
             @Override
             public void startTransition(LayoutTransition transition, ViewGroup container, View view,
@@ -785,8 +772,6 @@ public class MenuFragment extends Fragment {
                     return;
                 }
                 if (mEditViewModel.getItemsSecondSelected().getValue() != null) {
-
-                    // 添加文字
                     if (EDIT_PANEL_FRAGMENT_TAG.equals(view.getTag())) {
                         if (mMaterialEditViewModel.isEditModel()) {
                             SmartLog.e(TAG, "isEditModel is true");

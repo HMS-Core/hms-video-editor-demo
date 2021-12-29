@@ -1,17 +1,17 @@
 /*
- *  Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
+ *   Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
  *
- *     Licensed under the Apache License, Version 2.0 (the "License");
- *     you may not use this file except in compliance with the License.
- *     You may obtain a copy of the License at
+ *      Licensed under the Apache License, Version 2.0 (the "License");
+ *      you may not use this file except in compliance with the License.
+ *      You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- *     Unless required by applicable law or agreed to in writing, software
- *     distributed under the License is distributed on an "AS IS" BASIS,
- *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *     See the License for the specific language governing permissions and
- *     limitations under the License.
+ *      Unless required by applicable law or agreed to in writing, software
+ *      distributed under the License is distributed on an "AS IS" BASIS,
+ *      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *      See the License for the specific language governing permissions and
+ *      limitations under the License.
  */
 
 package com.huawei.hms.videoeditor.ui.common.adapter;
@@ -38,7 +38,7 @@ import com.bumptech.glide.request.target.Target;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RCommandAdapter;
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RViewHolder;
-import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
+import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
@@ -46,35 +46,35 @@ import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
 import androidx.annotation.Nullable;
 
-public class MaskEffectAdapter extends RCommandAdapter<CloudMaterialBean> {
+public class MaskEffectAdapter extends RCommandAdapter<MaterialsCloudBean> {
     private static final String TAG = "MaskEffectAdapter";
 
     private volatile int mSelectPosition = -1;
 
-    private final Map<String, CloudMaterialBean> mDownloadingMap = new LinkedHashMap<>();
+    private final Map<String, MaterialsCloudBean> mDownloadingMap = new LinkedHashMap<>();
 
-    private final Map<String, CloudMaterialBean> mFirstScreenMap = new LinkedHashMap<>();
+    private final Map<String, MaterialsCloudBean> mFirstScreenMap = new LinkedHashMap<>();
 
     private MaskEffectAdapter.OnItemClickListener mOnItemClickListener;
 
-    public void addFirstScreenMaterial(CloudMaterialBean item) {
+    public void addFirstScreenMaterial(MaterialsCloudBean item) {
         if (!mFirstScreenMap.containsKey(item.getId())) {
             mFirstScreenMap.put(item.getId(), item);
         }
     }
 
-    public void removeFirstScreenMaterial(CloudMaterialBean cloudMaterialBean) {
-        if (cloudMaterialBean == null || mFirstScreenMap.size() == 0) {
+    public void removeFirstScreenMaterial(MaterialsCloudBean materialsCloudBean) {
+        if (materialsCloudBean == null || mFirstScreenMap.size() == 0) {
             SmartLog.e(TAG, "input materials is null");
             return;
         }
-        mFirstScreenMap.remove(cloudMaterialBean.getId());
+        mFirstScreenMap.remove(materialsCloudBean.getId());
         if (mFirstScreenMap.size() == 0) {
             SmartLog.w(TAG, "HianalyticsEvent10007 postEvent");
         }
     }
 
-    public MaskEffectAdapter(Context context, List<CloudMaterialBean> list, int layoutId) {
+    public MaskEffectAdapter(Context context, List<MaterialsCloudBean> list, int layoutId) {
         super(context, list, layoutId);
     }
 
@@ -83,7 +83,7 @@ public class MaskEffectAdapter extends RCommandAdapter<CloudMaterialBean> {
     }
 
     @Override
-    protected void convert(RViewHolder holder, CloudMaterialBean item, int dataPosition, int position) {
+    protected void convert(RViewHolder holder, MaterialsCloudBean item, int dataPosition, int position) {
         View mSelectView = holder.getView(R.id.item_select_view_mask_effect);
         ImageView mItemIv = holder.getView(R.id.item_image_view_mask_effect);
         TextView mNameTv = holder.getView(R.id.item_name_mask_effect);
@@ -157,7 +157,7 @@ public class MaskEffectAdapter extends RCommandAdapter<CloudMaterialBean> {
         this.mSelectPosition = selectPosition;
     }
 
-    public void addDownloadMaterial(CloudMaterialBean item) {
+    public void addDownloadMaterial(MaterialsCloudBean item) {
         mDownloadingMap.put(item.getId(), item);
     }
 

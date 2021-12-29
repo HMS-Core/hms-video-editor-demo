@@ -1,17 +1,17 @@
 /*
- *  Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
+ *   Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
  *
- *     Licensed under the Apache License, Version 2.0 (the "License");
- *     you may not use this file except in compliance with the License.
- *     You may obtain a copy of the License at
+ *      Licensed under the Apache License, Version 2.0 (the "License");
+ *      you may not use this file except in compliance with the License.
+ *      You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- *     Unless required by applicable law or agreed to in writing, software
- *     distributed under the License is distributed on an "AS IS" BASIS,
- *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *     See the License for the specific language governing permissions and
- *     limitations under the License.
+ *      Unless required by applicable law or agreed to in writing, software
+ *      distributed under the License is distributed on an "AS IS" BASIS,
+ *      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *      See the License for the specific language governing permissions and
+ *      limitations under the License.
  */
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.preview;
@@ -27,7 +27,7 @@ import com.huawei.hms.videoeditor.sdk.asset.HVEAsset;
 import com.huawei.hms.videoeditor.sdk.asset.HVEVisibleAsset;
 import com.huawei.hms.videoeditor.sdk.effect.HVEEffect;
 import com.huawei.hms.videoeditor.ui.common.EditorManager;
-import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
+import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
 import com.huawei.hms.videoeditor.ui.mediaeditor.preview.view.MaskShape;
 
 import androidx.annotation.NonNull;
@@ -42,7 +42,7 @@ public class MaskEffectViewModel extends AndroidViewModel {
 
     private MutableLiveData<HVEAsset> hveVideoAsset = new MutableLiveData<>();
 
-    private MutableLiveData<CloudMaterialBean> materialsCutContentMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<MaterialsCloudBean> materialsCutContentMutableLiveData = new MutableLiveData<>();
 
     private MutableLiveData<Boolean> isInverse = new MutableLiveData<>(false);
 
@@ -74,7 +74,7 @@ public class MaskEffectViewModel extends AndroidViewModel {
         firstEffect = hveEffect;
     }
 
-    public HVEEffect appendHVEEffect(HVEAsset assetKey, CloudMaterialBean materialsCutContent) {
+    public HVEEffect appendHVEEffect(HVEAsset assetKey, MaterialsCloudBean materialsCutContent) {
         Map<String, HVEEffect> map = effectMap.get(assetKey);
         if (map == null) {
             effectMap.put(assetKey, new HashMap<>());
@@ -128,11 +128,11 @@ public class MaskEffectViewModel extends AndroidViewModel {
         }
     }
 
-    public MutableLiveData<CloudMaterialBean> getMaterialsCutContentMutableLiveData() {
+    public MutableLiveData<MaterialsCloudBean> getMaterialsCutContentMutableLiveData() {
         return materialsCutContentMutableLiveData;
     }
 
-    public void setMaterialsCutContentMutableLiveData(CloudMaterialBean materialsCutContentMutableLiveData) {
+    public void setMaterialsCutContentMutableLiveData(MaterialsCloudBean materialsCutContentMutableLiveData) {
         this.materialsCutContentMutableLiveData.postValue(materialsCutContentMutableLiveData);
     }
 

@@ -1,17 +1,17 @@
 /*
- *  Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
+ *   Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
  *
- *     Licensed under the Apache License, Version 2.0 (the "License");
- *     you may not use this file except in compliance with the License.
- *     You may obtain a copy of the License at
+ *      Licensed under the Apache License, Version 2.0 (the "License");
+ *      you may not use this file except in compliance with the License.
+ *      You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- *     Unless required by applicable law or agreed to in writing, software
- *     distributed under the License is distributed on an "AS IS" BASIS,
- *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *     See the License for the specific language governing permissions and
- *     limitations under the License.
+ *      Unless required by applicable law or agreed to in writing, software
+ *      distributed under the License is distributed on an "AS IS" BASIS,
+ *      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *      See the License for the specific language governing permissions and
+ *      limitations under the License.
  */
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.sticker.stickeranimation.viewmodel;
@@ -24,7 +24,7 @@ import android.app.Application;
 import com.huawei.hms.videoeditor.materials.HVEColumnInfo;
 import com.huawei.hms.videoeditor.sdk.asset.HVEAsset;
 import com.huawei.hms.videoeditor.sdk.effect.HVEEffect;
-import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
+import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
 import com.huawei.hms.videoeditor.ui.common.bean.MaterialsDownloadInfo;
 import com.huawei.hms.videoeditor.ui.mediaeditor.repository.ColumnsListener;
 import com.huawei.hms.videoeditor.ui.mediaeditor.repository.ColumnsRespository;
@@ -50,7 +50,7 @@ public class StickerAnimationViewModel extends AndroidViewModel {
 
     private MutableLiveData<Integer> errorType = new MutableLiveData<>();
 
-    private final MutableLiveData<List<CloudMaterialBean>> pageData = new MutableLiveData<>();
+    private final MutableLiveData<List<MaterialsCloudBean>> pageData = new MutableLiveData<>();
 
     private final MutableLiveData<Boolean> boundaryPageData = new MutableLiveData<>();
 
@@ -58,7 +58,7 @@ public class StickerAnimationViewModel extends AndroidViewModel {
 
     private final MutableLiveData<LoadUrlEvent> loadUrlEvent = new MutableLiveData<>();
 
-    private MutableLiveData<CloudMaterialBean> selectData = new MutableLiveData<>();
+    private MutableLiveData<MaterialsCloudBean> selectData = new MutableLiveData<>();
 
     public StickerAnimationViewModel(@NonNull Application application) {
         super(application);
@@ -76,7 +76,7 @@ public class StickerAnimationViewModel extends AndroidViewModel {
         return errorType;
     }
 
-    public MutableLiveData<List<CloudMaterialBean>> getPageData() {
+    public MutableLiveData<List<MaterialsCloudBean>> getPageData() {
         return pageData;
     }
 
@@ -92,11 +92,11 @@ public class StickerAnimationViewModel extends AndroidViewModel {
         return loadUrlEvent;
     }
 
-    public MutableLiveData<CloudMaterialBean> getSelectData() {
+    public MutableLiveData<MaterialsCloudBean> getSelectData() {
         return selectData;
     }
 
-    public void setSelectCutContent(CloudMaterialBean mCutContent) {
+    public void setSelectCutContent(MaterialsCloudBean mCutContent) {
         selectData.postValue(mCutContent);
     }
 
@@ -111,7 +111,7 @@ public class StickerAnimationViewModel extends AndroidViewModel {
         materialsRespository.loadMaterials(cutContent.getColumnId(), page);
     }
 
-    public void downloadMaterials(int previousPosition, int position, CloudMaterialBean cutContent) {
+    public void downloadMaterials(int previousPosition, int position, MaterialsCloudBean cutContent) {
         if (materialsRespository == null || cutContent == null) {
             return;
         }
@@ -139,7 +139,7 @@ public class StickerAnimationViewModel extends AndroidViewModel {
         return StickerAnimationRepository.getCycleAnimation(asset);
     }
 
-    public HVEEffect appendAnimation(HVEAsset asset, CloudMaterialBean content, long duration, String type) {
+    public HVEEffect appendAnimation(HVEAsset asset, MaterialsCloudBean content, long duration, String type) {
         HVEEffect animationEffect = null;
         if (asset == null) {
             return animationEffect;
@@ -212,7 +212,7 @@ public class StickerAnimationViewModel extends AndroidViewModel {
         return isSetDuration;
     }
 
-    public int getSelectedPosition(HVEAsset hveAsset, List<CloudMaterialBean> animList, String type) {
+    public int getSelectedPosition(HVEAsset hveAsset, List<MaterialsCloudBean> animList, String type) {
         int selectedPosition = 0;
         HVEEffect enterEffect = getEnterAnimation(hveAsset);
         HVEEffect leaveEffect = getLeaveAnimation(hveAsset);
@@ -232,7 +232,7 @@ public class StickerAnimationViewModel extends AndroidViewModel {
         return selectedPosition;
     }
 
-    private int getPosition(HVEEffect animEffect, List<CloudMaterialBean> animList) {
+    private int getPosition(HVEEffect animEffect, List<MaterialsCloudBean> animList) {
         int selectedPosition = 0;
         for (int i = 0; i < animList.size(); i++) {
             if (animEffect.getOptions().getEffectId().equals(animList.get(i).getId())) {
@@ -266,7 +266,7 @@ public class StickerAnimationViewModel extends AndroidViewModel {
 
     private MaterialsListener materialsListener = new MaterialsListener() {
         @Override
-        public void pageData(List<CloudMaterialBean> materialsCutContentList) {
+        public void pageData(List<MaterialsCloudBean> materialsCutContentList) {
             pageData.postValue(materialsCutContentList);
         }
 
@@ -291,13 +291,12 @@ public class StickerAnimationViewModel extends AndroidViewModel {
         }
     };
 
-    // 获取本地头数据
-    public List<CloudMaterialBean> loadLocalData(String name) {
-        CloudMaterialBean animationNothing = new CloudMaterialBean();
+    public List<MaterialsCloudBean> loadLocalData(String name) {
+        MaterialsCloudBean animationNothing = new MaterialsCloudBean();
         animationNothing.setName(name);
         animationNothing.setLocalDrawableId(R.drawable.icon_no);
         animationNothing.setId("-1");
-        List<CloudMaterialBean> list = new ArrayList<>();
+        List<MaterialsCloudBean> list = new ArrayList<>();
         list.add(animationNothing);
         return list;
     }

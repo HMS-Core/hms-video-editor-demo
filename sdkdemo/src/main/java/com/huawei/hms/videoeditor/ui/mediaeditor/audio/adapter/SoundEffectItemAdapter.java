@@ -1,17 +1,17 @@
 /*
- *  Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
+ *   Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
  *
- *     Licensed under the Apache License, Version 2.0 (the "License");
- *     you may not use this file except in compliance with the License.
- *     You may obtain a copy of the License at
+ *      Licensed under the Apache License, Version 2.0 (the "License");
+ *      you may not use this file except in compliance with the License.
+ *      You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- *     Unless required by applicable law or agreed to in writing, software
- *     distributed under the License is distributed on an "AS IS" BASIS,
- *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *     See the License for the specific language governing permissions and
- *     limitations under the License.
+ *      Unless required by applicable law or agreed to in writing, software
+ *      distributed under the License is distributed on an "AS IS" BASIS,
+ *      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *      See the License for the specific language governing permissions and
+ *      limitations under the License.
  */
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.audio.adapter;
@@ -28,7 +28,7 @@ import android.widget.TextView;
 
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RCommandAdapter;
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RViewHolder;
-import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
+import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
@@ -37,8 +37,8 @@ import com.huawei.hms.videoeditor.ui.common.view.audio.AudioColumnView;
 import com.huawei.hms.videoeditor.ui.mediaeditor.audio.view.SoundEffectMarqueTextView;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
-public class SoundEffectItemAdapter extends RCommandAdapter<CloudMaterialBean> {
-    private final Map<String, CloudMaterialBean> aDownloadingMap = new LinkedHashMap<>();
+public class SoundEffectItemAdapter extends RCommandAdapter<MaterialsCloudBean> {
+    private final Map<String, MaterialsCloudBean> aDownloadingMap = new LinkedHashMap<>();
 
     private volatile int aSelectPosition = -1;
 
@@ -48,12 +48,12 @@ public class SoundEffectItemAdapter extends RCommandAdapter<CloudMaterialBean> {
         onClickListener = listener;
     }
 
-    public SoundEffectItemAdapter(Context context, List<CloudMaterialBean> list, int layoutId) {
+    public SoundEffectItemAdapter(Context context, List<MaterialsCloudBean> list, int layoutId) {
         super(context, list, layoutId);
     }
 
     @Override
-    protected void convert(RViewHolder holder, CloudMaterialBean materialsCutContent, int dataPosition, int position) {
+    protected void convert(RViewHolder holder, MaterialsCloudBean materialsCutContent, int dataPosition, int position) {
         AudioColumnView mColumnView = holder.getView(R.id.audio_column_view);
         ImageView mMusicPictureIv = holder.getView(R.id.music_icon);
         SoundEffectMarqueTextView mNameTv = holder.getView(R.id.music_name_tv);
@@ -62,7 +62,7 @@ public class SoundEffectItemAdapter extends RCommandAdapter<CloudMaterialBean> {
         TextView mUseTv = holder.getView(R.id.music_use_tv);
         FrameLayout mProgressLayout = holder.getView(R.id.music_download_progress_layout);
         mNameTv.setMaxWidth(SizeUtils.screenWidth(mContext) - SizeUtils.dp2Px(mContext, 148));
-        CloudMaterialBean item = mList.get(dataPosition);
+        MaterialsCloudBean item = mList.get(dataPosition);
         if (position == aSelectPosition) {
             mMusicPictureIv.setVisibility(View.GONE);
             mColumnView.setVisibility(View.VISIBLE);
@@ -130,7 +130,7 @@ public class SoundEffectItemAdapter extends RCommandAdapter<CloudMaterialBean> {
         return aSelectPosition;
     }
 
-    public void addDownloadMaterial(CloudMaterialBean item) {
+    public void addDownloadMaterial(MaterialsCloudBean item) {
         aDownloadingMap.put(item.getId(), item);
     }
 

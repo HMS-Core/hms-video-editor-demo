@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/dp_58"
+    android:layout_height="@dimen/dp_75"
+    tools:ignore="MissingConstraints">
+
+    <androidx.constraintlayout.utils.widget.ImageFilterView
+        android:id="@+id/item_image_view_curve_speed"
+        android:layout_width="@dimen/dp_56"
+        android:layout_height="@dimen/dp_56"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:round="@dimen/dp_4" />
+
+    <ImageView
+        android:id="@+id/item_download_view_curve_speed"
+        android:layout_width="@dimen/dp_16"
+        android:layout_height="@dimen/dp_16"
+        android:contentDescription="@string/download"
+        android:src="@drawable/icon_small_download"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/rl_item_edit_view_curve_speed"
+        android:layout_width="@dimen/dp_56"
+        android:layout_height="@dimen/dp_56"
+        android:alpha="0.9"
+        android:background="#262626"
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="@dimen/dp_16"
+            android:layout_height="@dimen/dp_16"
+            android:contentDescription="@string/edit"
+            android:src="@drawable/ic_rename_exclusive_filter" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/dp_4"
+            android:paddingEnd="@dimen/dp_4"
+            android:text="@string/speed_edit"
+            android:gravity="center"
+            android:textSize="@dimen/dp_10"
+            android:textColor="#E6FFFFFF"
+            android:fontFamily="PingFangSC"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <TextView
+        android:id="@+id/item_name_curve_speed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/dp_4"
+        android:layout_marginTop="@dimen/dp_5"
+        android:fontFamily="Helvetica"
+        android:gravity="center"
+        android:textColor="#DBFFFFFF"
+        android:textSize="@dimen/dp_10"
+        app:layout_constraintEnd_toEndOf="@+id/item_image_view_curve_speed"
+        app:layout_constraintStart_toStartOf="@+id/item_image_view_curve_speed"
+        app:layout_constraintTop_toBottomOf="@+id/item_image_view_curve_speed" />
+
+    <View
+        android:id="@+id/item_select_view_curve_speed"
+        android:layout_width="@dimen/dp_57"
+        android:layout_height="@dimen/dp_57"
+        android:background="@drawable/filter_select_bg"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/item_progress_curve_speed"
+        android:layout_width="@dimen/dp_16"
+        android:layout_height="@dimen/dp_16"
+        android:layout_gravity="center"
+        android:contentDescription="@string/downloading"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/item_image_view_curve_speed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

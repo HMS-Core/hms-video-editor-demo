@@ -1,17 +1,17 @@
 /*
- *  Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
+ *   Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
  *
- *     Licensed under the Apache License, Version 2.0 (the "License");
- *     you may not use this file except in compliance with the License.
- *     You may obtain a copy of the License at
+ *      Licensed under the Apache License, Version 2.0 (the "License");
+ *      you may not use this file except in compliance with the License.
+ *      You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- *     Unless required by applicable law or agreed to in writing, software
- *     distributed under the License is distributed on an "AS IS" BASIS,
- *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *     See the License for the specific language governing permissions and
- *     limitations under the License.
+ *      Unless required by applicable law or agreed to in writing, software
+ *      distributed under the License is distributed on an "AS IS" BASIS,
+ *      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *      See the License for the specific language governing permissions and
+ *      limitations under the License.
  */
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.aifun.fragment;
@@ -35,7 +35,7 @@ import com.huawei.hms.videoeditor.sdk.asset.HVEVideoAsset;
 import com.huawei.hms.videoeditor.sdk.asset.HVEVisibleAsset;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.BaseFragment;
-import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
+import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.FileUtil;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
@@ -70,7 +70,7 @@ public class AiFunFragment extends BaseFragment {
 
     private View mAiFunNone;
 
-    private List<CloudMaterialBean> currentAiFunContentList;
+    private List<MaterialsCloudBean> currentAiFunContentList;
 
     private AiFunAdapter mAiFunAdapter;
 
@@ -167,11 +167,11 @@ public class AiFunFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        CloudMaterialBean materialsCutContent = new CloudMaterialBean();
+        MaterialsCloudBean materialsCutContent = new MaterialsCloudBean();
         materialsCutContent.setName(context.getString(R.string.motion_photo));
         materialsCutContent.setLocalDrawableId(R.mipmap.icon_dynamic_pic_ai);
 
-        CloudMaterialBean materialsCutContent2 = new CloudMaterialBean();
+        MaterialsCloudBean materialsCutContent2 = new MaterialsCloudBean();
         materialsCutContent2.setName(context.getString(R.string.ai_color));
         materialsCutContent2.setLocalDrawableId(R.mipmap.icon_dynamic_pic_ai);
 

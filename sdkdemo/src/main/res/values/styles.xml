@@ -17,14 +17,12 @@
     <attr name="hwSeekBarStyle" format="reference" />
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/black</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <style name="launcher" parent="AppTheme">
-<!--        <item name="android:background">@drawable/start_bg</item>-->
         <item name="android:windowBackground">@color/black</item>
         <item name="android:navigationBarColor">@color/pure_black</item>
     </style>
@@ -74,7 +72,6 @@
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:windowBackground">@color/emui_mask_thin</item>
     </style>
-    <!--    纯色icon图片style-->
     <style name="iconSolidColorStyle">
         <item name="android:tintMode">src_in</item>
         <item name="android:tint">@color/emui_color_fg</item>
@@ -93,17 +90,17 @@
     </style>
 
     <style name="CustomBottomSheetDialogTheme" parent="Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@android:color/transparent</item><!--边框-->
-        <item name="android:windowFrame">@null</item><!--边框-->
-        <item name="android:windowIsFloating">false</item><!--是否浮现在activity之上-->
-        <item name="android:windowNoTitle">true</item><!--无标题-->
-        <item name="android:windowBackground">@android:color/transparent</item><!--背景透明-->
-        <item name="android:backgroundDimEnabled">false</item><!--模糊-->
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">false</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowSoftInputMode">adjustResize</item>
     </style>
 
-    <!-- 带动画的底部弹出dialog-->
+
     <style name="BottomDialogAnimation">
         <item name="android:windowEnterAnimation">@anim/dialog_slid_up</item>
         <item name="android:windowExitAnimation">@anim/dialog_slid_down</item>
@@ -131,7 +128,6 @@
         <attr name="lineColor" format="color" />
     </declare-styleable>
 
-    <!-- 圆角图片 -->
     <style name="roundedCornerStyle">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">8dp</item>

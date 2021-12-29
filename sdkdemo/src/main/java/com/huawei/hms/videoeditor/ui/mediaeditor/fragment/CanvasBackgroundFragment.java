@@ -1,18 +1,18 @@
 
 /*
- *  Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
+ *   Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
  *
- *     Licensed under the Apache License, Version 2.0 (the "License");
- *     you may not use this file except in compliance with the License.
- *     You may obtain a copy of the License at
+ *      Licensed under the Apache License, Version 2.0 (the "License");
+ *      you may not use this file except in compliance with the License.
+ *      You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- *     Unless required by applicable law or agreed to in writing, software
- *     distributed under the License is distributed on an "AS IS" BASIS,
- *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *     See the License for the specific language governing permissions and
- *     limitations under the License.
+ *      Unless required by applicable law or agreed to in writing, software
+ *      distributed under the License is distributed on an "AS IS" BASIS,
+ *      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *      See the License for the specific language governing permissions and
+ *      limitations under the License.
  */
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.fragment;
@@ -59,7 +59,7 @@ import com.huawei.hms.videoeditor.sdk.v1.AssetBeanAnalyer;
 import com.huawei.hms.videoeditor.ui.common.BaseFragment;
 import com.huawei.hms.videoeditor.ui.common.EditorManager;
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RViewHolder;
-import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
+import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
 import com.huawei.hms.videoeditor.ui.common.bean.MaterialsDownloadInfo;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.ScreenUtil;
@@ -126,7 +126,7 @@ public class CanvasBackgroundFragment extends BaseFragment {
 
     private List<HVEColumnInfo> mColumnList;
 
-    private List<CloudMaterialBean> mStyleList;
+    private List<MaterialsCloudBean> mStyleList;
 
     private RelativeLayout mStyleAddLayout;
 
@@ -516,7 +516,7 @@ public class CanvasBackgroundFragment extends BaseFragment {
                 mBlurSeek.setVisibility(View.INVISIBLE);
                 mBlueRecyclerView.setVisibility(View.VISIBLE);
                 setIsSlid(false);
-                CloudMaterialBean content = mStyleList.get(dataPosition);
+                MaterialsCloudBean content = mStyleList.get(dataPosition);
                 if (mStyleSelectPosition == -2) {
                     mStyleSelectPosition = Integer.MIN_VALUE;
                     mStyleAddSelectBg.setVisibility(View.GONE);
@@ -546,7 +546,7 @@ public class CanvasBackgroundFragment extends BaseFragment {
                 setIsSlid(false);
                 int aPreviousPosition = mCanvasStyleAdapter.getSelectPosition();
                 mCanvasStyleAdapter.setSelectPosition(position);
-                CloudMaterialBean cutContent = mStyleList.get(dataPosition);
+                MaterialsCloudBean cutContent = mStyleList.get(dataPosition);
 
                 mCanvasStyleAdapter.addDownloadMaterial(cutContent);
                 mCanvasPanelViewModel.downloadColumn(aPreviousPosition, position, dataPosition, cutContent);
@@ -917,7 +917,7 @@ public class CanvasBackgroundFragment extends BaseFragment {
         if (TextUtils.isEmpty(mStyleSelectCloudId) || mStyleSelectPosition >= 0) {
             return;
         }
-        for (CloudMaterialBean cutContent : mStyleList) {
+        for (MaterialsCloudBean cutContent : mStyleList) {
             if (mStyleSelectCloudId.equals(cutContent.getId())) {
                 mStyleSelectPosition = mStyleList.indexOf(cutContent) + 1;
                 mCanvasStyleAdapter.setSelectPosition(mStyleSelectPosition);

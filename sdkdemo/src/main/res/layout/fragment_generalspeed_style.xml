@@ -16,17 +16,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <TextView
+        <com.huawei.hms.videoeditor.ui.common.view.EditorTextView
             android:id="@+id/general_speed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_13"
+            android:ellipsize="end"
+            android:maxLines="2"
             android:text="@string/general_speed"
             android:textColor="@drawable/icon_apply_all_text_selector"
             android:textSize="@dimen/dp_14"
-            android:layout_marginTop="@dimen/dp_13"
-            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constrainedWidth="true"
             app:layout_constraintBottom_toTopOf="@+id/general_view"
-            app:layout_constraintEnd_toStartOf="@+id/curve_speed"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="SpUsage" />
@@ -42,6 +47,46 @@
             app:layout_constraintEnd_toEndOf="@+id/general_speed"
             app:layout_constraintStart_toStartOf="@+id/general_speed"
             app:layout_constraintTop_toBottomOf="@+id/general_speed" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <com.huawei.hms.videoeditor.ui.common.view.EditorTextView
+            android:id="@+id/curve_speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_13"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="@string/edit_item2_19"
+            android:textColor="@drawable/icon_apply_all_text_selector"
+            android:textSize="@dimen/dp_14"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toTopOf="@+id/curve_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SpUsage" />
+
+        <View
+            android:id="@+id/curve_view"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_2"
+            android:layout_marginTop="@dimen/dp_4"
+            android:layout_marginBottom="@dimen/dp_7"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/background_tab_view"
+            app:layout_constraintEnd_toEndOf="@+id/curve_speed"
+            app:layout_constraintStart_toStartOf="@+id/curve_speed"
+            app:layout_constraintTop_toBottomOf="@+id/curve_speed"
+            android:visibility="invisible" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.huawei.hms.videoeditor.ui.common.view.SpeedBar
@@ -57,8 +102,7 @@
         app:speed_textSize="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_20"
         android:layout_marginBottom="@dimen/dp_40"
-        app:speed_thumb="@drawable/circlethumb"
-       />
+        app:speed_thumb="@drawable/circlethumb" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_speed"

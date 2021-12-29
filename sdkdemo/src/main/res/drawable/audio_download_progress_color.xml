@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <!-- 背景  gradient是渐变,corners定义的是圆角 -->
     <item android:id="@android:id/background"
         android:layout_width="wrap_content">
         <shape>
@@ -15,7 +14,7 @@
                 android:width="@dimen/dp_2"/>
         </shape>
     </item>
-    <!-- 第二条进度条颜色 -->
+
     <item android:id="@android:id/secondaryProgress">
         <clip>
             <shape>
@@ -25,7 +24,7 @@
             </shape>
         </clip>
     </item>
-    <!-- 进度条 -->
+
     <item android:id="@android:id/progress">
         <clip>
             <shape>

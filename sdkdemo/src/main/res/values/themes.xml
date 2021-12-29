@@ -1,7 +1,4 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-
-    <!-- 隐私协议页面主题色 -->
     <color name="about_background">#FFFFFF</color>
     <color name="about_title">#000000</color>
     <color name="about_title_background">#FFFFFF</color>

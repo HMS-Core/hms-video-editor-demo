@@ -94,8 +94,10 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
+                android:id="@+id/time_speed_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:minHeight="@dimen/dp_16"
                 android:layout_marginEnd="@dimen/dp_16"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="@+id/add_point_layout"
@@ -129,6 +131,8 @@
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
     </androidx.core.widget.NestedScrollView>
 

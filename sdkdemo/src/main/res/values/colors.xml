@@ -73,7 +73,6 @@
     <color name="window_background_color">#FFFFFFFF</color>
     <color name="popup_window_bg">#FF262626</color>
 
-    <!--白色透明度-->
     <color name="translucent_white_00">#FFFFFFFF</color>
     <color name="translucent_white_05">#F2FFFFFF</color>
     <color name="translucent_white_09">#17FFFFFF</color>
@@ -87,7 +86,6 @@
     <color name="translucent_white_95">#0DFFFFFF</color>
     <color name="translucent_white_100">#00FFFFFF</color>
 
-    <!--黑色透明度-->
     <color name="translucent_black_05">#F2000000</color>
     <color name="translucent_black_45">#8C000000</color>
     <color name="translucent_black_60">#66000000</color>
@@ -145,55 +143,38 @@
     <color name="main_theme_color">#FF7500</color>
     <color name="main_black_color">#1A1A1A</color>
 
-    <!--    文本颜色start-->
-    <!--    焦点色-->
     <color name="color_text_focus">#FFB662D9</color>
-    <!--    文本背景颜色 -->
     <color name="font_bg">#353535</color>
-    <!--    一级文本,90%不透明度-->
     <color name="color_text_first_level">#E5FFFFFF</color>
-    <!--    二级文本,60%不透明度 -->
     <color name="color_text_second_level">#99FFFFFF</color>
-    <!--    三级文本,45%不透明度-->
     <color name="color_text_third_level">#73FFFFFF</color>
-    <!--    四级文本,20%不透明度-->
     <color name="color_text_fourth_level">#33FFFFFF</color>
 
-    <!--    菜单文本选中状态-->
     <color name="color_text_selected">#FFB662D9</color>
-    <!--    菜单文本未选中态-->
     <color name="color_text_unselected">#E6FFFFFF</color>
-    <!--    焦点色为白色时,未选中态,45%不透明度-->
     <color name="color_text_unselected_white_focus">#72FFFFFF</color>
-    <!--    文本颜色end-->
     <color name="emui_mask_thin">#33000000</color>
 
     <color name="color_dialog_background">#262626</color>
     <color name="color_dialog_line_background">#1AFFFFFF</color>
     <color name="color_dialog_pressed">#0DFFFFFF</color>
 
-    <!--    tab选中-->
     <color name="tab_text_tint_color">#FFB662D9</color>
-    <!--    tab未选中-->
     <color name="tab_text_default_color">#E6FFFFFF</color>
 
-    <!-- 视频裁剪用到 颜色 -->
     <color name="crop_shadow_color">#CF000000</color>
     <color name="crop_shadow_wp_color">#4F000000</color>
     <color name="crop_wp_markers">#7FFFFFFF</color>
 
     <color name="color_press_background">#0CFFFFFF</color>
 
-    <!--  红点颜色  -->
     <color name="shape_red_point_color">#FFFA2A2D</color>
 
-    <!--    焦点色-->
     <color name="color_focus">#FFFFFF</color>
 
     <color name="color_ff0a59f7">#FF0A59F7</color>
     <color name="color_e2e2e2">#E2E2E2</color>
     
-        <!-- 新手引导页背景颜色 -->
     <color name="guide_tip_bubble_color">#4D4D4D</color>
     <color name="guide_tip_mask_color">#99000000</color>
 
@@ -209,17 +190,13 @@
 
     <color name="color_40">#FF404040</color>
 
-    <!--人脸遮罩 透明紫色-->
     <color name="ai_blank_80">#7F000000</color>
     <color name="purple_50">#7FB662D9</color>
     <color name="color_ffd8d8d8">#FFD8D8D8</color>
 
-    <!--ai滤镜 重命名确定按钮字体的颜色-->
     <color name="filter_rename_text_color">#66B662D9</color>
-    <!-- 人像分割 -->
     <color name="loading_ai_dialog_bg">#99000000</color>
 
-    <!--    微电影弹框颜色-->
     <color name="mini_movie_dialog_bg">#ffffff</color>
     <color name="mini_movie_dialog_msg_text_color">#000000</color>
     <color name="mini_movie_dialog_button_text_color">#3F97E9</color>

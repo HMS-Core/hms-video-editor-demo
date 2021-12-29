@@ -1,17 +1,17 @@
 /*
- *  Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
+ *   Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
  *
- *     Licensed under the Apache License, Version 2.0 (the "License");
- *     you may not use this file except in compliance with the License.
- *     You may obtain a copy of the License at
+ *      Licensed under the Apache License, Version 2.0 (the "License");
+ *      you may not use this file except in compliance with the License.
+ *      You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- *     Unless required by applicable law or agreed to in writing, software
- *     distributed under the License is distributed on an "AS IS" BASIS,
- *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *     See the License for the specific language governing permissions and
- *     limitations under the License.
+ *      Unless required by applicable law or agreed to in writing, software
+ *      distributed under the License is distributed on an "AS IS" BASIS,
+ *      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *      See the License for the specific language governing permissions and
+ *      limitations under the License.
  */
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.cover;
@@ -30,10 +30,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
-/**
- * @author xwx882936
- * @since 2020/11/18
- */
 public class CoverImageViewModel extends AndroidViewModel {
 
     private static final String TAG = "CoverImageViewModel";
@@ -42,11 +38,11 @@ public class CoverImageViewModel extends AndroidViewModel {
 
     public static final String SOURCE_COVER_IMAGE_NAME_SUFFIX = "source.png";
 
-    private final MutableLiveData<String> mInitImageData = new MutableLiveData<>(); // 封面默认取首帧缩略图
+    private final MutableLiveData<String> mInitImageData = new MutableLiveData<>();
 
     private final MutableLiveData<String> mCoverImageData = new MutableLiveData<>();
 
-    private boolean isForCover; // 是否是封面
+    private boolean isForCover;
 
     public CoverImageViewModel(@NonNull Application application) {
         super(application);
@@ -92,10 +88,6 @@ public class CoverImageViewModel extends AndroidViewModel {
         }.start();
     }
 
-    /**
-     * 删除上次的封面图片
-     * 还需进行优化
-     */
     public void removeBitmapCover(String projectId) {
         if (TextUtils.isEmpty(projectId)) {
             return;
@@ -133,9 +125,6 @@ public class CoverImageViewModel extends AndroidViewModel {
         }
     }
 
-    /**
-     * 删除原始图片
-     */
     public void removePictureByProjectId(String projectId) {
         if (TextUtils.isEmpty(projectId)) {
             SmartLog.e(TAG, "projectId is empty");
@@ -162,9 +151,6 @@ public class CoverImageViewModel extends AndroidViewModel {
         }
     }
 
-    /**
-     * 删除原始图片
-     */
     public void removeSourcePicture(String filePath) {
         if (TextUtils.isEmpty(filePath)) {
             SmartLog.e(TAG, "filePath is empty");

@@ -1,18 +1,18 @@
 
 /*
- *  Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
+ *   Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
  *
- *     Licensed under the Apache License, Version 2.0 (the "License");
- *     you may not use this file except in compliance with the License.
- *     You may obtain a copy of the License at
+ *      Licensed under the Apache License, Version 2.0 (the "License");
+ *      you may not use this file except in compliance with the License.
+ *      You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- *     Unless required by applicable law or agreed to in writing, software
- *     distributed under the License is distributed on an "AS IS" BASIS,
- *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *     See the License for the specific language governing permissions and
- *     limitations under the License.
+ *      Unless required by applicable law or agreed to in writing, software
+ *      distributed under the License is distributed on an "AS IS" BASIS,
+ *      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *      See the License for the specific language governing permissions and
+ *      limitations under the License.
  */
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.cover;
@@ -43,10 +43,6 @@ import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PageKeyedDataSource;
 import androidx.paging.PagedList;
 
-/**
- * @author xwx882936
- * @since 2020/11/18
- */
 public class CoverPickPictureViewModel extends AndroidViewModel {
 
     private static final String TAG = "PickPictureViewModel";
@@ -77,19 +73,16 @@ public class CoverPickPictureViewModel extends AndroidViewModel {
     PagedList.BoundaryCallback<MediaData> callback = new PagedList.BoundaryCallback<MediaData>() {
         @Override
         public void onZeroItemsLoaded() {
-            // 新提交的PagedList中没有数据
             boundPageData.postValue(false);
         }
 
         @Override
         public void onItemAtFrontLoaded(@NonNull MediaData itemAtFront) {
-            // 新提交的PagedList中第一条数据被加载到列表上
             boundPageData.postValue(true);
         }
 
         @Override
         public void onItemAtEndLoaded(@NonNull MediaData itemAtEnd) {
-            // 新提交的PagedList中最后一条数据被加载到列表上
         }
     };
 
@@ -109,7 +102,6 @@ public class CoverPickPictureViewModel extends AndroidViewModel {
         @Override
         public void loadInitial(@NonNull LoadInitialParams<Integer> params,
             @NonNull LoadInitialCallback<Integer, MediaData> callback) {
-            // 加载初始化数据的
             List<MediaData> media = loadImage(getApplication().getApplicationContext(), 0);
             boolean hasNextPage = true;
             if (media.size() == 0 || media.size() % pageSize != 0) {
@@ -124,7 +116,6 @@ public class CoverPickPictureViewModel extends AndroidViewModel {
 
         @Override
         public void loadAfter(@NonNull LoadParams<Integer> params, @NonNull LoadCallback<Integer, MediaData> callback) {
-            // 能够向后加载数据的
             List<MediaData> mediaDataList = loadImage(getApplication().getApplicationContext(), params.key);
             boolean hasNextPage = true;
             if (mediaDataList.size() == 0 || mediaDataList.size() % pageSize != 0) {
@@ -140,26 +131,15 @@ public class CoverPickPictureViewModel extends AndroidViewModel {
         @Override
         public void loadBefore(@NonNull LoadParams<Integer> params,
             @NonNull LoadCallback<Integer, MediaData> callback) {
-            // 向后加载分页数据的
         }
     }
 
-    /**
-     * 加载图片
-     *
-     * @return 本地图片列表
-     */
     private List<MediaData> loadImage(Context context, int page) {
         List<MediaData> dataList = new ArrayList<>();
         dataList.clear();
-        final String[] imageProjection = {     // 查询图片需要的数据列
-            MediaStore.Images.Media._ID, MediaStore.Images.Media.DISPLAY_NAME,   // 图片的显示名称 aaa.jpg
-            MediaStore.Images.Media.DATA,           // 图片的真实路径 /storage/emulated/0/pp/downloader/wallpaper/aaa.jpg
-            MediaStore.Images.Media.SIZE,           // 图片的大小 long型 132492
-            MediaStore.Images.Media.MIME_TYPE,      // 图片的类型 image/jpeg
-            MediaStore.Images.Media.DATE_MODIFIED,     // 图片被添加的时间 long型 1450518608
-            MediaStore.MediaColumns.WIDTH,          // 图片的宽
-            MediaStore.MediaColumns.HEIGHT};        // 图片的高
+        final String[] imageProjection = {MediaStore.Images.Media._ID, MediaStore.Images.Media.DISPLAY_NAME,
+            MediaStore.Images.Media.DATA, MediaStore.Images.Media.SIZE, MediaStore.Images.Media.MIME_TYPE,
+            MediaStore.Images.Media.DATE_MODIFIED, MediaStore.MediaColumns.WIDTH, MediaStore.MediaColumns.HEIGHT};
         String mImageSelection = MediaStore.Images.Media.BUCKET_DISPLAY_NAME + " = ? ";
         String[] mImageSelectionArgs = new String[] {dirName};
         Cursor cursor = null;
@@ -196,12 +176,10 @@ public class CoverPickPictureViewModel extends AndroidViewModel {
                     }
                 }
                 if (!HVEUtil.isLegalImage(imagePath)) {
-                    // 不合法格式图片
                     loadContinue = true;
                     continue;
                 }
 
-                // 封面过滤.gif图片
                 if (imagePath.endsWith(".gif")) {
                     SmartLog.d(TAG, "gif:" + imagePath);
                     loadContinue = true;

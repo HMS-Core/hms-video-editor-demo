@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/edit_background">
+
+    <ImageView
+        android:id="@+id/back_crop_video"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_20"
+        android:background="@drawable/ic_top_cancel"
+        android:scaleType="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints"
+        android:contentDescription="@string/close"/>
+
+    <ImageView
+        android:id="@+id/contain_crop_video"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_20"
+        android:background="@drawable/icon_top_queding"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="MissingConstraints"
+        android:contentDescription="@string/confirm"/>
+
+    <RelativeLayout
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_0"
+        android:layout_marginStart="@dimen/dp_30"
+        android:layout_marginEnd="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_20"
+
+        android:layout_marginBottom="@dimen/dp_24"
+        app:layout_constraintBottom_toTopOf="@id/videoseekbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/back_crop_video"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:id="@+id/viewpreview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <RelativeLayout
+            android:id="@+id/preview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints">
+
+            <com.huawei.hms.videoeditor.ui.common.view.crop.CropView
+                android:id="@+id/image_crop_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                tools:ignore="MissingConstraints" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/playbtn"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:layout_marginStart="@dimen/dp_32"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginEnd="@dimen/dp_15"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        android:src="@drawable/media_edit_play_btn_selector"
+        app:layout_constraintBottom_toBottomOf="@id/videoseekbar"
+        app:layout_constraintEnd_toStartOf="@id/videoseekbar"
+        app:layout_constraintTop_toTopOf="@id/videoseekbar"
+        tools:ignore="MissingConstraints"
+        android:contentDescription="@string/play"/>
+
+    <SeekBar
+        android:id="@+id/videoseekbar"
+        style="@style/SeekBarStylePreCrop"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_26"
+        android:layout_marginBottom="@dimen/dp_44"
+        android:max="100"
+        android:min="0"
+        android:paddingStart="@dimen/dp_6"
+        android:paddingEnd="@dimen/dp_6"
+        android:progress="0"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerview_crop_video"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/playbtn" />
+
+    <TextView
+        android:id="@+id/starttime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_3"
+        android:layout_marginTop="@dimen/dp_5"
+        android:fontFamily="Helvetica"
+        android:text="00:00"
+        android:textColor="#FFFFFFFF"
+        android:textSize="@dimen/dp_10"
+        app:layout_constraintStart_toStartOf="@id/videoseekbar"
+        app:layout_constraintTop_toBottomOf="@+id/videoseekbar"
+        tools:ignore="SpUsage" />
+
+    <TextView
+        android:id="@+id/seek_total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_marginEnd="@dimen/dp_3"
+        android:fontFamily="Helvetica"
+        android:text="00:20"
+        android:textColor="#FFFFFFFF"
+        android:textSize="@dimen/dp_10"
+        app:layout_constraintEnd_toEndOf="@id/videoseekbar"
+        app:layout_constraintTop_toBottomOf="@+id/videoseekbar"
+        tools:ignore="SpUsage" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_crop_video"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_32"
+        android:layout_marginEnd="@dimen/dp_32"
+        android:layout_marginBottom="@dimen/dp_28"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/reset_crop_video"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <TextView
+        android:id="@+id/reset_crop_video"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginBottom="@dimen/dp_28"
+        android:drawablePadding="@dimen/dp_4"
+        android:fontFamily="PingFangSC"
+        android:text="@string/reset"
+        android:textColor="#E6FFFFFF"
+        android:textSize="@dimen/dp_12"
+        app:drawableStartCompat="@drawable/icon_small_reset"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="SpUsage" />
+
+    <TextView
+        android:id="@+id/rotate_crop_video"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginBottom="@dimen/dp_28"
+        android:drawablePadding="@dimen/dp_4"
+        android:fontFamily="PingFangSC"
+        android:text="@string/crop_rotate"
+        android:textColor="#E6FFFFFF"
+        android:textSize="@dimen/dp_12"
+        app:drawableStartCompat="@drawable/icon_top_rotate"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="SpUsage" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

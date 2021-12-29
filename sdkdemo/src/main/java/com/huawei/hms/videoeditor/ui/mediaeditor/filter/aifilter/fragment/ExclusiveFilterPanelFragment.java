@@ -1,17 +1,17 @@
 /*
- *  Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
+ *   Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
  *
- *     Licensed under the Apache License, Version 2.0 (the "License");
- *     you may not use this file except in compliance with the License.
- *     You may obtain a copy of the License at
+ *      Licensed under the Apache License, Version 2.0 (the "License");
+ *      you may not use this file except in compliance with the License.
+ *      You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- *     Unless required by applicable law or agreed to in writing, software
- *     distributed under the License is distributed on an "AS IS" BASIS,
- *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *     See the License for the specific language governing permissions and
- *     limitations under the License.
+ *      Unless required by applicable law or agreed to in writing, software
+ *      distributed under the License is distributed on an "AS IS" BASIS,
+ *      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *      See the License for the specific language governing permissions and
+ *      limitations under the License.
  */
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.filter.aifilter.fragment;
@@ -51,7 +51,7 @@ import com.huawei.hms.videoeditor.sdk.lane.HVEEffectLane;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.BaseFragment;
 import com.huawei.hms.videoeditor.ui.common.EditorManager;
-import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
+import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
 import com.huawei.hms.videoeditor.ui.common.bean.Constant;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.LaneSizeCheckUtils;
@@ -98,7 +98,7 @@ public class ExclusiveFilterPanelFragment extends BaseFragment {
 
     private ExclusiveFilterItemAdapter mExclusiveFilterItemAdapter;
 
-    private List<CloudMaterialBean> mCutContentList = new ArrayList<>();
+    private List<MaterialsCloudBean> mCutContentList = new ArrayList<>();
 
     private ExclusiveFilterPanelViewModel mExclusiveFilterPanelViewModel;
 
@@ -124,7 +124,7 @@ public class ExclusiveFilterPanelFragment extends BaseFragment {
 
     private AIFilterHandler aiFilterHandler = new AIFilterHandler(this);
 
-    private CloudMaterialBean mContent;
+    private MaterialsCloudBean mContent;
 
     private static class AIFilterHandler extends Handler {
         private WeakReference<ExclusiveFilterPanelFragment> weakReference;
@@ -225,12 +225,11 @@ public class ExclusiveFilterPanelFragment extends BaseFragment {
         for (int i = 0; i < cutContentList.size(); i++) {
             HVELocalMaterialInfo materialInfo = cutContentList.get(i);
             if (materialInfo.getMaterialPath() != null) {
-                CloudMaterialBean cloudMaterialBean = new CloudMaterialBean();
-                cloudMaterialBean.setId(materialInfo.getMaterialId());
-                cloudMaterialBean.setLocalPath(materialInfo.getMaterialPath());
-                cloudMaterialBean.setName(materialInfo.getMaterialName());
-                cloudMaterialBean.setCategoryName(materialInfo.getCategoryName());
-                mCutContentList.add(cloudMaterialBean);
+                MaterialsCloudBean materialsCloudBean = new MaterialsCloudBean();
+                materialsCloudBean.setId(materialInfo.getMaterialId());
+                materialsCloudBean.setLocalPath(materialInfo.getMaterialPath());
+                materialsCloudBean.setName(materialInfo.getMaterialName());
+                mCutContentList.add(materialsCloudBean);
             }
         }
 
@@ -348,7 +347,7 @@ public class ExclusiveFilterPanelFragment extends BaseFragment {
                 if (timeLine == null) {
                     return;
                 }
-                CloudMaterialBean materialsCutContent = mCutContentList.get(mSelectedDataPosition);
+                MaterialsCloudBean materialsCutContent = mCutContentList.get(mSelectedDataPosition);
                 String prevName = "";
                 if (materialsCutContent != null) {
                     prevName = materialsCutContent.getName();
@@ -384,7 +383,7 @@ public class ExclusiveFilterPanelFragment extends BaseFragment {
                     @Override
                     public void onAllowClick() {
                         SmartLog.i(TAG, "onAllowClick start.");
-                        CloudMaterialBean materialsCutContent = mCutContentList.get(mSelectedDataPosition);
+                        MaterialsCloudBean materialsCutContent = mCutContentList.get(mSelectedDataPosition);
                         if (materialsCutContent == null || TextUtils.isEmpty(materialsCutContent.getId())) {
                             return;
                         }
@@ -494,7 +493,7 @@ public class ExclusiveFilterPanelFragment extends BaseFragment {
             return;
         }
 
-        CloudMaterialBean customFilter = new CloudMaterialBean();
+        MaterialsCloudBean customFilter = new MaterialsCloudBean();
         customFilter.setType(HVEMaterialConstant.AI_FILTER);
         customFilter.setId(filterId);
         customFilter.setName(filterName);
@@ -517,7 +516,7 @@ public class ExclusiveFilterPanelFragment extends BaseFragment {
         mFilterAddView.setSelected(false);
     }
 
-    private HVEEffect addFilterEffect(CloudMaterialBean cutContent, long startTime, long endTime) {
+    private HVEEffect addFilterEffect(MaterialsCloudBean cutContent, long startTime, long endTime) {
         HuaweiVideoEditor editor = EditorManager.getInstance().getEditor();
         if (editor == null) {
             return null;
@@ -553,7 +552,7 @@ public class ExclusiveFilterPanelFragment extends BaseFragment {
         return effect;
     }
 
-    private HVEEffect replaceFilterEffect(HVEEffect lastEffect, CloudMaterialBean cutContent) {
+    private HVEEffect replaceFilterEffect(HVEEffect lastEffect, MaterialsCloudBean cutContent) {
         if (cutContent == null || lastEffect == null) {
             return null;
         }

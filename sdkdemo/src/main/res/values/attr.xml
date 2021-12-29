@@ -2,11 +2,9 @@
 <resources>
     <declare-styleable name="MLTimelineView">
         <attr name="maxTime" format="integer" />
-        <!--文字颜色-->
         <attr name="textColor" format="color" />
     </declare-styleable>
     <declare-styleable name="NormalTrackView">
-        <!--文字颜色-->
         <attr name="paintColor" format="color" />
     </declare-styleable>
 
@@ -23,7 +21,7 @@
         <attr name="main_bg" format="color" />
         <attr name="outer_circle_bg" format="color" />
         <attr name="inner_circle_bg" format="color" />
-        <attr name="line_bg" format="color" /> <!--滑动条背景色-->
+        <attr name="line_bg" format="color" />
         <attr name="value_bg" format="color" />
         <attr name="line_width" format="dimension" />
         <attr name="seek_text_color" format="color" />
@@ -103,16 +101,12 @@
             <enum name="fit_xy" value="6" />
             <enum name="matrix" value="7" />
         </attr>
-        <!--<attr name="indicator_animator" format="reference" />-->
-        <!--<attr name="indicator_animator_reverse" format="reference" />-->
     </declare-styleable>
-
 
     <declare-styleable name="AudioColumnView">
         <attr name="column_height" format="integer" />
     </declare-styleable>
 
-    <!-- 录音控件属性 -->
     <declare-styleable name="RecordAudioView">
         <attr name="min_audio_time" format="integer" />
         <attr name="max_audio_time" format="integer" />
@@ -151,23 +145,14 @@
     </declare-styleable>
 
     <declare-styleable name="SpeedBar">
-        <!--刻度值-->
         <attr name="speed_degreeCount" format="integer" />
-        <!--文字颜色-->
         <attr name="speed_textColor" format="color" />
-        <!--刻度线颜色-->
         <attr name="speed_degreeColor" format="color" />
-        <!--刻度线宽度-->
         <attr name="speed_degreeWidth" format="dimension" />
-        <!--文字尺寸-->
         <attr name="speed_textSize" format="dimension" />
-        <!--thumb尺寸-->
         <attr name="speed_thumbRadius" format="dimension" />
-        <!--thumber图片-->
         <attr name="speed_thumb" format="reference" />
-        <!--刻度值长度-->
         <attr name="speed_length" format="dimension" />
-        <!--是否显示文字-->
         <attr name="speed_show_text" format="boolean" />
     </declare-styleable>
 
@@ -193,45 +178,26 @@
     </declare-styleable>
 
     <declare-styleable name="ProgressCircle">
-        <!-- 如果圆的边框是有宽度(厚度)的, 那么 circleRadius特指该圆的外边框的半径, 实际在绘制该圆时,
-            绘制所用的半径是该 circleRadius减去圆边框厚度的 1/2后的值 -->
         <attr name="circleOuterRadius" format="dimension"/>
-        <!-- 圆边框的宽度(厚度) -->
         <attr name="circleBorderWidth" format="dimension" />
-        <!-- 圆边框的颜色 -->
         <attr name="circleBorderColor" format="color"/>
-        <!-- 圆内扇形的颜色 -->
         <attr name="innerPieColor" format="color" />
-        <!-- 绘制圆内扇形的起始角度 -->
         <attr name="innerPieStartingAngle" format="float"/>
-        <!-- 绘制圆内扇形的最大进度 -->
         <attr name="innerPieMaxProgress" format="integer"/>
-        <!-- 绘制圆内扇形的进度 -->
         <attr name="innerPieProgress" format="integer"/>
     </declare-styleable>
 
     <declare-styleable name="AnimationBar">
-        <!--背景底板颜色-->
         <attr name="anim_backColor" format="color"/>
-        <!--入场progress颜色-->
         <attr name="anim_enterColor" format="color"/>
-        <!--出场progress颜色-->
         <attr name="anim_leaveColor" format="color"/>
-        <!--文字颜色-->
         <attr name="anim_textColor" format="color"/>
-        <!--thumb尺寸-->
         <attr name="anim_thumbRadius" format="reference" />
-        <!--thumber入场图片-->
         <attr name="anim_enterThumb" format="reference" />
-        <!--thumber出场图片-->
         <attr name="anim_leaveThumb" format="reference" />
-        <!--文字尺寸-->
         <attr name="anim_textSize" format="dimension" />
-        <!--progress线高-->
         <attr name="anim_lineHeight" format="dimension" />
-        <!--progress线长-->
         <attr name="anim_lineLength" format="dimension" />
-        <!--刻度值-->
         <attr name="anim_degreeCount" format="integer" />
     </declare-styleable>
 </resources>

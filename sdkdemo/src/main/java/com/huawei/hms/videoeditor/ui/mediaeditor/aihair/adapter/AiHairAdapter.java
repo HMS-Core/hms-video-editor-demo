@@ -1,17 +1,17 @@
 /*
- *  Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
+ *   Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
  *
- *     Licensed under the Apache License, Version 2.0 (the "License");
- *     you may not use this file except in compliance with the License.
- *     You may obtain a copy of the License at
+ *      Licensed under the Apache License, Version 2.0 (the "License");
+ *      you may not use this file except in compliance with the License.
+ *      You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- *     Unless required by applicable law or agreed to in writing, software
- *     distributed under the License is distributed on an "AS IS" BASIS,
- *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *     See the License for the specific language governing permissions and
- *     limitations under the License.
+ *      Unless required by applicable law or agreed to in writing, software
+ *      distributed under the License is distributed on an "AS IS" BASIS,
+ *      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *      See the License for the specific language governing permissions and
+ *      limitations under the License.
  */
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.aihair.adapter;
@@ -38,7 +38,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RCommandAdapter;
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RViewHolder;
-import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
+import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.FileUtil;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
@@ -47,16 +47,16 @@ import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
 import androidx.annotation.Nullable;
 
-public class AiHairAdapter extends RCommandAdapter<CloudMaterialBean> {
+public class AiHairAdapter extends RCommandAdapter<MaterialsCloudBean> {
     private volatile int currentSelectedPosition = -1;
 
-    private final Map<String, CloudMaterialBean> mCurrentDownloadingMap = new LinkedHashMap<>();
+    private final Map<String, MaterialsCloudBean> mCurrentDownloadingMap = new LinkedHashMap<>();
 
-    private final Map<String, CloudMaterialBean> mFirstDataMap = new LinkedHashMap<>();
+    private final Map<String, MaterialsCloudBean> mFirstDataMap = new LinkedHashMap<>();
 
     private OnAiHairAdapterItemClickListener onAiHairAdapterItemClickListener;
 
-    public AiHairAdapter(Context context, List<CloudMaterialBean> list, int layoutId) {
+    public AiHairAdapter(Context context, List<MaterialsCloudBean> list, int layoutId) {
         super(context, list, layoutId);
     }
 
@@ -65,7 +65,7 @@ public class AiHairAdapter extends RCommandAdapter<CloudMaterialBean> {
     }
 
     @Override
-    protected void convert(RViewHolder holder, CloudMaterialBean materialItem, int dataPosition, int position) {
+    protected void convert(RViewHolder holder, MaterialsCloudBean materialItem, int dataPosition, int position) {
         View holderView = holder.getView(R.id.item_select_view_ai_hair);
         ImageView mItemIv = holder.getView(R.id.item_image_view_ai_hair);
         TextView mTitleTv = holder.getView(R.id.item_name_ai_hair);
@@ -139,7 +139,7 @@ public class AiHairAdapter extends RCommandAdapter<CloudMaterialBean> {
         this.currentSelectedPosition = selectPosition;
     }
 
-    public void addDownloadMap(CloudMaterialBean materialsData) {
+    public void addDownloadMap(MaterialsCloudBean materialsData) {
         mCurrentDownloadingMap.put(materialsData.getId(), materialsData);
     }
 
@@ -147,13 +147,13 @@ public class AiHairAdapter extends RCommandAdapter<CloudMaterialBean> {
         mCurrentDownloadingMap.remove(contentId);
     }
 
-    public void addFirstScreenData(CloudMaterialBean materialsData) {
+    public void addFirstScreenData(MaterialsCloudBean materialsData) {
         if (!mFirstDataMap.containsKey(materialsData.getId())) {
             mFirstDataMap.put(materialsData.getId(), materialsData);
         }
     }
 
-    public void removeFirstScreenData(CloudMaterialBean materialsData) {
+    public void removeFirstScreenData(MaterialsCloudBean materialsData) {
         if (materialsData == null || mFirstDataMap.size() == 0) {
             return;
         }

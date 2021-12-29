@@ -1,17 +1,17 @@
 /*
- *  Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
+ *   Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
  *
- *     Licensed under the Apache License, Version 2.0 (the "License");
- *     you may not use this file except in compliance with the License.
- *     You may obtain a copy of the License at
+ *      Licensed under the Apache License, Version 2.0 (the "License");
+ *      you may not use this file except in compliance with the License.
+ *      You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- *     Unless required by applicable law or agreed to in writing, software
- *     distributed under the License is distributed on an "AS IS" BASIS,
- *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *     See the License for the specific language governing permissions and
- *     limitations under the License.
+ *      Unless required by applicable law or agreed to in writing, software
+ *      distributed under the License is distributed on an "AS IS" BASIS,
+ *      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *      See the License for the specific language governing permissions and
+ *      limitations under the License.
  */
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean;
@@ -37,6 +37,8 @@ public class MainViewState {
 
     public static final int EDIT_BACKGROUND_STATE = 109;
 
+    public final static int EDIT_VIDEO_STATE_TRIM = 101200;
+
     public final static int EDIT_VIDEO_STATE_SPLIT = 101201;
 
     public final static int EDIT_VIDEO_STATE_PROPORTION = 101202;
@@ -47,6 +49,7 @@ public class MainViewState {
 
     public final static int EDIT_VIDEO_STATE_DELETE = 101206;
 
+    public final static int EDIT_VIDEO_STATE_TAILORING = 101207;
 
     public final static int EDIT_VIDEO_STATE_COPY = 101208;
 
@@ -63,6 +66,8 @@ public class MainViewState {
     public final static int EDIT_VIDEO_STATE_VOLUME = 101217;
 
     public final static int EDIT_VIDEO_STATE_FILTER = 101218;
+
+    public final static int EDIT_VIDEO_STATE_BLOCK_FACE = 101219;
 
     public final static int EDIT_VIDEO_STATE_HUMAN_TRACKING = 101220;
 
@@ -101,6 +106,8 @@ public class MainViewState {
     public final static int EDIT_VIDEO_STATE_ADJUST = 121;
 
     public final static int EDIT_VIDEO_OPERATION = 201;
+
+    public final static int EDIT_VIDEO_OPERATION_TRIM = 201100;
 
     public final static int EDIT_VIDEO_OPERATION_SPLIT = 201101;
 
@@ -210,6 +217,8 @@ public class MainViewState {
 
     public final static int EDIT_PIP_OPERATION_DELETE = 207107;
 
+    public final static int EDIT_PIP_OPERATION_CROP = 207108;
+
     public final static int EDIT_PIP_OPERATION_ADJUST = 207109;
 
     public final static int EDIT_PIP_OPERATION_COPY = 207110;
@@ -269,4 +278,6 @@ public class MainViewState {
     public static final int TRANSITION_PANEL = 1100;
 
     public static final int EDIT_VIDEO_STATE_MOVE = 1300;
+
+    public final static int EDIT_AUDIO_CUSTOM_CURVESPEED = 609;
 }

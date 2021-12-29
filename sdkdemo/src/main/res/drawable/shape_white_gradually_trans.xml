@@ -6,7 +6,6 @@
         android:endColor="#00ffffff"
         android:startColor="#fff" />
 
-    <!-- 圆角的幅度 -->
     <corners
        android:radius="@dimen/dp_15" />
 

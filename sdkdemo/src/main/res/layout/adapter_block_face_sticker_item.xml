@@ -41,34 +41,18 @@
                 app:layout_constraintEnd_toEndOf="@id/item_image_view"
                 app:layout_constraintTop_toTopOf="@id/item_image_view" />
 
-            <com.huawei.hms.videoeditor.ui.common.view.loading.DonutProgress
+            <ProgressBar
                 android:id="@+id/item_progress"
-                android:layout_width="@dimen/dp_16"
-                android:layout_height="@dimen/dp_16"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:contentDescription="@string/downloading"
                 android:visibility="gone"
-                app:donut_background_color="@color/transparent"
-                app:donut_finished_color="@color/pick_add_select_color"
-                app:donut_finished_stroke_width="@dimen/dp_1"
-                app:donut_progress="0"
-                app:donut_show_text="false"
-                app:donut_unfinished_color="#99FFFFFF"
-                app:donut_unfinished_stroke_width="@dimen/dp_1"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="MissingConstraints" />
-
-            <ImageView
-                android:id="@+id/progress_center_iv"
-                android:layout_width="@dimen/dp_8"
-                android:layout_height="@dimen/dp_1"
-                android:src="@drawable/sticker_progress_waiting"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/item_progress"
-                app:layout_constraintEnd_toEndOf="@+id/item_progress"
-                app:layout_constraintStart_toStartOf="@+id/item_progress"
-                app:layout_constraintTop_toTopOf="@+id/item_progress"
+                app:layout_constraintBottom_toBottomOf="@+id/item_image_view"
+                app:layout_constraintEnd_toEndOf="@+id/item_image_view"
+                app:layout_constraintStart_toStartOf="@+id/item_image_view"
+                app:layout_constraintTop_toTopOf="@+id/item_image_view"
                 tools:ignore="MissingConstraints" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

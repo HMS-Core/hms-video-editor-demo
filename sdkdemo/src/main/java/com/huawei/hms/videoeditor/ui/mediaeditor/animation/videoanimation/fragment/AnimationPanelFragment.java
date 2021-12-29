@@ -1,18 +1,18 @@
 
 /*
- *  Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
+ *   Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
  *
- *     Licensed under the Apache License, Version 2.0 (the "License");
- *     you may not use this file except in compliance with the License.
- *     You may obtain a copy of the License at
+ *      Licensed under the Apache License, Version 2.0 (the "License");
+ *      you may not use this file except in compliance with the License.
+ *      You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- *     Unless required by applicable law or agreed to in writing, software
- *     distributed under the License is distributed on an "AS IS" BASIS,
- *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *     See the License for the specific language governing permissions and
- *     limitations under the License.
+ *      Unless required by applicable law or agreed to in writing, software
+ *      distributed under the License is distributed on an "AS IS" BASIS,
+ *      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *      See the License for the specific language governing permissions and
+ *      limitations under the License.
  */
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.animation.videoanimation.fragment;
@@ -42,7 +42,7 @@ import com.huawei.hms.videoeditor.sdk.asset.HVEAsset;
 import com.huawei.hms.videoeditor.sdk.effect.HVEEffect;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.BaseFragment;
-import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
+import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
 import com.huawei.hms.videoeditor.ui.common.bean.MaterialsDownloadInfo;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.ScreenUtil;
@@ -76,9 +76,9 @@ public class AnimationPanelFragment extends BaseFragment implements AnimationBar
 
     private List<HVEColumnInfo> columnList = new ArrayList<>();
 
-    private List<CloudMaterialBean> initAnim = new ArrayList<>(1);
+    private List<MaterialsCloudBean> initAnim = new ArrayList<>(1);
 
-    private List<CloudMaterialBean> animList = new ArrayList<>();
+    private List<MaterialsCloudBean> animList = new ArrayList<>();
 
     private HVEAsset hveAsset;
 
@@ -226,10 +226,13 @@ public class AnimationPanelFragment extends BaseFragment implements AnimationBar
             currentIndex = index;
             if (index == 0) {
                 animType = HVEEffect.ENTER_ANIMATION;
+                animationBar.setEnterAnimation(true);
             } else if (index == 1) {
                 animType = HVEEffect.LEAVE_ANIMATION;
+                animationBar.setEnterAnimation(false);
             } else if (index == 2) {
-                animType = HVEEffect.COMBINE_ANIMATION;
+                animType = HVEEffect.CYCLE_ANIMATION;
+                animationBar.setEnterAnimation(true);
             }
             currentPage = 0;
             isFirst = false;
@@ -316,7 +319,7 @@ public class AnimationPanelFragment extends BaseFragment implements AnimationBar
                 if (animList == null || animList.isEmpty()) {
                     return;
                 }
-                CloudMaterialBean content1 = animList.get(position);
+                MaterialsCloudBean content1 = animList.get(position);
                 if (content1 == null) {
                     return;
                 }
@@ -649,7 +652,7 @@ public class AnimationPanelFragment extends BaseFragment implements AnimationBar
         animationItemAdapter.notifyItemChanged(downloadPosition);
     }
 
-    private void setAnimationSelected(HVEAsset hveAsset, List<CloudMaterialBean> animList, String animType) {
+    private void setAnimationSelected(HVEAsset hveAsset, List<MaterialsCloudBean> animList, String animType) {
         int selectedPosition = animationViewModel.getSelectedPosition(hveAsset, animList, animType);
         animationItemAdapter.setSelectPosition(selectedPosition);
     }

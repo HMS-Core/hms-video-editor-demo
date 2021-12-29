@@ -1,24 +1,24 @@
 /*
- *  Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
+ *   Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
  *
- *     Licensed under the Apache License, Version 2.0 (the "License");
- *     you may not use this file except in compliance with the License.
- *     You may obtain a copy of the License at
+ *      Licensed under the Apache License, Version 2.0 (the "License");
+ *      you may not use this file except in compliance with the License.
+ *      You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- *     Unless required by applicable law or agreed to in writing, software
- *     distributed under the License is distributed on an "AS IS" BASIS,
- *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *     See the License for the specific language governing permissions and
- *     limitations under the License.
+ *      Unless required by applicable law or agreed to in writing, software
+ *      distributed under the License is distributed on an "AS IS" BASIS,
+ *      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *      See the License for the specific language governing permissions and
+ *      limitations under the License.
  */
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.texts.viewmodel;
 
 import android.app.Application;
 
-import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
+import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -26,13 +26,13 @@ import androidx.lifecycle.MutableLiveData;
 
 public class TextPanelViewModel extends AndroidViewModel {
 
-    private CloudMaterialBean mFontContent;
+    private MaterialsCloudBean mFontContent;
 
-    private CloudMaterialBean mBubblesContent;
+    private MaterialsCloudBean mBubblesContent;
 
-    private CloudMaterialBean mFlowerContent;
+    private MaterialsCloudBean mFlowerContent;
 
-    private CloudMaterialBean mAnimaText;
+    private MaterialsCloudBean mAnimaText;
 
     private MutableLiveData<String> animColumn = new MutableLiveData<>();
 
@@ -43,31 +43,31 @@ public class TextPanelViewModel extends AndroidViewModel {
 
     }
 
-    public CloudMaterialBean getFontContent() {
+    public MaterialsCloudBean getFontContent() {
         return mFontContent;
     }
 
-    public void setFontContent(CloudMaterialBean mFontContent) {
+    public void setFontContent(MaterialsCloudBean mFontContent) {
         this.mFontContent = mFontContent;
     }
 
-    public CloudMaterialBean getBubblesContent() {
+    public MaterialsCloudBean getBubblesContent() {
         return mBubblesContent;
     }
 
-    public void setBubblesContent(CloudMaterialBean mBubblesContent) {
+    public void setBubblesContent(MaterialsCloudBean mBubblesContent) {
         this.mBubblesContent = mBubblesContent;
     }
 
-    public CloudMaterialBean getFlowerContent() {
+    public MaterialsCloudBean getFlowerContent() {
         return mFlowerContent;
     }
 
-    public void setFlowerContent(CloudMaterialBean mFlowerContent) {
+    public void setFlowerContent(MaterialsCloudBean mFlowerContent) {
         this.mFlowerContent = mFlowerContent;
     }
 
-    public CloudMaterialBean getAnimaText() {
+    public MaterialsCloudBean getAnimaText() {
         return mAnimaText;
     }
 
@@ -87,7 +87,7 @@ public class TextPanelViewModel extends AndroidViewModel {
         return fontColumn;
     }
 
-    public void setAnimaText(CloudMaterialBean animaText) {
+    public void setAnimaText(MaterialsCloudBean animaText) {
         this.mAnimaText = animaText;
     }
 }

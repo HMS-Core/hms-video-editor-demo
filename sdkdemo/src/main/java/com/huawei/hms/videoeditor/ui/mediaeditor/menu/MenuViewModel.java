@@ -1,17 +1,17 @@
 /*
- *  Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
+ *   Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
  *
- *     Licensed under the Apache License, Version 2.0 (the "License");
- *     you may not use this file except in compliance with the License.
- *     You may obtain a copy of the License at
+ *      Licensed under the Apache License, Version 2.0 (the "License");
+ *      you may not use this file except in compliance with the License.
+ *      You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- *     Unless required by applicable law or agreed to in writing, software
- *     distributed under the License is distributed on an "AS IS" BASIS,
- *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *     See the License for the specific language governing permissions and
- *     limitations under the License.
+ *      Unless required by applicable law or agreed to in writing, software
+ *      distributed under the License is distributed on an "AS IS" BASIS,
+ *      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *      See the License for the specific language governing permissions and
+ *      limitations under the License.
  */
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.menu;
@@ -28,7 +28,6 @@ import java.util.List;
 
 import android.app.Application;
 import android.os.Handler;
-import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.huawei.hms.videoeditor.common.store.sp.SPManager;
@@ -49,7 +48,7 @@ import com.huawei.hms.videoeditor.sdk.lane.HVEStickerLane;
 import com.huawei.hms.videoeditor.sdk.lane.HVEVideoLane;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.EditorManager;
-import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
+import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
 import com.huawei.hms.videoeditor.ui.common.bean.MediaData;
 import com.huawei.hms.videoeditor.ui.common.tools.EditorRuntimeException;
 import com.huawei.hms.videoeditor.ui.common.utils.LaneSizeCheckUtils;
@@ -341,7 +340,7 @@ public class MenuViewModel extends AndroidViewModel {
         }
     }
 
-    public HVEEffect addTransitionEffect(CloudMaterialBean content, long duration, boolean preview) {
+    public HVEEffect addTransitionEffect(MaterialsCloudBean content, long duration, boolean preview) {
         HVEVideoLane videoLane = EditorManager.getInstance().getMainLane();
         if (videoLane == null) {
             return null;
@@ -364,7 +363,7 @@ public class MenuViewModel extends AndroidViewModel {
         return null;
     }
 
-    public boolean applyTransitionToAll(CloudMaterialBean content) {
+    public boolean applyTransitionToAll(MaterialsCloudBean content) {
         HuaweiVideoEditor mEditor = EditorManager.getInstance().getEditor();
         HVETimeLine timeLine = EditorManager.getInstance().getTimeLine();
         if (mEditor == null || timeLine == null) {

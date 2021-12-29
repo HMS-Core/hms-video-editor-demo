@@ -1,18 +1,18 @@
 
 /*
- *  Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
+ *   Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
  *
- *     Licensed under the Apache License, Version 2.0 (the "License");
- *     you may not use this file except in compliance with the License.
- *     You may obtain a copy of the License at
+ *      Licensed under the Apache License, Version 2.0 (the "License");
+ *      you may not use this file except in compliance with the License.
+ *      You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- *     Unless required by applicable law or agreed to in writing, software
- *     distributed under the License is distributed on an "AS IS" BASIS,
- *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *     See the License for the specific language governing permissions and
- *     limitations under the License.
+ *      Unless required by applicable law or agreed to in writing, software
+ *      distributed under the License is distributed on an "AS IS" BASIS,
+ *      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *      See the License for the specific language governing permissions and
+ *      limitations under the License.
  */
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.materialedit;
@@ -144,7 +144,6 @@ public class MaterialEditFragment extends BaseFragment {
             }
         });
 
-        // 根据当前时间轴判断选中的素材框是否显示
         mEditPreviewViewModel.getCurrentTime().observe(this, time -> {
             HVEAsset selectedAsset = mEditPreviewViewModel.getSelectedAsset();
             if (!(selectedAsset instanceof HVEVisibleAsset)) {
@@ -164,7 +163,6 @@ public class MaterialEditFragment extends BaseFragment {
                     boolean isVisible = selectedAsset.isVisible(time);
                     transformView.setVisibility(isVisible ? View.VISIBLE : View.GONE);
 
-                    // 检查当前已经绘制的TransformView的位置、角度、大小和即将需要绘制的是否有差异
                     boolean hasDiff = checkRectDiff(transformView, hveVisibleAsset);
                     if (isVisible && hasDiff) {
                         transformView.setRectangularPoints(hveVisibleAsset.getRect(), hveVisibleAsset.getSize(),
@@ -198,7 +196,6 @@ public class MaterialEditFragment extends BaseFragment {
             }
         });
 
-        // 监听贴纸编辑状态变化
         mMaterialEditViewModel.getIsStickerEditState().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
@@ -226,7 +223,6 @@ public class MaterialEditFragment extends BaseFragment {
             }
         });
 
-        // 监听文字编辑状态变化
         mMaterialEditViewModel.getIsTextEditState().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
@@ -264,7 +260,6 @@ public class MaterialEditFragment extends BaseFragment {
             }
         });
 
-        // 文字输入框内容变化监听
         mMaterialEditViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String string) {
@@ -305,11 +300,7 @@ public class MaterialEditFragment extends BaseFragment {
         });
     }
 
-    /**
-     * 获取坐标点
-     */
     private void getPoint(float posX, float posY) {
-        // 获取触摸点的坐标 x, y
         float x = posX;
         float y = posY;
         HVEAsset selectedAsset = mPersonTrackingViewModel.getSelectedTracking();
@@ -318,32 +309,32 @@ public class MaterialEditFragment extends BaseFragment {
         int h = hveVisibleAsset.getHeight();
         float vw = hveVisibleAsset.getSize().width;
         float vh = hveVisibleAsset.getSize().height;
-        boolean isMirror = hveVisibleAsset.getHorizontalMirrorState(); // 水平镜像
-        boolean isVerticalMirror = hveVisibleAsset.getVerticalMirrorState(); // 垂直镜像
+        boolean isMirror = hveVisibleAsset.getHorizontalMirrorState();
+        boolean isVerticalMirror = hveVisibleAsset.getVerticalMirrorState();
         if (hveVisibleAsset.getRect().size() > 1) {
             HVEPosition2D leftTop = hveVisibleAsset.getRect().get(1);
             HVEPosition2D bottomRight = hveVisibleAsset.getRect().get(3);
             float centerX = (leftTop.xPos + bottomRight.xPos) / 2;
             float centerY = (leftTop.yPos + bottomRight.yPos) / 2;
-            // 相对中心点偏移量
+
             x = x - centerX;
             y = y - centerY;
             float ro = hveVisibleAsset.getRotation();
             Matrix matrix = new Matrix();
-            matrix.postRotate(ro); // 旋转逆运算
+            matrix.postRotate(ro);
             float[] f = new float[] {x, y};
             float[] dst = new float[2];
             matrix.mapPoints(dst, f);
-            f[0] = ((dst[0] + vw / 2)) / vw; // 相对左下角的纹理x坐标
-            f[1] = (vh / 2 - dst[1]) / vh; // 相对左下角的纹理y坐标
+            f[0] = ((dst[0] + vw / 2)) / vw;
+            f[1] = (vh / 2 - dst[1]) / vh;
             if (isMirror) {
-                f[0] = 1 - f[0]; // 水平镜像
+                f[0] = 1 - f[0];
             }
             if (isVerticalMirror) {
-                f[1] = 1 - f[1]; // 垂直镜像
+                f[1] = 1 - f[1];
             }
-            // 获取点击的坐标点
-            Point position2D = new Point((int) (f[0] * w), (int) ((1 - f[1]) * h)); // 1-f[1] 转换成相对左上角纹理坐标
+
+            Point position2D = new Point((int) (f[0] * w), (int) ((1 - f[1]) * h));
             mPersonTrackingViewModel.setTrackingPoint(position2D);
         }
     }
@@ -353,12 +344,6 @@ public class MaterialEditFragment extends BaseFragment {
         return 0;
     }
 
-    /**
-     * 比较当前预览区展示的TransformView的位置信息是否需要刷新重绘
-     *
-     * @param transformView 当前预览区展示的TransformView
-     * @param hveVisibleAsset 当前时间轴对应的选中HVEAsset
-     */
     private boolean checkRectDiff(TransformView transformView, HVEVisibleAsset hveVisibleAsset) {
         if (transformView.getSrcRotation() != hveVisibleAsset.getRotation()) {
             return true;
@@ -394,9 +379,6 @@ public class MaterialEditFragment extends BaseFragment {
         return false;
     }
 
-    /**
-     * 刷新预览区状态
-     */
     private void refreshMaterialList() {
         mContentLayout.removeAllViews();
         if (mMaterialEditViewModel.getMaterialList() != null) {
@@ -406,11 +388,6 @@ public class MaterialEditFragment extends BaseFragment {
         }
     }
 
-    /**
-     * 添加预览区选中矩形框
-     *
-     * @param data 预览区选中数据类
-     */
     private void addMaterialRectView(MaterialEditData data) {
         if (data == null || data.getAsset() == null || isFullScreenState) {
             SmartLog.e(TAG, "data is unValid");

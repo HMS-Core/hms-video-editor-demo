@@ -1,18 +1,18 @@
 
 /*
- *  Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
+ *   Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
  *
- *     Licensed under the Apache License, Version 2.0 (the "License");
- *     you may not use this file except in compliance with the License.
- *     You may obtain a copy of the License at
+ *      Licensed under the Apache License, Version 2.0 (the "License");
+ *      you may not use this file except in compliance with the License.
+ *      You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- *     Unless required by applicable law or agreed to in writing, software
- *     distributed under the License is distributed on an "AS IS" BASIS,
- *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *     See the License for the specific language governing permissions and
- *     limitations under the License.
+ *      Unless required by applicable law or agreed to in writing, software
+ *      distributed under the License is distributed on an "AS IS" BASIS,
+ *      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *      See the License for the specific language governing permissions and
+ *      limitations under the License.
  */
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.animation.videoanimation.adapter;
@@ -39,7 +39,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
-import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
+import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
@@ -53,15 +53,15 @@ import androidx.recyclerview.widget.RecyclerView;
 public class AnimationItemAdapter extends RecyclerView.Adapter<AnimationItemAdapter.ViewHolder> {
     private Context mContext;
 
-    private List<CloudMaterialBean> mList;
+    private List<MaterialsCloudBean> mList;
 
-    private final Map<String, CloudMaterialBean> bDownloadingMap = new LinkedHashMap<>();
+    private final Map<String, MaterialsCloudBean> bDownloadingMap = new LinkedHashMap<>();
 
     private int bSelectPosition = 0;
 
     private OnItemClickListener mOnItemClickListener;
 
-    public AnimationItemAdapter(Context context, List<CloudMaterialBean> list) {
+    public AnimationItemAdapter(Context context, List<MaterialsCloudBean> list) {
         mContext = context;
         mList = list;
     }
@@ -70,7 +70,7 @@ public class AnimationItemAdapter extends RecyclerView.Adapter<AnimationItemAdap
         mOnItemClickListener = listener;
     }
 
-    public void setData(List<CloudMaterialBean> list) {
+    public void setData(List<MaterialsCloudBean> list) {
         this.mList = list;
         notifyDataSetChanged();
     }
@@ -85,7 +85,7 @@ public class AnimationItemAdapter extends RecyclerView.Adapter<AnimationItemAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        CloudMaterialBean item = mList.get(position);
+        MaterialsCloudBean item = mList.get(position);
 
         Glide.with(mContext)
             .load(!StringUtil.isEmpty(item.getPreviewUrl()) ? item.getPreviewUrl() : item.getLocalDrawableId())
@@ -152,7 +152,7 @@ public class AnimationItemAdapter extends RecyclerView.Adapter<AnimationItemAdap
         this.bSelectPosition = selectPosition;
     }
 
-    public void addDownloadMaterial(CloudMaterialBean item) {
+    public void addDownloadMaterial(MaterialsCloudBean item) {
         if (!bDownloadingMap.containsKey(item.getId())) {
             bDownloadingMap.put(item.getId(), item);
         }

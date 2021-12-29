@@ -16,7 +16,7 @@
         android:contentDescription="@string/tv_back"
         android:src="@drawable/white_back_icon"
         tools:ignore="ContentDescription" />
-    <!--    保存/导出/其他、使用文字形式-->
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -45,7 +45,6 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints"
             android:textAllCaps="true"/>
-        <!--    保存，图标形式-->
 
         <ImageView
             android:id="@+id/iv_save"
@@ -58,7 +57,5 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="ContentDescription,MissingConstraints" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </RelativeLayout>

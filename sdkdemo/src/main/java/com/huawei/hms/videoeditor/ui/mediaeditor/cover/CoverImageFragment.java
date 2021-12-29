@@ -1,18 +1,18 @@
 
 /*
- *  Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
+ *   Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
  *
- *     Licensed under the Apache License, Version 2.0 (the "License");
- *     you may not use this file except in compliance with the License.
- *     You may obtain a copy of the License at
+ *      Licensed under the Apache License, Version 2.0 (the "License");
+ *      you may not use this file except in compliance with the License.
+ *      You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- *     Unless required by applicable law or agreed to in writing, software
- *     distributed under the License is distributed on an "AS IS" BASIS,
- *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *     See the License for the specific language governing permissions and
- *     limitations under the License.
+ *      Unless required by applicable law or agreed to in writing, software
+ *      distributed under the License is distributed on an "AS IS" BASIS,
+ *      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *      See the License for the specific language governing permissions and
+ *      limitations under the License.
  */
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.cover;
@@ -66,19 +66,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-/**
- * 添加封面
- *
- * @author xwx882936
- * @since 2020/12/22
- */
 public class CoverImageFragment extends BaseFragment {
 
     private static final String TAG = "CoverImageFragment";
 
-    public static final String SET_COVER_PATH_TYPE_SPLIT_TAG = "##"; // 设置封面成功后分割路径和封面类型的tag
+    public static final String SET_COVER_PATH_TYPE_SPLIT_TAG = "##";
 
-    public static final String IMAGE_COVER_PATH_TYPE_SPLIT_TAG = "&&"; // 相册导入分割路径的tag
+    public static final String IMAGE_COVER_PATH_TYPE_SPLIT_TAG = "&&";
 
     private LinearLayout mResetLayout;
 
@@ -130,9 +124,9 @@ public class CoverImageFragment extends BaseFragment {
 
     private String mSelectPicForImagePath;
 
-    private String mInitSourcePicForImagePath; // 相册导入模式下 初始状态 源图片地址
+    private String mInitSourcePicForImagePath;
 
-    private String mSourcePicForImagePath; // 相册导入模式下 源图片地址
+    private String mSourcePicForImagePath;
 
     private boolean isVideoSelect;
 
@@ -148,7 +142,6 @@ public class CoverImageFragment extends BaseFragment {
 
     private boolean isSaveState = false;
 
-    // 主轨道视频帧
     private List<HVEAsset> mAssetList;
 
     private List<HVEAsset> mCoverAssetList;
@@ -258,9 +251,6 @@ public class CoverImageFragment extends BaseFragment {
         mCoverAdapter.addFooterView(footView);
     }
 
-    /**
-     * 相册导入模式获取封面源图
-     */
     private void getSourcePicPath() {
         if (EditorManager.getInstance().getEditor() != null
             && !StringUtil.isEmpty(EditorManager.getInstance().getEditor().getProjectId())) {
@@ -375,7 +365,6 @@ public class CoverImageFragment extends BaseFragment {
             }
         }));
 
-        // 相册导入编辑图片
         mCoverLayout.setOnClickListener(v -> chosePicture());
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {

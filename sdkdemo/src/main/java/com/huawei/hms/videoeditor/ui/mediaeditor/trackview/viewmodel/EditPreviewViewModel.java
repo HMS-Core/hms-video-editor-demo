@@ -1,25 +1,29 @@
 /*
- *  Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
+ *   Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
  *
- *     Licensed under the Apache License, Version 2.0 (the "License");
- *     you may not use this file except in compliance with the License.
- *     You may obtain a copy of the License at
+ *      Licensed under the Apache License, Version 2.0 (the "License");
+ *      you may not use this file except in compliance with the License.
+ *      You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- *     Unless required by applicable law or agreed to in writing, software
- *     distributed under the License is distributed on an "AS IS" BASIS,
- *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *     See the License for the specific language governing permissions and
- *     limitations under the License.
+ *      Unless required by applicable law or agreed to in writing, software
+ *      distributed under the License is distributed on an "AS IS" BASIS,
+ *      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *      See the License for the specific language governing permissions and
+ *      limitations under the License.
  */
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.trackview.viewmodel;
 
 import static android.content.Context.ALARM_SERVICE;
 import static com.huawei.hms.videoeditor.sdk.asset.HVEAsset.HVEAssetType.AUDIO;
+import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_FILTER_STATE;
+import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_SPECIAL_STATE;
+import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.TRANSITION_PANEL;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -34,6 +38,9 @@ import com.huawei.hms.videoeditor.sdk.asset.HVEAsset;
 import com.huawei.hms.videoeditor.sdk.asset.HVEAudioAsset;
 import com.huawei.hms.videoeditor.sdk.asset.HVEVideoAsset;
 import com.huawei.hms.videoeditor.sdk.asset.HVEVideoReverseCallback;
+import com.huawei.hms.videoeditor.sdk.asset.HVEVisibleAsset;
+import com.huawei.hms.videoeditor.sdk.bean.HVEAIFaceStickerInput;
+import com.huawei.hms.videoeditor.sdk.bean.HVESpeedCurvePoint;
 import com.huawei.hms.videoeditor.sdk.effect.HVEEffect;
 import com.huawei.hms.videoeditor.sdk.effect.impl.ScriptableFilterEffect;
 import com.huawei.hms.videoeditor.sdk.lane.HVEAudioLane;
@@ -41,14 +48,15 @@ import com.huawei.hms.videoeditor.sdk.lane.HVEEffectLane;
 import com.huawei.hms.videoeditor.sdk.lane.HVELane;
 import com.huawei.hms.videoeditor.sdk.lane.HVEStickerLane;
 import com.huawei.hms.videoeditor.sdk.lane.HVEVideoLane;
+import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.EditorManager;
-import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.utils.LaneSizeCheckUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.ScreenUtil;
 import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
 import com.huawei.hms.videoeditor.ui.common.utils.ToastWrapper;
 import com.huawei.hms.videoeditor.ui.common.utils.UpdateTimesManager;
+import com.huawei.hms.videoeditor.ui.mediaeditor.blockface.FaceBlockingInfo;
 import com.huawei.hms.videoeditor.ui.mediaeditor.graffiti.GraffitiInfo;
 import com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainRecyclerData;
 import com.huawei.hms.videoeditor.ui.mediaeditor.trackview.fragment.EditPreviewFragment;
@@ -115,6 +123,8 @@ public class EditPreviewViewModel extends AndroidViewModel {
 
     private MutableLiveData<HVEAsset> mainLaneAsset = new MutableLiveData<>();
 
+    private HashMap<Integer, List<HVESpeedCurvePoint>> curvePointMap;
+
     private HVEAsset currentMainLaneAsset;
 
     private MutableLiveData<String> mTextTempValue = new MutableLiveData<>();
@@ -153,11 +163,13 @@ public class EditPreviewViewModel extends AndroidViewModel {
 
     private MutableLiveData<String> toastTime = new MutableLiveData<>();
 
-    private MutableLiveData<CloudMaterialBean> defaultFontContent = new MutableLiveData<>();
+    private MutableLiveData<MaterialsCloudBean> defaultFontContent = new MutableLiveData<>();
 
     private MutableLiveData<Boolean> isFootShow = new MutableLiveData<Boolean>();
 
     private MutableLiveData<Boolean> footPrintsShow = new MutableLiveData<>();
+
+    private MutableLiveData<Integer> faceBlockingEnter = new MutableLiveData<>();
 
     private int lastPosition = -1;
 
@@ -210,6 +222,13 @@ public class EditPreviewViewModel extends AndroidViewModel {
     public void destroyTimeoutManager() {
         isTimeout.postValue(Boolean.FALSE);
         UpdateTimesManager.getInstance().destroy();
+    }
+
+    public void updateCurvePointMap(int position, List<HVESpeedCurvePoint> speedCurvePoints) {
+        if (curvePointMap == null) {
+            curvePointMap = new HashMap<>();
+        }
+        curvePointMap.put(position, speedCurvePoints);
     }
 
     public void initTimeoutManager() {
@@ -285,6 +304,8 @@ public class EditPreviewViewModel extends AndroidViewModel {
         return hveAsset;
     }
 
+    private MainRecyclerData mainData;
+
     private int mTransIndex = -1;
 
     private boolean isAddCoverTextStatus = false;
@@ -317,6 +338,8 @@ public class EditPreviewViewModel extends AndroidViewModel {
 
     private boolean isPersonTrackingStatus = false;
 
+    private boolean isFaceBlockingStatus = false;
+
     public boolean isEditTextStatus() {
         return isEditTextStatus;
     }
@@ -347,6 +370,14 @@ public class EditPreviewViewModel extends AndroidViewModel {
 
     public void setEditStickerStatus(boolean isEditStickerStatus) {
         this.isEditStickerStatus = isEditStickerStatus;
+    }
+
+    public boolean isFaceBlockingStatus() {
+        return isFaceBlockingStatus;
+    }
+
+    public void setFaceBlockingStatus(boolean isFaceBlockingStatus) {
+        this.isFaceBlockingStatus = isFaceBlockingStatus;
     }
 
     public boolean isPersonTrackingStatus() {
@@ -409,6 +440,7 @@ public class EditPreviewViewModel extends AndroidViewModel {
     }
 
     public void setMainData(MainRecyclerData mainData) {
+        this.mainData = mainData;
         this.data.postValue(mainData);
     }
 
@@ -465,6 +497,14 @@ public class EditPreviewViewModel extends AndroidViewModel {
         seekTime = currentTime;
         mainLaneAssetChange(currentTime);
         this.currentTime.postValue(currentTime);
+    }
+
+    public void refreshMenuState() {
+        if (selectedUUID != null) {
+            setSelectedUUID(selectedUUID.getValue());
+        }
+        currentMainLaneAsset = getMainLaneAsset();
+        mainLaneAsset.postValue(currentMainLaneAsset);
     }
 
     public void mainLaneAssetChange(long currentTime) {
@@ -586,7 +626,7 @@ public class EditPreviewViewModel extends AndroidViewModel {
         return Math.min(4000, Math.min(firstAsset.getDuration(), secondAsset.getDuration()) / 2);
     }
 
-    public boolean addAudio(CloudMaterialBean content, int type) {
+    public boolean addAudio(MaterialsCloudBean content, int type) {
         HVETimeLine hveTimeLine = getTimeLine();
         if (hveTimeLine == null) {
             SmartLog.e(TAG, "timeline is null when add audio");
@@ -712,6 +752,83 @@ public class EditPreviewViewModel extends AndroidViewModel {
             return;
         }
         editor.pauseTimeLine();
+    }
+
+    public void changeUIData() {
+        HVETimeLine hveTimeLine = getTimeLine();
+        if (hveTimeLine == null) {
+            return;
+        }
+
+        mainData.getWholeListData().audioTrackItemList.clear();
+
+        mainData.getWholeListData().pipTrackItemList.clear();
+        mainData.getWholeListData().textTrackItemList.clear();
+
+        mainData.getWholeListData().specialTrackItemList.clear();
+        mainData.getWholeListData().filterTrackItemList.clear();
+
+        List<HVEVideoLane> videoLanes = hveTimeLine.getAllVideoLane();
+        List<HVEAudioLane> audioLanes = hveTimeLine.getAllAudioLane();
+        List<HVEStickerLane> stickerLanes = hveTimeLine.getAllStickerLane();
+
+        for (HVEAudioLane lane : audioLanes) {
+            List<HVEAsset> assets = new ArrayList<>(lane.getAssets());
+            mainData.getWholeListData().audioTrackItemList
+                .add(new MainRecyclerData.NormalTrackItem(lane.getIndex(), assets));
+        }
+
+        for (HVEStickerLane lane : stickerLanes) {
+            List<HVEAsset> assets = new ArrayList<>(lane.getAssets());
+            mainData.getWholeListData().textTrackItemList
+                .add(new MainRecyclerData.NormalTrackItem(lane.getIndex(), assets));
+        }
+        if (videoLanes.size() >= 1) {
+            for (int i = 1; i < videoLanes.size(); i++) {
+                mainData.getWholeListData().pipTrackItemList.add(
+                    new MainRecyclerData.NormalTrackItem(videoLanes.get(i).getIndex(), videoLanes.get(i).getAssets()));
+            }
+        }
+        for (HVEEffectLane lane : hveTimeLine.getAllEffectLane(HVEEffectLane.HVEEffectLaneType.NORMAL)) {
+            List<HVEEffect> specials = new ArrayList<>();
+            List<HVEEffect> filters = new ArrayList<>();
+            for (HVEEffect effect : lane.getEffects()) {
+                if (effect.getEffectType() == HVEEffect.HVEEffectType.NORMAL
+                    || effect.getEffectType() == HVEEffect.HVEEffectType.MASK) {
+                    specials.add(effect);
+                }
+                if (effect.getEffectType() == HVEEffect.HVEEffectType.FILTER
+                    || effect.getEffectType() == HVEEffect.HVEEffectType.ADJUST) {
+                    filters.add(effect);
+                }
+            }
+            mainData.getWholeListData().specialTrackItemList
+                .add(new MainRecyclerData.NormalTrackItem(lane.getIndex(), specials, EDIT_SPECIAL_STATE));
+            mainData.getWholeListData().filterTrackItemList
+                .add(new MainRecyclerData.NormalTrackItem(lane.getIndex(), filters, EDIT_FILTER_STATE));
+        }
+
+        for (HVEEffectLane lane : EditorManager.getInstance()
+            .getTimeLine()
+            .getAllEffectLane(HVEEffectLane.HVEEffectLaneType.EFFECT)) {
+            List<HVEEffect> effects = new ArrayList<>(lane.getEffects());
+            mainData.getWholeListData().specialTrackItemList
+                .add(new MainRecyclerData.NormalTrackItem(lane.getIndex(), effects, EDIT_SPECIAL_STATE));
+        }
+
+        for (HVEEffectLane lane : EditorManager.getInstance()
+            .getTimeLine()
+            .getAllEffectLane(HVEEffectLane.HVEEffectLaneType.ADJUST)) {
+            List<HVEEffect> effects = new ArrayList<>(lane.getEffects());
+            mainData.getWholeListData().filterTrackItemList
+                .add(new MainRecyclerData.NormalTrackItem(lane.getIndex(), effects, EDIT_FILTER_STATE));
+        }
+    }
+
+    public void reloadUIData() {
+        changeUIData();
+        data.postValue(mainData);
+        updateDuration();
     }
 
     public HVEAsset getSelectedAsset() {
@@ -907,6 +1024,43 @@ public class EditPreviewViewModel extends AndroidViewModel {
         return refreshCurrentMenuControl;
     }
 
+    public void startFaceBlockingTracking(HVEAsset visibleAsset, List<FaceBlockingInfo> faceBlockingInfoList) {
+        if (visibleAsset == null) {
+            SmartLog.e(TAG, "HVEAsset is null! ");
+            return;
+        }
+        if (faceBlockingInfoList == null || faceBlockingInfoList.size() == 0) {
+            SmartLog.e(TAG, "faceBlockingInfoList size is zero! ");
+            return;
+        }
+        ArrayList<HVEAIFaceStickerInput> aiFaceEffectInputs = new ArrayList<>();
+        for (FaceBlockingInfo faceBlockingInfo : faceBlockingInfoList) {
+            HVEAIFaceStickerInput aiFaceEffectInput = new HVEAIFaceStickerInput(faceBlockingInfo.getFaceTemplates(),
+                faceBlockingInfo.getLocalSticker(), Integer.parseInt(faceBlockingInfo.getType()));
+            aiFaceEffectInputs.add(aiFaceEffectInput);
+        }
+        if (visibleAsset instanceof HVEVisibleAsset) {
+            ((HVEVisibleAsset) visibleAsset).addFacePrivacyEffect(aiFaceEffectInputs);
+        }
+    }
+
+    public void updateVideoLane() {
+        HuaweiVideoEditor editor = getEditor();
+        if (EditorManager.getInstance().getMainLane() != null) {
+            reloadMainLane();
+        }
+        updateDuration();
+        if (editor == null) {
+            return;
+        }
+        editor.seekTimeLine(seekTime, new HuaweiVideoEditor.SeekCallback() {
+            @Override
+            public void onSeekFinished() {
+                reloadUIData();
+            }
+        });
+    }
+
     public boolean isAlarmClock(long time) {
         boolean isClock = false;
         if (alarmManager == null) {
@@ -1034,7 +1188,7 @@ public class EditPreviewViewModel extends AndroidViewModel {
         isKeyBordShow.setValue(b);
     }
 
-    public MutableLiveData<CloudMaterialBean> getDefaultFontContent() {
+    public MutableLiveData<MaterialsCloudBean> getDefaultFontContent() {
         return defaultFontContent;
     }
 
@@ -1052,6 +1206,14 @@ public class EditPreviewViewModel extends AndroidViewModel {
 
     public MutableLiveData<Boolean> getIsFootShow() {
         return isFootShow;
+    }
+
+    public MutableLiveData<Integer> getFaceBlockingEnter() {
+        return faceBlockingEnter;
+    }
+
+    public void setFaceBlockingEnter(Integer humanTrackingEnter) {
+        this.faceBlockingEnter.postValue(humanTrackingEnter);
     }
 
     public int getLastPosition() {
@@ -1172,5 +1334,27 @@ public class EditPreviewViewModel extends AndroidViewModel {
 
     public void setOnTouchEvent(boolean refresh) {
         this.onTouchEvent.setValue(refresh);
+    }
+
+    public boolean setTransitionPanel(int index) {
+        mTransIndex = index;
+        List<HVEAsset> assetList = null;
+        HVEVideoLane hveVideoLane = getVideoLane();
+        if (hveVideoLane != null) {
+            assetList = hveVideoLane.getAssets();
+        }
+        if (assetList == null || assetList.isEmpty()) {
+            return false;
+        }
+        if (assetList.size() > index + 1) {
+            HVEAsset fromAsset = assetList.get(index);
+            HVEAsset toAsset = assetList.get(index + 1);
+            if (fromAsset != null && fromAsset.getDuration() >= 300 && toAsset != null
+                && toAsset.getDuration() >= 300) {
+                transition.postValue(TRANSITION_PANEL);
+                return true;
+            }
+        }
+        return false;
     }
 }

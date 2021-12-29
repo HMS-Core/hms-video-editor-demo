@@ -34,8 +34,8 @@
 ## 运行步骤
  - 将本代码库克隆到本地。
 
- - 如果您还没有注册成为开发者，请在[AppGalleryConnect上注册并创建应用](https://developer.huawei.com/consumer/cn/service/josp/agc/index.html)。
- - agconnect-services.json文件请从[华为开发者联盟](https://developer.huawei.com/consumer/cn/doc/development/Media-Guides/config-agc-0000001101108580)网站申请获取。
+ - 如果您还没有注册成为开发者，请在[AppGalleryConnect上注册并创建应用](https://developer.huawei.com/consumer/cn/service/josp/agc/index.html?ha_source=hms1)。
+ - agconnect-services.json文件请从[华为开发者联盟](https://developer.huawei.com/consumer/cn/doc/development/Media-Guides/config-agc-0000001101108580?ha_source=hms1)网站申请获取。
  - 将agconnect-services.json文件拷贝到应用级根目录下。
  - 如果您需要使用云侧服务的能力，需要您使用agconnect-services.json里的api_key值，在应用初始化时调用MediaApplication.getInstance().setApiKey(String apiKey)。
  - 编译并且在安卓设备或模拟器上运行。

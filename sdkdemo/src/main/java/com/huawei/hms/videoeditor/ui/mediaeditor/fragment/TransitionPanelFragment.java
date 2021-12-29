@@ -1,29 +1,20 @@
 /*
- *  Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
+ *   Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
  *
- *     Licensed under the Apache License, Version 2.0 (the "License");
- *     you may not use this file except in compliance with the License.
- *     You may obtain a copy of the License at
+ *      Licensed under the Apache License, Version 2.0 (the "License");
+ *      you may not use this file except in compliance with the License.
+ *      You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- *     Unless required by applicable law or agreed to in writing, software
- *     distributed under the License is distributed on an "AS IS" BASIS,
- *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *     See the License for the specific language governing permissions and
- *     limitations under the License.
+ *      Unless required by applicable law or agreed to in writing, software
+ *      distributed under the License is distributed on an "AS IS" BASIS,
+ *      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *      See the License for the specific language governing permissions and
+ *      limitations under the License.
  */
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.fragment;
-
-import static com.huawei.hms.videoeditor.ui.common.bean.Constant.LTR_UI;
-import static com.huawei.hms.videoeditor.ui.common.bean.Constant.RTL_UI;
-
-import java.math.BigDecimal;
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 import android.annotation.SuppressLint;
 import android.content.res.Configuration;
@@ -38,6 +29,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.huawei.hms.videoeditor.common.utils.LanguageUtils;
 import com.huawei.hms.videoeditor.materials.HVEColumnInfo;
 import com.huawei.hms.videoeditor.materials.HVEMaterialConstant;
@@ -48,7 +46,7 @@ import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.BaseFragment;
 import com.huawei.hms.videoeditor.ui.common.EditorManager;
 import com.huawei.hms.videoeditor.ui.common.adapter.TransitionItemAdapter;
-import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
+import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
 import com.huawei.hms.videoeditor.ui.common.bean.MaterialsDownloadInfo;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.BigDecimalUtils;
@@ -68,12 +66,14 @@ import com.huawei.hms.videoeditor.ui.mediaeditor.preview.view.TransitionSeekBar;
 import com.huawei.hms.videoeditor.ui.mediaeditor.trackview.viewmodel.EditPreviewViewModel;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
-import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import java.math.BigDecimal;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
+import static com.huawei.hms.videoeditor.ui.common.bean.Constant.LTR_UI;
+import static com.huawei.hms.videoeditor.ui.common.bean.Constant.RTL_UI;
 
 public class TransitionPanelFragment extends BaseFragment {
     private static final String TAG = "TransitionPanelFragment";
@@ -108,9 +108,9 @@ public class TransitionPanelFragment extends BaseFragment {
 
     private List<HVEColumnInfo> columnList = new ArrayList<>();
 
-    private List<CloudMaterialBean> animList = new ArrayList<>();
+    private List<MaterialsCloudBean> animList = new ArrayList<>();
 
-    private List<CloudMaterialBean> initAnim = new ArrayList<>(1);
+    private List<MaterialsCloudBean> initAnim = new ArrayList<>(1);
 
     private int mCurrentIndex = 0;
 
@@ -128,7 +128,7 @@ public class TransitionPanelFragment extends BaseFragment {
 
     private LoadingIndicatorView mLoadingIndicatorView;
 
-    public CloudMaterialBean mLastContent;
+    public MaterialsCloudBean mLastContent;
 
     private TextView tv_title;
 
@@ -138,7 +138,7 @@ public class TransitionPanelFragment extends BaseFragment {
 
     private HVEColumnInfo mContent;
 
-    private CloudMaterialBean mMaterialsCutContent;
+    private MaterialsCloudBean mMaterialsCutContent;
 
     @Override
     protected void initViewModelObserve() {
@@ -176,14 +176,25 @@ public class TransitionPanelFragment extends BaseFragment {
         LinearLayout.LayoutParams transParams;
         if (LanguageUtils.isZh()) {
             transParams = new LinearLayout.LayoutParams(SizeUtils.dp2Px(context, 48.0f),
-                ConstraintLayout.LayoutParams.WRAP_CONTENT);
+                    ConstraintLayout.LayoutParams.WRAP_CONTENT);
         } else {
             transParams = new LinearLayout.LayoutParams(SizeUtils.dp2Px(context, 64.0f),
-                ConstraintLayout.LayoutParams.WRAP_CONTENT);
+                    ConstraintLayout.LayoutParams.WRAP_CONTENT);
         }
         transParams.setMargins(SizeUtils.dp2Px(context, 16.0f), 0, 0, SizeUtils.dp2Px(context, 3.0f));
         transParams.gravity = Gravity.BOTTOM;
         transTime.setLayoutParams(transParams);
+    }
+
+    public List<MaterialsCloudBean> loadLocalData() {
+        MaterialsCloudBean transitionNothing = new MaterialsCloudBean();
+        transitionNothing.setName(
+                this.getResources().getString(R.string.none));
+        transitionNothing.setLocalDrawableId(R.drawable.icon_no);
+        transitionNothing.setId("-1");
+        List<MaterialsCloudBean> list = new ArrayList<>();
+        list.add(transitionNothing);
+        return list;
     }
 
     @Override
@@ -203,12 +214,13 @@ public class TransitionPanelFragment extends BaseFragment {
             mProgress = (int) (maxTransTime / 5);
             currentTransTime = 100;
         }
+        animList.addAll(loadLocalData());
         transitionItemAdapter = new TransitionItemAdapter(mActivity, animList);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false));
         if (mRecyclerView.getItemDecorationCount() == 0) {
             mRecyclerView
-                .addItemDecoration(new HorizontalDividerDecoration(ContextCompat.getColor(mActivity, R.color.color_20),
-                    SizeUtils.dp2Px(mActivity, 64), SizeUtils.dp2Px(mActivity, 6)));
+                    .addItemDecoration(new HorizontalDividerDecoration(ContextCompat.getColor(mActivity, R.color.color_20),
+                            SizeUtils.dp2Px(mActivity, 64), SizeUtils.dp2Px(mActivity, 6)));
         }
         mRecyclerView.setItemAnimator(null);
         mRecyclerView.setAdapter(transitionItemAdapter);
@@ -219,6 +231,7 @@ public class TransitionPanelFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+        initAnim.addAll(loadLocalData());
         int defaultColor = ContextCompat.getColor(mActivity, R.color.color_fff_86);
         int color = ContextCompat.getColor(mActivity, R.color.tab_text_tint_color);
         int leftRightPadding = SizeUtils.dp2Px(mActivity, 15);
@@ -234,7 +247,7 @@ public class TransitionPanelFragment extends BaseFragment {
             List<TabTopInfo<?>> mInfoList = new ArrayList<>();
             for (HVEColumnInfo item : list) {
                 mInfoList.add(new TabTopInfo<>(item.getColumnName(), true, defaultColor, color, leftRightPadding,
-                    leftRightPadding));
+                        leftRightPadding));
             }
             mTabTopLayout.inflateInfo(mInfoList);
             mTabTopLayout.defaultSelected(mInfoList.get(mCurrentIndex));
@@ -297,11 +310,11 @@ public class TransitionPanelFragment extends BaseFragment {
     @Override
     protected void initEvent() {
         mEditPreviewViewModel.getTimeout()
-            .observe(this, isTimeout -> {
-                if (isTimeout && !isBackground) {
-                    mActivity.onBackPressed();
-                }
-            });
+                .observe(this, isTimeout -> {
+                    if (isTimeout && !isBackground) {
+                        mActivity.onBackPressed();
+                    }
+                });
         transitionPanelViewModel.getPageData().observe(getViewLifecycleOwner(), list -> {
             if (list == null || list.size() <= 0) {
                 mSelectPosition = 0;
@@ -357,8 +370,8 @@ public class TransitionPanelFragment extends BaseFragment {
             calculateTransTime(progress);
             float textTimer = BigDecimal.valueOf(BigDecimalUtils.div(currentTransTime, 1000f, 1)).floatValue();
             mEditPreviewViewModel.setToastTime(mActivity.getResources()
-                .getQuantityString(R.plurals.seconds_time, Double.valueOf(textTimer).intValue(),
-                    NumberFormat.getInstance().format(textTimer)));
+                    .getQuantityString(R.plurals.seconds_time, Double.valueOf(textTimer).intValue(),
+                            NumberFormat.getInstance().format(textTimer)));
             HuaweiVideoEditor editor = EditorManager.getInstance().getEditor();
             editor.pauseTimeLine();
         });
@@ -368,8 +381,8 @@ public class TransitionPanelFragment extends BaseFragment {
                 int transitionTime = (int) Math.max(100, (float) mSeekBar.getProgress() / 100 * maxTransTime);
                 float textTimer = BigDecimal.valueOf(BigDecimalUtils.div(transitionTime, 1000f, 1)).floatValue();
                 String v = mActivity.getResources()
-                    .getQuantityString(R.plurals.seconds_time, Double.valueOf(textTimer).intValue(),
-                        NumberFormat.getInstance().format(textTimer));
+                        .getQuantityString(R.plurals.seconds_time, Double.valueOf(textTimer).intValue(),
+                                NumberFormat.getInstance().format(textTimer));
                 mEditPreviewViewModel.setToastTime(v);
             } else {
                 mEditPreviewViewModel.setToastTime("");
@@ -423,7 +436,7 @@ public class TransitionPanelFragment extends BaseFragment {
                 mLastPosition = position;
                 int previousPosition = transitionItemAdapter.getSelectPosition();
                 transitionItemAdapter.setSelectPosition(position);
-                CloudMaterialBean content = animList.get(position);
+                MaterialsCloudBean content = animList.get(position);
                 if (content != null) {
                     transitionItemAdapter.addDownloadMaterial(content);
                     transitionPanelViewModel.downloadColumn(previousPosition, position, content);
@@ -469,7 +482,7 @@ public class TransitionPanelFragment extends BaseFragment {
 
             transitionItemAdapter.setItemClick(true);
             if (downloadPosition == transitionItemAdapter.getSelectPosition()) {
-                CloudMaterialBean materialsCutContent = downloadInfo.getMaterialBean();
+                MaterialsCloudBean materialsCutContent = downloadInfo.getMaterialBean();
                 addByPosition(materialsCutContent, true);
             }
         });
@@ -483,10 +496,10 @@ public class TransitionPanelFragment extends BaseFragment {
             transitionItemAdapter.removeDownloadMaterial(downloadInfo.getContentId());
             transitionItemAdapter.setItemClick(true);
             ToastWrapper.makeText(mActivity,
-                downloadInfo.getMaterialBean().getName() + Utils.setNumColor(
-                    String.format(Locale.ROOT, mActivity.getResources().getString(R.string.download_failed), 0),
-                    mActivity.getResources().getColor(R.color.transparent)),
-                Toast.LENGTH_SHORT).show();
+                    downloadInfo.getMaterialBean().getName() + Utils.setNumColor(
+                            String.format(Locale.ROOT, mActivity.getResources().getString(R.string.download_failed), 0),
+                            mActivity.getResources().getColor(R.color.transparent)),
+                    Toast.LENGTH_SHORT).show();
         });
 
         transitionPanelViewModel.getErrorString().observe(this, errorString -> {
@@ -507,7 +520,7 @@ public class TransitionPanelFragment extends BaseFragment {
 
         mApplyToAllTv.setOnClickListener(new OnClickRepeatedListener(v -> {
             boolean isSuccess = false;
-            CloudMaterialBean beforeContent = getBeforeContent();
+            MaterialsCloudBean beforeContent = getBeforeContent();
             if (mLastPosition == 0) {
                 isSuccess = mMenuViewModel.removeAllTransition();
             } else if (beforeContent != null) {
@@ -533,9 +546,9 @@ public class TransitionPanelFragment extends BaseFragment {
             return;
         }
         if (downloadInfo.getDataPosition() < animList.size()
-            && downloadInfo.getContentId().equals(animList.get(downloadInfo.getDataPosition()).getId())) {
+                && downloadInfo.getContentId().equals(animList.get(downloadInfo.getDataPosition()).getId())) {
             TransitionItemAdapter.ViewHolder viewHolder = (TransitionItemAdapter.ViewHolder) mRecyclerView
-                .findViewHolderForAdapterPosition(downloadInfo.getPosition());
+                    .findViewHolderForAdapterPosition(downloadInfo.getPosition());
             if (viewHolder != null) {
                 ProgressBar mHwProgressBar = viewHolder.itemView.findViewById(R.id.item_progress);
                 mHwProgressBar.setProgress(downloadInfo.getProgress());
@@ -543,7 +556,7 @@ public class TransitionPanelFragment extends BaseFragment {
         }
     }
 
-    public void addByPosition(CloudMaterialBean content, boolean preview) {
+    public void addByPosition(MaterialsCloudBean content, boolean preview) {
         hasAddPosition = true;
         if (mLastPosition == 0) {
             deleteTransitionEffect();
@@ -591,8 +604,8 @@ public class TransitionPanelFragment extends BaseFragment {
         HVEVideoLane videoLane = mEditPreviewViewModel.getVideoLane();
         for (int i = 0; i < videoLane.getTransitionEffects().size(); i++) {
             if (videoLane.getTransitionEffects().get(i).getIntVal("from") == mEditPreviewViewModel
-                .getTransLengthByIndex()
-                || videoLane.getTransitionEffects()
+                    .getTransLengthByIndex()
+                    || videoLane.getTransitionEffects()
                     .get(i)
                     .getIntVal("to") == mEditPreviewViewModel.getTransLengthByIndex() + 1) {
                 videoLane.removeTransitionEffect(i);
@@ -621,7 +634,7 @@ public class TransitionPanelFragment extends BaseFragment {
         isFirst = false;
     }
 
-    public CloudMaterialBean getBeforeContent() {
+    public MaterialsCloudBean getBeforeContent() {
         HVEEffect effect = mEditPreviewViewModel.getEffectedTransition();
         if (effect != null) {
             String name = effect.getOptions().getEffectName();

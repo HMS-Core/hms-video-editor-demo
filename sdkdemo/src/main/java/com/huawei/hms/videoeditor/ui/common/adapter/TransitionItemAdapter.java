@@ -1,24 +1,20 @@
 /*
- *  Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
+ *   Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
  *
- *     Licensed under the Apache License, Version 2.0 (the "License");
- *     you may not use this file except in compliance with the License.
- *     You may obtain a copy of the License at
+ *      Licensed under the Apache License, Version 2.0 (the "License");
+ *      you may not use this file except in compliance with the License.
+ *      You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- *     Unless required by applicable law or agreed to in writing, software
- *     distributed under the License is distributed on an "AS IS" BASIS,
- *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *     See the License for the specific language governing permissions and
- *     limitations under the License.
+ *      Unless required by applicable law or agreed to in writing, software
+ *      distributed under the License is distributed on an "AS IS" BASIS,
+ *      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *      See the License for the specific language governing permissions and
+ *      limitations under the License.
  */
 
 package com.huawei.hms.videoeditor.ui.common.adapter;
-
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -29,6 +25,11 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.utils.widget.ImageFilterView;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.MultiTransformation;
@@ -38,29 +39,28 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
-import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
+import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.utils.widget.ImageFilterView;
-import androidx.recyclerview.widget.RecyclerView;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class TransitionItemAdapter extends RecyclerView.Adapter<TransitionItemAdapter.ViewHolder> {
     private Context mContext;
 
-    private List<CloudMaterialBean> list;
+    private List<MaterialsCloudBean> list;
 
-    private final Map<String, CloudMaterialBean> downloadingMap = new LinkedHashMap<>();
+    private final Map<String, MaterialsCloudBean> downloadingMap = new LinkedHashMap<>();
 
     private int selectPosition = 0;
 
     private TransitionItemAdapter.OnItemClickListener onItemClickListener;
 
-    public TransitionItemAdapter(Context context, List<CloudMaterialBean> list) {
+    public TransitionItemAdapter(Context context, List<MaterialsCloudBean> list) {
         mContext = context;
         this.list = list;
     }
@@ -69,7 +69,7 @@ public class TransitionItemAdapter extends RecyclerView.Adapter<TransitionItemAd
         onItemClickListener = listener;
     }
 
-    public void setData(List<CloudMaterialBean> list) {
+    public void setData(List<MaterialsCloudBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -78,32 +78,32 @@ public class TransitionItemAdapter extends RecyclerView.Adapter<TransitionItemAd
     @Override
     public TransitionItemAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view =
-            LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_add_animation_item, parent, false);
+                LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_add_animation_item, parent, false);
         return new TransitionItemAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull TransitionItemAdapter.ViewHolder holder, int position) {
-        CloudMaterialBean materialsCutContent = list.get(position);
+        MaterialsCloudBean materialsCutContent = list.get(position);
 
         Glide.with(mContext)
-            .load(!StringUtil.isEmpty(materialsCutContent.getPreviewUrl()))
-            .apply(new RequestOptions()
-                .transform(new MultiTransformation(new CenterCrop(), new RoundedCorners(SizeUtils.dp2Px(mContext, 4)))))
-            .addListener(new RequestListener<Drawable>() {
-                @Override
-                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target,
-                    boolean isFirstResource) {
-                    return false;
-                }
+                .load(!StringUtil.isEmpty(materialsCutContent.getPreviewUrl()) ? materialsCutContent.getPreviewUrl() : materialsCutContent.getLocalDrawableId())
+                .apply(new RequestOptions()
+                        .transform(new MultiTransformation(new CenterCrop(), new RoundedCorners(SizeUtils.dp2Px(mContext, 4)))))
+                .addListener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target,
+                                                boolean isFirstResource) {
+                        return false;
+                    }
 
-                @Override
-                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target,
-                    DataSource dataSource, boolean isFirstResource) {
-                    return false;
-                }
-            })
-            .into(holder.itemIv);
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target,
+                                                   DataSource dataSource, boolean isFirstResource) {
+                        return false;
+                    }
+                })
+                .into(holder.itemIv);
         holder.selectView.setVisibility(selectPosition == position ? View.VISIBLE : View.INVISIBLE);
         holder.nameTv.setText(materialsCutContent.getName());
         holder.mDownloadPbCenterTv.setVisibility(View.GONE);
@@ -161,7 +161,7 @@ public class TransitionItemAdapter extends RecyclerView.Adapter<TransitionItemAd
         this.selectPosition = selectPosition;
     }
 
-    public void addDownloadMaterial(CloudMaterialBean materialsCutContent) {
+    public void addDownloadMaterial(MaterialsCloudBean materialsCutContent) {
         downloadingMap.put(materialsCutContent.getId(), materialsCutContent);
     }
 

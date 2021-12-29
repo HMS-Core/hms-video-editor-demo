@@ -1,18 +1,18 @@
 
 /*
- *  Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
+ *   Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
  *
- *     Licensed under the Apache License, Version 2.0 (the "License");
- *     you may not use this file except in compliance with the License.
- *     You may obtain a copy of the License at
+ *      Licensed under the Apache License, Version 2.0 (the "License");
+ *      you may not use this file except in compliance with the License.
+ *      You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- *     Unless required by applicable law or agreed to in writing, software
- *     distributed under the License is distributed on an "AS IS" BASIS,
- *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *     See the License for the specific language governing permissions and
- *     limitations under the License.
+ *      Unless required by applicable law or agreed to in writing, software
+ *      distributed under the License is distributed on an "AS IS" BASIS,
+ *      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *      See the License for the specific language governing permissions and
+ *      limitations under the License.
  */
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.filter;
@@ -47,7 +47,7 @@ import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.BaseFragment;
 import com.huawei.hms.videoeditor.ui.common.EditorManager;
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RViewHolder;
-import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
+import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
 import com.huawei.hms.videoeditor.ui.common.bean.FilterData;
 import com.huawei.hms.videoeditor.ui.common.bean.MaterialsDownloadInfo;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
@@ -105,9 +105,9 @@ public class FilterPanelFragment extends BaseFragment {
 
     private List<HVEColumnInfo> mColumnList;
 
-    private CloudMaterialBean mSelectedMaterialsCutContent;
+    private MaterialsCloudBean mSelectedMaterialsCutContent;
 
-    private List<CloudMaterialBean> mCutContentList;
+    private List<MaterialsCloudBean> mCutContentList;
 
     private FilterItemAdapter mFilterItemAdapter;
 
@@ -460,7 +460,7 @@ public class FilterPanelFragment extends BaseFragment {
 
                 showSeekBar(true);
                 mFilterCancelRl.setSelected(false);
-                CloudMaterialBean content = mCutContentList.get(dataPosition);
+                MaterialsCloudBean content = mCutContentList.get(dataPosition);
                 int mSelectPosition = mFilterItemAdapter.getSelectPosition();
                 mSelectedMaterialsCutContent = content;
                 if (mSelectPosition == position) {
@@ -529,7 +529,7 @@ public class FilterPanelFragment extends BaseFragment {
 
                 int previousPosition = mFilterItemAdapter.getSelectPosition();
                 mFilterItemAdapter.setSelectPosition(position);
-                CloudMaterialBean content = mCutContentList.get(dataPosition);
+                MaterialsCloudBean content = mCutContentList.get(dataPosition);
 
                 mFilterItemAdapter.addDownloadMaterial(content);
                 mFilterPanelViewModel.downloadColumn(previousPosition, position, dataPosition, content);

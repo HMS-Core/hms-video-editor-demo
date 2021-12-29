@@ -1,18 +1,18 @@
 
 /*
- *  Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
+ *   Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
  *
- *     Licensed under the Apache License, Version 2.0 (the "License");
- *     you may not use this file except in compliance with the License.
- *     You may obtain a copy of the License at
+ *      Licensed under the Apache License, Version 2.0 (the "License");
+ *      you may not use this file except in compliance with the License.
+ *      You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- *     Unless required by applicable law or agreed to in writing, software
- *     distributed under the License is distributed on an "AS IS" BASIS,
- *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *     See the License for the specific language governing permissions and
- *     limitations under the License.
+ *      Unless required by applicable law or agreed to in writing, software
+ *      distributed under the License is distributed on an "AS IS" BASIS,
+ *      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *      See the License for the specific language governing permissions and
+ *      limitations under the License.
  */
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.texts.fragment;
@@ -52,7 +52,7 @@ import com.huawei.hms.videoeditor.ui.common.adapter.SelectAdapter;
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RCommandAdapter;
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RMCommandAdapter;
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RViewHolder;
-import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
+import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
 import com.huawei.hms.videoeditor.ui.common.bean.Constant;
 import com.huawei.hms.videoeditor.ui.common.bean.MaterialsDownloadInfo;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
@@ -130,7 +130,7 @@ public class EditTextStyleFragment extends Fragment {
 
     private RecyclerView mFontRecycleView;
 
-    private List<CloudMaterialBean> mFontList;
+    private List<MaterialsCloudBean> mFontList;
 
     private EditTextFontAdapter mEditTextFontAdapter;
 
@@ -292,9 +292,9 @@ public class EditTextStyleFragment extends Fragment {
         });
 
         mEditPreviewViewModel.getDefaultFontContent()
-            .observe(getViewLifecycleOwner(), new Observer<CloudMaterialBean>() {
+            .observe(getViewLifecycleOwner(), new Observer<MaterialsCloudBean>() {
                 @Override
-                public void onChanged(CloudMaterialBean materialsCutContent) {
+                public void onChanged(MaterialsCloudBean materialsCutContent) {
                     if (materialsCutContent != null && !StringUtil.isEmpty(materialsCutContent.getLocalPath())) {
                         FontFileManager.setDefaultFontFile(materialsCutContent.getLocalPath());
                         isDefaultFont = true;
@@ -380,7 +380,6 @@ public class EditTextStyleFragment extends Fragment {
             return position;
         }
 
-        // 常用
         public class TextStyleHolder extends RecyclerView.ViewHolder {
 
             private View mSeekBarLayout;
@@ -1332,7 +1331,7 @@ public class EditTextStyleFragment extends Fragment {
         }
     }
 
-    private void setEditPanelFont(CloudMaterialBean cutContent) {
+    private void setEditPanelFont(MaterialsCloudBean cutContent) {
         textPanelViewModel.setFontContent(cutContent);
     }
 
@@ -1351,7 +1350,7 @@ public class EditTextStyleFragment extends Fragment {
                         mEditTextFontAdapter.notifyItemChanged(mSelectPosition);
                     }
                     setEditPanelFont(null);
-                    CloudMaterialBean materialsCutContent = mEditPreviewViewModel.getDefaultFontContent().getValue();
+                    MaterialsCloudBean materialsCutContent = mEditPreviewViewModel.getDefaultFontContent().getValue();
                     if (materialsCutContent == null) {
                         textEditViewModel.setFontPath(Constant.DEFAULT_FONT_PATH, "");
                         return;
@@ -1385,7 +1384,7 @@ public class EditTextStyleFragment extends Fragment {
             public void onDownloadClick(int position, int aDataPosition) {
                 int previousPosition = mEditTextFontAdapter.getSelectPosition();
                 mEditTextFontAdapter.setSelectPosition(position);
-                CloudMaterialBean content = mFontList.get(aDataPosition);
+                MaterialsCloudBean content = mFontList.get(aDataPosition);
                 mEditTextFontAdapter.addDownloadMaterial(content);
                 mFontViewModel.downloadColumn(previousPosition, position, aDataPosition, content);
             }
@@ -1506,7 +1505,7 @@ public class EditTextStyleFragment extends Fragment {
                         if (firstPosition != -1 && visibleItemCount > 0 && !isFirst && mFontList.size() > 0) {
                             isFirst = true;
                             for (int i = 0; i < visibleItemCount - 1; i++) {
-                                CloudMaterialBean cutContent = mFontList.get(i);
+                                MaterialsCloudBean cutContent = mFontList.get(i);
                                 mEditTextFontAdapter.addFirstScreenMaterial(cutContent);
                             }
                         }

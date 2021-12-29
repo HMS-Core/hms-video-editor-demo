@@ -169,7 +169,6 @@
     -->
     <dimen name="inner_frame_layout_padding">5dp</dimen>
     
-        <!--    裁剪-->
     <dimen name="preview_margin">0dp</dimen>
     <dimen name="crop_min_side">45dp</dimen>
     <dimen name="crop_touch_tolerance">20dp</dimen>
@@ -178,13 +177,11 @@
     <dimen name="crop_indicator_size">24dp</dimen>
     <dimen name="crop_aspect_text_size">15sp</dimen>
 
-    <!--新手引导页气泡圆角-->
     <dimen name="guide_bubble_radius">8dp</dimen>
 
     <dimen name="dp_1_half">1.5dp</dimen>
     <dimen name="dp_16_half">16.5dp</dimen>
 
-    <!--   微电影字体-->
     <dimen name="mini_movie_sp_10">10sp</dimen>
     <dimen name="mini_movie_sp_11">11sp</dimen>
     <dimen name="mini_movie_sp_12">12sp</dimen>

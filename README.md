@@ -31,8 +31,8 @@ Both modes provide one-stop video editing capabilities, such as import, editing,
 ## Running Procedure
 - Clone the code base to the local host.
 
-- If you haven't already registered as a developer, register and create an app on [AppGalleryConnect](https://developer.huawei.com/consumer/en/service/josp/agc/index.html).
-- Obtain the agconnect-services.json file from [HUAWEI Developers]([https://developer.huawei.com/consumer/en/doc/development/Media-Guides/config-agc-0000001101108580](javascript:;)).
+- If you haven't already registered as a developer, register and create an app on [AppGalleryConnect](https://developer.huawei.com/consumer/en/service/josp/agc/index.html?ha_source=hms1).
+- Obtain the agconnect-services.json file from [HUAWEI Developers](https://developer.huawei.com/consumer/en/doc/development/Media-Guides/config-agc-0000001101108580?ha_source=hms1).
 - Place the agconnect-services.json file in the root directory of the demo.
 - If you need to use cloud-side service capabilities, you need to use the api_key value in agconnect-services.json to call MediaApplication.getInstance().setApiKey(String apiKey) during application initialization.
 - Compile and run on an Android device or emulator.

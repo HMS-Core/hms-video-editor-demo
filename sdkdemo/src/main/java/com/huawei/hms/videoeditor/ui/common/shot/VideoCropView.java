@@ -1,18 +1,18 @@
 
 /*
- *  Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
+ *   Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
  *
- *     Licensed under the Apache License, Version 2.0 (the "License");
- *     you may not use this file except in compliance with the License.
- *     You may obtain a copy of the License at
+ *      Licensed under the Apache License, Version 2.0 (the "License");
+ *      you may not use this file except in compliance with the License.
+ *      You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- *     Unless required by applicable law or agreed to in writing, software
- *     distributed under the License is distributed on an "AS IS" BASIS,
- *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *     See the License for the specific language governing permissions and
- *     limitations under the License.
+ *      Unless required by applicable law or agreed to in writing, software
+ *      distributed under the License is distributed on an "AS IS" BASIS,
+ *      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *      See the License for the specific language governing permissions and
+ *      limitations under the License.
  */
 
 package com.huawei.hms.videoeditor.ui.common.shot;
@@ -188,14 +188,14 @@ public class VideoCropView extends View {
                 break;
             case MotionEvent.ACTION_MOVE:
                 SmartLog.i(TAG, "ACTION_MOVE：" + event.getX(0));
-                if (isCanMove == 0) { // 左边
+                if (isCanMove == 0) {
                     float x = calculation(event);
                     SmartLog.i(TAG, "ACTION_MOVE：" + isCanMove);
                     cutVideo((int) (x - lengthOld), isCanMove);
                     lengthOld = x;
                     return true;
                 }
-                if (isCanMove == 1) { // 右边
+                if (isCanMove == 1) {
                     float x = calculation(event);
                     cutVideo((int) (lengthOld - x), isCanMove);
                     lengthOld = x;
@@ -310,5 +310,9 @@ public class VideoCropView extends View {
         void cut(long time);
 
         void cutResult(long cutTime, int isCanMove);
+    }
+
+    public void setCutVideoListener(CutVideoResult cutVideoListener) {
+        this.mCutVideoResult = cutVideoListener;
     }
 }

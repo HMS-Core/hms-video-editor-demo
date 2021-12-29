@@ -56,7 +56,13 @@
             android:screenOrientation="portrait">
 
         </activity>
-
+        <activity
+            android:name="com.huawei.hms.videoeditor.ui.mediaeditor.blockface.cropimage.CropImageActivity"
+            android:configChanges="uiMode" />
+        <activity
+            android:name="com.huawei.hms.videoeditor.ui.mediaeditor.crop.CropNewActivity"
+            android:configChanges="uiMode|orientation|screenSize"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.huawei.hms.videoeditor.ui.mediaeditor.filter.aifilter.activity.CreateFilterActivity"
             android:configChanges="uiMode"

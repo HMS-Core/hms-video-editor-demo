@@ -9,25 +9,11 @@
 
         <action android:id="@+id/export_fail"
             app:destination="@id/videoExportFailFragment"/>
-
-<!--        <action android:id="@+id/export_done"-->
-<!--            app:destination="@id/videoExportDoneFragment"/>-->
     </fixfragment>
 
 
     <fixfragment
         android:id="@+id/videoExportFailFragment"
         android:name="com.huawei.hms.videoeditor.ui.mediaexport.VideoExportFailFragment">
-
-<!--        <action-->
-<!--            android:id="@+id/action_videoExportFailFragment_to_videoExportDoneFragment"-->
-<!--            app:destination="@id/videoExportDoneFragment" />-->
     </fixfragment>
-
-
-<!--    <fixfragment-->
-<!--        android:id="@+id/videoExportDoneFragment"-->
-<!--        android:name="com.huawei.hms.videoeditor.ui.mediaexport.VideoExportDoneFragment">-->
-
-<!--    </fixfragment>-->
 </navigation>

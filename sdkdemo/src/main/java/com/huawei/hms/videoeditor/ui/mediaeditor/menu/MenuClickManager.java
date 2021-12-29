@@ -1,18 +1,18 @@
 
 /*
- *  Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
+ *   Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
  *
- *     Licensed under the Apache License, Version 2.0 (the "License");
- *     you may not use this file except in compliance with the License.
- *     You may obtain a copy of the License at
+ *      Licensed under the Apache License, Version 2.0 (the "License");
+ *      you may not use this file except in compliance with the License.
+ *      You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- *     Unless required by applicable law or agreed to in writing, software
- *     distributed under the License is distributed on an "AS IS" BASIS,
- *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *     See the License for the specific language governing permissions and
- *     limitations under the License.
+ *      Unless required by applicable law or agreed to in writing, software
+ *      distributed under the License is distributed on an "AS IS" BASIS,
+ *      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *      See the License for the specific language governing permissions and
+ *      limitations under the License.
  */
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.menu;
@@ -22,14 +22,10 @@ import static com.huawei.hms.videoeditor.ui.mediaeditor.VideoClipsActivity.ACTIO
 import static com.huawei.hms.videoeditor.ui.mediaeditor.VideoClipsActivity.ACTION_REPLACE_VIDEO_ASSET;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.*;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Stack;
-
 import android.content.Intent;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.huawei.hms.videoeditor.common.store.sp.SPManager;
 import com.huawei.hms.videoeditor.sdk.ai.HVEAIInitialCallback;
@@ -79,14 +75,20 @@ import com.huawei.hms.videoeditor.ui.mediaeditor.trackview.viewmodel.EditPreview
 import com.huawei.hms.videoeditor.ui.mediapick.activity.MediaPickActivity;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
-import androidx.fragment.app.Fragment;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Stack;
 
 public class MenuClickManager {
-    private static final String TAG = "MenuClickManager";
-
     public final static String AI_FUN = "AI_FUN";
 
     public final static String AI_FUN_KEY = "AI_FUN_KEY";
+
+    private final static String FACE_BLOCKING = "FACE_BLOCKING";
+
+    private final static String FACE_BLOCKING_KEY = "FACE_BLOCKING_KEY";
 
     private VideoClipsActivity mActivity;
 
@@ -185,6 +187,17 @@ public class MenuClickManager {
 
             case EDIT_VIDEO_STATE_SPLIT:
                 mActivity.showAssetSplitFragment(id);
+                break;
+
+            case EDIT_VIDEO_STATE_TRIM:
+            case EDIT_VIDEO_OPERATION_TRIM:
+                HVEAsset assetTrim = editPreviewViewModel.getMainLaneAsset();
+                if (assetTrim == null || !(assetTrim instanceof HVEVideoAsset)) {
+                    ToastWrapper.makeText(mActivity, mActivity.getString(R.string.crop_limit), Toast.LENGTH_SHORT)
+                        .show();
+                    return;
+                }
+                mActivity.showAssetCropFragment(id);
                 break;
             case EDIT_BACKGROUND_STATE:
                 showPanelViewPrepare(id, new CanvasBackgroundFragment());
@@ -291,7 +304,7 @@ public class MenuClickManager {
                     editPreviewViewModel.getEditor().seekTimeLine(editPreviewViewModel.getTimeLine().getCurrentTime());
                 }
                 break;
-            case EDIT_VIDEO_STATE_INVERTED:// 剪辑倒放
+            case EDIT_VIDEO_STATE_INVERTED:
                 editPreviewViewModel.videoRevert();
                 break;
             case EDIT_PIP_OPERATION_ADD:
@@ -299,7 +312,7 @@ public class MenuClickManager {
                 startIntent2.putExtra(MediaPickActivity.ACTION_TYPE, MediaPickActivity.ACTION_ADD_PIP_MEDIA_TYPE);
                 mActivity.startActivityForResult(startIntent2, ACTION_ADD_PICTURE_IN_REQUEST_CODE);
                 break;
-            case EDIT_VIDEO_OPERATION_SPLIT:// 剪辑拆分
+            case EDIT_VIDEO_OPERATION_SPLIT:
                 mActivity.showAssetSplitFragment(id);
                 break;
             case EDIT_VIDEO_OPERATION_COPY:
@@ -353,6 +366,12 @@ public class MenuClickManager {
                 }
 
                 break;
+            case EDIT_VIDEO_OPERATION_TAILORING:
+            case EDIT_PIP_OPERATION_CROP:
+            case EDIT_VIDEO_STATE_TAILORING:
+                mActivity.gotoCropVideoActivity();
+                break;
+
             case EDIT_PIP_OPERATION_ANIMATION:
             case EDIT_VIDEO_STATE_ANIMATION:
             case EDIT_VIDEO_OPERATION_ANIMATION:
@@ -674,6 +693,29 @@ public class MenuClickManager {
             case EDIT_VIDEO_OPERATION_PROPORTION:
                 showPanelViewPrepare(id, new VideoProportionFragment());
                 break;
+            case EDIT_VIDEO_STATE_BLOCK_FACE:
+                HVEAsset aiFaceAsset = editPreviewViewModel.getSelectedAsset();
+                if (aiFaceAsset == null) {
+                    aiFaceAsset = editPreviewViewModel.getMainLaneAsset();
+                }
+
+                if (!(aiFaceAsset instanceof HVEVisibleAsset)) {
+                    return;
+                }
+                if (!isAiCanBeUsed((HVEVisibleAsset) aiFaceAsset, HVEEffect.HVEEffectType.FACEPRIVACY)) {
+                    ToastWrapper.makeText(mActivity, mActivity.getResources().getString(R.string.ai_limit)).show();
+                    return;
+                }
+
+                boolean isShowToast = SPManager.get(FACE_BLOCKING).getBoolean(FACE_BLOCKING_KEY, false);
+                if (!isShowToast) {
+                    String maxFace =
+                        mActivity.getResources().getQuantityString(R.plurals.face_blocking_max_face, 20, 20);
+                    ToastWrapper.makeText(mActivity, maxFace, Toast.LENGTH_SHORT).show();
+                    SPManager.get(FACE_BLOCKING).put(FACE_BLOCKING_KEY, true);
+                }
+                editPreviewViewModel.setFaceBlockingEnter(id);
+                break;
             case EDIT_VIDEO_STATE_HUMAN_TRACKING:
             case EDIT_VIDEO_OPERATION_HUMAN_TRACKING:
             case EDIT_PIP_OPERATION_HUMAN_TRACKING:
@@ -760,7 +802,6 @@ public class MenuClickManager {
                             return;
                         }
 
-                        // 模型加载失败
                         mActivity.runOnUiThread(() -> {
                             LoadingDialogUtils.getInstance().dismiss();
                             ToastWrapper

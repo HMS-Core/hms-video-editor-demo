@@ -1,18 +1,18 @@
 
 /*
- *  Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
+ *   Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
  *
- *     Licensed under the Apache License, Version 2.0 (the "License");
- *     you may not use this file except in compliance with the License.
- *     You may obtain a copy of the License at
+ *      Licensed under the Apache License, Version 2.0 (the "License");
+ *      you may not use this file except in compliance with the License.
+ *      You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- *     Unless required by applicable law or agreed to in writing, software
- *     distributed under the License is distributed on an "AS IS" BASIS,
- *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *     See the License for the specific language governing permissions and
- *     limitations under the License.
+ *      Unless required by applicable law or agreed to in writing, software
+ *      distributed under the License is distributed on an "AS IS" BASIS,
+ *      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *      See the License for the specific language governing permissions and
+ *      limitations under the License.
  */
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.filter;
@@ -49,7 +49,7 @@ import com.huawei.hms.videoeditor.sdk.lane.HVEVideoLane;
 import com.huawei.hms.videoeditor.sdk.store.MaterialsLocalDataManager;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.EditorManager;
-import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
+import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
 import com.huawei.hms.videoeditor.ui.common.bean.FilterData;
 import com.huawei.hms.videoeditor.ui.common.bean.MaterialsDownloadInfo;
 import com.huawei.hms.videoeditor.ui.common.utils.LaneSizeCheckUtils;
@@ -73,7 +73,7 @@ public class FilterPanelViewModel extends AndroidViewModel {
 
     private final MutableLiveData<String> emptyString = new MutableLiveData<>();
 
-    private final MutableLiveData<List<CloudMaterialBean>> mFilterMaterials = new MutableLiveData<>();
+    private final MutableLiveData<List<MaterialsCloudBean>> mFilterMaterials = new MutableLiveData<>();
 
     private final MutableLiveData<MaterialsDownloadInfo> mDownloadSuccess = new MutableLiveData<>();
 
@@ -183,9 +183,9 @@ public class FilterPanelViewModel extends AndroidViewModel {
     }
 
     private void queryDownloadStatus(List<HVEMaterialInfo> materialsCutContents) {
-        List<CloudMaterialBean> list = new ArrayList<>();
+        List<MaterialsCloudBean> list = new ArrayList<>();
         for (int i = 0; i < materialsCutContents.size(); i++) {
-            CloudMaterialBean materialInfo = new CloudMaterialBean();
+            MaterialsCloudBean materialInfo = new MaterialsCloudBean();
             HVEMaterialInfo hveMaterialInfo = materialsCutContents.get(i);
             HVELocalMaterialInfo localMaterialInfo =
                 HVEMaterialsManager.queryLocalMaterialById(hveMaterialInfo.getMaterialId());
@@ -203,7 +203,7 @@ public class FilterPanelViewModel extends AndroidViewModel {
         mFilterMaterials.postValue(list);
     }
 
-    public void downloadColumn(int previousPosition, int position, int dataPosition, CloudMaterialBean cutContent) {
+    public void downloadColumn(int previousPosition, int position, int dataPosition, MaterialsCloudBean cutContent) {
         MaterialsDownloadInfo downloadFilterInfo = new MaterialsDownloadInfo();
         downloadFilterInfo.setPreviousPosition(previousPosition);
         downloadFilterInfo.setPosition(position);
@@ -246,7 +246,7 @@ public class FilterPanelViewModel extends AndroidViewModel {
         return errorString;
     }
 
-    public MutableLiveData<List<CloudMaterialBean>> getPageData() {
+    public MutableLiveData<List<MaterialsCloudBean>> getPageData() {
         return mFilterMaterials;
     }
 

@@ -1,18 +1,18 @@
 
 /*
- *  Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
+ *   Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
  *
- *     Licensed under the Apache License, Version 2.0 (the "License");
- *     you may not use this file except in compliance with the License.
- *     You may obtain a copy of the License at
+ *      Licensed under the Apache License, Version 2.0 (the "License");
+ *      you may not use this file except in compliance with the License.
+ *      You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- *     Unless required by applicable law or agreed to in writing, software
- *     distributed under the License is distributed on an "AS IS" BASIS,
- *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *     See the License for the specific language governing permissions and
- *     limitations under the License.
+ *      Unless required by applicable law or agreed to in writing, software
+ *      distributed under the License is distributed on an "AS IS" BASIS,
+ *      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *      See the License for the specific language governing permissions and
+ *      limitations under the License.
  */
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.audio.fragment;
@@ -36,7 +36,7 @@ import com.huawei.hms.videoeditor.materials.HVEColumnInfo;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.BaseFragment;
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RViewHolder;
-import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
+import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
 import com.huawei.hms.videoeditor.ui.common.bean.MaterialsDownloadInfo;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.ToastWrapper;
@@ -75,7 +75,7 @@ public class SoundEffectItemFragment extends BaseFragment
 
     private MediaPlayer mMediaPlayer;
 
-    private CloudMaterialBean materialsCutContent = new CloudMaterialBean();
+    private MaterialsCloudBean materialsCutContent = new MaterialsCloudBean();
 
     private boolean mHasNextPage = false;
 
@@ -83,7 +83,7 @@ public class SoundEffectItemFragment extends BaseFragment
 
     private SoundEffectItemAdapter mSoundEffectItemAdapter;
 
-    private List<CloudMaterialBean> mList;
+    private List<MaterialsCloudBean> mList;
 
     private int mCurrentPosition = -1;
 
@@ -262,7 +262,7 @@ public class SoundEffectItemFragment extends BaseFragment
                 startTimeDiff = System.currentTimeMillis();
                 int previousPosition = mSoundEffectItemAdapter.getSelectPosition();
                 mSoundEffectItemAdapter.setSelectPosition(position);
-                CloudMaterialBean content = mList.get(dataPosition);
+                MaterialsCloudBean content = mList.get(dataPosition);
                 mSoundEffectItemAdapter.addDownloadMaterial(content);
                 mSoundEffectItemViewModel.downloadColumn(previousPosition, position, content);
             }
@@ -373,7 +373,7 @@ public class SoundEffectItemFragment extends BaseFragment
         super.onBackPressed();
     }
 
-    private void startOrStopAudio(int position, CloudMaterialBean item) {
+    private void startOrStopAudio(int position, MaterialsCloudBean item) {
         if (mCurrentPosition != position) {
             resetMediaPlayer(item.getLocalPath());
             mCurrentPosition = position;

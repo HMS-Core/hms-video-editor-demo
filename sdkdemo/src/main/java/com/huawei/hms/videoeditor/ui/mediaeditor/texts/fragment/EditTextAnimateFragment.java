@@ -1,18 +1,18 @@
 
 /*
- *  Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
+ *   Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
  *
- *     Licensed under the Apache License, Version 2.0 (the "License");
- *     you may not use this file except in compliance with the License.
- *     You may obtain a copy of the License at
+ *      Licensed under the Apache License, Version 2.0 (the "License");
+ *      you may not use this file except in compliance with the License.
+ *      You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- *     Unless required by applicable law or agreed to in writing, software
- *     distributed under the License is distributed on an "AS IS" BASIS,
- *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *     See the License for the specific language governing permissions and
- *     limitations under the License.
+ *      Unless required by applicable law or agreed to in writing, software
+ *      distributed under the License is distributed on an "AS IS" BASIS,
+ *      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *      See the License for the specific language governing permissions and
+ *      limitations under the License.
  */
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.texts.fragment;
@@ -35,9 +35,9 @@ import com.huawei.hms.videoeditor.materials.HVEColumnInfo;
 import com.huawei.hms.videoeditor.materials.HVEMaterialConstant;
 import com.huawei.hms.videoeditor.sdk.asset.HVEAsset;
 import com.huawei.hms.videoeditor.sdk.effect.HVEEffect;
+import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.BaseFragment;
-import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.bean.Constant;
 import com.huawei.hms.videoeditor.ui.common.bean.MaterialsDownloadInfo;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
@@ -53,8 +53,8 @@ import com.huawei.hms.videoeditor.ui.mediaeditor.repository.MaterialsRespository
 import com.huawei.hms.videoeditor.ui.mediaeditor.texts.adapter.TextAnimationItemAdapter;
 import com.huawei.hms.videoeditor.ui.mediaeditor.texts.viewmodel.TextAnimationViewModel;
 import com.huawei.hms.videoeditor.ui.mediaeditor.texts.viewmodel.TextPanelViewModel;
-import com.huawei.secure.android.common.intent.SafeBundle;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
+import com.huawei.secure.android.common.intent.SafeBundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -68,9 +68,9 @@ public class EditTextAnimateFragment extends BaseFragment implements AnimationBa
 
     private List<HVEColumnInfo> columnList = new ArrayList<>();
 
-    private List<CloudMaterialBean> animList = new ArrayList<>();
+    private List<MaterialsCloudBean> animList = new ArrayList<>();
 
-    private List<CloudMaterialBean> initAnim = new ArrayList<>(1);
+    private List<MaterialsCloudBean> initAnim = new ArrayList<>(1);
 
     private HVEAsset hveAsset = null;
 
@@ -106,6 +106,8 @@ public class EditTextAnimateFragment extends BaseFragment implements AnimationBa
 
     private String animType = HVEEffect.ENTER_ANIMATION;
 
+    private AnimationBar animationPanelBar;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         navigationBarColor = R.color.color_20;
@@ -126,7 +128,7 @@ public class EditTextAnimateFragment extends BaseFragment implements AnimationBa
         recyclerView = view.findViewById(R.id.rl_pic);
         animationBar = view.findViewById(R.id.sb_items);
         seek_container = view.findViewById(R.id.seek_container);
-
+        animationPanelBar = view.findViewById(R.id.sb_items);
         TextView animationText = view.findViewById(R.id.animtext);
 
         loadingIndicatorView.show();
@@ -159,8 +161,20 @@ public class EditTextAnimateFragment extends BaseFragment implements AnimationBa
         textPanelViewModel = new ViewModelProvider(mActivity).get(TextPanelViewModel.class);
     }
 
+    public List<MaterialsCloudBean> loadLocalData() {
+        MaterialsCloudBean transitionNothing = new MaterialsCloudBean();
+        transitionNothing.setName(
+                this.getResources().getString(R.string.none));
+        transitionNothing.setLocalDrawableId(R.drawable.icon_no);
+        transitionNothing.setId("-1");
+        List<MaterialsCloudBean> list = new ArrayList<>();
+        list.add(transitionNothing);
+        return list;
+    }
+
     @Override
     protected void initData() {
+        initAnim.addAll(loadLocalData());
         hveAsset = viewModel.getSelectedAsset();
         if (hveAsset != null) {
             animationBar.setDuration(hveAsset.getDuration());
@@ -181,10 +195,13 @@ public class EditTextAnimateFragment extends BaseFragment implements AnimationBa
             currentIndex = index;
             if (index == 0) {
                 animType = HVEEffect.ENTER_ANIMATION;
+                animationPanelBar.setEnterAnimation(true);
             } else if (index == 1) {
                 animType = HVEEffect.LEAVE_ANIMATION;
+                animationPanelBar.setEnterAnimation(false);
             } else if (index == 2) {
                 animType = HVEEffect.CYCLE_ANIMATION;
+                animationPanelBar.setEnterAnimation(true);
             }
             currentPage = 0;
             isFirst = false;
@@ -271,7 +288,7 @@ public class EditTextAnimateFragment extends BaseFragment implements AnimationBa
                 if (animList == null || animList.isEmpty()) {
                     return;
                 }
-                CloudMaterialBean content1 = animList.get(position);
+                MaterialsCloudBean content1 = animList.get(position);
                 if (content1 == null) {
                     return;
                 }
@@ -535,7 +552,7 @@ public class EditTextAnimateFragment extends BaseFragment implements AnimationBa
         textAnimationItemAdapter.notifyItemChanged(downloadPosition);
     }
 
-    private void setAnimationSelected(HVEAsset hveAsset, List<CloudMaterialBean> animList, String animType) {
+    private void setAnimationSelected(HVEAsset hveAsset, List<MaterialsCloudBean> animList, String animType) {
         int selectedPosition = textAnimationViewModel.getSelectedPosition(hveAsset, animList, animType);
         textAnimationItemAdapter.setSelectPosition(selectedPosition);
     }

@@ -1,17 +1,17 @@
 /*
- *  Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
+ *   Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
  *
- *     Licensed under the Apache License, Version 2.0 (the "License");
- *     you may not use this file except in compliance with the License.
- *     You may obtain a copy of the License at
+ *      Licensed under the Apache License, Version 2.0 (the "License");
+ *      you may not use this file except in compliance with the License.
+ *      You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- *     Unless required by applicable law or agreed to in writing, software
- *     distributed under the License is distributed on an "AS IS" BASIS,
- *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *     See the License for the specific language governing permissions and
- *     limitations under the License.
+ *      Unless required by applicable law or agreed to in writing, software
+ *      distributed under the License is distributed on an "AS IS" BASIS,
+ *      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *      See the License for the specific language governing permissions and
+ *      limitations under the License.
  */
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.aihair.viewmodel;
@@ -37,7 +37,7 @@ import com.huawei.hms.videoeditor.materials.HVETopColumnRequest;
 import com.huawei.hms.videoeditor.materials.HVETopColumnResponse;
 import com.huawei.hms.videoeditor.sdk.store.MaterialsLocalDataManager;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
-import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
+import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
 import com.huawei.hms.videoeditor.ui.common.bean.Constant;
 import com.huawei.hms.videoeditor.ui.common.bean.MaterialsDownloadInfo;
 import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
@@ -56,7 +56,7 @@ public class AiHairViewModel extends AndroidViewModel {
 
     private final MutableLiveData<String> emptyText = new MutableLiveData<>();
 
-    private final MutableLiveData<List<CloudMaterialBean>> mAiHairMaterials = new MutableLiveData<>();
+    private final MutableLiveData<List<MaterialsCloudBean>> mAiHairMaterials = new MutableLiveData<>();
 
     private final MutableLiveData<MaterialsDownloadInfo> mAiHairDownloadSuccess = new MutableLiveData<>();
 
@@ -170,9 +170,9 @@ public class AiHairViewModel extends AndroidViewModel {
     }
 
     private void queryAiHairDownloadStatus(List<HVEMaterialInfo> materialInfos) {
-        List<CloudMaterialBean> list = new ArrayList<>();
+        List<MaterialsCloudBean> list = new ArrayList<>();
         for (int i = 0; i < materialInfos.size(); i++) {
-            CloudMaterialBean materialInfo = new CloudMaterialBean();
+            MaterialsCloudBean materialInfo = new MaterialsCloudBean();
 
             HVEMaterialInfo hveMaterialInfo = materialInfos.get(i);
 
@@ -192,7 +192,7 @@ public class AiHairViewModel extends AndroidViewModel {
     }
 
     public void downloadAiHairMaterial(int previousPosition, int position, int dataPosition,
-        CloudMaterialBean aiHairMaterial) {
+        MaterialsCloudBean aiHairMaterial) {
         MaterialsDownloadInfo downloadLocalAiHairInfo = new MaterialsDownloadInfo();
         downloadLocalAiHairInfo.setPreviousPosition(previousPosition);
         downloadLocalAiHairInfo.setPosition(position);
@@ -233,7 +233,7 @@ public class AiHairViewModel extends AndroidViewModel {
         return errorText;
     }
 
-    public MutableLiveData<List<CloudMaterialBean>> getPageData() {
+    public MutableLiveData<List<MaterialsCloudBean>> getPageData() {
         return mAiHairMaterials;
     }
 

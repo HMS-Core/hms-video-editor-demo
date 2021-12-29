@@ -1,23 +1,20 @@
 /*
- *  Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
+ *   Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
  *
- *     Licensed under the Apache License, Version 2.0 (the "License");
- *     you may not use this file except in compliance with the License.
- *     You may obtain a copy of the License at
+ *      Licensed under the Apache License, Version 2.0 (the "License");
+ *      you may not use this file except in compliance with the License.
+ *      You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- *     Unless required by applicable law or agreed to in writing, software
- *     distributed under the License is distributed on an "AS IS" BASIS,
- *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *     See the License for the specific language governing permissions and
- *     limitations under the License.
+ *      Unless required by applicable law or agreed to in writing, software
+ *      distributed under the License is distributed on an "AS IS" BASIS,
+ *      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *      See the License for the specific language governing permissions and
+ *      limitations under the License.
  */
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.trackview.adapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -27,6 +24,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.huawei.hms.videoeditor.sdk.HuaweiVideoEditor;
 import com.huawei.hms.videoeditor.sdk.asset.HVEAsset;
@@ -34,11 +35,12 @@ import com.huawei.hms.videoeditor.sdk.asset.HVEImageAsset;
 import com.huawei.hms.videoeditor.sdk.asset.HVEVideoAsset;
 import com.huawei.hms.videoeditor.ui.common.utils.BitmapUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.ScreenUtil;
+import com.huawei.hms.videoeditor.ui.common.utils.ToastWrapper;
 import com.huawei.hms.videoeditor.ui.mediaeditor.trackview.viewmodel.EditPreviewViewModel;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ImageTrackRecyclerViewAdapter extends RecyclerView.Adapter {
     private List<HVEAsset> dataList = new ArrayList<>();
@@ -84,6 +86,22 @@ public class ImageTrackRecyclerViewAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         HVEAsset asset = dataList.get(position);
 
+        if (position == (dataList.size() - 1)) {
+            ((MainViewHolder) holder).trans.setVisibility(View.GONE);
+        } else {
+            ((MainViewHolder) holder).trans.setVisibility(View.VISIBLE);
+            ((MainViewHolder) holder).trans.getParent().requestDisallowInterceptTouchEvent(false);
+            ((MainViewHolder) holder).trans.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!viewModel.setTransitionPanel(position)) {
+                        ToastWrapper.makeText(context, context.getString(R.string.lowvideo), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+        }
+
         imageCallback = new HuaweiVideoEditor.ImageCallback() {
             @Override
             public void onSuccess(Bitmap bitmap, long timeStamp) {
@@ -119,10 +137,6 @@ public class ImageTrackRecyclerViewAdapter extends RecyclerView.Adapter {
                     viewModel.setCurrentTimeLine(asset.getStartTime());
                 }
             }, 100);
-
-            ((MainViewHolder) holder).layout.setBackgroundColor(context.getResources().getColor(R.color.white));
-        } else {
-            ((MainViewHolder) holder).layout.setBackgroundColor(context.getResources().getColor(R.color.black));
         }
     }
 
@@ -139,13 +153,14 @@ public class ImageTrackRecyclerViewAdapter extends RecyclerView.Adapter {
 
     class MainViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
-
+        ImageView trans;
         View layout;
 
         MainViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.iv_media);
             layout = itemView.findViewById(R.id.content_layout);
+            trans = itemView.findViewById(R.id.iv_trans);
         }
     }
 

@@ -1,18 +1,17 @@
-
 /*
- *  Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
+ *   Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
  *
- *     Licensed under the Apache License, Version 2.0 (the "License");
- *     you may not use this file except in compliance with the License.
- *     You may obtain a copy of the License at
+ *      Licensed under the Apache License, Version 2.0 (the "License");
+ *      you may not use this file except in compliance with the License.
+ *      You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- *     Unless required by applicable law or agreed to in writing, software
- *     distributed under the License is distributed on an "AS IS" BASIS,
- *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *     See the License for the specific language governing permissions and
- *     limitations under the License.
+ *      Unless required by applicable law or agreed to in writing, software
+ *      distributed under the License is distributed on an "AS IS" BASIS,
+ *      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *      See the License for the specific language governing permissions and
+ *      limitations under the License.
  */
 
 package com.huawei.hms.videoeditor.ui.common.view;
@@ -35,7 +34,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.huawei.hms.videoeditor.ui.common.utils.BigDecimalUtils;
+import com.huawei.hms.videoeditor.sdk.util.BigDecimalUtil;
 import com.huawei.hms.videoeditor.ui.common.utils.ScreenUtil;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
@@ -43,6 +42,8 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 public class AnimationBar extends View {
+    private static final String TAG = "AnimationBar";
+
     private static final int MAX_PROGRESS = 100;
 
     private Paint backPaint;
@@ -61,11 +62,11 @@ public class AnimationBar extends View {
 
     private int textColor = R.color.speedBarTextColor;
 
-    private float textSize = ScreenUtil.dp2px(12);
+    private float textSize = ScreenUtil.dp2px(14);
 
-    private float thumbRadius = ScreenUtil.dp2px(9);
+    private float thumbRadius = ScreenUtil.dp2px(8);
 
-    private float lineHeight = ScreenUtil.dp2px(2);
+    private float lineHeight = ScreenUtil.dp2px(4);
 
     private float lineLength = ScreenUtil.dp2px(200);
 
@@ -112,6 +113,8 @@ public class AnimationBar extends View {
     private boolean isTouchEntre;
 
     private AnimationBar.TouchListener cTouchListener;
+
+    private boolean isEnter = true;
 
     public AnimationBar(Context context) {
         super(context);
@@ -174,7 +177,7 @@ public class AnimationBar extends View {
             }
         }
 
-        space = (float) lineLength / degreeCount;
+        space = lineLength / degreeCount;
         setBackPaint(backLineColor, lineHeight);
         setProgressPaint(lineHeight);
         setTextPaint(textColor, textSize);
@@ -186,6 +189,7 @@ public class AnimationBar extends View {
         backPaint.setColor(backLineColor);
         backPaint.setAntiAlias(true);
         backPaint.setStyle(Paint.Style.STROKE);
+        backPaint.setStrokeCap(Paint.Cap.ROUND);
         backPaint.setStrokeWidth(lineHeight);
     }
 
@@ -193,6 +197,7 @@ public class AnimationBar extends View {
         progressPaint = new Paint();
         progressPaint.setAntiAlias(true);
         progressPaint.setStyle(Paint.Style.STROKE);
+        progressPaint.setStrokeCap(Paint.Cap.ROUND);
         progressPaint.setStrokeWidth(lineHeight);
     }
 
@@ -224,38 +229,68 @@ public class AnimationBar extends View {
         super.onMeasure(widthMeasureSpec + 2 * (int) (thumbRadius + interval), heightMeasureSpec);
     }
 
+    private boolean showEnterText = true;
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (isEnterShow) {
-            touchEnterRect = new Rect((int) (interval + enterThumbLeft), (int) enterThumbTop,
-                (int) (interval + enterThumbLeft + 2 * thumbRadius), (int) (enterThumbTop + 2 * thumbRadius));
-        } else {
-            touchEnterRect = null;
-        }
-        if (isLeaveShow) {
-            touchLeaveRect = new Rect((int) (interval + leaveThumbLeft), (int) leaveThumbTop,
-                (int) (interval + leaveThumbLeft + 2 * thumbRadius), (int) (leaveThumbTop + 2 * thumbRadius));
-        } else {
-            touchLeaveRect = null;
-        }
-
+        touchEnterRect = null;
+        touchLeaveRect = null;
         canvas.drawLine(interval + thumbRadius, enterThumbTop + thumbRadius, interval + thumbRadius + lineLength,
             enterThumbTop + thumbRadius, backPaint);
-        if (isLeaveShow) {
-            canvas.drawBitmap(leaveThumb, interval + leaveThumbLeft, leaveThumbTop, thumbPaint);
-            drawProgress(canvas, leaveLineColor, interval + thumbRadius + lineLength, leaveThumbTop + thumbRadius,
-                interval + thumbRadius + leaveThumbLeft, leaveThumbTop + thumbRadius);
-            drawText(canvas, leaveThumbLeft, leaveDuration);
-        }
+        if (isEnter) {
+            if (isLeaveShow) {
+                touchLeaveRect = new Rect((int) (interval + leaveThumbLeft), (int) leaveThumbTop,
+                    (int) (interval + leaveThumbLeft + 2 * thumbRadius), (int) (leaveThumbTop + 2 * thumbRadius));
+                drawProgress(canvas, leaveLineColor, interval + thumbRadius + lineLength, leaveThumbTop + thumbRadius,
+                    interval + thumbRadius + leaveThumbLeft, leaveThumbTop + thumbRadius);
+                canvas.drawBitmap(leaveThumb, interval + leaveThumbLeft, leaveThumbTop, thumbPaint);
+                if (!showEnterText) {
+                    drawText(canvas, leaveThumbLeft, leaveDuration);
+                }
+            } else {
+                touchLeaveRect = null;
+            }
 
-        if (isEnterShow) {
-            canvas.drawBitmap(enterThumb, interval + enterThumbLeft, enterThumbTop, thumbPaint);
-            drawProgress(canvas, enterLineColor, interval + thumbRadius, enterThumbTop + thumbRadius,
-                interval + thumbRadius + enterThumbLeft, enterThumbTop + thumbRadius);
-            drawText(canvas, enterThumbLeft, enterDuration);
-        }
+            if (isEnterShow) {
+                touchEnterRect = new Rect((int) (interval + enterThumbLeft), (int) enterThumbTop,
+                    (int) (interval + enterThumbLeft + 2 * thumbRadius), (int) (enterThumbTop + 2 * thumbRadius));
+                drawProgress(canvas, enterLineColor, interval + thumbRadius, enterThumbTop + thumbRadius,
+                    interval + thumbRadius + enterThumbLeft, enterThumbTop + thumbRadius);
+                canvas.drawBitmap(enterThumb, interval + enterThumbLeft, enterThumbTop, thumbPaint);
+                if (showEnterText) {
+                    drawText(canvas, enterThumbLeft, enterDuration);
+                }
+            } else {
+                touchEnterRect = null;
+            }
+        } else {
+            if (isEnterShow) {
+                touchEnterRect = new Rect((int) (interval + enterThumbLeft), (int) enterThumbTop,
+                    (int) (interval + enterThumbLeft + 2 * thumbRadius), (int) (enterThumbTop + 2 * thumbRadius));
+                drawProgress(canvas, enterLineColor, interval + thumbRadius, enterThumbTop + thumbRadius,
+                    interval + thumbRadius + enterThumbLeft, enterThumbTop + thumbRadius);
+                canvas.drawBitmap(enterThumb, interval + enterThumbLeft, enterThumbTop, thumbPaint);
+                if (showEnterText) {
+                    drawText(canvas, enterThumbLeft, enterDuration);
+                }
+            } else {
+                touchEnterRect = null;
+            }
 
+            if (isLeaveShow) {
+                touchLeaveRect = new Rect((int) (interval + leaveThumbLeft), (int) leaveThumbTop,
+                    (int) (interval + leaveThumbLeft + 2 * thumbRadius), (int) (leaveThumbTop + 2 * thumbRadius));
+                drawProgress(canvas, leaveLineColor, interval + thumbRadius + lineLength, leaveThumbTop + thumbRadius,
+                    interval + thumbRadius + leaveThumbLeft, leaveThumbTop + thumbRadius);
+                canvas.drawBitmap(leaveThumb, interval + leaveThumbLeft, leaveThumbTop, thumbPaint);
+                if (!showEnterText) {
+                    drawText(canvas, leaveThumbLeft, leaveDuration);
+                }
+            } else {
+                touchLeaveRect = null;
+            }
+        }
     }
 
     private void drawProgress(Canvas canvas, int progressColor, float startX, float startY, float endX, float endY) {
@@ -280,16 +315,24 @@ public class AnimationBar extends View {
         String str = getText(duration);
         Rect mBounds = new Rect();
         textPaint.getTextBounds(str, 0, str.length(), mBounds);
+        float wordOffset = 0;
         if (ScreenUtil.isRTL()) {
             textPaint.setTextScaleX(RTL_UI);
-            canvas.drawText(str, interval + thumbRadius + offset + getTextWidth(str, textPaint), textHeight, textPaint);
         } else {
             textPaint.setTextScaleX(LTR_UI);
-            canvas.drawText(str, interval + thumbRadius + offset, textHeight, textPaint);
         }
+        if (interval + thumbRadius + offset - getTextWidth(str, textPaint) / 2 <= 0) {
+            wordOffset = (float) (getTextWidth(str, textPaint) / 2);
+        } else if (interval + thumbRadius + offset + getTextWidth(str, textPaint) / 2 >= lineLength
+            + 2 * (interval + thumbRadius)) {
+            wordOffset = (float) (lineLength + 2 * (interval + thumbRadius) - getTextWidth(str, textPaint) / 2);
+        } else {
+            wordOffset = interval + thumbRadius + offset;
+        }
+        canvas.drawText(str, wordOffset, textHeight, textPaint);
     }
 
-    public int getTextWidth(String text, Paint paint) {
+    public double getTextWidth(String text, Paint paint) {
         Rect rect = new Rect();
         paint.getTextBounds(text, 0, text.length(), rect);
         return Math.abs(rect.width());
@@ -301,12 +344,12 @@ public class AnimationBar extends View {
 
     private String getText(long animationDuration) {
         if (animationDuration == 0.0 || animationDuration <= 100) {
-            return "0.1s";
+            return getResources().getQuantityString(R.plurals.seconds_time, 1, NumberFormat.getInstance().format(0.1));
         }
         BigDecimal bd1 = new BigDecimal(animationDuration);
         BigDecimal bd2 = new BigDecimal(1000f);
         BigDecimal text = bd1.divide(bd2).setScale(1, BigDecimal.ROUND_DOWN);
-        return text + "s";
+        return getResources().getQuantityString(R.plurals.seconds_time, 1, NumberFormat.getInstance().format(text));
     }
 
     private boolean isEnterSliding = false;
@@ -363,7 +406,16 @@ public class AnimationBar extends View {
     }
 
     private void setSlidStatus(MotionEvent event, Rect touchEnterRect, boolean b, boolean b2, Rect touchLeaveRect) {
-        if (touchEnterRect != null && touchEnterRect.contains((int) event.getX(), (int) event.getY())) {
+        if (touchEnterRect != null && touchEnterRect.contains((int) event.getX(), (int) event.getY())
+            && touchLeaveRect != null && touchLeaveRect.contains((int) event.getX(), (int) event.getY())) {
+            if (isEnter) {
+                isEnterSliding = true;
+                isLeaveSliding = false;
+            } else {
+                isEnterSliding = false;
+                isLeaveSliding = true;
+            }
+        } else if (touchEnterRect != null && touchEnterRect.contains((int) event.getX(), (int) event.getY())) {
             isEnterSliding = b;
             isLeaveSliding = b2;
         } else if (touchLeaveRect != null && touchLeaveRect.contains((int) event.getX(), (int) event.getY())) {
@@ -377,7 +429,6 @@ public class AnimationBar extends View {
         if (isEnterSliding) {
             isTouchEntre = true;
             enterThumbLeft = motionEvent.getX();
-
             if (isLeaveShow) {
                 if (enterThumbLeft > leaveThumbLeft) {
                     thisProgress = leaveProgress;
@@ -406,7 +457,7 @@ public class AnimationBar extends View {
             if (cTouchListener != null) {
                 cTouchListener.isTouch(true);
             }
-            invalidate();
+            setEnterAnimation(true);
         }
 
         if (isLeaveSliding) {
@@ -441,12 +492,12 @@ public class AnimationBar extends View {
             if (cTouchListener != null) {
                 cTouchListener.isTouch(true);
             }
-            invalidate();
+            setEnterAnimation(false);
         }
     }
 
     private int minAnimationDuration(long duration) {
-        return (int) (BigDecimalUtils.mul(duration, (BigDecimalUtils.div(0.1, (BigDecimalUtils.div(duration, 1000))))));
+        return (int) (BigDecimalUtil.mul(duration, (BigDecimalUtil.div(0.1, (BigDecimalUtil.div(duration, 1000))))));
     }
 
     private OnProgressChangedListener listener;
@@ -497,6 +548,7 @@ public class AnimationBar extends View {
         enterDuration = Math.max(enterDuration, 0);
         this.enterDuration = enterDuration;
         this.enterProgress = (int) (enterDuration / (duration / degreeCount));
+
         if (this.enterProgress > MAX_PROGRESS) {
             this.enterProgress = MAX_PROGRESS;
         }
@@ -512,6 +564,7 @@ public class AnimationBar extends View {
         }
         this.leaveDuration = leaveDuration;
         this.leaveProgress = (int) (leaveDuration / (duration / degreeCount));
+
         if (this.leaveProgress > MAX_PROGRESS) {
             this.leaveProgress = MAX_PROGRESS;
         }
@@ -554,5 +607,11 @@ public class AnimationBar extends View {
 
     public interface TouchListener {
         void isTouch(boolean isTouch);
+    }
+
+    public void setEnterAnimation(boolean isEnter) {
+        this.isEnter = isEnter;
+        showEnterText = isEnter;
+        invalidate();
     }
 }
