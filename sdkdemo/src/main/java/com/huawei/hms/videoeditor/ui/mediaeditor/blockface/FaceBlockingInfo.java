@@ -19,7 +19,7 @@ package com.huawei.hms.videoeditor.ui.mediaeditor.blockface;
 import android.graphics.Bitmap;
 
 import com.huawei.hms.videoeditor.sdk.bean.HVEAIFaceTemplate;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 
 public class FaceBlockingInfo {
     private int id;
@@ -40,14 +40,14 @@ public class FaceBlockingInfo {
 
     private boolean isShowGray = true;
 
-    private MaterialsCloudBean materialsCutContent;
+    private CloudMaterialBean materialsCutContent;
 
     private HVEAIFaceTemplate faceTemplates;
 
     public FaceBlockingInfo() {
     }
 
-    public FaceBlockingInfo(String type, String localSticker, MaterialsCloudBean materialsCutContent,
+    public FaceBlockingInfo(String type, String localSticker, CloudMaterialBean materialsCutContent,
                             boolean isShowGray) {
         this.type = type;
         this.isShowGray = isShowGray;
@@ -127,11 +127,11 @@ public class FaceBlockingInfo {
         isShowGray = showGray;
     }
 
-    public MaterialsCloudBean getMaterialsCutContent() {
+    public CloudMaterialBean getMaterialsCutContent() {
         return materialsCutContent;
     }
 
-    public void setMaterialsCutContent(MaterialsCloudBean materialsCutContent) {
+    public void setMaterialsCutContent(CloudMaterialBean materialsCutContent) {
         this.materialsCutContent = materialsCutContent;
     }
 

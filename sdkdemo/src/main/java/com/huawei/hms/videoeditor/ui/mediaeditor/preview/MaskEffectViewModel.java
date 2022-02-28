@@ -22,12 +22,11 @@ import java.util.Map;
 
 import android.app.Application;
 
-import com.huawei.hms.videoeditor.common.network.http.ability.util.array.ArrayUtils;
 import com.huawei.hms.videoeditor.sdk.asset.HVEAsset;
 import com.huawei.hms.videoeditor.sdk.asset.HVEVisibleAsset;
 import com.huawei.hms.videoeditor.sdk.effect.HVEEffect;
 import com.huawei.hms.videoeditor.ui.common.EditorManager;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.mediaeditor.preview.view.MaskShape;
 
 import androidx.annotation.NonNull;
@@ -42,7 +41,7 @@ public class MaskEffectViewModel extends AndroidViewModel {
 
     private MutableLiveData<HVEAsset> hveVideoAsset = new MutableLiveData<>();
 
-    private MutableLiveData<MaterialsCloudBean> materialsCutContentMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<CloudMaterialBean> materialsCutContentMutableLiveData = new MutableLiveData<>();
 
     private MutableLiveData<Boolean> isInverse = new MutableLiveData<>(false);
 
@@ -74,7 +73,7 @@ public class MaskEffectViewModel extends AndroidViewModel {
         firstEffect = hveEffect;
     }
 
-    public HVEEffect appendHVEEffect(HVEAsset assetKey, MaterialsCloudBean materialsCutContent) {
+    public HVEEffect appendHVEEffect(HVEAsset assetKey, CloudMaterialBean materialsCutContent) {
         Map<String, HVEEffect> map = effectMap.get(assetKey);
         if (map == null) {
             effectMap.put(assetKey, new HashMap<>());
@@ -128,11 +127,11 @@ public class MaskEffectViewModel extends AndroidViewModel {
         }
     }
 
-    public MutableLiveData<MaterialsCloudBean> getMaterialsCutContentMutableLiveData() {
+    public MutableLiveData<CloudMaterialBean> getMaterialsCutContentMutableLiveData() {
         return materialsCutContentMutableLiveData;
     }
 
-    public void setMaterialsCutContentMutableLiveData(MaterialsCloudBean materialsCutContentMutableLiveData) {
+    public void setMaterialsCutContentMutableLiveData(CloudMaterialBean materialsCutContentMutableLiveData) {
         this.materialsCutContentMutableLiveData.postValue(materialsCutContentMutableLiveData);
     }
 
@@ -167,7 +166,7 @@ public class MaskEffectViewModel extends AndroidViewModel {
         }
 
         List<HVEEffect> effects = videoAsset.getEffects();
-        if (ArrayUtils.isEmpty(effects)) {
+        if (effects.size() == 0) {
             return;
         }
         for (HVEEffect effect : effects) {

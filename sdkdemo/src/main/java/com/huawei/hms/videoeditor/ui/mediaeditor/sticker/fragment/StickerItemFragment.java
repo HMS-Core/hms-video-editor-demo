@@ -31,7 +31,7 @@ import android.widget.Toast;
 import com.huawei.hms.videoeditor.materials.HVEColumnInfo;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.BaseFragment;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.bean.MaterialsDownloadInfo;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.ToastWrapper;
@@ -74,7 +74,7 @@ public class StickerItemFragment extends BaseFragment {
 
     private String columnId;
 
-    private List<MaterialsCloudBean> mList = new ArrayList<>();
+    private List<CloudMaterialBean> mList = new ArrayList<>();
 
     private int mCurrentPage = 0;
 
@@ -186,7 +186,7 @@ public class StickerItemFragment extends BaseFragment {
                     if (firstPosition != -1 && visibleItemCount > 0 && !isFirst) {
                         isFirst = true;
                         for (int i = 0; i < visibleItemCount; i++) {
-                            MaterialsCloudBean cutContent = mList.get(i);
+                            CloudMaterialBean cutContent = mList.get(i);
                             mStickerItemAdapter.addFirstScreenMaterial(cutContent);
                         }
                     }
@@ -221,7 +221,7 @@ public class StickerItemFragment extends BaseFragment {
                 if (mList == null || mList.isEmpty()) {
                     return;
                 }
-                MaterialsCloudBean contentST = mList.get(position);
+                CloudMaterialBean contentST = mList.get(position);
                 if (contentST == null) {
                     return;
                 }

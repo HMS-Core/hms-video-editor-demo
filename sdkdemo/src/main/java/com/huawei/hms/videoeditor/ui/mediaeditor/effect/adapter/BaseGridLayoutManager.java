@@ -25,13 +25,6 @@ import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-/**
- * BaseGridLayoutManager
- *
- * @author pwx878803
- * @version [V1.0.0.1, 2021/08/04]
- * @since V1.0.0.1
- */
 public class BaseGridLayoutManager extends GridLayoutManager {
     private static final String TAG = "BaseGridLayoutManager";
 

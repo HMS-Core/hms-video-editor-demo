@@ -136,6 +136,7 @@ public class AssetCropFragment extends BaseFragment {
                     return;
                 }
                 mSdkPlayViewModel.setVideoDuration(mHVETimeLane.getVideoLane(0).getDuration());
+                mEditPreviewViewModel.updateDuration();
             }
         });
         mVideoCropView.setOnTouchListener((view, motionEvent) -> {

@@ -15,18 +15,6 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.575" />
 
-    <com.huawei.hms.videoeditor.ui.mediaeditor.preview.view.ColorCutoutView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:alpha="1"
-        android:background="@null"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
-
     <com.huawei.hms.videoeditor.ui.mediaeditor.preview.view.MaskEffectContainerView
         android:id="@+id/mask_container_view"
         android:layout_width="match_parent"

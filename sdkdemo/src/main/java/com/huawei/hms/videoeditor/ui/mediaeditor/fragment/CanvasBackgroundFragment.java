@@ -59,7 +59,7 @@ import com.huawei.hms.videoeditor.sdk.v1.AssetBeanAnalyer;
 import com.huawei.hms.videoeditor.ui.common.BaseFragment;
 import com.huawei.hms.videoeditor.ui.common.EditorManager;
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RViewHolder;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.bean.MaterialsDownloadInfo;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.ScreenUtil;
@@ -126,7 +126,7 @@ public class CanvasBackgroundFragment extends BaseFragment {
 
     private List<HVEColumnInfo> mColumnList;
 
-    private List<MaterialsCloudBean> mStyleList;
+    private List<CloudMaterialBean> mStyleList;
 
     private RelativeLayout mStyleAddLayout;
 
@@ -516,7 +516,7 @@ public class CanvasBackgroundFragment extends BaseFragment {
                 mBlurSeek.setVisibility(View.INVISIBLE);
                 mBlueRecyclerView.setVisibility(View.VISIBLE);
                 setIsSlid(false);
-                MaterialsCloudBean content = mStyleList.get(dataPosition);
+                CloudMaterialBean content = mStyleList.get(dataPosition);
                 if (mStyleSelectPosition == -2) {
                     mStyleSelectPosition = Integer.MIN_VALUE;
                     mStyleAddSelectBg.setVisibility(View.GONE);
@@ -546,7 +546,7 @@ public class CanvasBackgroundFragment extends BaseFragment {
                 setIsSlid(false);
                 int aPreviousPosition = mCanvasStyleAdapter.getSelectPosition();
                 mCanvasStyleAdapter.setSelectPosition(position);
-                MaterialsCloudBean cutContent = mStyleList.get(dataPosition);
+                CloudMaterialBean cutContent = mStyleList.get(dataPosition);
 
                 mCanvasStyleAdapter.addDownloadMaterial(cutContent);
                 mCanvasPanelViewModel.downloadColumn(aPreviousPosition, position, dataPosition, cutContent);
@@ -917,7 +917,7 @@ public class CanvasBackgroundFragment extends BaseFragment {
         if (TextUtils.isEmpty(mStyleSelectCloudId) || mStyleSelectPosition >= 0) {
             return;
         }
-        for (MaterialsCloudBean cutContent : mStyleList) {
+        for (CloudMaterialBean cutContent : mStyleList) {
             if (mStyleSelectCloudId.equals(cutContent.getId())) {
                 mStyleSelectPosition = mStyleList.indexOf(cutContent) + 1;
                 mCanvasStyleAdapter.setSelectPosition(mStyleSelectPosition);

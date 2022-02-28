@@ -30,11 +30,11 @@ import com.huawei.hms.videoeditor.sdk.asset.HVEAsset;
 import com.huawei.hms.videoeditor.sdk.asset.HVEVisibleAsset;
 import com.huawei.hms.videoeditor.sdk.bean.HVEAIFaceTemplate;
 import com.huawei.hms.videoeditor.sdk.lane.HVEVideoLane;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
-import com.huawei.hms.videoeditor.sdk.store.MaterialsCloudDataManager;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
+import com.huawei.hms.videoeditor.ui.common.database.CloudMaterialsDataManager;
 import com.huawei.hms.videoeditor.sdk.store.database.DBManager;
-import com.huawei.hms.videoeditor.sdk.store.database.bean.blockface.MaterialsCloudDaoBean;
-import com.huawei.hms.videoeditor.sdk.store.database.dao.MaterialsCloudBeanDao;
+import com.huawei.hms.videoeditor.ui.common.database.bean.CloudMaterialDaoBean;
+import com.huawei.hms.videoeditor.ui.common.database.bean.CloudMaterialsBeanDao;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.EditorManager;
 import com.huawei.hms.videoeditor.ui.common.utils.SPGuideUtils;
@@ -64,7 +64,7 @@ public class FaceBlockingViewModel extends AndroidViewModel {
 
     private MutableLiveData<Integer> errorType = new MutableLiveData<>();
 
-    private final MaterialsCloudDataManager mLocalDataManager;
+    private final CloudMaterialsDataManager mLocalDataManager;
 
     private long mVideoStartTime;
 
@@ -74,7 +74,7 @@ public class FaceBlockingViewModel extends AndroidViewModel {
 
     public FaceBlockingViewModel(@NonNull Application application) {
         super(application);
-        mLocalDataManager = new MaterialsCloudDataManager();
+        mLocalDataManager = new CloudMaterialsDataManager(application.getBaseContext());
         columnsRespository = new ColumnsRespository();
         columnsRespository.seatColumnsListener(columnsListener);
     }
@@ -135,31 +135,31 @@ public class FaceBlockingViewModel extends AndroidViewModel {
         this.isDetectedSuccess.postValue(isDetectedSuccess);
     }
 
-    public MaterialsCloudBean addStickerCustomToLocal(String stickerId, String path) {
+    public CloudMaterialBean addStickerCustomToLocal(String stickerId, String path) {
         if (TextUtils.isEmpty(stickerId)) {
             SmartLog.e(TAG, "stickerId is null!");
             return null;
         } else {
-            MaterialsCloudBean materialsCloudBean = new MaterialsCloudBean();
-            materialsCloudBean.setType(CUSTOM_STICKERS);
-            materialsCloudBean.setId(stickerId);
-            materialsCloudBean
+            CloudMaterialBean cloudMaterialBean = new CloudMaterialBean();
+            cloudMaterialBean.setType(CUSTOM_STICKERS);
+            cloudMaterialBean.setId(stickerId);
+            cloudMaterialBean
                 .setName(getApplication().getResources().getString(R.string.first_menu_sticker) + "_" + stickerId);
-            materialsCloudBean.setCategoryName(
+            cloudMaterialBean.setCategoryName(
                 getApplication().getResources().getString(R.string.first_menu_sticker) + "_" + stickerId);
-            materialsCloudBean.setLocalPath(path);
-            boolean result = mLocalDataManager.updateCloudMaterialsBean(materialsCloudBean);
+            cloudMaterialBean.setLocalPath(path);
+            boolean result = mLocalDataManager.updateCloudMaterialsBean(cloudMaterialBean);
             if (result) {
-                return materialsCloudBean;
+                return cloudMaterialBean;
             } else {
                 return null;
             }
         }
     }
 
-    public List<MaterialsCloudBean> getLocalMaterialsDataByType(int type) {
+    public List<CloudMaterialBean> getLocalMaterialsDataByType(int type) {
         if (type == CUSTOM_STICKERS) {
-            List<MaterialsCloudBean> cutContents = mLocalDataManager.queryCloudMaterialsBeanByType(type);
+            List<CloudMaterialBean> cutContents = mLocalDataManager.queryCloudMaterialsBeanByType(type);
 
             Collections.reverse(cutContents);
             return cutContents;
@@ -168,7 +168,7 @@ public class FaceBlockingViewModel extends AndroidViewModel {
         }
     }
 
-    public boolean deleteLocalCustomSticker(MaterialsCloudBean item) {
+    public boolean deleteLocalCustomSticker(CloudMaterialBean item) {
         String contentId = item.getId();
         if (contentId != null) {
             if (TextUtils.isEmpty(contentId)) {
@@ -176,9 +176,9 @@ public class FaceBlockingViewModel extends AndroidViewModel {
                 return false;
             }
             List<WhereCondition> whereConditionList = new ArrayList<>();
-            whereConditionList.add(MaterialsCloudBeanDao.Properties.ID.eq(contentId));
-            List<MaterialsCloudDaoBean> beanListTemp =
-                DBManager.getInstance().queryByCondition(MaterialsCloudDaoBean.class, whereConditionList);
+            whereConditionList.add(CloudMaterialsBeanDao.Properties.ID.eq(contentId));
+            List<CloudMaterialDaoBean> beanListTemp =
+                DBManager.getInstance().queryByCondition(CloudMaterialDaoBean.class, whereConditionList);
             if (beanListTemp != null && beanListTemp.size() > 0) {
                 DBManager.getInstance().delete(beanListTemp.get(0));
                 return true;

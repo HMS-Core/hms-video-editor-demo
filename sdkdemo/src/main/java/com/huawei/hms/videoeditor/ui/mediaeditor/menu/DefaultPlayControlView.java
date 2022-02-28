@@ -182,8 +182,7 @@ public class DefaultPlayControlView extends RelativeLayout {
                     if (editor == null) {
                         return;
                     }
-                    editor.seekTimeLine(i, () -> {
-                    });
+                    editor.seekTimeLine(i);
                     seekListener.onSeek(i);
                 }
             }
@@ -191,11 +190,29 @@ public class DefaultPlayControlView extends RelativeLayout {
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
                 mTvRunningTime.setSelected(false);
+
+                HuaweiVideoEditor editor = EditorManager.getInstance().getEditor();
+                if (editor == null) {
+                    return;
+                }
+
+                if (isVideoPlaying) {
+                    editor.pauseTimeLine();
+                    isVideoPlaying = false;
+                }
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                EditorManager.getInstance().getEditor().pauseTimeLine();
+                HuaweiVideoEditor editor = EditorManager.getInstance().getEditor();
+                if (editor == null) {
+                    return;
+                }
+
+                if (isVideoPlaying) {
+                    editor.pauseTimeLine();
+                    isVideoPlaying = false;
+                }
             }
         });
     }

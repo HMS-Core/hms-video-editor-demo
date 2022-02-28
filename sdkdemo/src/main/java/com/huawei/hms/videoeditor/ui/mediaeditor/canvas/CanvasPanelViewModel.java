@@ -44,9 +44,8 @@ import com.huawei.hms.videoeditor.sdk.bean.HVEBlur;
 import com.huawei.hms.videoeditor.sdk.bean.HVECanvas;
 import com.huawei.hms.videoeditor.sdk.bean.HVEColor;
 import com.huawei.hms.videoeditor.sdk.lane.HVEVideoLane;
-import com.huawei.hms.videoeditor.sdk.store.MaterialsLocalDataManager;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.bean.Constant;
 import com.huawei.hms.videoeditor.ui.common.bean.MaterialsDownloadInfo;
 import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
@@ -65,15 +64,13 @@ public class CanvasPanelViewModel extends AndroidViewModel {
 
     private final MutableLiveData<String> cErrorString = new MutableLiveData<>();
 
-    private final MutableLiveData<List<MaterialsCloudBean>> mMaterials = new MutableLiveData<>();
+    private final MutableLiveData<List<CloudMaterialBean>> mMaterials = new MutableLiveData<>();
 
     private final MutableLiveData<MaterialsDownloadInfo> mDownloadSuccess = new MutableLiveData<>();
 
     private final MutableLiveData<MaterialsDownloadInfo> mDownloadFail = new MutableLiveData<>();
 
     private final MutableLiveData<MaterialsDownloadInfo> mDownloadProgress = new MutableLiveData<>();
-
-    private final MaterialsLocalDataManager mCanvasLocalDataManager;
 
     private EditPreviewViewModel mEditPreviewViewModel;
 
@@ -83,7 +80,6 @@ public class CanvasPanelViewModel extends AndroidViewModel {
 
     public CanvasPanelViewModel(@NonNull Application application) {
         super(application);
-        mCanvasLocalDataManager = new MaterialsLocalDataManager();
     }
 
     public void setEditPreviewViewModel(EditPreviewViewModel mEditPreviewViewModel) {
@@ -176,9 +172,9 @@ public class CanvasPanelViewModel extends AndroidViewModel {
     }
 
     private void queryDownloadStatus(List<HVEMaterialInfo> materialInfos) {
-        List<MaterialsCloudBean> list = new ArrayList<>();
+        List<CloudMaterialBean> list = new ArrayList<>();
         for (int i = 0; i < materialInfos.size(); i++) {
-            MaterialsCloudBean materialInfo = new MaterialsCloudBean();
+            CloudMaterialBean materialInfo = new CloudMaterialBean();
             HVEMaterialInfo hveMaterialInfo = materialInfos.get(i);
             HVELocalMaterialInfo localMaterialInfo =
                 HVEMaterialsManager.queryLocalMaterialById(hveMaterialInfo.getMaterialId());
@@ -195,7 +191,7 @@ public class CanvasPanelViewModel extends AndroidViewModel {
         mMaterials.postValue(list);
     }
 
-    public void downloadColumn(int previousPosition, int position, int dataPosition, MaterialsCloudBean cutContent) {
+    public void downloadColumn(int previousPosition, int position, int dataPosition, CloudMaterialBean cutContent) {
         MaterialsDownloadInfo downloadCanvasInfo = new MaterialsDownloadInfo();
         downloadCanvasInfo.setPreviousPosition(previousPosition);
         downloadCanvasInfo.setDataPosition(dataPosition);
@@ -232,7 +228,7 @@ public class CanvasPanelViewModel extends AndroidViewModel {
         });
     }
 
-    public MutableLiveData<List<MaterialsCloudBean>> getPageData() {
+    public MutableLiveData<List<CloudMaterialBean>> getPageData() {
         return mMaterials;
     }
 

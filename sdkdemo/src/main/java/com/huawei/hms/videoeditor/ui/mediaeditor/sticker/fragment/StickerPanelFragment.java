@@ -44,7 +44,7 @@ import com.huawei.hms.videoeditor.sdk.asset.HVEAsset;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.BaseFragment;
 import com.huawei.hms.videoeditor.ui.common.EditorManager;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.bean.Constant;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.ScreenUtil;
@@ -106,7 +106,7 @@ public class StickerPanelFragment extends BaseFragment {
 
     private int mTopTabSelectIndex = 0;
 
-    private MaterialsCloudBean mCutContent;
+    private CloudMaterialBean mCutContent;
 
     private HVEAsset mLastAsset = null;
 
@@ -144,7 +144,7 @@ public class StickerPanelFragment extends BaseFragment {
                 return;
             }
 
-            MaterialsCloudBean cutContent = (MaterialsCloudBean) msg.obj;
+            CloudMaterialBean cutContent = (CloudMaterialBean) msg.obj;
             if (cutContent == null) {
                 return;
             }
@@ -424,7 +424,7 @@ public class StickerPanelFragment extends BaseFragment {
         if (StringUtil.isEmpty(canvasPath)) {
             return;
         }
-        MaterialsCloudBean pictureCutContent = new MaterialsCloudBean();
+        CloudMaterialBean pictureCutContent = new CloudMaterialBean();
         pictureCutContent.setLocalPath(canvasPath);
         workHandler.removeMessages(STICKER);
         Message message = workHandler.obtainMessage();

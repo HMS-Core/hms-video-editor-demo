@@ -28,9 +28,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.huawei.hms.videoeditor.common.utils.LanguageUtils;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
+import com.huawei.hms.videoeditor.ui.common.utils.LanguageUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 

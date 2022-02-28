@@ -115,7 +115,8 @@ public class FolderListViewModel extends AndroidViewModel {
                     }
                     String[] picSize =
                         parentFile.list((dir, filename) -> filename.toLowerCase(Locale.ENGLISH).endsWith(".jpg")
-                            || filename.toLowerCase(Locale.ENGLISH).endsWith(".png"));
+                            || filename.toLowerCase(Locale.ENGLISH).endsWith(".png")
+                            || filename.toLowerCase(Locale.ENGLISH).endsWith(".gif"));
                     if (picSize == null) {
                         continue;
                     }

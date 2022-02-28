@@ -22,12 +22,15 @@ import static com.huawei.hms.videoeditor.ui.mediaeditor.VideoClipsActivity.ACTIO
 import static com.huawei.hms.videoeditor.ui.mediaeditor.VideoClipsActivity.ACTION_REPLACE_VIDEO_ASSET;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.*;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Stack;
+
 import android.content.Intent;
 import android.widget.Toast;
 
-import androidx.fragment.app.Fragment;
-
-import com.huawei.hms.videoeditor.common.store.sp.SPManager;
 import com.huawei.hms.videoeditor.sdk.ai.HVEAIInitialCallback;
 import com.huawei.hms.videoeditor.sdk.asset.HVEAsset;
 import com.huawei.hms.videoeditor.sdk.asset.HVEAudioAsset;
@@ -41,6 +44,7 @@ import com.huawei.hms.videoeditor.sdk.lane.HVEVideoLane;
 import com.huawei.hms.videoeditor.ui.common.EditorManager;
 import com.huawei.hms.videoeditor.ui.common.utils.CpuUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.LaneSizeCheckUtils;
+import com.huawei.hms.videoeditor.ui.common.utils.SPManager;
 import com.huawei.hms.videoeditor.ui.common.utils.ToastUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.ToastWrapper;
 import com.huawei.hms.videoeditor.ui.common.view.loading.LoadingDialogUtils;
@@ -75,11 +79,7 @@ import com.huawei.hms.videoeditor.ui.mediaeditor.trackview.viewmodel.EditPreview
 import com.huawei.hms.videoeditor.ui.mediapick.activity.MediaPickActivity;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Stack;
+import androidx.fragment.app.Fragment;
 
 public class MenuClickManager {
     public final static String AI_FUN = "AI_FUN";
@@ -173,7 +173,7 @@ public class MenuClickManager {
     public void handlerClickEvent(int id) {
         switch (id) {
             case EDIT_PIP_STATE_ADD:
-                if (!LaneSizeCheckUtils.isCanAddPip(EditorManager.getInstance().getEditor())) {
+                if (!LaneSizeCheckUtils.isCanAddPip(EditorManager.getInstance().getEditor(), mActivity)) {
                     ToastWrapper
                         .makeText(mActivity, mActivity.getString(R.string.pip_lane_out_of_size), Toast.LENGTH_SHORT)
                         .show();
@@ -187,6 +187,11 @@ public class MenuClickManager {
 
             case EDIT_VIDEO_STATE_SPLIT:
                 mActivity.showAssetSplitFragment(id);
+                break;
+
+            case EDIT_VIDEO_STATE_KEYFRAME:
+            case EDIT_VIDEO_OPERATION_KEYFRAME:
+                mActivity.showKeyFrameFragment(id);
                 break;
 
             case EDIT_VIDEO_STATE_TRIM:
@@ -624,7 +629,7 @@ public class MenuClickManager {
                         return;
                     }
                 }
-                if (!LaneSizeCheckUtils.isCanAddAudio(editPreviewViewModel.getEditor())) {
+                if (!LaneSizeCheckUtils.isCanAddAudio(editPreviewViewModel.getEditor(), mActivity)) {
                     ToastUtils.getInstance()
                         .showToast(mActivity, mActivity.getString(R.string.audio_lane_out_of_size), Toast.LENGTH_SHORT);
                     return;
@@ -664,7 +669,7 @@ public class MenuClickManager {
                 break;
 
             case EDIT_AUDIO_STATE_ACOUSTICS:
-                if (!LaneSizeCheckUtils.isCanAddAudio(editPreviewViewModel.getEditor())) {
+                if (!LaneSizeCheckUtils.isCanAddAudio(editPreviewViewModel.getEditor(), mActivity)) {
                     ToastUtils.getInstance()
                         .showToast(mActivity, mActivity.getString(R.string.audio_lane_out_of_size), Toast.LENGTH_SHORT);
                     return;
@@ -707,12 +712,12 @@ public class MenuClickManager {
                     return;
                 }
 
-                boolean isShowToast = SPManager.get(FACE_BLOCKING).getBoolean(FACE_BLOCKING_KEY, false);
+                boolean isShowToast = SPManager.get(FACE_BLOCKING, mActivity).getBoolean(FACE_BLOCKING_KEY, false);
                 if (!isShowToast) {
                     String maxFace =
                         mActivity.getResources().getQuantityString(R.plurals.face_blocking_max_face, 20, 20);
                     ToastWrapper.makeText(mActivity, maxFace, Toast.LENGTH_SHORT).show();
-                    SPManager.get(FACE_BLOCKING).put(FACE_BLOCKING_KEY, true);
+                    SPManager.get(FACE_BLOCKING, mActivity).put(FACE_BLOCKING_KEY, true);
                 }
                 editPreviewViewModel.setFaceBlockingEnter(id);
                 break;
@@ -838,13 +843,13 @@ public class MenuClickManager {
                     return;
                 }
 
-                boolean isFirstAiFun = SPManager.get(AI_FUN).getBoolean(AI_FUN_KEY, true);
+                boolean isFirstAiFun = SPManager.get(AI_FUN, mActivity).getBoolean(AI_FUN_KEY, true);
                 if (isFirstAiFun) {
                     AIBlockingHintDialog aiFunDialog =
                         new AIBlockingHintDialog(mActivity, mActivity.getString(R.string.cut_second_menu_fun),
                             mActivity.getString(R.string.fun_description));
                     aiFunDialog.setOnPositiveClickListener(() -> {
-                        SPManager.get(AI_FUN).put(AI_FUN_KEY, false);
+                        SPManager.get(AI_FUN, mActivity).put(AI_FUN_KEY, false);
                         MenuClickManager.getInstance().showPanelViewPrepare(id, AiFunFragment.newInstance(id));
                     });
                     aiFunDialog.show();

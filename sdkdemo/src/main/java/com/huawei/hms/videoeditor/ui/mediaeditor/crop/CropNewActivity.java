@@ -16,21 +16,22 @@
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.crop;
 
+import static com.huawei.hms.videoeditor.ui.common.utils.ImageUtil.correctionWH;
+
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.huawei.hms.videoeditor.sdk.HVETimeLine;
 import com.huawei.hms.videoeditor.sdk.HuaweiVideoEditor;
@@ -41,11 +42,11 @@ import com.huawei.hms.videoeditor.sdk.bean.HVERational;
 import com.huawei.hms.videoeditor.sdk.bean.HVESize;
 import com.huawei.hms.videoeditor.sdk.lane.HVELane;
 import com.huawei.hms.videoeditor.sdk.lane.HVEVideoLane;
-import com.huawei.hms.videoeditor.sdk.util.BigDecimalUtil;
 import com.huawei.hms.videoeditor.sdk.util.HVEUtil;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.BaseActivity;
 import com.huawei.hms.videoeditor.ui.common.bean.MediaData;
+import com.huawei.hms.videoeditor.ui.common.utils.BigDecimalUtil;
 import com.huawei.hms.videoeditor.ui.common.utils.FoldScreenUtil;
 import com.huawei.hms.videoeditor.ui.common.utils.TimeUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.ToastWrapper;
@@ -53,14 +54,12 @@ import com.huawei.hms.videoeditor.ui.common.view.crop.CropView;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 import com.huawei.secure.android.common.intent.SafeIntent;
 
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.List;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import static com.huawei.hms.videoeditor.sdk.util.ImageUtil.correctionWH;
-
-
-public class CropNewActivity extends BaseActivity implements CropView.ICropListener, HuaweiVideoEditor.PlayCallback, HuaweiVideoEditor.SurfaceCallback {
+public class CropNewActivity extends BaseActivity
+    implements CropView.ICropListener, HuaweiVideoEditor.PlayCallback, HuaweiVideoEditor.SurfaceCallback {
     public static final String TAG = "CropNewActivity";
 
     private CropView mCropView;
@@ -71,28 +70,36 @@ public class CropNewActivity extends BaseActivity implements CropView.ICropListe
 
     protected RectF mCurDefaultClipBound;
 
-
     private RecyclerView mRecyclerView;
 
     private CropNewAdapter mAdapter;
 
     public static final String MEDIA_DATA = "media";
+
     public static final String MEDIA_RTN = "hvecut";
+
     public static final String EDITOR_UUID = "editor_uuid";
+
     public static final String EDITOR_CURRENT_TIME = "EditorCurrentTime";
+
     public static final String NO_ACTION_AFTER_RESET = "IsNoActionAfterReset";
 
     private HuaweiVideoEditor mEditor;
+
     private ViewGroup mPreview;
+
     private MediaData mMediaData;
+
     private ImageView mConfirm;
 
     private TextView mDuration;
 
     private float mAssetWidth;
+
     private float mAssetHeight;
 
     private float horiWidth;
+
     private float horiHeight;
 
     private ImageView mPlay;
@@ -153,7 +160,7 @@ public class CropNewActivity extends BaseActivity implements CropView.ICropListe
             return;
         }
         currentRotation = (int) mMediaData.getRotation();
-        mEditor = HuaweiVideoEditor.createEditor(this);
+        mEditor = HuaweiVideoEditor.create(this);
         try {
             mEditor.initEnvironment();
         } catch (LicenseException e) {
@@ -179,7 +186,6 @@ public class CropNewActivity extends BaseActivity implements CropView.ICropListe
             return;
         }
 
-        timeLine.setCurrentTime(editorCurrentTime);
         mEditor.seekTimeLine(editorCurrentTime, new HuaweiVideoEditor.SeekCallback() {
             @Override
             public void onSeekFinished() {
@@ -254,7 +260,8 @@ public class CropNewActivity extends BaseActivity implements CropView.ICropListe
         }
         HVEAsset asset = hveAssetList.get(0);
         if (horiWidth == 0 || horiHeight == 0) {
-            float[] floats = correctionWH(mEditor.getSurfaceHeight(), mEditor.getSurfaceWidth(), mAssetWidth, mAssetHeight);
+            float[] floats =
+                correctionWH(mEditor.getSurfaceHeight(), mEditor.getSurfaceWidth(), mAssetWidth, mAssetHeight);
             horiWidth = floats[0];
             horiHeight = floats[1];
         }
@@ -542,7 +549,8 @@ public class CropNewActivity extends BaseActivity implements CropView.ICropListe
             mRectVideoClipBound = new RectF(0, 0, mAssetWidth, mAssetHeight);
             mCurDefaultClipBound = new RectF(mRectVideoClipBound);
 
-            if (mMediaData.getGlLeftBottomX() != 0 || mMediaData.getGlLeftBottomY() != 0 || mMediaData.getGlRightTopX() != 0 || mMediaData.getGlRightTopY() != 0) {
+            if (mMediaData.getGlLeftBottomX() != 0 || mMediaData.getGlLeftBottomY() != 0
+                || mMediaData.getGlRightTopX() != 0 || mMediaData.getGlRightTopY() != 0) {
                 float left = mMediaData.getGlLeftBottomX() * mAssetWidth;
                 float top = mAssetHeight - mMediaData.getGlRightTopY() * mAssetHeight;
                 float right = mMediaData.getGlRightTopX() * mAssetWidth;
@@ -556,7 +564,6 @@ public class CropNewActivity extends BaseActivity implements CropView.ICropListe
             mCropView.applyFreeAspect();
         });
     }
-
 
     @Override
     public void onPlayState() {

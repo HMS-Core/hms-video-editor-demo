@@ -39,7 +39,7 @@ import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.BaseFragment;
 import com.huawei.hms.videoeditor.ui.common.adapter.MaskEffectAdapter;
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RViewHolder;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.bean.MaterialsDownloadInfo;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
@@ -97,7 +97,7 @@ public class MaskEffectFragment extends BaseFragment {
 
     private List<HVEColumnInfo> currentColumnList;
 
-    private List<MaterialsCloudBean> currentContentList;
+    private List<CloudMaterialBean> currentContentList;
 
     private View mFilterCancelRl;
 
@@ -115,9 +115,9 @@ public class MaskEffectFragment extends BaseFragment {
 
     private boolean isFirst;
 
-    private MaterialsCloudBean mMaterialsCutContent;
+    private CloudMaterialBean mMaterialsCutContent;
 
-    private MaterialsCloudBean mContent;
+    private CloudMaterialBean mContent;
 
     public static MaskEffectFragment newInstance(boolean flag) {
         MaskEffectFragment fragment = new MaskEffectFragment();
@@ -283,7 +283,7 @@ public class MaskEffectFragment extends BaseFragment {
                     .equals(currentContentList.get(downloadInfo.getDataPosition()).getId()))) {
                 mFilterCancelRl.setSelected(false);
                 maskEffectAdapter.setSelectPosition(downloadPosition);
-                MaterialsCloudBean materialsCutContent = downloadInfo.getMaterialBean();
+                CloudMaterialBean materialsCutContent = downloadInfo.getMaterialBean();
                 currentContentList.set(downloadInfo.getDataPosition(), materialsCutContent);
                 maskEffectAdapter.notifyDataSetChanged();
 
@@ -359,7 +359,7 @@ public class MaskEffectFragment extends BaseFragment {
                     if (firstPosition != -1 && visibleItemCount > 0 && !isFirst && currentContentList.size() > 0) {
                         isFirst = true;
                         for (int i = 0; i < visibleItemCount - 1; i++) {
-                            MaterialsCloudBean cutContent = currentContentList.get(i);
+                            CloudMaterialBean cutContent = currentContentList.get(i);
                             maskEffectAdapter.addFirstScreenMaterial(cutContent);
                         }
                     }
@@ -589,7 +589,7 @@ public class MaskEffectFragment extends BaseFragment {
         }
     }
 
-    private void selectResource(MaterialsCloudBean materialsCutContent) {
+    private void selectResource(CloudMaterialBean materialsCutContent) {
         viewModel.setMaterialsCutContentMutableLiveData(materialsCutContent);
         viewModel
             .setFirstEffect(viewModel.appendHVEEffect(viewModel.getHveVideoAsset().getValue(), materialsCutContent));

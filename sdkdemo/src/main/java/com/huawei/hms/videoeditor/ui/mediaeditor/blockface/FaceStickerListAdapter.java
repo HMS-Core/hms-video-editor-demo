@@ -23,7 +23,7 @@ import android.widget.ProgressBar;
 
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RCommandAdapter;
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RViewHolder;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
 import com.huawei.hms.videoeditor.ui.common.view.image.RoundImage;
@@ -41,7 +41,7 @@ public class FaceStickerListAdapter extends RCommandAdapter<FaceBlockingInfo> {
 
     private volatile int mSelectPosition = -1;
 
-    private final Map<String, MaterialsCloudBean> mDownloadingMap = new LinkedHashMap<>();
+    private final Map<String, CloudMaterialBean> mDownloadingMap = new LinkedHashMap<>();
 
     public OnStickerSelectedListener stickerSelectedListener;
 
@@ -52,7 +52,7 @@ public class FaceStickerListAdapter extends RCommandAdapter<FaceBlockingInfo> {
 
     @Override
     protected void convert(RViewHolder holder, FaceBlockingInfo faceBlockingInfo, int dataPosition, int position) {
-        MaterialsCloudBean materialsCutContent = faceBlockingInfo.getMaterialsCutContent();
+        CloudMaterialBean materialsCutContent = faceBlockingInfo.getMaterialsCutContent();
         View viewNoClick = holder.getView(R.id.view_no_click);
         ImageView ivDelete = holder.getView(R.id.iv_delete);
         RoundImage itemImageView = holder.getView(R.id.item_image_view);
@@ -146,7 +146,7 @@ public class FaceStickerListAdapter extends RCommandAdapter<FaceBlockingInfo> {
         this.mSelectPosition = selectPosition;
     }
 
-    public void addDownloadMaterial(MaterialsCloudBean item) {
+    public void addDownloadMaterial(CloudMaterialBean item) {
         mDownloadingMap.put(item.getId(), item);
     }
 

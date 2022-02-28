@@ -30,16 +30,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.huawei.hms.videoeditor.common.utils.LanguageUtils;
 import com.huawei.hms.videoeditor.materials.HVEColumnInfo;
 import com.huawei.hms.videoeditor.materials.HVEMaterialConstant;
 import com.huawei.hms.videoeditor.sdk.asset.HVEAsset;
 import com.huawei.hms.videoeditor.sdk.effect.HVEEffect;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.BaseFragment;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.bean.MaterialsDownloadInfo;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
+import com.huawei.hms.videoeditor.ui.common.utils.LanguageUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.ScreenUtil;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.ToastWrapper;
@@ -69,9 +69,9 @@ public class StickerAnimationPanelFragment extends BaseFragment implements Anima
 
     private List<HVEColumnInfo> columnList = new ArrayList<>();
 
-    private List<MaterialsCloudBean> initAnim = new ArrayList<>(1);
+    private List<CloudMaterialBean> initAnim = new ArrayList<>(1);
 
-    private List<MaterialsCloudBean> animList = new ArrayList<>();
+    private List<CloudMaterialBean> animList = new ArrayList<>();
 
     private HVEAsset hveAsset;
 
@@ -301,7 +301,7 @@ public class StickerAnimationPanelFragment extends BaseFragment implements Anima
                 if (animList == null || animList.isEmpty()) {
                     return;
                 }
-                MaterialsCloudBean content1 = animList.get(position);
+                CloudMaterialBean content1 = animList.get(position);
                 if (content1 == null) {
                     return;
                 }
@@ -585,7 +585,7 @@ public class StickerAnimationPanelFragment extends BaseFragment implements Anima
         stickerAnimationItemAdapter.notifyItemChanged(downloadPosition);
     }
 
-    private void setAnimationSelected(HVEAsset hveAsset, List<MaterialsCloudBean> animList, String animType) {
+    private void setAnimationSelected(HVEAsset hveAsset, List<CloudMaterialBean> animList, String animType) {
         int selectedPosition = stickerAnimationViewModel.getSelectedPosition(hveAsset, animList, animType);
         stickerAnimationItemAdapter.setSelectPosition(selectedPosition);
     }

@@ -98,7 +98,7 @@
     <string name="cut_second_menu_freezes" priority="translator">"定格"</string>
     <string name="cut_second_menu_single_frame_export" priority="translator">"单帧导出"</string>
     <string name="cut_second_menu_fun" priority="translator">"AI趣玩"</string>
-
+    <string name="cut_second_menu_keyframe" priority="translator">"关键帧"</string>
     <string name="audio_second_menu_music" priority="translator">"音乐"</string>
     <string name="audio_second_menu_sound_effect" priority="translator">"音效"</string>
     <string name="audio_second_menu_record" priority="translator">"录音"</string>
@@ -191,6 +191,7 @@
     <string name="result_illegal" priority="translator">"网络异常，请重试"</string>
     <string name="apply_to_all" priority="translator">应用到全部</string>
     <string name="applied_to_all" priority="translator">已应用到全部</string>
+    <string name="device_not_support" priority="translator">设备不支持</string>
 
     <string name="filter_brightness" priority="translator">"亮度"</string>
     <string name="filter_contrast" priority="translator">"对比度"</string>
@@ -614,4 +615,5 @@
     <string name="cpu_limit" priority="translator">32位系统不支持AI相关功能</string>
     <string name="reenact_limit" priority="translator">该功能仅支持图片</string>
     <string name="crop_limit" priority="translator">请选择视频进行修剪</string>
+    <string name="keyframe" priority="translator">"关键帧"</string>
 </resources>

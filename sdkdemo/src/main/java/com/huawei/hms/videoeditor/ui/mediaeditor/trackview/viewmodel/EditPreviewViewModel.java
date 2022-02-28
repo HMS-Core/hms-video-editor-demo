@@ -48,7 +48,7 @@ import com.huawei.hms.videoeditor.sdk.lane.HVEEffectLane;
 import com.huawei.hms.videoeditor.sdk.lane.HVELane;
 import com.huawei.hms.videoeditor.sdk.lane.HVEStickerLane;
 import com.huawei.hms.videoeditor.sdk.lane.HVEVideoLane;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.EditorManager;
 import com.huawei.hms.videoeditor.ui.common.utils.LaneSizeCheckUtils;
@@ -155,7 +155,7 @@ public class EditPreviewViewModel extends AndroidViewModel {
 
     private MutableLiveData<Boolean> isEndOfVideoTrackView = new MutableLiveData<>();
 
-    private MutableLiveData<String> faceDetectError = new MutableLiveData<>();
+    private MutableLiveData<Integer> faceDetectError = new MutableLiveData<>();
 
     public MutableLiveData<Boolean> clearGraffitView = new MutableLiveData<>();
 
@@ -163,7 +163,7 @@ public class EditPreviewViewModel extends AndroidViewModel {
 
     private MutableLiveData<String> toastTime = new MutableLiveData<>();
 
-    private MutableLiveData<MaterialsCloudBean> defaultFontContent = new MutableLiveData<>();
+    private MutableLiveData<CloudMaterialBean> defaultFontContent = new MutableLiveData<>();
 
     private MutableLiveData<Boolean> isFootShow = new MutableLiveData<Boolean>();
 
@@ -286,11 +286,11 @@ public class EditPreviewViewModel extends AndroidViewModel {
         return toastString;
     }
 
-    public MutableLiveData<String> getFaceDetectError() {
+    public MutableLiveData<Integer> getFaceDetectError() {
         return faceDetectError;
     }
 
-    public void setFaceDetectError(String errorCode) {
+    public void setFaceDetectError(int errorCode) {
         this.faceDetectError.postValue(errorCode);
     }
 
@@ -626,7 +626,7 @@ public class EditPreviewViewModel extends AndroidViewModel {
         return Math.min(4000, Math.min(firstAsset.getDuration(), secondAsset.getDuration()) / 2);
     }
 
-    public boolean addAudio(MaterialsCloudBean content, int type) {
+    public boolean addAudio(CloudMaterialBean content, int type) {
         HVETimeLine hveTimeLine = getTimeLine();
         if (hveTimeLine == null) {
             SmartLog.e(TAG, "timeline is null when add audio");
@@ -664,17 +664,23 @@ public class EditPreviewViewModel extends AndroidViewModel {
         if (startTime < 0) {
             startTime = hveTimeLine.getCurrentTime();
         }
-        HVEAudioLane audioLane = LaneSizeCheckUtils.getAudioFreeLan(editor, startTime, hveTimeLine.getEndTime());
+        long endTime = hveTimeLine.getEndTime();
+        HVEAudioLane audioLane =
+                LaneSizeCheckUtils.getAudioFreeLan(editor, startTime, hveTimeLine.getEndTime(), getApplication());
         if (audioLane == null) {
             ToastWrapper
-                .makeText(getApplication(), getApplication().getString(R.string.audio_lane_out_of_size),
-                    Toast.LENGTH_SHORT)
-                .show();
+                    .makeText(getApplication(), getApplication().getString(R.string.audio_lane_out_of_size),
+                            Toast.LENGTH_SHORT)
+                    .show();
             return null;
         }
         HVEAudioAsset asset = audioLane.appendAudioAsset(path, startTime);
         if (asset != null) {
             setSelectedUUID(asset.getUuid());
+            if (asset.getEndTime() > endTime) {
+                audioLane.splitAsset(asset.getIndex(), endTime);
+                audioLane.removeAsset(asset.getIndex() + 1);
+            }
         }
         return asset;
     }
@@ -1188,7 +1194,7 @@ public class EditPreviewViewModel extends AndroidViewModel {
         isKeyBordShow.setValue(b);
     }
 
-    public MutableLiveData<MaterialsCloudBean> getDefaultFontContent() {
+    public MutableLiveData<CloudMaterialBean> getDefaultFontContent() {
         return defaultFontContent;
     }
 

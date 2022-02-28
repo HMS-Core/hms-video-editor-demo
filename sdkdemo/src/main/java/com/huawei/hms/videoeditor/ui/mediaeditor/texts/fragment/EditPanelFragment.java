@@ -103,7 +103,7 @@ public class EditPanelFragment extends BaseFragment {
     private List<TabTopInfo<?>> mInfoList;
 
     private final int[] aTabs = {R.string.keybaord, R.string.edit_item2_1_2, R.string.cut_second_menu_animation,
-        /* R.string.edit_item2_1_12, R.string.edit_item2_1_13 */};
+         R.string.edit_item2_1_12, R.string.edit_item2_1_13 };
 
     private final int[] aTabsForCover =
         {R.string.keybaord, R.string.edit_item2_1_2, R.string.edit_item2_1_12, R.string.edit_item2_1_13};

@@ -31,7 +31,7 @@ import com.huawei.hms.videoeditor.materials.HVEMaterialInfo;
 import com.huawei.hms.videoeditor.materials.HVEMaterialsManager;
 import com.huawei.hms.videoeditor.materials.HVEMaterialsResponseCallback;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.bean.Constant;
 import com.huawei.hms.videoeditor.ui.common.bean.MaterialsDownloadInfo;
 import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
@@ -105,9 +105,9 @@ public class MaterialsRespository {
             return;
         }
 
-        List<MaterialsCloudBean> list = new ArrayList<>();
+        List<CloudMaterialBean> list = new ArrayList<>();
         for (int i = 0; i < materialInfos.size(); i++) {
-            MaterialsCloudBean materialInfo = new MaterialsCloudBean();
+            CloudMaterialBean materialInfo = new CloudMaterialBean();
 
             HVEMaterialInfo hveMaterialInfo = materialInfos.get(i);
 
@@ -126,7 +126,7 @@ public class MaterialsRespository {
         materialsListener.pageData(list);
     }
 
-    public void downloadMaterials(int previousPosition, int position, MaterialsCloudBean cutContent) {
+    public void downloadMaterials(int previousPosition, int position, CloudMaterialBean cutContent) {
         if (materialsListener == null || cutContent == null) {
             return;
         }

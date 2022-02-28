@@ -36,7 +36,7 @@ import android.widget.TextView;
 import com.huawei.hms.videoeditor.materials.HVEColumnInfo;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.BaseFragment;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.ScreenUtil;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
@@ -145,6 +145,7 @@ public class SoundEffectFragment extends BaseFragment {
             if (list != null && list.size() > 0) {
                 mColumnList.clear();
                 mColumnList.addAll(list);
+                mInfoList.clear();
                 for (HVEColumnInfo item : list) {
                     SmartLog.i(TAG, item.toString());
                     TabTopInfo<?> info = new TabTopInfo<>(item.getColumnName(), false, defaultColor, color, 14, 14,
@@ -233,7 +234,7 @@ public class SoundEffectFragment extends BaseFragment {
         return DYNAMIC_HEIGHT;
     }
 
-    private void addSoundEffect(MaterialsCloudBean cutContent) {
+    private void addSoundEffect(CloudMaterialBean cutContent) {
         if (cutContent != null) {
             mEditPreviewViewModel.addAudio(cutContent, AUDIO_TYPE_SOUND_EFFECT);
         }

@@ -16,6 +16,15 @@
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.blockface;
 
+import static com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCutContentType.CUSTOM_STICKERS;
+
+import java.io.File;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -32,28 +41,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.gson.Gson;
-import com.huawei.hms.videoeditor.common.utils.BitmapDecodeUtils;
 import com.huawei.hms.videoeditor.materials.HVEColumnInfo;
 import com.huawei.hms.videoeditor.materials.HVEMaterialConstant;
 import com.huawei.hms.videoeditor.sdk.asset.HVEAsset;
 import com.huawei.hms.videoeditor.sdk.asset.HVEVisibleAsset;
 import com.huawei.hms.videoeditor.sdk.bean.HVEAIFaceTemplate;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
-import com.huawei.hms.videoeditor.sdk.util.FileUtil;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.sdk.v1.bean.AssetBean;
 import com.huawei.hms.videoeditor.sdk.v1.json.Constants;
 import com.huawei.hms.videoeditor.ui.common.BaseFragment;
 import com.huawei.hms.videoeditor.ui.common.bean.MaterialsDownloadInfo;
+import com.huawei.hms.videoeditor.ui.common.utils.BitmapDecodeUtils;
+import com.huawei.hms.videoeditor.ui.common.utils.FileUtil;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.ToastWrapper;
 import com.huawei.hms.videoeditor.ui.common.utils.Utils;
@@ -70,14 +71,13 @@ import com.huawei.hms.videoeditor.ui.mediapick.activity.PicturePickActivity;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 import com.huawei.secure.android.common.util.SafeBase64;
 
-import java.io.File;
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-
-import static com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCutContentType.CUSTOM_STICKERS;
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class FaceBlockingFragment extends BaseFragment implements View.OnClickListener {
     public static final String TAG = "FaceBlockingFragment";
@@ -156,7 +156,7 @@ public class FaceBlockingFragment extends BaseFragment implements View.OnClickLi
 
     private List<HVEAIFaceTemplate> mFaceBoxList = new ArrayList<>();
 
-    private List<MaterialsCloudBean> mStickerList = new ArrayList<>();
+    private List<CloudMaterialBean> mStickerList = new ArrayList<>();
 
     private boolean mHasNextPage = false;
 
@@ -214,18 +214,18 @@ public class FaceBlockingFragment extends BaseFragment implements View.OnClickLi
         mSdkPlayViewModel = new ViewModelProvider(mActivity, mFactory).get(VideoClipsPlayViewModel.class);
 
         mFaceBlockingListAdapter =
-                new FaceBlockingListAdapter(mActivity, mFaceBlockingInfoList, R.layout.adapter_block_face_item);
+            new FaceBlockingListAdapter(mActivity, mFaceBlockingInfoList, R.layout.adapter_block_face_item);
         recyclerViewFace.setLayoutManager(new LinearLayoutManager(mActivity, RecyclerView.HORIZONTAL, false));
         recyclerViewFace.addItemDecoration(
-                new HorizontalDividerDecoration(ContextCompat.getColor(mActivity, R.color.translucent_white_100),
-                        SizeUtils.dp2Px(mActivity, 56), SizeUtils.dp2Px(mActivity, 8)));
+            new HorizontalDividerDecoration(ContextCompat.getColor(mActivity, R.color.translucent_white_100),
+                SizeUtils.dp2Px(mActivity, 56), SizeUtils.dp2Px(mActivity, 8)));
         recyclerViewFace.setAdapter(mFaceBlockingListAdapter);
         recyclerViewFace.setNestedScrollingEnabled(false);
 
         mStickerHeaderView =
-                LayoutInflater.from(mActivity).inflate(R.layout.adapter_face_sticker_head_view, null, false);
+            LayoutInflater.from(mActivity).inflate(R.layout.adapter_face_sticker_head_view, null, false);
         mStickerHeaderView.setLayoutParams(
-                new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, SizeUtils.dp2Px(context, 60)));
+            new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, SizeUtils.dp2Px(context, 60)));
         ivChooseSticker = mStickerHeaderView.findViewById(R.id.iv_choose_sticker);
         ivChooseSticker.setOnClickListener(this);
         ivMosaic = mStickerHeaderView.findViewById(R.id.iv_mosaic);
@@ -237,12 +237,12 @@ public class FaceBlockingFragment extends BaseFragment implements View.OnClickLi
         ivCancel.setEnabled(false);
         ivCancel.setSelected(false);
         mFaceStickerListAdapter =
-                new FaceStickerListAdapter(mActivity, mStickerInfoList, R.layout.adapter_block_face_sticker_item);
+            new FaceStickerListAdapter(mActivity, mStickerInfoList, R.layout.adapter_block_face_sticker_item);
         mFaceStickerListAdapter.addHeaderView(mStickerHeaderView);
         recyclerViewSticker.setLayoutManager(new LinearLayoutManager(mActivity, RecyclerView.HORIZONTAL, false));
         recyclerViewSticker.addItemDecoration(
-                new HorizontalDividerDecoration(ContextCompat.getColor(mActivity, R.color.translucent_white_100),
-                        SizeUtils.dp2Px(mActivity, 60), SizeUtils.dp2Px(mActivity, 6)));
+            new HorizontalDividerDecoration(ContextCompat.getColor(mActivity, R.color.translucent_white_100),
+                SizeUtils.dp2Px(mActivity, 60), SizeUtils.dp2Px(mActivity, 6)));
         recyclerViewSticker.setAdapter(mFaceStickerListAdapter);
         recyclerViewSticker.setNestedScrollingEnabled(false);
 
@@ -287,9 +287,9 @@ public class FaceBlockingFragment extends BaseFragment implements View.OnClickLi
                 mIndicatorView.hide();
                 mStickerList.clear();
                 mStickerInfoList.clear();
-                List<MaterialsCloudBean> localStickerList =
-                        mFaceBlockingViewModel.getLocalMaterialsDataByType(CUSTOM_STICKERS);
-                for (MaterialsCloudBean pageDatas : localStickerList) {
+                List<CloudMaterialBean> localStickerList =
+                    mFaceBlockingViewModel.getLocalMaterialsDataByType(CUSTOM_STICKERS);
+                for (CloudMaterialBean pageDatas : localStickerList) {
                     mEditPreviewViewModel.addBlockingSticker(pageDatas.getLocalPath());
                     mStickerInfoList.add(new FaceBlockingInfo("0", pageDatas.getLocalPath(), pageDatas, isShowGray));
                 }
@@ -297,9 +297,9 @@ public class FaceBlockingFragment extends BaseFragment implements View.OnClickLi
             if (!mStickerList.containsAll(materialsCutContents)) {
                 SmartLog.i(TAG, "materialsCutContents is not exist.");
                 mStickerList.addAll(materialsCutContents);
-                for (MaterialsCloudBean containsDatas : materialsCutContents) {
+                for (CloudMaterialBean containsDatas : materialsCutContents) {
                     mStickerInfoList.add(new FaceBlockingInfo("1", parseStickerLocalPath(containsDatas.getLocalPath()),
-                            containsDatas, isShowGray));
+                        containsDatas, isShowGray));
                 }
                 if (mFaceStickerListAdapter != null) {
                     mFaceStickerListAdapter.setSelectPosition(-1);
@@ -324,12 +324,12 @@ public class FaceBlockingFragment extends BaseFragment implements View.OnClickLi
                     if (mCurrentPage == 0) {
                         mIndicatorView.hide();
                         mStickerInfoList.clear();
-                        List<MaterialsCloudBean> localStickerList =
-                                mFaceBlockingViewModel.getLocalMaterialsDataByType(CUSTOM_STICKERS);
-                        for (MaterialsCloudBean localDatas : localStickerList) {
+                        List<CloudMaterialBean> localStickerList =
+                            mFaceBlockingViewModel.getLocalMaterialsDataByType(CUSTOM_STICKERS);
+                        for (CloudMaterialBean localDatas : localStickerList) {
                             mEditPreviewViewModel.addBlockingSticker(localDatas.getLocalPath());
                             mStickerInfoList
-                                    .add(new FaceBlockingInfo("0", localDatas.getLocalPath(), localDatas, isShowGray));
+                                .add(new FaceBlockingInfo("0", localDatas.getLocalPath(), localDatas, isShowGray));
                         }
                         if (mFaceStickerListAdapter != null) {
                             mFaceStickerListAdapter.setSelectPosition(-1);
@@ -351,8 +351,8 @@ public class FaceBlockingFragment extends BaseFragment implements View.OnClickLi
                         blockingInfo.setType(CUSTOM_STICKER);
                         blockingInfo.setLocalSticker(string);
                         blockingInfo.setShowGray(getSelectedFacesNum() <= 0);
-                        MaterialsCloudBean content =
-                                mFaceBlockingViewModel.addStickerCustomToLocal(System.currentTimeMillis() + "", string);
+                        CloudMaterialBean content =
+                            mFaceBlockingViewModel.addStickerCustomToLocal(System.currentTimeMillis() + "", string);
                         if (content != null) {
                             blockingInfo.setMaterialsCutContent(content);
                         }
@@ -363,8 +363,8 @@ public class FaceBlockingFragment extends BaseFragment implements View.OnClickLi
                     blockingInfo.setType(CUSTOM_STICKER);
                     blockingInfo.setLocalSticker(string);
                     blockingInfo.setShowGray(getSelectedFacesNum() <= 0);
-                    MaterialsCloudBean content =
-                            mFaceBlockingViewModel.addStickerCustomToLocal(System.currentTimeMillis() + "", string);
+                    CloudMaterialBean content =
+                        mFaceBlockingViewModel.addStickerCustomToLocal(System.currentTimeMillis() + "", string);
                     if (content != null) {
                         blockingInfo.setMaterialsCutContent(content);
                     }
@@ -522,7 +522,7 @@ public class FaceBlockingFragment extends BaseFragment implements View.OnClickLi
                 if (mStickerInfoList == null || mStickerInfoList.isEmpty()) {
                     return;
                 }
-                MaterialsCloudBean contentST = mStickerInfoList.get(dataPosition).getMaterialsCutContent();
+                CloudMaterialBean contentST = mStickerInfoList.get(dataPosition).getMaterialsCutContent();
                 if (contentST == null) {
                     return;
                 }
@@ -570,7 +570,7 @@ public class FaceBlockingFragment extends BaseFragment implements View.OnClickLi
             while (iterator.hasNext()) {
                 FaceBlockingInfo info = iterator.next();
                 if (!TextUtils.isEmpty(info.getLocalSticker())
-                        && info.getLocalSticker().equals(faceBlockingInfo.getLocalSticker())) {
+                    && info.getLocalSticker().equals(faceBlockingInfo.getLocalSticker())) {
                     mEditPreviewViewModel.removeBlockingSticker(info.getLocalSticker());
                     mFaceBlockingViewModel.deleteLocalCustomSticker(info.getMaterialsCutContent());
                     iterator.remove();
@@ -581,7 +581,7 @@ public class FaceBlockingFragment extends BaseFragment implements View.OnClickLi
             }
             for (FaceBlockingInfo info : mFaceBlockingInfoList) {
                 if (!TextUtils.isEmpty(info.getLocalSticker())
-                        && info.getLocalSticker().equals(faceBlockingInfo.getLocalSticker())) {
+                    && info.getLocalSticker().equals(faceBlockingInfo.getLocalSticker())) {
                     info.setMosaic(true);
                     info.setType(MOSAIC_STICKER);
                     info.setLocalSticker(null);
@@ -617,7 +617,7 @@ public class FaceBlockingFragment extends BaseFragment implements View.OnClickLi
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE
-                        && mFaceStickerListAdapter.getItemCount() >= mStickerList.size()) {
+                    && mFaceStickerListAdapter.getItemCount() >= mStickerList.size()) {
                     LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                     if (!isScrolled && mHasNextPage && layoutManager != null) {
                         int lastCompletelyVisibleItemPosition = layoutManager.findLastCompletelyVisibleItemPosition();
@@ -664,18 +664,18 @@ public class FaceBlockingFragment extends BaseFragment implements View.OnClickLi
                         int dataPosition = downloadPosition - 1;
 
                         if (dataPosition >= 0 && dataPosition < mStickerInfoList.size() && downloadInfo.getContentId()
-                                .equals(mStickerInfoList.get(dataPosition).getMaterialsCutContent().getId())) {
+                            .equals(mStickerInfoList.get(dataPosition).getMaterialsCutContent().getId())) {
                             mFaceStickerListAdapter.setSelectPosition(downloadPosition);
                             mStickerInfoList.get(dataPosition)
-                                    .setLocalSticker(parseStickerLocalPath(downloadInfo.getMaterialBean().getLocalPath()));
+                                .setLocalSticker(parseStickerLocalPath(downloadInfo.getMaterialBean().getLocalPath()));
                             mStickerInfoList.get(dataPosition).setMaterialsCutContent(downloadInfo.getMaterialBean());
                             mFaceStickerListAdapter.notifyDataSetChanged();
 
                             mStickerPath = parseStickerLocalPath(
-                                    mStickerInfoList.get(dataPosition).getMaterialsCutContent().getLocalPath());
+                                mStickerInfoList.get(dataPosition).getMaterialsCutContent().getLocalPath());
                             for (FaceBlockingInfo info : mFaceBlockingInfoList) {
                                 if ((info.isSelected() && !info.isGetFocus())
-                                        || (info.isGetFocus() && !info.isSelected())) {
+                                    || (info.isGetFocus() && !info.isSelected())) {
                                     if (!TextUtils.isEmpty(mStickerPath)) {
                                         info.setMosaic(false);
                                         info.setGetFocus(true);
@@ -700,13 +700,13 @@ public class FaceBlockingFragment extends BaseFragment implements View.OnClickLi
                         mFaceStickerListAdapter.removeDownloadMaterial(downloadInfo.getContentId());
                         updateFail(downloadInfo);
                         ToastWrapper
-                                .makeText(mActivity,
-                                        downloadInfo.getMaterialBean().getName() + Utils.setNumColor(
-                                                String.format(Locale.ROOT,
-                                                        mActivity.getResources().getString(R.string.download_failed), 0),
-                                                mActivity.getResources().getColor(R.color.transparent)),
-                                        Toast.LENGTH_SHORT)
-                                .show();
+                            .makeText(mActivity,
+                                downloadInfo.getMaterialBean().getName() + Utils.setNumColor(
+                                    String.format(Locale.ROOT,
+                                        mActivity.getResources().getString(R.string.download_failed), 0),
+                                    mActivity.getResources().getColor(R.color.transparent)),
+                                Toast.LENGTH_SHORT)
+                            .show();
                         break;
                     case MaterialsRespository.DOWNLOAD_LOADING:
                         SmartLog.d(TAG, "progress:" + downloadInfo.getProgress());
@@ -731,7 +731,7 @@ public class FaceBlockingFragment extends BaseFragment implements View.OnClickLi
         int downloadPosition = downloadInfo.getPosition();
         int dataPosition = downloadInfo.getDataPosition();
         if (downloadPosition >= 0 && downloadPosition < mStickerInfoList.size() && downloadInfo.getContentId()
-                .equals(mStickerInfoList.get(dataPosition).getMaterialsCutContent().getId())) {
+            .equals(mStickerInfoList.get(dataPosition).getMaterialsCutContent().getId())) {
             mStickerInfoList.get(downloadPosition).setMaterialsCutContent(downloadInfo.getMaterialBean());
             if (downloadInfo.getPreviousPosition() != -1) {
                 mFaceStickerListAdapter.notifyItemChanged(downloadInfo.getPreviousPosition());
@@ -836,14 +836,14 @@ public class FaceBlockingFragment extends BaseFragment implements View.OnClickLi
         int index = 0;
         for (FaceBlockingInfo faceBlockingInfo : faceBlockingInfoList) {
             if (!TextUtils.isEmpty(info.getLocalSticker())
-                    && info.getLocalSticker().equals(faceBlockingInfo.getLocalSticker())) {
+                && info.getLocalSticker().equals(faceBlockingInfo.getLocalSticker())) {
                 index++;
             }
         }
         if (index <= 1) {
             for (int i = 0; i < mStickerInfoList.size(); i++) {
                 if (!TextUtils.isEmpty(info.getLocalSticker())
-                        && !TextUtils.isEmpty(mStickerInfoList.get(i).getLocalSticker())) {
+                    && !TextUtils.isEmpty(mStickerInfoList.get(i).getLocalSticker())) {
                     if (info.getLocalSticker().equals(mStickerInfoList.get(i).getLocalSticker())) {
                         mStickerInfoList.get(i).setSelected(false);
                         if (mFaceStickerListAdapter != null) {
@@ -884,8 +884,8 @@ public class FaceBlockingFragment extends BaseFragment implements View.OnClickLi
 
     private List<String> getAllStickerPaths() {
         List<String> result = new ArrayList<>();
-        List<MaterialsCloudBean> localStickerList = mFaceBlockingViewModel.getLocalMaterialsDataByType(CUSTOM_STICKERS);
-        for (MaterialsCloudBean info : localStickerList) {
+        List<CloudMaterialBean> localStickerList = mFaceBlockingViewModel.getLocalMaterialsDataByType(CUSTOM_STICKERS);
+        for (CloudMaterialBean info : localStickerList) {
             if (!TextUtils.isEmpty(info.getLocalPath())) {
                 result.add(info.getLocalPath());
             }
@@ -999,7 +999,6 @@ public class FaceBlockingFragment extends BaseFragment implements View.OnClickLi
         }
         return localPath;
     }
-
 
     public static Bitmap base64ToBitmap(String base64Data) {
         try {

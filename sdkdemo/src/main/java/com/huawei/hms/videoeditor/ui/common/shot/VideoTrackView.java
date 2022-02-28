@@ -28,9 +28,9 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.huawei.hms.videoeditor.sdk.asset.HVEVideoAsset;
-import com.huawei.hms.videoeditor.sdk.util.BigDecimalUtil;
 import com.huawei.hms.videoeditor.sdk.util.HVEUtil;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
+import com.huawei.hms.videoeditor.ui.common.utils.BigDecimalUtil;
 import com.huawei.hms.videoeditor.ui.common.utils.BigDecimalUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.ScreenUtil;
 

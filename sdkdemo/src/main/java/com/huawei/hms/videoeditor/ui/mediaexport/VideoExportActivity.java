@@ -46,8 +46,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.huawei.hms.videoeditor.common.store.sp.SPManager;
-import com.huawei.hms.videoeditor.common.utils.BitmapDecodeUtils;
 import com.huawei.hms.videoeditor.sdk.HVETimeLine;
 import com.huawei.hms.videoeditor.sdk.HuaweiVideoEditor;
 import com.huawei.hms.videoeditor.sdk.asset.HVEVisibleAsset;
@@ -58,7 +56,9 @@ import com.huawei.hms.videoeditor.ui.common.bean.Constant;
 import com.huawei.hms.videoeditor.ui.common.bean.MaterialData;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.BigDecimalUtils;
+import com.huawei.hms.videoeditor.ui.common.utils.BitmapDecodeUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.FileUtil;
+import com.huawei.hms.videoeditor.ui.common.utils.SPManager;
 import com.huawei.hms.videoeditor.ui.common.utils.ScreenUtil;
 import com.huawei.hms.videoeditor.ui.common.utils.ToastWrapper;
 import com.huawei.hms.videoeditor.ui.common.view.ProgressView;
@@ -213,13 +213,13 @@ public class VideoExportActivity extends BaseActivity
         dialog.setOnDialogClickLister(new CommonBottomDialog.OnDialogClickLister() {
             @Override
             public void onCancelClick() {
-                SPManager.get(SHORTCUT_IS_FIRST).put(SHORTCUT_IS_FIRST_KEY, false);
+                SPManager.get(SHORTCUT_IS_FIRST, VideoExportActivity.this).put(SHORTCUT_IS_FIRST_KEY, false);
                 backHomePage();
             }
 
             @Override
             public void onAllowClick() {
-                SPManager.get(SHORTCUT_IS_FIRST).put(SHORTCUT_IS_FIRST_KEY, false);
+                SPManager.get(SHORTCUT_IS_FIRST, VideoExportActivity.this).put(SHORTCUT_IS_FIRST_KEY, false);
                 handler.postDelayed(() -> backHomePage(), 1000);
             }
         });

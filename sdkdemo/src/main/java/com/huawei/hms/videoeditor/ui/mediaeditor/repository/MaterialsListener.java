@@ -19,11 +19,11 @@ package com.huawei.hms.videoeditor.ui.mediaeditor.repository;
 
 import java.util.List;
 
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.bean.MaterialsDownloadInfo;
 
 public interface MaterialsListener {
-    void pageData(List<MaterialsCloudBean> materialsCutContentList);
+    void pageData(List<CloudMaterialBean> materialsCutContentList);
 
     void errorType(int type);
 

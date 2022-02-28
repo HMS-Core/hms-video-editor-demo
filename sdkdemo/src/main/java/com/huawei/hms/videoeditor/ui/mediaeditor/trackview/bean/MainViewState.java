@@ -72,7 +72,7 @@ public class MainViewState {
     public final static int EDIT_VIDEO_STATE_HUMAN_TRACKING = 101220;
 
     public final static int EDIT_VIDEO_STATE_AI_FUN = 101223;
-
+    public final static int EDIT_VIDEO_STATE_KEYFRAME = 101224;
     public final static int EDIT_VIDEO_STATE_AI_HAIR = 101221;
 
     public final static int EDIT_AUDIO_STATE_HWMUSIC = 102202;
@@ -146,6 +146,8 @@ public class MainViewState {
     public final static int EDIT_VIDEO_OPERATION_AI_FUN = 201123;
 
     public final static int EDIT_VIDEO_OPERATION_ROTATION = 1007;
+
+    public final static int EDIT_VIDEO_OPERATION_KEYFRAME = 201124;
 
     public final static int EDIT_AUDIO_OPERATION = 202;
 

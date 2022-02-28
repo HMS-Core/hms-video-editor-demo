@@ -49,12 +49,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.huawei.hms.videoeditor.common.utils.BitmapDecodeUtils;
-import com.huawei.hms.videoeditor.common.utils.LanguageUtils;
 import com.huawei.hms.videoeditor.sdk.HVEDownSamplingManager;
 import com.huawei.hms.videoeditor.sdk.bean.HVEVisibleFormatBean;
 import com.huawei.hms.videoeditor.sdk.util.HVEUtil;
-import com.huawei.hms.videoeditor.sdk.util.MemoryInfoUtil;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.BaseActivity;
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RMCommandAdapter;
@@ -63,8 +60,11 @@ import com.huawei.hms.videoeditor.ui.common.bean.MediaData;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.tools.EditorRuntimeException;
 import com.huawei.hms.videoeditor.ui.common.utils.BigDecimalUtils;
+import com.huawei.hms.videoeditor.ui.common.utils.BitmapDecodeUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.FileUtil;
+import com.huawei.hms.videoeditor.ui.common.utils.LanguageUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.MediaDataDownSampleManager;
+import com.huawei.hms.videoeditor.ui.common.utils.MemoryInfoUtil;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
 import com.huawei.hms.videoeditor.ui.common.utils.SystemUtils;
@@ -243,11 +243,11 @@ public class MediaPickActivity extends BaseActivity {
             mTvPressCopy.setVisibility(View.VISIBLE);
         }
 
-        if (!MemoryInfoUtil.isLowMemoryDevice()) {
+        if (!MemoryInfoUtil.isLowMemoryDevice(this)) {
             mQualityLayout.setVisibility(View.VISIBLE);
         }
 
-        if (!SystemUtils.isLowDevice()) {
+        if (!SystemUtils.isLowDevice(this)) {
             isQualitySelect = true;
             mQualityIcon.setSelected(true);
         }
@@ -461,7 +461,6 @@ public class MediaPickActivity extends BaseActivity {
 
             @Override
             public void onItemMove(int fromPosition, int toPosition) {
-                // 拖动已选择素材改变顺序
                 Collections.swap(mSelectList, fromPosition, toPosition);
                 Collections.swap(mMediaPickManager.getSelectItemList(), fromPosition, toPosition);
                 mSelectAdapter.notifyItemMoved(fromPosition, toPosition);

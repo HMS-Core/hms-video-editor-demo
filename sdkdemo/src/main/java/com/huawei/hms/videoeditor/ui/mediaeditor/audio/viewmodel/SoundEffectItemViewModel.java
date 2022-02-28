@@ -29,10 +29,9 @@ import com.huawei.hms.videoeditor.materials.HVELocalMaterialInfo;
 import com.huawei.hms.videoeditor.materials.HVEMaterialInfo;
 import com.huawei.hms.videoeditor.materials.HVEMaterialsManager;
 import com.huawei.hms.videoeditor.materials.HVEMaterialsResponseCallback;
-import com.huawei.hms.videoeditor.sdk.store.MaterialsLocalDataManager;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.sdk.v1.AssetBeanAnalyer;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.bean.Constant;
 import com.huawei.hms.videoeditor.ui.common.bean.MaterialsDownloadInfo;
 import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
@@ -51,7 +50,7 @@ public class SoundEffectItemViewModel extends AndroidViewModel {
 
     private final MutableLiveData<String> emptyString = new MutableLiveData<>();
 
-    private final MutableLiveData<List<MaterialsCloudBean>> mSoundEffectMaterials = new MutableLiveData<>();
+    private final MutableLiveData<List<CloudMaterialBean>> mSoundEffectMaterials = new MutableLiveData<>();
 
     private final MutableLiveData<MaterialsDownloadInfo> mDownloadSuccess = new MutableLiveData<>();
 
@@ -61,11 +60,8 @@ public class SoundEffectItemViewModel extends AndroidViewModel {
 
     private final MutableLiveData<Boolean> boundaryPageData = new MutableLiveData<>();
 
-    private final MaterialsLocalDataManager mSoundEffectLocalDataManager;
-
     public SoundEffectItemViewModel(@NonNull Application application) {
         super(application);
-        mSoundEffectLocalDataManager = new MaterialsLocalDataManager();
     }
 
     public MutableLiveData<String> getErrorString() {
@@ -112,9 +108,9 @@ public class SoundEffectItemViewModel extends AndroidViewModel {
     }
 
     private void queryDownloadStatus(List<HVEMaterialInfo> materialInfos) {
-        List<MaterialsCloudBean> list = new ArrayList<>();
+        List<CloudMaterialBean> list = new ArrayList<>();
         for (int i = 0; i < materialInfos.size(); i++) {
-            MaterialsCloudBean materialInfo = new MaterialsCloudBean();
+            CloudMaterialBean materialInfo = new CloudMaterialBean();
 
             HVEMaterialInfo hveMaterialInfo = materialInfos.get(i);
 
@@ -135,7 +131,7 @@ public class SoundEffectItemViewModel extends AndroidViewModel {
         mSoundEffectMaterials.postValue(list);
     }
 
-    public void downloadColumn(int previousPosition, int position, MaterialsCloudBean cutContent) {
+    public void downloadColumn(int previousPosition, int position, CloudMaterialBean cutContent) {
         MaterialsDownloadInfo downloadSoundEffectInfo = new MaterialsDownloadInfo();
         downloadSoundEffectInfo.setPreviousPosition(previousPosition);
         downloadSoundEffectInfo.setDataPosition(position);
@@ -177,7 +173,7 @@ public class SoundEffectItemViewModel extends AndroidViewModel {
         });
     }
 
-    public MutableLiveData<List<MaterialsCloudBean>> getPageData() {
+    public MutableLiveData<List<CloudMaterialBean>> getPageData() {
         return mSoundEffectMaterials;
     }
 

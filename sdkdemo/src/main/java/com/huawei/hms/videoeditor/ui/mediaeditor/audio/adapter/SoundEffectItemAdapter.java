@@ -28,7 +28,7 @@ import android.widget.TextView;
 
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RCommandAdapter;
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RViewHolder;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
@@ -37,8 +37,8 @@ import com.huawei.hms.videoeditor.ui.common.view.audio.AudioColumnView;
 import com.huawei.hms.videoeditor.ui.mediaeditor.audio.view.SoundEffectMarqueTextView;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
-public class SoundEffectItemAdapter extends RCommandAdapter<MaterialsCloudBean> {
-    private final Map<String, MaterialsCloudBean> aDownloadingMap = new LinkedHashMap<>();
+public class SoundEffectItemAdapter extends RCommandAdapter<CloudMaterialBean> {
+    private final Map<String, CloudMaterialBean> aDownloadingMap = new LinkedHashMap<>();
 
     private volatile int aSelectPosition = -1;
 
@@ -48,12 +48,12 @@ public class SoundEffectItemAdapter extends RCommandAdapter<MaterialsCloudBean> 
         onClickListener = listener;
     }
 
-    public SoundEffectItemAdapter(Context context, List<MaterialsCloudBean> list, int layoutId) {
+    public SoundEffectItemAdapter(Context context, List<CloudMaterialBean> list, int layoutId) {
         super(context, list, layoutId);
     }
 
     @Override
-    protected void convert(RViewHolder holder, MaterialsCloudBean materialsCutContent, int dataPosition, int position) {
+    protected void convert(RViewHolder holder, CloudMaterialBean materialsCutContent, int dataPosition, int position) {
         AudioColumnView mColumnView = holder.getView(R.id.audio_column_view);
         ImageView mMusicPictureIv = holder.getView(R.id.music_icon);
         SoundEffectMarqueTextView mNameTv = holder.getView(R.id.music_name_tv);
@@ -62,7 +62,7 @@ public class SoundEffectItemAdapter extends RCommandAdapter<MaterialsCloudBean> 
         TextView mUseTv = holder.getView(R.id.music_use_tv);
         FrameLayout mProgressLayout = holder.getView(R.id.music_download_progress_layout);
         mNameTv.setMaxWidth(SizeUtils.screenWidth(mContext) - SizeUtils.dp2Px(mContext, 148));
-        MaterialsCloudBean item = mList.get(dataPosition);
+        CloudMaterialBean item = mList.get(dataPosition);
         if (position == aSelectPosition) {
             mMusicPictureIv.setVisibility(View.GONE);
             mColumnView.setVisibility(View.VISIBLE);
@@ -130,7 +130,7 @@ public class SoundEffectItemAdapter extends RCommandAdapter<MaterialsCloudBean> 
         return aSelectPosition;
     }
 
-    public void addDownloadMaterial(MaterialsCloudBean item) {
+    public void addDownloadMaterial(CloudMaterialBean item) {
         aDownloadingMap.put(item.getId(), item);
     }
 

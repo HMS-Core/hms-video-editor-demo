@@ -37,7 +37,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RCommandAdapter;
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RViewHolder;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
@@ -47,12 +47,12 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.utils.widget.ImageFilterView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-public class CanvasStyleStyleAdapter extends RCommandAdapter<MaterialsCloudBean> {
+public class CanvasStyleStyleAdapter extends RCommandAdapter<CloudMaterialBean> {
     private static final String TAG = "CanvasStyleStyleAdapter";
 
     private volatile int mSelectPosition = -1;
 
-    private final Map<String, MaterialsCloudBean> mDownloadingMap = new LinkedHashMap<>();
+    private final Map<String, CloudMaterialBean> mDownloadingMap = new LinkedHashMap<>();
 
     private final int mImageViewWidth;
 
@@ -60,7 +60,7 @@ public class CanvasStyleStyleAdapter extends RCommandAdapter<MaterialsCloudBean>
 
     private OnItemClickListener mOnItemClickListener;
 
-    public CanvasStyleStyleAdapter(Context context, List<MaterialsCloudBean> list, int layoutId) {
+    public CanvasStyleStyleAdapter(Context context, List<CloudMaterialBean> list, int layoutId) {
         super(context, list, layoutId);
         mImageViewWidth = (SizeUtils.screenWidth(mContext) - (SizeUtils.dp2Px(mContext, 72))) / 6;
         mImageViewHeight = mImageViewWidth;
@@ -71,7 +71,7 @@ public class CanvasStyleStyleAdapter extends RCommandAdapter<MaterialsCloudBean>
     }
 
     @Override
-    protected void convert(RViewHolder holder, MaterialsCloudBean item, int dataPosition, int position) {
+    protected void convert(RViewHolder holder, CloudMaterialBean item, int dataPosition, int position) {
         ConstraintLayout mContentView = holder.getView(R.id.item_content);
         View mSelectView = holder.getView(R.id.item_select_view);
         ImageFilterView imageView = holder.getView(R.id.item_image_view);
@@ -148,7 +148,7 @@ public class CanvasStyleStyleAdapter extends RCommandAdapter<MaterialsCloudBean>
         this.mSelectPosition = selectPosition;
     }
 
-    public void addDownloadMaterial(MaterialsCloudBean item) {
+    public void addDownloadMaterial(CloudMaterialBean item) {
         mDownloadingMap.put(item.getId(), item);
     }
 

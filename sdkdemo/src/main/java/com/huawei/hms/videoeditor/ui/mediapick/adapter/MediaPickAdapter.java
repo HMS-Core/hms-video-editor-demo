@@ -16,8 +16,6 @@
 
 package com.huawei.hms.videoeditor.ui.mediapick.adapter;
 
-import static com.huawei.hms.videoeditor.common.utils.ResUtils.getResources;
-
 import java.util.List;
 
 import android.app.Activity;
@@ -199,7 +197,7 @@ public class MediaPickAdapter extends PagedListAdapter<MediaData, MediaPickAdapt
             holder.mMediaIv.setContentDescription(mContext.getString(R.string.checked));
             if (!manager.addSelectItemAndSetIndex(item)) {
                 Toast.makeText(mContext,
-                    getResources().getQuantityString(R.plurals.media_max_send_images_or_videos_format,
+                        mContext.getResources().getQuantityString(R.plurals.media_max_send_images_or_videos_format,
                         manager.getMaxSelectCount(), manager.getMaxSelectCount()),
                     Toast.LENGTH_SHORT).show();
             }

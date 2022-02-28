@@ -22,10 +22,12 @@ import java.util.List;
 import java.util.Locale;
 
 import android.app.Application;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 
@@ -132,24 +134,27 @@ public class PictureListViewModel extends AndroidViewModel {
         List<MediaData> dataList = new ArrayList<>();
         dataList.clear();
         counts = 0;
-        final String[] imageDataList = {
-            MediaStore.Images.Media._ID, MediaStore.Images.Media.DISPLAY_NAME,
-            MediaStore.Images.Media.DATA,
-            MediaStore.Images.Media.SIZE,
-            MediaStore.Images.Media.MIME_TYPE,
-            MediaStore.Images.Media.DATE_ADDED,
-            MediaStore.MediaColumns.WIDTH,
-            MediaStore.MediaColumns.HEIGHT
-        };
+        final String[] imageDataList = {MediaStore.Images.Media._ID, MediaStore.Images.Media.DISPLAY_NAME,
+            MediaStore.Images.Media.DATA, MediaStore.Images.Media.SIZE, MediaStore.Images.Media.MIME_TYPE,
+            MediaStore.Images.Media.DATE_ADDED, MediaStore.MediaColumns.WIDTH, MediaStore.MediaColumns.HEIGHT};
         String[] mImageSelectionArgs = new String[] {dirName};
         String mImageSelection = MediaStore.Images.Media.BUCKET_DISPLAY_NAME + " = ? ";
         Cursor cursor = null;
+
         try {
-            cursor = context.getContentResolver()
-                .query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, imageDataList,
-                    StringUtil.isEmpty(dirName) ? null : mImageSelection,
-                    StringUtil.isEmpty(dirName) ? null : mImageSelectionArgs,
-                    imageDataList[5] + " DESC LIMIT " + page * PAGE_SIZE + " , " + PAGE_SIZE);
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
+                Bundle bundle = new Bundle();
+                bundle.putString(ContentResolver.QUERY_ARG_SQL_SELECTION, StringUtil.isEmpty(dirName) ? null : mImageSelection);
+                bundle.putStringArray(ContentResolver.QUERY_ARG_SQL_SELECTION_ARGS, StringUtil.isEmpty(dirName) ? null : mImageSelectionArgs);
+                bundle.putString(ContentResolver.QUERY_ARG_SORT_DIRECTION, imageDataList[5] + " DESC LIMIT " + page * PAGE_SIZE + " , " + PAGE_SIZE);
+                cursor = context.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, imageDataList, bundle, null);
+            } else {
+                cursor = context.getContentResolver()
+                        .query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, imageDataList,
+                                StringUtil.isEmpty(dirName) ? null : mImageSelection,
+                                StringUtil.isEmpty(dirName) ? null : mImageSelectionArgs,
+                                imageDataList[5] + " DESC LIMIT " + page * PAGE_SIZE + " , " + PAGE_SIZE);
+            }
         } catch (SecurityException e) {
             SmartLog.e(TAG, e.getMessage());
         }
@@ -182,7 +187,8 @@ public class PictureListViewModel extends AndroidViewModel {
                 }
 
                 if (!imagePath.toLowerCase(Locale.ENGLISH).endsWith(".jpg")
-                    && !imagePath.toLowerCase(Locale.ENGLISH).endsWith(".png")) {
+                    && !imagePath.toLowerCase(Locale.ENGLISH).endsWith(".png")
+                    && !imagePath.toLowerCase(Locale.ENGLISH).endsWith(".gif")) {
                     continue;
                 }
                 if (imageWidth < RESOLUTION || imageHeight < RESOLUTION) {

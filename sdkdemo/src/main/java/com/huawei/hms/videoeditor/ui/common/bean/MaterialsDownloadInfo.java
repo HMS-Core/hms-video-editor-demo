@@ -17,8 +17,6 @@
 
 package com.huawei.hms.videoeditor.ui.common.bean;
 
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
-
 public class MaterialsDownloadInfo {
 
     private int previousPosition = -1;
@@ -31,7 +29,7 @@ public class MaterialsDownloadInfo {
 
     private int progress;
 
-    private MaterialsCloudBean materialBean;
+    private CloudMaterialBean materialBean;
 
     private int state;
 
@@ -89,11 +87,11 @@ public class MaterialsDownloadInfo {
         return state;
     }
 
-    public MaterialsCloudBean getMaterialBean() {
+    public CloudMaterialBean getMaterialBean() {
         return materialBean;
     }
 
-    public void setMaterialBean(MaterialsCloudBean materialBean) {
+    public void setMaterialBean(CloudMaterialBean materialBean) {
         this.materialBean = materialBean;
     }
 }

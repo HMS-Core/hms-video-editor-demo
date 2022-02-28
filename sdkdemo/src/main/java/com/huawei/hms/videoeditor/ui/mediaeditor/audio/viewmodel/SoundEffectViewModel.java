@@ -30,7 +30,7 @@ import com.huawei.hms.videoeditor.materials.HVETopColumnInfo;
 import com.huawei.hms.videoeditor.materials.HVETopColumnRequest;
 import com.huawei.hms.videoeditor.materials.HVETopColumnResponse;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
 import androidx.annotation.NonNull;
@@ -41,7 +41,7 @@ public class SoundEffectViewModel extends AndroidViewModel {
 
     private static final String TAG = "SoundEffectViewModel";
 
-    private MutableLiveData<MaterialsCloudBean> mSelectData = new MutableLiveData<>();
+    private MutableLiveData<CloudMaterialBean> mSelectData = new MutableLiveData<>();
 
     private MutableLiveData<List<HVEColumnInfo>> soundEffectColumnsContent = new MutableLiveData<>();
 
@@ -94,11 +94,11 @@ public class SoundEffectViewModel extends AndroidViewModel {
         return soundEffectColumnsContent;
     }
 
-    public MutableLiveData<MaterialsCloudBean> getSelectData() {
+    public MutableLiveData<CloudMaterialBean> getSelectData() {
         return mSelectData;
     }
 
-    public void setSelectCutContent(MaterialsCloudBean mCutContent) {
+    public void setSelectCutContent(CloudMaterialBean mCutContent) {
         mSelectData.postValue(mCutContent);
     }
 

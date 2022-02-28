@@ -20,7 +20,6 @@ import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.util.LruCache;
 
-import com.huawei.hms.videoeditor.common.utils.BitmapDecodeUtils;
 import com.huawei.hms.videoeditor.ui.common.bean.ThumbInfo;
 
 public class ThumbNailMemoryCache {

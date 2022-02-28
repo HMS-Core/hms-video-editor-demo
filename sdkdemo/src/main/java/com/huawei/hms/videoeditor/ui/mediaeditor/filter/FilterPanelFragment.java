@@ -47,7 +47,7 @@ import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.BaseFragment;
 import com.huawei.hms.videoeditor.ui.common.EditorManager;
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RViewHolder;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.bean.FilterData;
 import com.huawei.hms.videoeditor.ui.common.bean.MaterialsDownloadInfo;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
@@ -105,9 +105,9 @@ public class FilterPanelFragment extends BaseFragment {
 
     private List<HVEColumnInfo> mColumnList;
 
-    private MaterialsCloudBean mSelectedMaterialsCutContent;
+    private CloudMaterialBean mSelectedMaterialsCutContent;
 
-    private List<MaterialsCloudBean> mCutContentList;
+    private List<CloudMaterialBean> mCutContentList;
 
     private FilterItemAdapter mFilterItemAdapter;
 
@@ -460,7 +460,7 @@ public class FilterPanelFragment extends BaseFragment {
 
                 showSeekBar(true);
                 mFilterCancelRl.setSelected(false);
-                MaterialsCloudBean content = mCutContentList.get(dataPosition);
+                CloudMaterialBean content = mCutContentList.get(dataPosition);
                 int mSelectPosition = mFilterItemAdapter.getSelectPosition();
                 mSelectedMaterialsCutContent = content;
                 if (mSelectPosition == position) {
@@ -529,7 +529,7 @@ public class FilterPanelFragment extends BaseFragment {
 
                 int previousPosition = mFilterItemAdapter.getSelectPosition();
                 mFilterItemAdapter.setSelectPosition(position);
-                MaterialsCloudBean content = mCutContentList.get(dataPosition);
+                CloudMaterialBean content = mCutContentList.get(dataPosition);
 
                 mFilterItemAdapter.addDownloadMaterial(content);
                 mFilterPanelViewModel.downloadColumn(previousPosition, position, dataPosition, content);

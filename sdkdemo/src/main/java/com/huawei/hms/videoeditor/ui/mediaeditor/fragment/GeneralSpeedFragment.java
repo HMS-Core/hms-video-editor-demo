@@ -39,6 +39,7 @@ import android.widget.Toast;
 
 import com.huawei.hms.videoeditor.materials.HVEColumnInfo;
 import com.huawei.hms.videoeditor.materials.HVEMaterialConstant;
+import com.huawei.hms.videoeditor.sdk.HVETimeLine;
 import com.huawei.hms.videoeditor.sdk.HuaweiVideoEditor;
 import com.huawei.hms.videoeditor.sdk.asset.HVEAsset;
 import com.huawei.hms.videoeditor.sdk.asset.HVEAudioAsset;
@@ -46,13 +47,12 @@ import com.huawei.hms.videoeditor.sdk.asset.HVEImageAsset;
 import com.huawei.hms.videoeditor.sdk.asset.HVEVideoAsset;
 import com.huawei.hms.videoeditor.sdk.bean.HVESpeedCurvePoint;
 import com.huawei.hms.videoeditor.sdk.lane.HVEVideoLane;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.BaseFragment;
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RViewHolder;
 import com.huawei.hms.videoeditor.ui.common.bean.MaterialsDownloadInfo;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
-import com.huawei.hms.videoeditor.ui.common.utils.ArrayUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.ScreenUtil;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.ToastWrapper;
@@ -108,7 +108,7 @@ public class GeneralSpeedFragment extends BaseFragment {
 
     private List<HVEColumnInfo> mColumnList;
 
-    private List<MaterialsCloudBean> mCutContentList;
+    private List<CloudMaterialBean> mCutContentList;
 
     private List<HVESpeedCurvePoint> currentSelectedCurveSpeedPoints;
 
@@ -130,7 +130,7 @@ public class GeneralSpeedFragment extends BaseFragment {
 
     private boolean isFirst;
 
-    private MaterialsCloudBean mMaterialsCutContent;
+    private CloudMaterialBean mMaterialsCutContent;
 
     public static GeneralSpeedFragment newInstance(int id) {
         GeneralSpeedFragment fragment = new GeneralSpeedFragment();
@@ -295,7 +295,7 @@ public class GeneralSpeedFragment extends BaseFragment {
             }
             if (!mCutContentList.containsAll(list)) {
                 SmartLog.i(TAG, "materialsCutContents is not exist.");
-                MaterialsCloudBean materialsCutContent = new MaterialsCloudBean();
+                CloudMaterialBean materialsCutContent = new CloudMaterialBean();
                 materialsCutContent.setName(mActivity.getString(R.string.custom));
                 materialsCutContent.setLocalDrawableId(R.drawable.icon_speed_custom);
                 mCutContentList.add(materialsCutContent);
@@ -352,7 +352,7 @@ public class GeneralSpeedFragment extends BaseFragment {
                             num = mCutContentList.size();
                         }
                         for (int i = 1; i < num - 1; i++) {
-                            MaterialsCloudBean cutContent = mCutContentList.get(i);
+                            CloudMaterialBean cutContent = mCutContentList.get(i);
                             curveSpeedItemAdapter.addFirstScreenMaterial(cutContent);
                         }
                     }
@@ -397,7 +397,7 @@ public class GeneralSpeedFragment extends BaseFragment {
 
                 int previousPosition = curveSpeedItemAdapter.getSelectPosition();
                 curveSpeedItemAdapter.setSelectPosition(position);
-                MaterialsCloudBean content = mCutContentList.get(dataPosition);
+                CloudMaterialBean content = mCutContentList.get(dataPosition);
 
                 curveSpeedItemAdapter.addDownloadMaterial(content);
                 mFilterPanelViewModel.downloadColumn(previousPosition, position, dataPosition, content);
@@ -446,7 +446,7 @@ public class GeneralSpeedFragment extends BaseFragment {
                     && downloadInfo.getContentId().equals(mCutContentList.get(downloadInfo.getDataPosition()).getId()))) {
                 mFilterCancelRl.setSelected(false);
                 curveSpeedItemAdapter.setSelectPosition(downloadPosition);
-                MaterialsCloudBean materialsCutContent = downloadInfo.getMaterialBean();
+                CloudMaterialBean materialsCutContent = downloadInfo.getMaterialBean();
                 mCutContentList.set(downloadInfo.getDataPosition(), materialsCutContent);
                 curveSpeedItemAdapter.notifyDataSetChanged();
 
@@ -531,7 +531,9 @@ public class GeneralSpeedFragment extends BaseFragment {
         if (currentSelectedAsset == null || currentSelectedAsset.getType() != HVEAsset.HVEAssetType.VIDEO) {
             return;
         }
-        if (mEditPreviewViewModel.getTimeLine() == null) {
+
+        HVETimeLine timeLine = mEditPreviewViewModel.getTimeLine();
+        if (timeLine == null) {
             return;
         }
 
@@ -546,7 +548,14 @@ public class GeneralSpeedFragment extends BaseFragment {
         boolean isSuccess = videoLane.changeAssetSpeed(currentSelectedAsset.getIndex(), mProgress);
         if (isSuccess) {
             mEditPreviewViewModel.reloadMainLane();
-            mEditor.playTimeLine(currentSelectedAsset.getStartTime(), currentSelectedAsset.getEndTime());
+            long currentTime = timeLine.getCurrentTime();
+            if (currentTime == currentSelectedAsset.getStartTime()) {
+                mEditor.playTimeLine(currentSelectedAsset.getStartTime(), currentSelectedAsset.getEndTime());
+            } else {
+                mEditor.seekTimeLine(currentSelectedAsset.getStartTime(), () -> {
+                    mEditor.playTimeLine(currentSelectedAsset.getStartTime(), currentSelectedAsset.getEndTime());
+                });
+            }
         } else {
             ToastWrapper.makeText(mActivity, mActivity.getString(R.string.set_seeped_fail), Toast.LENGTH_SHORT).show();
         }
@@ -706,7 +715,7 @@ public class GeneralSpeedFragment extends BaseFragment {
     }
 
     private void addCustomDataIntoList() {
-        MaterialsCloudBean materialsCutContent = new MaterialsCloudBean();
+        CloudMaterialBean materialsCutContent = new CloudMaterialBean();
         materialsCutContent.setName(mActivity.getString(R.string.custom));
         materialsCutContent.setLocalDrawableId(R.drawable.icon_speed_custom);
         mCutContentList.add(materialsCutContent);

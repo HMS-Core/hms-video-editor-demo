@@ -20,6 +20,7 @@ import java.io.File;
 import java.util.Locale;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -36,12 +37,12 @@ import com.huawei.hms.videoeditor.sdk.HVEExportManager.HVEExportVideoCallback;
 import com.huawei.hms.videoeditor.sdk.HuaweiVideoEditor;
 import com.huawei.hms.videoeditor.sdk.bean.HVEVideoProperty;
 import com.huawei.hms.videoeditor.sdk.util.HVEUtil;
-import com.huawei.hms.videoeditor.sdk.util.MemoryInfoUtil;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.LazyFragment;
 import com.huawei.hms.videoeditor.ui.common.bean.Constant;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.FoldScreenUtil;
+import com.huawei.hms.videoeditor.ui.common.utils.MemoryInfoUtil;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
@@ -154,7 +155,7 @@ public class VideoExportSettingFragment extends LazyFragment implements HVEExpor
 
     int height = 1080;
 
-    private final boolean isLowMemory = MemoryInfoUtil.isLowMemoryDevice();
+    private boolean isLowMemory;
 
     private HVEExportManager exportManager;
 
@@ -164,6 +165,10 @@ public class VideoExportSettingFragment extends LazyFragment implements HVEExpor
     public void onCreate(@Nullable Bundle savedInstanceState) {
         navigationBarColor = R.color.export_bg;
         super.onCreate(savedInstanceState);
+        Activity activity = getActivity();
+        if (activity != null) {
+            isLowMemory = MemoryInfoUtil.isLowMemoryDevice(activity);
+        }
     }
 
     @Override

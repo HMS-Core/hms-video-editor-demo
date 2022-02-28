@@ -16,6 +16,8 @@
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.aifun.fragment;
 
+import static com.huawei.hms.videoeditor.sdk.effect.HVEEffect.HVEEffectType.AI_COLOR;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,9 +35,10 @@ import com.huawei.hms.videoeditor.sdk.asset.HVEAsset;
 import com.huawei.hms.videoeditor.sdk.asset.HVEImageAsset;
 import com.huawei.hms.videoeditor.sdk.asset.HVEVideoAsset;
 import com.huawei.hms.videoeditor.sdk.asset.HVEVisibleAsset;
+import com.huawei.hms.videoeditor.sdk.effect.HVEEffect;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.BaseFragment;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.FileUtil;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
@@ -70,7 +73,7 @@ public class AiFunFragment extends BaseFragment {
 
     private View mAiFunNone;
 
-    private List<MaterialsCloudBean> currentAiFunContentList;
+    private List<CloudMaterialBean> currentAiFunContentList;
 
     private AiFunAdapter mAiFunAdapter;
 
@@ -167,11 +170,11 @@ public class AiFunFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        MaterialsCloudBean materialsCutContent = new MaterialsCloudBean();
+        CloudMaterialBean materialsCutContent = new CloudMaterialBean();
         materialsCutContent.setName(context.getString(R.string.motion_photo));
         materialsCutContent.setLocalDrawableId(R.mipmap.icon_dynamic_pic_ai);
 
-        MaterialsCloudBean materialsCutContent2 = new MaterialsCloudBean();
+        CloudMaterialBean materialsCutContent2 = new CloudMaterialBean();
         materialsCutContent2.setName(context.getString(R.string.ai_color));
         materialsCutContent2.setLocalDrawableId(R.mipmap.icon_dynamic_pic_ai);
 
@@ -249,7 +252,7 @@ public class AiFunFragment extends BaseFragment {
 
                 if (currentSelectedAsset.getType() == HVEAsset.HVEAssetType.IMAGE
                     || currentSelectedAsset.getType() == HVEAsset.HVEAssetType.VIDEO) {
-                    if (((HVEVisibleAsset) currentSelectedAsset).isAIColorEnabled()) {
+                    if (isAIColorEnabled(currentSelectedAsset)) {
                         boolean isCanceled = ((HVEVisibleAsset) currentSelectedAsset).removeAIColorEffect();
                         if (isCanceled) {
                             showToast(getString(R.string.ai_color_cancel));
@@ -262,6 +265,11 @@ public class AiFunFragment extends BaseFragment {
             }
         });
 
+    }
+
+    private boolean isAIColorEnabled(HVEAsset asset) {
+        List<HVEEffect> effects = asset.getEffectsWithType(AI_COLOR);
+        return !effects.isEmpty();
     }
 
     private void addFaceReenactEffect() {

@@ -21,7 +21,7 @@ import java.util.List;
 
 import android.app.Application;
 
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.bean.MaterialsDownloadInfo;
 import com.huawei.hms.videoeditor.ui.mediaeditor.repository.LoadUrlEvent;
 import com.huawei.hms.videoeditor.ui.mediaeditor.repository.MaterialsListener;
@@ -34,7 +34,7 @@ import androidx.lifecycle.MutableLiveData;
 
 public class EffectItemViewModel extends AndroidViewModel {
 
-    private final MutableLiveData<List<MaterialsCloudBean>> pageData = new MutableLiveData<>();
+    private final MutableLiveData<List<CloudMaterialBean>> pageData = new MutableLiveData<>();
 
     private final MutableLiveData<Boolean> boundaryPageData = new MutableLiveData<>();
 
@@ -52,7 +52,7 @@ public class EffectItemViewModel extends AndroidViewModel {
         materialsRespository.setMaterialsListener(materialsListener);
     }
 
-    public MutableLiveData<List<MaterialsCloudBean>> getPageData() {
+    public MutableLiveData<List<CloudMaterialBean>> getPageData() {
         return pageData;
     }
 
@@ -79,7 +79,7 @@ public class EffectItemViewModel extends AndroidViewModel {
         materialsRespository.loadMaterials(columnId, page);
     }
 
-    public void downloadMaterials(int previousPosition, int position, MaterialsCloudBean cutContent) {
+    public void downloadMaterials(int previousPosition, int position, CloudMaterialBean cutContent) {
         if (materialsRespository == null || cutContent == null) {
             return;
         }
@@ -95,7 +95,7 @@ public class EffectItemViewModel extends AndroidViewModel {
 
     private MaterialsListener materialsListener = new MaterialsListener() {
         @Override
-        public void pageData(List<MaterialsCloudBean> materialsCutContentList) {
+        public void pageData(List<CloudMaterialBean> materialsCutContentList) {
             pageData.postValue(materialsCutContentList);
         }
 

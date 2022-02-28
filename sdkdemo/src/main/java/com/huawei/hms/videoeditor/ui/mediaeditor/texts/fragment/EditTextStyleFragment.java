@@ -41,7 +41,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.huawei.hms.videoeditor.common.utils.LanguageUtils;
 import com.huawei.hms.videoeditor.sdk.HuaweiVideoEditor;
 import com.huawei.hms.videoeditor.sdk.asset.HVEAsset;
 import com.huawei.hms.videoeditor.sdk.asset.HVEWordAsset;
@@ -52,12 +51,13 @@ import com.huawei.hms.videoeditor.ui.common.adapter.SelectAdapter;
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RCommandAdapter;
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RMCommandAdapter;
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RViewHolder;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.bean.Constant;
 import com.huawei.hms.videoeditor.ui.common.bean.MaterialsDownloadInfo;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.BigDecimalUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.FoldScreenUtil;
+import com.huawei.hms.videoeditor.ui.common.utils.LanguageUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.ScreenUtil;
 import com.huawei.hms.videoeditor.ui.common.utils.SharedPreferencesUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
@@ -130,7 +130,7 @@ public class EditTextStyleFragment extends Fragment {
 
     private RecyclerView mFontRecycleView;
 
-    private List<MaterialsCloudBean> mFontList;
+    private List<CloudMaterialBean> mFontList;
 
     private EditTextFontAdapter mEditTextFontAdapter;
 
@@ -292,9 +292,9 @@ public class EditTextStyleFragment extends Fragment {
         });
 
         mEditPreviewViewModel.getDefaultFontContent()
-            .observe(getViewLifecycleOwner(), new Observer<MaterialsCloudBean>() {
+            .observe(getViewLifecycleOwner(), new Observer<CloudMaterialBean>() {
                 @Override
-                public void onChanged(MaterialsCloudBean materialsCutContent) {
+                public void onChanged(CloudMaterialBean materialsCutContent) {
                     if (materialsCutContent != null && !StringUtil.isEmpty(materialsCutContent.getLocalPath())) {
                         FontFileManager.setDefaultFontFile(materialsCutContent.getLocalPath());
                         isDefaultFont = true;
@@ -1331,7 +1331,7 @@ public class EditTextStyleFragment extends Fragment {
         }
     }
 
-    private void setEditPanelFont(MaterialsCloudBean cutContent) {
+    private void setEditPanelFont(CloudMaterialBean cutContent) {
         textPanelViewModel.setFontContent(cutContent);
     }
 
@@ -1350,7 +1350,7 @@ public class EditTextStyleFragment extends Fragment {
                         mEditTextFontAdapter.notifyItemChanged(mSelectPosition);
                     }
                     setEditPanelFont(null);
-                    MaterialsCloudBean materialsCutContent = mEditPreviewViewModel.getDefaultFontContent().getValue();
+                    CloudMaterialBean materialsCutContent = mEditPreviewViewModel.getDefaultFontContent().getValue();
                     if (materialsCutContent == null) {
                         textEditViewModel.setFontPath(Constant.DEFAULT_FONT_PATH, "");
                         return;
@@ -1384,7 +1384,7 @@ public class EditTextStyleFragment extends Fragment {
             public void onDownloadClick(int position, int aDataPosition) {
                 int previousPosition = mEditTextFontAdapter.getSelectPosition();
                 mEditTextFontAdapter.setSelectPosition(position);
-                MaterialsCloudBean content = mFontList.get(aDataPosition);
+                CloudMaterialBean content = mFontList.get(aDataPosition);
                 mEditTextFontAdapter.addDownloadMaterial(content);
                 mFontViewModel.downloadColumn(previousPosition, position, aDataPosition, content);
             }
@@ -1505,7 +1505,7 @@ public class EditTextStyleFragment extends Fragment {
                         if (firstPosition != -1 && visibleItemCount > 0 && !isFirst && mFontList.size() > 0) {
                             isFirst = true;
                             for (int i = 0; i < visibleItemCount - 1; i++) {
-                                MaterialsCloudBean cutContent = mFontList.get(i);
+                                CloudMaterialBean cutContent = mFontList.get(i);
                                 mEditTextFontAdapter.addFirstScreenMaterial(cutContent);
                             }
                         }

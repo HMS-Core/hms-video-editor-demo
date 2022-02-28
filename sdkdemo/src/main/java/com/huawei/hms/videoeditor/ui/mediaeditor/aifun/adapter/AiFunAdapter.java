@@ -37,7 +37,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RCommandAdapter;
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RViewHolder;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
@@ -45,14 +45,14 @@ import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
 import androidx.annotation.Nullable;
 
-public class AiFunAdapter extends RCommandAdapter<MaterialsCloudBean> {
+public class AiFunAdapter extends RCommandAdapter<CloudMaterialBean> {
     private volatile int currentSelectedPosition = -1;
 
-    private final Map<String, MaterialsCloudBean> mFirstDataMap = new LinkedHashMap<>();
+    private final Map<String, CloudMaterialBean> mFirstDataMap = new LinkedHashMap<>();
 
     private OnAiFunAdapterItemClickListener onAiFunAdapterItemClickListener;
 
-    public AiFunAdapter(Context context, List<MaterialsCloudBean> list, int layoutId) {
+    public AiFunAdapter(Context context, List<CloudMaterialBean> list, int layoutId) {
         super(context, list, layoutId);
     }
 
@@ -61,7 +61,7 @@ public class AiFunAdapter extends RCommandAdapter<MaterialsCloudBean> {
     }
 
     @Override
-    protected void convert(RViewHolder holder, MaterialsCloudBean materialItem, int dataPosition, int position) {
+    protected void convert(RViewHolder holder, CloudMaterialBean materialItem, int dataPosition, int position) {
         View holderView = holder.getView(R.id.item_select_view_ai_fun);
         ImageView mItemIv = holder.getView(R.id.item_image_view_ai_fun);
         TextView mTitleTv = holder.getView(R.id.item_name_ai_fun);
@@ -105,7 +105,7 @@ public class AiFunAdapter extends RCommandAdapter<MaterialsCloudBean> {
         this.currentSelectedPosition = selectPosition;
     }
 
-    public void removeFirstScreenData(MaterialsCloudBean materialsData) {
+    public void removeFirstScreenData(CloudMaterialBean materialsData) {
         if (materialsData == null || mFirstDataMap.size() == 0) {
             return;
         }

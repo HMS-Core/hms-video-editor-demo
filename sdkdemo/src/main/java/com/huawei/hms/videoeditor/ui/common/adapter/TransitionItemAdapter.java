@@ -39,7 +39,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
@@ -52,15 +52,15 @@ import java.util.Map;
 public class TransitionItemAdapter extends RecyclerView.Adapter<TransitionItemAdapter.ViewHolder> {
     private Context mContext;
 
-    private List<MaterialsCloudBean> list;
+    private List<CloudMaterialBean> list;
 
-    private final Map<String, MaterialsCloudBean> downloadingMap = new LinkedHashMap<>();
+    private final Map<String, CloudMaterialBean> downloadingMap = new LinkedHashMap<>();
 
     private int selectPosition = 0;
 
     private TransitionItemAdapter.OnItemClickListener onItemClickListener;
 
-    public TransitionItemAdapter(Context context, List<MaterialsCloudBean> list) {
+    public TransitionItemAdapter(Context context, List<CloudMaterialBean> list) {
         mContext = context;
         this.list = list;
     }
@@ -69,7 +69,7 @@ public class TransitionItemAdapter extends RecyclerView.Adapter<TransitionItemAd
         onItemClickListener = listener;
     }
 
-    public void setData(List<MaterialsCloudBean> list) {
+    public void setData(List<CloudMaterialBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -84,7 +84,7 @@ public class TransitionItemAdapter extends RecyclerView.Adapter<TransitionItemAd
 
     @Override
     public void onBindViewHolder(@NonNull TransitionItemAdapter.ViewHolder holder, int position) {
-        MaterialsCloudBean materialsCutContent = list.get(position);
+        CloudMaterialBean materialsCutContent = list.get(position);
 
         Glide.with(mContext)
                 .load(!StringUtil.isEmpty(materialsCutContent.getPreviewUrl()) ? materialsCutContent.getPreviewUrl() : materialsCutContent.getLocalDrawableId())
@@ -161,7 +161,7 @@ public class TransitionItemAdapter extends RecyclerView.Adapter<TransitionItemAd
         this.selectPosition = selectPosition;
     }
 
-    public void addDownloadMaterial(MaterialsCloudBean materialsCutContent) {
+    public void addDownloadMaterial(CloudMaterialBean materialsCutContent) {
         downloadingMap.put(materialsCutContent.getId(), materialsCutContent);
     }
 

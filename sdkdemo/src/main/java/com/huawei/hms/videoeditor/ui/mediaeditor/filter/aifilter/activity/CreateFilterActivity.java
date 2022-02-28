@@ -49,8 +49,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.request.RequestOptions;
-import com.huawei.hms.videoeditor.common.network.NetworkUtil;
-import com.huawei.hms.videoeditor.common.utils.BitmapDecodeUtils;
 import com.huawei.hms.videoeditor.materials.HVELocalMaterialInfo;
 import com.huawei.hms.videoeditor.materials.HVEMaterialConstant;
 import com.huawei.hms.videoeditor.materials.HVEMaterialsManager;
@@ -63,6 +61,8 @@ import com.huawei.hms.videoeditor.ui.common.bean.Constant;
 import com.huawei.hms.videoeditor.ui.common.bean.MediaData;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.BigDecimalUtils;
+import com.huawei.hms.videoeditor.ui.common.utils.BitmapDecodeUtils;
+import com.huawei.hms.videoeditor.ui.common.utils.NetworkUtil;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.ToastWrapper;
 import com.huawei.hms.videoeditor.ui.common.view.EditorTextView;
@@ -258,7 +258,7 @@ public class CreateFilterActivity extends BaseActivity implements MediaPickManag
         mMediaPickManager = MediaPickManager.getInstance();
         mMediaPickManager.clear();
 
-        if (mFilterType.equals(FILTER_CLONE)) {
+        if (FILTER_CLONE.equals(mFilterType)) {
             mMediaPickManager.setMaxSelectCount(2);
             mOriginalItem.setSelected(true);
             mRenderingItem.setSelected(false);
@@ -459,7 +459,7 @@ public class CreateFilterActivity extends BaseActivity implements MediaPickManag
             if (isCanCreate) {
                 filterSynthesis();
             } else {
-                if (!NetworkUtil.isNetworkConnected()) {
+                if (!NetworkUtil.isNetworkConnected(this)) {
                     ToastWrapper
                         .makeText(getApplication(), getText(R.string.exclusive_filter_tip_text12), Toast.LENGTH_LONG)
                         .show();
@@ -638,7 +638,7 @@ public class CreateFilterActivity extends BaseActivity implements MediaPickManag
         mTitleGallery.setText(getString(R.string.exclusive_filter_photo));
 
         mPictureListViewModel.getPageData().observe(this, pagedList -> {
-            if (pagedList.size() > 0) {
+            if (pagedList.size() >= 0) {
                 mMediaAdapter.submitList(pagedList);
             }
         });

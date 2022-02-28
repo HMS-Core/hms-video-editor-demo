@@ -134,10 +134,8 @@ public class MaterialEditFragment extends BaseFragment {
                     mEditPreviewViewModel.setChoiceAsset((HVEAsset) asset);
                     if (asset instanceof HVEWordAsset) {
                         HVEWordAsset wordAsset = (HVEWordAsset) asset;
-                        if (wordAsset.getWordAssetType() != HVEWordAsset.HVEWordAssetType.NORMAL_TEMPLATE) {
                             mLastSelectWordUUID = wordAsset.getUuid();
                             mLastSelectWordTime = System.currentTimeMillis();
-                        }
                     }
                 }
                 return false;
@@ -475,8 +473,7 @@ public class MaterialEditFragment extends BaseFragment {
 
                 long currentTime = System.currentTimeMillis();
                 if (mLastSelectWordTime != 0 && currentTime - mLastSelectWordTime < DOUBLE_TAP_TIMEOUT) {
-                    if (asset instanceof HVEWordAsset
-                        && ((HVEWordAsset) asset).getWordAssetType() != HVEWordAsset.HVEWordAssetType.NORMAL_TEMPLATE) {
+                    if (asset instanceof HVEWordAsset) {
                         if (asset.getUuid().equals(mLastSelectWordUUID)) {
                             mMaterialEditViewModel.setTextDefaultEdit(data);
                             return;

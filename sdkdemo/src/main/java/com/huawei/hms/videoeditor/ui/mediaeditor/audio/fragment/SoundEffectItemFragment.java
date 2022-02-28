@@ -36,7 +36,7 @@ import com.huawei.hms.videoeditor.materials.HVEColumnInfo;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.BaseFragment;
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RViewHolder;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.bean.MaterialsDownloadInfo;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.ToastWrapper;
@@ -75,7 +75,7 @@ public class SoundEffectItemFragment extends BaseFragment
 
     private MediaPlayer mMediaPlayer;
 
-    private MaterialsCloudBean materialsCutContent = new MaterialsCloudBean();
+    private CloudMaterialBean materialsCutContent = new CloudMaterialBean();
 
     private boolean mHasNextPage = false;
 
@@ -83,7 +83,7 @@ public class SoundEffectItemFragment extends BaseFragment
 
     private SoundEffectItemAdapter mSoundEffectItemAdapter;
 
-    private List<MaterialsCloudBean> mList;
+    private List<CloudMaterialBean> mList;
 
     private int mCurrentPosition = -1;
 
@@ -262,7 +262,7 @@ public class SoundEffectItemFragment extends BaseFragment
                 startTimeDiff = System.currentTimeMillis();
                 int previousPosition = mSoundEffectItemAdapter.getSelectPosition();
                 mSoundEffectItemAdapter.setSelectPosition(position);
-                MaterialsCloudBean content = mList.get(dataPosition);
+                CloudMaterialBean content = mList.get(dataPosition);
                 mSoundEffectItemAdapter.addDownloadMaterial(content);
                 mSoundEffectItemViewModel.downloadColumn(previousPosition, position, content);
             }
@@ -373,7 +373,7 @@ public class SoundEffectItemFragment extends BaseFragment
         super.onBackPressed();
     }
 
-    private void startOrStopAudio(int position, MaterialsCloudBean item) {
+    private void startOrStopAudio(int position, CloudMaterialBean item) {
         if (mCurrentPosition != position) {
             resetMediaPlayer(item.getLocalPath());
             mCurrentPosition = position;

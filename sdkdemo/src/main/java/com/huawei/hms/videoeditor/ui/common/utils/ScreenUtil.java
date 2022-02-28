@@ -20,6 +20,7 @@ import java.util.Locale;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -52,5 +53,11 @@ public class ScreenUtil {
     public static boolean isRTL() {
         boolean isRtl = TextUtils.getLayoutDirectionFromLocale(Locale.getDefault()) == View.LAYOUT_DIRECTION_RTL;
         return isRtl;
+    }
+
+    public static boolean isPortrait(Context context) {
+        Configuration mConfiguration = context.getResources().getConfiguration();
+        int ori = mConfiguration.orientation;
+        return ori == mConfiguration.ORIENTATION_PORTRAIT;
     }
 }

@@ -24,11 +24,11 @@ import com.huawei.hms.videoeditor.sdk.asset.HVEStickerAsset;
 import com.huawei.hms.videoeditor.sdk.lane.HVEStickerLane;
 import com.huawei.hms.videoeditor.sdk.lane.HVEVideoLane;
 import com.huawei.hms.videoeditor.ui.common.EditorManager;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.utils.LaneSizeCheckUtils;
 
 public class StickerRepository {
-    public static HVEStickerAsset addStickerAsset(MaterialsCloudBean content, long startTime) {
+    public static HVEStickerAsset addStickerAsset(CloudMaterialBean content, long startTime) {
         if (content == null) {
             return null;
         }
@@ -39,6 +39,7 @@ public class StickerRepository {
             return null;
         }
         long endTime = startTime + 3000;
+
         HVEStickerLane stickerLane = LaneSizeCheckUtils.getStickerFreeLan(editor, startTime, endTime);
         if (stickerLane == null) {
             return null;
@@ -68,7 +69,7 @@ public class StickerRepository {
         return isDelete;
     }
 
-    public static HVEStickerAsset replaceStickerAsset(HVEAsset asset, MaterialsCloudBean content) {
+    public static HVEStickerAsset replaceStickerAsset(HVEAsset asset, CloudMaterialBean content) {
         if (content == null || asset == null) {
             return null;
         }

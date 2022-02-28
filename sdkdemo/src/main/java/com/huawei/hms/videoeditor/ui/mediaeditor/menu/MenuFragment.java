@@ -32,7 +32,6 @@ import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewS
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_SPECIAL_OPERATION;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_STICKER_OPERATION;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_STICKER_OPERATION_ANIMATION;
-import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_TEXT_MODULE_OPERATION;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_TEXT_OPERATION;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_TEXT_OPERATION_EDIT;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_TEXT_STATE;
@@ -49,9 +48,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-import android.animation.Animator;
 import android.animation.LayoutTransition;
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -74,7 +71,6 @@ import com.huawei.hms.videoeditor.sdk.effect.HVEEffect;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.BaseFragment;
 import com.huawei.hms.videoeditor.ui.common.EditorManager;
-import com.huawei.hms.videoeditor.ui.common.utils.SharedPreferencesUtils;
 import com.huawei.hms.videoeditor.ui.mediaeditor.VideoClipsActivity;
 import com.huawei.hms.videoeditor.ui.mediaeditor.graffiti.GraffitiManager;
 import com.huawei.hms.videoeditor.ui.mediaeditor.graffiti.view.GraffitiView;
@@ -376,27 +372,6 @@ public class MenuFragment extends Fragment {
             }
         });
 
-        mMaterialEditViewModel.getTextTemplateEdit().observe(getViewLifecycleOwner(), new Observer<MaterialEditData>() {
-            @Override
-            public void onChanged(MaterialEditData data) {
-                if (data.getAsset() instanceof HVEWordAsset && ((HVEWordAsset) data.getAsset())
-                    .getWordAssetType() == HVEWordAsset.HVEWordAssetType.NORMAL_TEMPLATE) {
-                    HVEWordAsset hveWordAsset = (HVEWordAsset) data.getAsset();
-
-                    List<String> textValues = hveWordAsset.getAllTextInTemplate();
-                    if (textValues == null || mEditPreviewViewModel.getTextTemplateEditSelectIndex() < 0
-                        || mEditPreviewViewModel.getTextTemplateEditSelectIndex() > textValues.size()) {
-                        return;
-                    }
-                    String hint = textValues.get(mEditPreviewViewModel.getTextTemplateEditSelectIndex());
-                    SharedPreferencesUtils.getInstance()
-                        .putStringValue(mActivity, SharedPreferencesUtils.TEXT_TEMPLATE_HINT, hint);
-
-                    mActivity.showKeyboardForTextTemplate();
-                }
-            }
-        });
-
         mMaterialEditViewModel.getMaterialCopy().observe(getViewLifecycleOwner(), new Observer<MaterialEditData>() {
             @Override
             public void onChanged(MaterialEditData data) {
@@ -454,7 +429,7 @@ public class MenuFragment extends Fragment {
                         if (isVideoReverse) {
                             ableIds.add(EDIT_VIDEO_STATE_HUMAN_TRACKING);
                         }
-                        boolean isHumanTracking = ((HVEVideoAsset) hveAsset).isContainHumanTrackingEffect();
+                        boolean isHumanTracking = isContainHumanTrackingEffect(hveAsset);
                         if (isHumanTracking) {
                             ableIds.add(EDIT_VIDEO_STATE_INVERTED);
                         }
@@ -466,45 +441,6 @@ public class MenuFragment extends Fragment {
                 ableIds.add(EDIT_VIDEO_STATE_PROPORTION);
                 if (menuContentLayout != null) {
                     menuContentLayout.updateUnAbleMenus(true, ableIds);
-                }
-            }
-        });
-
-        mEditPreviewViewModel.getTextTempValue().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                if (mEditPreviewViewModel.getTimeLine() == null) {
-                    return;
-                }
-                HVEAsset asset = mEditPreviewViewModel.getSelectedAsset();
-                if (asset instanceof HVEWordAsset
-                    && ((HVEWordAsset) asset).getWordAssetType() == HVEWordAsset.HVEWordAssetType.NORMAL_TEMPLATE) {
-                    HVEWordAsset hveWordAsset = (HVEWordAsset) asset;
-                    if (mEditPreviewViewModel.getTextTemplateEditSelectIndex() >= 0 && mEditPreviewViewModel
-                        .getTextTemplateEditSelectIndex() < hveWordAsset.getAllTextInTemplate().size()) {
-                        if (s == null || s.length() == 0) {
-                            return;
-                        }
-                        hveWordAsset.setTextInTemplate(s, mEditPreviewViewModel.getTextTemplateEditSelectIndex());
-                        mEditPreviewViewModel.getEditor().refresh(mEditPreviewViewModel.getTimeLine().getCurrentTime());
-
-                    }
-                }
-            }
-        });
-
-        mEditPreviewViewModel.getIsClearTemplate().observe(getViewLifecycleOwner(), aBoolean -> {
-            if (aBoolean && mEditPreviewViewModel.getTimeLine() != null) {
-                HVEAsset asset = mEditPreviewViewModel.getSelectedAsset();
-                if (asset instanceof HVEWordAsset
-                    && ((HVEWordAsset) asset).getWordAssetType() == HVEWordAsset.HVEWordAssetType.NORMAL_TEMPLATE) {
-                    HVEWordAsset hveWordAsset = (HVEWordAsset) asset;
-                    if (mEditPreviewViewModel.getTextTemplateEditSelectIndex() >= 0 && mEditPreviewViewModel
-                        .getTextTemplateEditSelectIndex() < hveWordAsset.getAllTextInTemplate().size()) {
-                        hveWordAsset.setTextInTemplate("", mEditPreviewViewModel.getTextTemplateEditSelectIndex());
-                        mEditPreviewViewModel.getEditor().refresh(mEditPreviewViewModel.getTimeLine().getCurrentTime());
-
-                    }
                 }
             }
         });
@@ -550,42 +486,26 @@ public class MenuFragment extends Fragment {
                 if (type == WORD) {
                     state = EDIT_TEXT_OPERATION;
                     if (selectedHveAsset instanceof HVEWordAsset) {
-                        HVEWordAsset wordAsset = (HVEWordAsset) selectedHveAsset;
-                        if (wordAsset.getWordAssetType() == HVEWordAsset.HVEWordAssetType.NORMAL_TEMPLATE) {
-                            state = EDIT_TEXT_MODULE_OPERATION;
-                            if (getViewStack() != null && !getViewStack().isEmpty()) {
-                                MenuControlViewRouter.Panel panel = getViewStack().lastElement();
+                        if (getViewStack() != null && !getViewStack().isEmpty()) {
+                            MenuControlViewRouter.Panel panel = getViewStack().lastElement();
+                            if (panel.object instanceof EditPanelFragment) {
+                                mEditPreviewViewModel
+                                    .setEditPanelInputValue(((HVEWordAsset) selectedHveAsset).getText());
                             } else {
                                 if (mEditPreviewViewModel.isEditTextTemplateStatus()) {
                                     mActivity.showInputLayout(false);
-                                }
-                            }
-                            mMaterialEditViewModel.addMaterialEditData(new MaterialEditData(
-                                (HVEVisibleAsset) selectedHveAsset, MaterialEditData.MaterialType.WORD));
-                        } else {
-                            if (getViewStack() != null && !getViewStack().isEmpty()) {
-                                MenuControlViewRouter.Panel panel = getViewStack().lastElement();
-                                if (panel.object instanceof EditPanelFragment) {
-                                    mEditPreviewViewModel
-                                        .setEditPanelInputValue(((HVEWordAsset) selectedHveAsset).getText());
                                 } else {
-                                    if (mEditPreviewViewModel.isEditTextTemplateStatus()) {
-                                        mActivity.showInputLayout(false);
-                                    } else {
-                                        mActivity.onBackPressed();
-                                    }
-                                }
-                            } else {
-                                if (mEditPreviewViewModel.isEditTextTemplateStatus()) {
-                                    mActivity.showInputLayout(false);
+                                    mActivity.onBackPressed();
                                 }
                             }
-                            mMaterialEditViewModel.addMaterialEditData(new MaterialEditData(
-                                (HVEVisibleAsset) selectedHveAsset, MaterialEditData.MaterialType.WORD));
+                        } else {
+                            if (mEditPreviewViewModel.isEditTextTemplateStatus()) {
+                                mActivity.showInputLayout(false);
+                            }
                         }
-
+                        mMaterialEditViewModel.addMaterialEditData(new MaterialEditData(
+                            (HVEVisibleAsset) selectedHveAsset, MaterialEditData.MaterialType.WORD));
                     }
-
                 } else if (type == STICKER) {
                     state = EDIT_STICKER_OPERATION;
                     if (selectedHveAsset instanceof HVEStickerAsset) {
@@ -618,7 +538,7 @@ public class MenuFragment extends Fragment {
                             if (isVideoReverse) {
                                 unableIds.addAll(MenuClickManager.getInstance().getUnableOperateIds(8));
                             }
-                            boolean isHumanTracking = ((HVEVideoAsset) selectedHveAsset).isContainHumanTrackingEffect();
+                            boolean isHumanTracking =isContainHumanTrackingEffect(selectedHveAsset);
                             if (isHumanTracking) {
                                 unableIds.addAll(MenuClickManager.getInstance().getUnableOperateIds(9));
                             }
@@ -637,7 +557,7 @@ public class MenuFragment extends Fragment {
                             if (isVideoReverse) {
                                 unableIds.addAll(MenuClickManager.getInstance().getUnableOperateIds(8));
                             }
-                            boolean isHumanTracking = ((HVEVideoAsset) selectedHveAsset).isContainHumanTrackingEffect();
+                            boolean isHumanTracking = isContainHumanTrackingEffect(selectedHveAsset);
                             if (isHumanTracking) {
                                 unableIds.addAll(MenuClickManager.getInstance().getUnableOperateIds(9));
                             }
@@ -706,10 +626,8 @@ public class MenuFragment extends Fragment {
                     mActivity.runOnUiThread(() -> {
                         if (finalAsset instanceof HVEWordAsset) {
                             HVEWordAsset wordAsset = (HVEWordAsset) finalAsset;
-                            if (wordAsset.getWordAssetType() != HVEWordAsset.HVEWordAssetType.NORMAL_TEMPLATE) {
-                                mMaterialEditViewModel.addMaterialEditData(new MaterialEditData(
-                                    (HVEVisibleAsset) finalAsset, MaterialEditData.MaterialType.WORD));
-                            }
+                            mMaterialEditViewModel.addMaterialEditData(
+                                new MaterialEditData((HVEVisibleAsset) finalAsset, MaterialEditData.MaterialType.WORD));
                         }
                     });
                 });
@@ -746,6 +664,15 @@ public class MenuFragment extends Fragment {
         });
 
         initAnimation();
+    }
+
+    private boolean isContainHumanTrackingEffect(HVEAsset asset) {
+        for (HVEEffect effect : asset.getEffects()) {
+            if (effect.getEffectType() == HVEEffect.HVEEffectType.HUMAN_TRACKING) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void initAnimation() {

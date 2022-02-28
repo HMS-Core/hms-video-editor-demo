@@ -37,7 +37,7 @@ import com.bumptech.glide.request.target.Target;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RCommandAdapter;
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RViewHolder;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
@@ -46,12 +46,12 @@ import com.huawei.hms.videoeditorkit.sdkdemo.R;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-public class StickerItemAdapter extends RCommandAdapter<MaterialsCloudBean> {
+public class StickerItemAdapter extends RCommandAdapter<CloudMaterialBean> {
     private static final String TAG = "StickerItemAdapter";
 
-    private final Map<String, MaterialsCloudBean> mDownloadingMap = new LinkedHashMap<>();
+    private final Map<String, CloudMaterialBean> mDownloadingMap = new LinkedHashMap<>();
 
-    private final Map<String, MaterialsCloudBean> mFirstScreenMap = new LinkedHashMap<>();
+    private final Map<String, CloudMaterialBean> mFirstScreenMap = new LinkedHashMap<>();
 
     private final int mImageViewWidth;
 
@@ -61,7 +61,7 @@ public class StickerItemAdapter extends RCommandAdapter<MaterialsCloudBean> {
 
     private OnItemClickListener mOnItemClickListener;
 
-    public StickerItemAdapter(Context context, List<MaterialsCloudBean> list, int layoutId) {
+    public StickerItemAdapter(Context context, List<CloudMaterialBean> list, int layoutId) {
         super(context, list, layoutId);
         mImageViewWidth = (SizeUtils.screenWidth(mContext) - (SizeUtils.dp2Px(mContext, 62))) / 4;
         mImageViewHeight = mImageViewWidth;
@@ -79,7 +79,7 @@ public class StickerItemAdapter extends RCommandAdapter<MaterialsCloudBean> {
         this.mSelectPosition = selectPosition;
     }
 
-    public void addDownloadMaterial(MaterialsCloudBean item) {
+    public void addDownloadMaterial(CloudMaterialBean item) {
         if (!mDownloadingMap.containsKey(item.getId())) {
             mDownloadingMap.put(item.getId(), item);
         }
@@ -89,13 +89,13 @@ public class StickerItemAdapter extends RCommandAdapter<MaterialsCloudBean> {
         mDownloadingMap.remove(contentId);
     }
 
-    public void addFirstScreenMaterial(MaterialsCloudBean item) {
+    public void addFirstScreenMaterial(CloudMaterialBean item) {
         if (!mFirstScreenMap.containsKey(item.getId())) {
             mFirstScreenMap.put(item.getId(), item);
         }
     }
 
-    public void removeFirstScreenMaterial(MaterialsCloudBean materialsCutContent) {
+    public void removeFirstScreenMaterial(CloudMaterialBean materialsCutContent) {
         if (materialsCutContent == null || mFirstScreenMap.size() == 0) {
             SmartLog.e(TAG, "input materials is null");
             return;
@@ -107,7 +107,7 @@ public class StickerItemAdapter extends RCommandAdapter<MaterialsCloudBean> {
     }
 
     @Override
-    protected void convert(RViewHolder holder, MaterialsCloudBean item, int dataPosition, int position) {
+    protected void convert(RViewHolder holder, CloudMaterialBean item, int dataPosition, int position) {
         ConstraintLayout mContentView = holder.getView(R.id.item_content);
         mContentView.setTag(position);
         View mSelectView = holder.getView(R.id.item_select_view);

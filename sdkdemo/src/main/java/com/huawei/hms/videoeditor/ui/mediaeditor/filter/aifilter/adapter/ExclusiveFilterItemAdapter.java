@@ -29,21 +29,21 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RCommandAdapter;
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RViewHolder;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
 import androidx.constraintlayout.utils.widget.ImageFilterView;
 
-public class ExclusiveFilterItemAdapter extends RCommandAdapter<MaterialsCloudBean> {
+public class ExclusiveFilterItemAdapter extends RCommandAdapter<CloudMaterialBean> {
     private static final String TAG = "FilterItemAdapter";
 
     private volatile int mSelectPosition = -1;
 
     private OnItemClickListener mOnItemClickListener;
 
-    public ExclusiveFilterItemAdapter(Context context, List<MaterialsCloudBean> list, int layoutId) {
+    public ExclusiveFilterItemAdapter(Context context, List<CloudMaterialBean> list, int layoutId) {
         super(context, list, layoutId);
     }
 
@@ -52,7 +52,7 @@ public class ExclusiveFilterItemAdapter extends RCommandAdapter<MaterialsCloudBe
     }
 
     @Override
-    protected void convert(RViewHolder holder, MaterialsCloudBean item, int dataPosition, int position) {
+    protected void convert(RViewHolder holder, CloudMaterialBean item, int dataPosition, int position) {
         View mSelectView = holder.getView(R.id.item_select_view);
         ImageFilterView mItemIv = holder.getView(R.id.item_image_view);
         TextView mNameTv = holder.getView(R.id.item_name);

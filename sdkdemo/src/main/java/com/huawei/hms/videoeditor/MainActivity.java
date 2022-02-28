@@ -16,14 +16,16 @@
 
 package com.huawei.hms.videoeditor;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.huawei.hms.videoeditor.fragment.ClipFragment;
 import com.huawei.hms.videoeditor.sdk.MediaApplication;
@@ -33,11 +35,9 @@ import com.huawei.hms.videoeditor.utils.SmartLog;
 import com.huawei.hms.videoeditor.view.NoScrollViewPager;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class MainActivity extends BaseActivity {
     private final String[] mPermissions = new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -72,7 +72,8 @@ public class MainActivity extends BaseActivity {
 
     private void initData() {
         MediaApplication.getInstance()
-                .setApiKey("please set your apikey");
+            .setApiKey("please set your apikey");
+
         UUID uuid = UUID.randomUUID();
         MediaApplication.getInstance().setLicenseId(uuid.toString());
 

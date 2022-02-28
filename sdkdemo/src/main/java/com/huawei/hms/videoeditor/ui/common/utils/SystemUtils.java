@@ -21,15 +21,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Locale;
 
+import android.content.Context;
 import android.os.Build;
 import android.text.TextUtils;
 
-import com.huawei.hms.videoeditor.common.utils.SystemPropertiesInvoke;
-import com.huawei.hms.videoeditor.sdk.util.MemoryInfoUtil;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
+import com.huawei.hms.videoeditor.ui.common.tools.SystemPropertiesInvoke;
 
 public class SystemUtils {
-
     private static final String TAG = "SystemUtils";
 
     public static final String ROM_MIUI = "MIUI";
@@ -122,10 +121,10 @@ public class SystemUtils {
         return line;
     }
 
-    public static boolean isLowDevice() {
+    public static boolean isLowDevice(Context context) {
         boolean ultraLite = SystemPropertiesInvoke.getBoolean("ro.build.hw_emui_ultra_lite", false);
         boolean emuiLite = SystemPropertiesInvoke.getBoolean("ro.build.hw_emui_lite.enable", false);
-        boolean isLowMem = MemoryInfoUtil.isLowMemoryDevice(MemoryInfoUtil.MEMORY_THRESHOLD_6G);
+        boolean isLowMem = MemoryInfoUtil.isLowMemoryDevice(MemoryInfoUtil.MEMORY_THRESHOLD_6G, context);
         return ultraLite || emuiLite || isLowMem;
     }
 }

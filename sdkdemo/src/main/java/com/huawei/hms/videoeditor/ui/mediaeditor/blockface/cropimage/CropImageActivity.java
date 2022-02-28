@@ -26,8 +26,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.huawei.hms.videoeditor.common.utils.BitmapDecodeUtils;
 import com.huawei.hms.videoeditor.ui.common.BaseActivity;
+import com.huawei.hms.videoeditor.ui.common.utils.BitmapDecodeUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 import com.huawei.secure.android.common.intent.SafeIntent;

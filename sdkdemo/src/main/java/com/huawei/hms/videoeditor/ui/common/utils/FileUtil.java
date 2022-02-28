@@ -20,6 +20,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 
 import android.content.ActivityNotFoundException;
@@ -65,6 +68,33 @@ public class FileUtil {
             blockSize = getFileSize(file);
         }
         return (long) formetFileSize(blockSize, sizeType);
+    }
+
+    public static String readJsonFile(String path) {
+        String jsonStr = "";
+        Reader reader = null;
+        try {
+            File jsonFile = new File(path);
+            reader = new InputStreamReader(new FileInputStream(jsonFile), StandardCharsets.UTF_8);
+            int ch;
+            StringBuffer sb = new StringBuffer();
+            char[] buff = new char[1024];
+            while ((ch = reader.read(buff, 0, 1024)) != -1) {
+                sb.append(buff, 0, ch);
+            }
+            jsonStr = sb.toString();
+        } catch (IOException e) {
+            SmartLog.e(TAG, "IOException: " + e.toString());
+        } finally {
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (IOException e) {
+                SmartLog.e(TAG, "IOException: " + e.toString());
+            }
+        }
+        return jsonStr;
     }
 
     private static long getFileSize(File file) {

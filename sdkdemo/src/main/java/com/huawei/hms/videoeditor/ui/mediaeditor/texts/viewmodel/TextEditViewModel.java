@@ -16,27 +16,22 @@
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.texts.viewmodel;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Application;
 import android.graphics.Color;
-
-import com.huawei.hms.videoeditor.common.network.http.ability.util.array.ArrayUtils;
-import com.huawei.hms.videoeditor.sdk.HVETimeLine;
-import com.huawei.hms.videoeditor.sdk.asset.HVEAsset;
-import com.huawei.hms.videoeditor.sdk.asset.HVEWordAsset;
-import com.huawei.hms.videoeditor.sdk.bean.HVEWordStyle;
-import com.huawei.hms.videoeditor.sdk.engine.word.FontFileManager;
-import com.huawei.hms.videoeditor.sdk.lane.HVEStickerLane;
-import com.huawei.hms.videoeditor.sdk.util.SmartLog;
-import com.huawei.hms.videoeditor.ui.common.EditorManager;
-import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
 import androidx.annotation.NonNull;
 import androidx.core.graphics.ColorUtils;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
+
+import com.huawei.hms.videoeditor.sdk.asset.HVEWordAsset;
+import com.huawei.hms.videoeditor.sdk.bean.HVEWordStyle;
+import com.huawei.hms.videoeditor.sdk.engine.word.FontFileManager;
+import com.huawei.hms.videoeditor.sdk.util.SmartLog;
+import com.huawei.hms.videoeditorkit.sdkdemo.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TextEditViewModel extends AndroidViewModel {
     private final List<Integer> normalImageList = new ArrayList<>(30);

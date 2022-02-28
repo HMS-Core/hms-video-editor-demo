@@ -17,15 +17,15 @@
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.fragment;
 
-import static com.huawei.hms.videoeditor.ui.common.bean.Constant.LTR_UI;
-import static com.huawei.hms.videoeditor.ui.common.bean.Constant.RTL_UI;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.huawei.hms.videoeditor.sdk.HuaweiVideoEditor;
 import com.huawei.hms.videoeditor.sdk.asset.HVEAsset;
@@ -43,11 +43,11 @@ import com.huawei.hms.videoeditor.ui.mediaeditor.menu.VideoClipsPlayViewModel;
 import com.huawei.hms.videoeditor.ui.mediaeditor.preview.view.MySeekBar;
 import com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState;
 import com.huawei.hms.videoeditor.ui.mediaeditor.trackview.viewmodel.EditPreviewViewModel;
-import com.huawei.secure.android.common.intent.SafeBundle;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
+import com.huawei.secure.android.common.intent.SafeBundle;
 
-import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModelProvider;
+import static com.huawei.hms.videoeditor.ui.common.bean.Constant.LTR_UI;
+import static com.huawei.hms.videoeditor.ui.common.bean.Constant.RTL_UI;
 
 public class VolumePanelFragment extends BaseFragment {
     private static final String TAG = "VolumePanelFragment";
@@ -260,7 +260,15 @@ public class VolumePanelFragment extends BaseFragment {
         }
         ((HVEVideoAsset) selectedAsset).setVolume(mProgress);
         mEditPreviewViewModel.refreshTrackView(selectedAsset.getUuid());
-        EditorManager.getInstance().getEditor().playTimeLine(selectedAsset.getStartTime(), selectedAsset.getEndTime());
+
+        HuaweiVideoEditor mEditor = EditorManager.getInstance().getEditor();
+
+        if (mEditor == null) {
+            return false;
+        }
+        mEditor.seekTimeLine(selectedAsset.getStartTime(), () -> {
+            mEditor.playTimeLine(selectedAsset.getStartTime(), selectedAsset.getEndTime());
+        });
         return true;
     }
 
@@ -272,7 +280,15 @@ public class VolumePanelFragment extends BaseFragment {
         HVEAudioAsset hveAudioAsset = (HVEAudioAsset) asset;
         hveAudioAsset.setVolume(mProgress);
         mEditPreviewViewModel.refreshTrackView(hveAudioAsset.getUuid());
-        EditorManager.getInstance().getEditor().playTimeLine(hveAudioAsset.getStartTime(), hveAudioAsset.getEndTime());
+
+        HuaweiVideoEditor mEditor = EditorManager.getInstance().getEditor();
+
+        if (mEditor == null) {
+            return;
+        }
+        mEditor.seekTimeLine(hveAudioAsset.getStartTime(), () -> {
+            mEditor.playTimeLine(hveAudioAsset.getStartTime(), hveAudioAsset.getEndTime());
+        });
     }
 
     @Override

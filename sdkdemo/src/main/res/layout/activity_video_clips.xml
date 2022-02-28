@@ -83,18 +83,6 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.38" />
 
-    <Button
-        android:id="@+id/btn_lock"
-        android:layout_width="@dimen/dp_50"
-        android:layout_height="@dimen/dp_24"
-        android:layout_marginEnd="@dimen/dp_16"
-        android:background="@drawable/btn_unlock"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/guideline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline2"
-        tools:ignore="ContentDescription" />
-
     <ImageView
         android:id="@+id/iv_face_compare"
         android:layout_width="@dimen/dp_24"

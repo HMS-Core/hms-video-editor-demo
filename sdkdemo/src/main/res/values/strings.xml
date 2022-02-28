@@ -213,6 +213,7 @@
     <string name="cut_second_menu_freezes" priority="translator">Freeze</string>
     <string name="cut_second_menu_single_frame_export" priority="LT">Export frame</string>
     <string name="cut_second_menu_fun" priority="translator">AI fun</string>
+    <string name="cut_second_menu_keyframe" priority="translator">Keyframe</string>
     <string name="audio_second_menu_music" priority="LT">Music</string>
     <string name="audio_second_menu_sound_effect" priority="LT">Sound effects</string>
     <string name="audio_second_menu_record" priority="LT">Record</string>
@@ -291,6 +292,7 @@
     <string name="result_illegal" priority="translator">Network error. Please try again.</string>
     <string name="apply_to_all" priority="LT">Apply to all</string>
     <string name="applied_to_all" priority="LT">Applied to all.</string>
+    <string name="device_not_support" priority="translator">The device does not support this function.</string>
     <string name="filter_brightness" priority="LT">Brightness</string>
     <string name="filter_contrast" priority="LT">Contrast</string>
     <string name="filter_saturation" priority="LT">Saturation</string>
@@ -699,4 +701,5 @@
     <string name="cpu_limit" priority="translator">The 32-bit system does not support the AI function.</string>
     <string name="reenact_limit" priority="translator">This function supports only images.</string>
     <string name="crop_limit" priority="translator">Please select a video to trim.</string>
+    <string name="keyframe" priority="translator">Keyframe</string>
 </resources>

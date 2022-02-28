@@ -36,7 +36,7 @@ import com.huawei.hms.videoeditor.materials.HVETopColumnInfo;
 import com.huawei.hms.videoeditor.materials.HVETopColumnRequest;
 import com.huawei.hms.videoeditor.materials.HVETopColumnResponse;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.bean.Constant;
 import com.huawei.hms.videoeditor.ui.common.bean.MaterialsDownloadInfo;
 import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
@@ -56,7 +56,7 @@ public class MaskEffectOnlineViewModel extends AndroidViewModel {
 
     private final MutableLiveData<String> maskEmptyString = new MutableLiveData<>();
 
-    private final MutableLiveData<List<MaterialsCloudBean>> maskMaterials = new MutableLiveData<>();
+    private final MutableLiveData<List<CloudMaterialBean>> maskMaterials = new MutableLiveData<>();
 
     private final MutableLiveData<MaterialsDownloadInfo> maskDownloadSuccess = new MutableLiveData<>();
 
@@ -156,10 +156,10 @@ public class MaskEffectOnlineViewModel extends AndroidViewModel {
     }
 
     private void queryDownloadStatus(List<HVEMaterialInfo> materialInfos) {
-        List<MaterialsCloudBean> list = new ArrayList<>();
+        List<CloudMaterialBean> list = new ArrayList<>();
 
         for (int i = 0; i < materialInfos.size(); i++) {
-            MaterialsCloudBean materialInfo = new MaterialsCloudBean();
+            CloudMaterialBean materialInfo = new CloudMaterialBean();
 
             HVEMaterialInfo hveMaterialInfo = materialInfos.get(i);
 
@@ -179,7 +179,7 @@ public class MaskEffectOnlineViewModel extends AndroidViewModel {
         maskMaterials.postValue(list);
     }
 
-    public void downloadColumn(int previousPosition, int position, int dataPosition, MaterialsCloudBean cutContent) {
+    public void downloadColumn(int previousPosition, int position, int dataPosition, CloudMaterialBean cutContent) {
         MaterialsDownloadInfo info = new MaterialsDownloadInfo();
         info.setPreviousPosition(previousPosition);
         info.setPosition(position);
@@ -220,7 +220,7 @@ public class MaskEffectOnlineViewModel extends AndroidViewModel {
         return maskErrorString;
     }
 
-    public MutableLiveData<List<MaterialsCloudBean>> getPageData() {
+    public MutableLiveData<List<CloudMaterialBean>> getPageData() {
         return maskMaterials;
     }
 

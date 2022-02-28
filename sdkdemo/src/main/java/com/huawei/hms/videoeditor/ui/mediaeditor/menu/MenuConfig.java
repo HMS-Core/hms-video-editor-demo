@@ -30,10 +30,10 @@ import android.content.res.AssetManager;
 import android.text.TextUtils;
 
 import com.huawei.hms.videoeditor.common.utils.CloseUtils;
-import com.huawei.hms.videoeditor.common.utils.GsonUtils;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.utils.ArrayUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.CpuUtils;
+import com.huawei.hms.videoeditor.ui.common.utils.GsonUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.KeepOriginal;
 import com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState;
 

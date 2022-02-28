@@ -16,9 +16,9 @@
 
 package com.huawei.hms.videoeditor.ui.common.tools;
 
-import java.lang.reflect.Method;
+import com.huawei.hms.videoeditor.ui.common.utils.ReflectionUtils;
 
-import com.huawei.hms.videoeditor.common.utils.ReflectionUtils;
+import java.lang.reflect.Method;
 
 public class SystemPropertiesInvoke {
     public SystemPropertiesInvoke() {

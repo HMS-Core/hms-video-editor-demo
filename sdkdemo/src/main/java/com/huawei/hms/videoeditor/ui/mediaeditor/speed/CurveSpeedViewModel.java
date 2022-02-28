@@ -35,9 +35,8 @@ import com.huawei.hms.videoeditor.materials.HVEMaterialsResponseCallback;
 import com.huawei.hms.videoeditor.materials.HVETopColumnInfo;
 import com.huawei.hms.videoeditor.materials.HVETopColumnRequest;
 import com.huawei.hms.videoeditor.materials.HVETopColumnResponse;
-import com.huawei.hms.videoeditor.sdk.store.MaterialsLocalDataManager;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.bean.MaterialsDownloadInfo;
 import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
@@ -55,7 +54,7 @@ public class CurveSpeedViewModel extends AndroidViewModel {
 
     private final MutableLiveData<String> curveEmptyString = new MutableLiveData<>();
 
-    private final MutableLiveData<List<MaterialsCloudBean>> curveMaterials = new MutableLiveData<>();
+    private final MutableLiveData<List<CloudMaterialBean>> curveMaterials = new MutableLiveData<>();
 
     private final MutableLiveData<MaterialsDownloadInfo> curveDownloadSuccess = new MutableLiveData<>();
 
@@ -146,9 +145,9 @@ public class CurveSpeedViewModel extends AndroidViewModel {
     }
 
     private void queryDownloadStatus(List<HVEMaterialInfo> materialInfos) {
-        List<MaterialsCloudBean> list = new ArrayList<>();
+        List<CloudMaterialBean> list = new ArrayList<>();
         for (int i = 0; i < materialInfos.size(); i++) {
-            MaterialsCloudBean materialInfo = new MaterialsCloudBean();
+            CloudMaterialBean materialInfo = new CloudMaterialBean();
             HVEMaterialInfo hveMaterialInfo = materialInfos.get(i);
             HVELocalMaterialInfo localMaterialInfo =
                 HVEMaterialsManager.queryLocalMaterialById(hveMaterialInfo.getMaterialId());
@@ -165,7 +164,7 @@ public class CurveSpeedViewModel extends AndroidViewModel {
         curveMaterials.postValue(list);
     }
 
-    public void downloadColumn(int previousPosition, int position, int dataPosition, MaterialsCloudBean cutContent) {
+    public void downloadColumn(int previousPosition, int position, int dataPosition, CloudMaterialBean cutContent) {
         MaterialsDownloadInfo downloadAnimationInfo = new MaterialsDownloadInfo();
         downloadAnimationInfo.setPreviousPosition(previousPosition);
         downloadAnimationInfo.setPosition(position);
@@ -207,7 +206,7 @@ public class CurveSpeedViewModel extends AndroidViewModel {
         return curveErrorString;
     }
 
-    public MutableLiveData<List<MaterialsCloudBean>> getPageData() {
+    public MutableLiveData<List<CloudMaterialBean>> getPageData() {
         return curveMaterials;
     }
 

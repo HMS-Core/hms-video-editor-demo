@@ -37,7 +37,7 @@ import com.huawei.hms.videoeditor.materials.HVETopColumnInfo;
 import com.huawei.hms.videoeditor.materials.HVETopColumnRequest;
 import com.huawei.hms.videoeditor.materials.HVETopColumnResponse;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.bean.MaterialsDownloadInfo;
 import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
@@ -53,7 +53,7 @@ public class AnimationPanelViewModel extends AndroidViewModel {
 
     private final MutableLiveData<String> errorString = new MutableLiveData<>();
 
-    private final MutableLiveData<List<MaterialsCloudBean>> mAnimationMaterials = new MutableLiveData<>();
+    private final MutableLiveData<List<CloudMaterialBean>> mAnimationMaterials = new MutableLiveData<>();
 
     private final MutableLiveData<MaterialsDownloadInfo> mDownloadSuccess = new MutableLiveData<>();
 
@@ -145,9 +145,9 @@ public class AnimationPanelViewModel extends AndroidViewModel {
     }
 
     private void queryDownloadStatus(List<HVEMaterialInfo> materialInfos) {
-        List<MaterialsCloudBean> list = new ArrayList<>();
+        List<CloudMaterialBean> list = new ArrayList<>();
         for (int i = 0; i < materialInfos.size(); i++) {
-            MaterialsCloudBean materialInfo = new MaterialsCloudBean();
+            CloudMaterialBean materialInfo = new CloudMaterialBean();
             HVEMaterialInfo hveMaterialInfo = materialInfos.get(i);
             HVELocalMaterialInfo localMaterialInfo =
                 HVEMaterialsManager.queryLocalMaterialById(hveMaterialInfo.getMaterialId());
@@ -164,7 +164,7 @@ public class AnimationPanelViewModel extends AndroidViewModel {
         mAnimationMaterials.postValue(list);
     }
 
-    public void downloadColumn(int previousPosition, int dataPosition, MaterialsCloudBean cutContent) {
+    public void downloadColumn(int previousPosition, int dataPosition, CloudMaterialBean cutContent) {
         MaterialsDownloadInfo downloadAnimationInfo = new MaterialsDownloadInfo();
         downloadAnimationInfo.setPreviousPosition(previousPosition);
         downloadAnimationInfo.setDataPosition(dataPosition);
@@ -205,7 +205,7 @@ public class AnimationPanelViewModel extends AndroidViewModel {
         return errorString;
     }
 
-    public MutableLiveData<List<MaterialsCloudBean>> getPageData() {
+    public MutableLiveData<List<CloudMaterialBean>> getPageData() {
         return mAnimationMaterials;
     }
 

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/custom_operate_title" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layoutDirection="ltr"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/include">
+
+        <RelativeLayout
+            android:id="@+id/video_truck"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_80"
+            android:layout_marginTop="@dimen/dp_64"
+            android:layoutDirection="ltr"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_split"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_64"
+                android:layout_centerHorizontal="true"
+                android:scrollbars="none" />
+
+            <ImageView
+                android:id="@+id/view"
+                android:layout_width="@dimen/dp_3"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:background="@drawable/round_line_bg" />
+        </RelativeLayout>
+
+        <TextView
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/dp_1"
+            android:paddingBottom="@dimen/dp_1"
+            android:layout_below="@id/video_truck"
+            android:textColor="@color/white"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/dp_4"
+            android:gravity="center"
+            android:text="" />
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -31,7 +31,6 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.huawei.hms.videoeditor.common.utils.BitmapDecodeUtils;
 import com.huawei.hms.videoeditor.sdk.asset.HVEAsset;
 import com.huawei.hms.videoeditor.sdk.asset.HVEImageAsset;
 import com.huawei.hms.videoeditor.sdk.asset.HVEThumbnailCallback;
@@ -39,6 +38,7 @@ import com.huawei.hms.videoeditor.sdk.asset.HVEVideoAsset;
 import com.huawei.hms.videoeditor.sdk.lane.HVEVideoLane;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.utils.BigDecimalUtils;
+import com.huawei.hms.videoeditor.ui.common.utils.BitmapDecodeUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.ScreenUtil;
 import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
 

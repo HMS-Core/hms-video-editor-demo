@@ -19,6 +19,8 @@ package com.huawei.hms.videoeditor.ui.common.utils;
 
 import java.util.List;
 
+import android.content.Context;
+
 import com.huawei.hms.videoeditor.sdk.HuaweiVideoEditor;
 import com.huawei.hms.videoeditor.sdk.asset.HVEAsset;
 import com.huawei.hms.videoeditor.sdk.bean.HVEPosition2D;
@@ -29,7 +31,6 @@ import com.huawei.hms.videoeditor.sdk.lane.HVELane;
 import com.huawei.hms.videoeditor.sdk.lane.HVEStickerLane;
 import com.huawei.hms.videoeditor.sdk.lane.HVEVideoLane;
 import com.huawei.hms.videoeditor.sdk.util.KeepOriginal;
-import com.huawei.hms.videoeditor.sdk.util.MemoryInfoUtil;
 
 @KeepOriginal
 public class LaneSizeCheckUtils {
@@ -42,8 +43,8 @@ public class LaneSizeCheckUtils {
 
     private static final int LOW_MEMORY_MAX_AUDIO_SIZE = 3;
 
-    public static HVEAudioLane getAudioFreeLan(HuaweiVideoEditor editor, long start, long end) {
-        if (editor == null || editor.getTimeLine() == null) {
+    public static HVEAudioLane getAudioFreeLan(HuaweiVideoEditor editor, long start, long end, Context context) {
+        if (editor == null || editor.getTimeLine() == null || context == null) {
             return null;
         }
 
@@ -69,14 +70,14 @@ public class LaneSizeCheckUtils {
                 return lane;
             }
         }
-        if (!isAudioLaneOutOfSize(editor)) {
+        if (!isAudioLaneOutOfSize(editor, context)) {
             return null;
         }
         return editor.getTimeLine().appendAudioLane();
     }
 
-    public static HVEVideoLane getPipFreeLan(HuaweiVideoEditor editor, long start, long end) {
-        if (editor == null || editor.getTimeLine() == null) {
+    public static HVEVideoLane getPipFreeLan(HuaweiVideoEditor editor, long start, long end, Context context) {
+        if (editor == null || editor.getTimeLine() == null || context == null) {
             return null;
         }
         List<HVEVideoLane> lanes = editor.getTimeLine().getAllVideoLane();
@@ -98,7 +99,7 @@ public class LaneSizeCheckUtils {
                 }
             }
         }
-        if (!isPipLaneOutOfSize(editor)) {
+        if (!isPipLaneOutOfSize(editor, context)) {
             return null;
         }
         return editor.getTimeLine().appendVideoLane();
@@ -160,7 +161,7 @@ public class LaneSizeCheckUtils {
         return getEffectFreeLan(editor, start, end);
     }
 
-    public static boolean isCanAddPip(HuaweiVideoEditor editor) {
+    public static boolean isCanAddPip(HuaweiVideoEditor editor, Context context) {
         if (editor == null || editor.getTimeLine() == null) {
             return false;
         }
@@ -188,11 +189,11 @@ public class LaneSizeCheckUtils {
         } else {
             return true;
         }
-        return isPipLaneOutOfSize(editor);
+        return isPipLaneOutOfSize(editor, context);
     }
 
-    public static boolean isCanAddAudio(HuaweiVideoEditor editor) {
-        if (editor == null || editor.getTimeLine() == null) {
+    public static boolean isCanAddAudio(HuaweiVideoEditor editor, Context context) {
+        if (editor == null || editor.getTimeLine() == null || context == null) {
             return false;
         }
         List<HVEAudioLane> lanes = editor.getTimeLine().getAllAudioLane();
@@ -225,7 +226,7 @@ public class LaneSizeCheckUtils {
         } else {
             return true;
         }
-        if (!isAudioLaneOutOfSize(editor)) {
+        if (!isAudioLaneOutOfSize(editor, context)) {
             return false;
         }
         return true;
@@ -246,9 +247,13 @@ public class LaneSizeCheckUtils {
 
     }
 
-    public static boolean isPipLaneOutOfSize(HuaweiVideoEditor editor) {
+    public static boolean isPipLaneOutOfSize(HuaweiVideoEditor editor, Context context) {
         int maxSize;
-        if (MemoryInfoUtil.isLowMemoryDevice()) {
+        if (context == null) {
+            return false;
+        }
+
+        if (MemoryInfoUtil.isLowMemoryDevice(context)) {
             maxSize = LOW_MEMORY_MAX_PIP_SIZE;
         } else {
             maxSize = HIGH_MEMORY_MAX_PIP_SIZE;
@@ -260,9 +265,12 @@ public class LaneSizeCheckUtils {
         return true;
     }
 
-    public static boolean isAudioLaneOutOfSize(HuaweiVideoEditor editor) {
+    public static boolean isAudioLaneOutOfSize(HuaweiVideoEditor editor, Context context) {
         int maxSize;
-        if (MemoryInfoUtil.isLowMemoryDevice()) {
+        if (context == null) {
+            return false;
+        }
+        if (MemoryInfoUtil.isLowMemoryDevice(context)) {
             maxSize = LOW_MEMORY_MAX_AUDIO_SIZE;
         } else {
             maxSize = HIGH_MEMORY_MAX_AUDIO_SIZE;

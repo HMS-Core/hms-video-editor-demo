@@ -25,7 +25,7 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.huawei.hms.videoeditor.sdk.util.MemoryInfoUtil;
+import com.huawei.hms.videoeditor.ui.common.utils.MemoryInfoUtil;
 import com.huawei.hms.videoeditor.ui.common.utils.ScreenUtil;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
@@ -97,7 +97,7 @@ public class FrameRate extends View {
             this.mLength = degreelength;
         }
 
-        isLowMemory = MemoryInfoUtil.isLowMemoryDevice();
+        isLowMemory = MemoryInfoUtil.isLowMemoryDevice(context);
         space = mLength / mDegreeCount;
         setDegreePaint(mDegreeColor, mDegreeWidth);
         setTextPaint(mTextColor, mTextSize);

@@ -29,7 +29,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import com.huawei.hms.videoeditor.sdk.util.BigDecimalUtil;
+import com.huawei.hms.videoeditor.ui.common.utils.BigDecimalUtil;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 import com.huawei.hms.videoeditor.ui.common.BaseDialog;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;

@@ -44,7 +44,7 @@ import com.huawei.hms.videoeditor.sdk.effect.HVEEffect;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.BaseFragment;
 import com.huawei.hms.videoeditor.ui.common.EditorManager;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.bean.Constant;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.ScreenUtil;
@@ -102,7 +102,7 @@ public class EffectPanelFragment extends BaseFragment {
 
     private int mTopTabSelectIndex = 0;
 
-    private MaterialsCloudBean mCutContent;
+    private CloudMaterialBean mCutContent;
 
     private HVEEffect mLastEffect;
 
@@ -139,7 +139,7 @@ public class EffectPanelFragment extends BaseFragment {
             if (effectPanelFragment.mEffectPanelViewModel == null) {
                 return;
             }
-            MaterialsCloudBean cutContent = (MaterialsCloudBean) msg.obj;
+            CloudMaterialBean cutContent = (CloudMaterialBean) msg.obj;
             if (cutContent == null) {
                 return;
             }

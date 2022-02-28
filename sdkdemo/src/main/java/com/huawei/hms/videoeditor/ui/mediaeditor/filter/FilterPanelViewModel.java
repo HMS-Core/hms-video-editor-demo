@@ -46,10 +46,9 @@ import com.huawei.hms.videoeditor.sdk.asset.HVEVisibleAsset;
 import com.huawei.hms.videoeditor.sdk.effect.HVEEffect;
 import com.huawei.hms.videoeditor.sdk.lane.HVEEffectLane;
 import com.huawei.hms.videoeditor.sdk.lane.HVEVideoLane;
-import com.huawei.hms.videoeditor.sdk.store.MaterialsLocalDataManager;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.EditorManager;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.bean.FilterData;
 import com.huawei.hms.videoeditor.ui.common.bean.MaterialsDownloadInfo;
 import com.huawei.hms.videoeditor.ui.common.utils.LaneSizeCheckUtils;
@@ -73,7 +72,7 @@ public class FilterPanelViewModel extends AndroidViewModel {
 
     private final MutableLiveData<String> emptyString = new MutableLiveData<>();
 
-    private final MutableLiveData<List<MaterialsCloudBean>> mFilterMaterials = new MutableLiveData<>();
+    private final MutableLiveData<List<CloudMaterialBean>> mFilterMaterials = new MutableLiveData<>();
 
     private final MutableLiveData<MaterialsDownloadInfo> mDownloadSuccess = new MutableLiveData<>();
 
@@ -83,11 +82,8 @@ public class FilterPanelViewModel extends AndroidViewModel {
 
     private final MutableLiveData<Boolean> boundaryPageData = new MutableLiveData<>();
 
-    private final MaterialsLocalDataManager mLocalDataManager;
-
     public FilterPanelViewModel(@NonNull Application application) {
         super(application);
-        mLocalDataManager = new MaterialsLocalDataManager();
     }
 
     public void initColumns() {
@@ -183,9 +179,9 @@ public class FilterPanelViewModel extends AndroidViewModel {
     }
 
     private void queryDownloadStatus(List<HVEMaterialInfo> materialsCutContents) {
-        List<MaterialsCloudBean> list = new ArrayList<>();
+        List<CloudMaterialBean> list = new ArrayList<>();
         for (int i = 0; i < materialsCutContents.size(); i++) {
-            MaterialsCloudBean materialInfo = new MaterialsCloudBean();
+            CloudMaterialBean materialInfo = new CloudMaterialBean();
             HVEMaterialInfo hveMaterialInfo = materialsCutContents.get(i);
             HVELocalMaterialInfo localMaterialInfo =
                 HVEMaterialsManager.queryLocalMaterialById(hveMaterialInfo.getMaterialId());
@@ -203,7 +199,7 @@ public class FilterPanelViewModel extends AndroidViewModel {
         mFilterMaterials.postValue(list);
     }
 
-    public void downloadColumn(int previousPosition, int position, int dataPosition, MaterialsCloudBean cutContent) {
+    public void downloadColumn(int previousPosition, int position, int dataPosition, CloudMaterialBean cutContent) {
         MaterialsDownloadInfo downloadFilterInfo = new MaterialsDownloadInfo();
         downloadFilterInfo.setPreviousPosition(previousPosition);
         downloadFilterInfo.setPosition(position);
@@ -246,7 +242,7 @@ public class FilterPanelViewModel extends AndroidViewModel {
         return errorString;
     }
 
-    public MutableLiveData<List<MaterialsCloudBean>> getPageData() {
+    public MutableLiveData<List<CloudMaterialBean>> getPageData() {
         return mFilterMaterials;
     }
 

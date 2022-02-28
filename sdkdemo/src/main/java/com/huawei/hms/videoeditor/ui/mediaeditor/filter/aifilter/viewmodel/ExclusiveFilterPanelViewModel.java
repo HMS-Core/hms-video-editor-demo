@@ -29,9 +29,8 @@ import com.huawei.hms.videoeditor.sdk.HuaweiVideoEditor;
 import com.huawei.hms.videoeditor.sdk.ai.HVEExclusiveFilter;
 import com.huawei.hms.videoeditor.sdk.effect.HVEEffect;
 import com.huawei.hms.videoeditor.sdk.lane.HVEEffectLane;
-import com.huawei.hms.videoeditor.sdk.store.MaterialsLocalDataManager;
 import com.huawei.hms.videoeditor.ui.common.EditorManager;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -45,11 +44,8 @@ public class ExclusiveFilterPanelViewModel extends AndroidViewModel {
 
     public static final int FILTER_LAST = 1;
 
-    private MaterialsLocalDataManager mLocalDataManager;
-
     public ExclusiveFilterPanelViewModel(@NonNull Application application) {
         super(application);
-        mLocalDataManager = new MaterialsLocalDataManager();
     }
 
     public List<HVELocalMaterialInfo> queryAllMaterialsByType(int type) throws ClassCastException {
@@ -57,7 +53,7 @@ public class ExclusiveFilterPanelViewModel extends AndroidViewModel {
         return cutContents;
     }
 
-    public void updateFilter(MaterialsCloudBean materialsCutContent) throws ClassCastException {
+    public void updateFilter(CloudMaterialBean materialsCutContent) throws ClassCastException {
         HVEExclusiveFilter filter = new HVEExclusiveFilter();
         filter.updateEffectName(materialsCutContent.getId(), materialsCutContent.getName());
     }

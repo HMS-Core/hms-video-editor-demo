@@ -36,7 +36,7 @@ import com.huawei.hms.videoeditor.materials.HVETopColumnInfo;
 import com.huawei.hms.videoeditor.materials.HVETopColumnRequest;
 import com.huawei.hms.videoeditor.materials.HVETopColumnResponse;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.bean.MaterialsDownloadInfo;
 import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
@@ -52,7 +52,7 @@ public class TransitionPanelViewModel extends AndroidViewModel {
 
     private final MutableLiveData<String> errorString = new MutableLiveData<>();
 
-    private final MutableLiveData<List<MaterialsCloudBean>> mTransitionMaterials = new MutableLiveData<>();
+    private final MutableLiveData<List<CloudMaterialBean>> mTransitionMaterials = new MutableLiveData<>();
 
     private final MutableLiveData<MaterialsDownloadInfo> mDownloadSuccess = new MutableLiveData<>();
 
@@ -144,9 +144,9 @@ public class TransitionPanelViewModel extends AndroidViewModel {
     }
 
     private void queryDownloadStatus(List<HVEMaterialInfo> transitionCutContents) {
-        List<MaterialsCloudBean> list = new ArrayList<>();
+        List<CloudMaterialBean> list = new ArrayList<>();
         for (int i = 0; i < transitionCutContents.size(); i++) {
-            MaterialsCloudBean materialInfo = new MaterialsCloudBean();
+            CloudMaterialBean materialInfo = new CloudMaterialBean();
 
             HVEMaterialInfo hveMaterialInfo = transitionCutContents.get(i);
 
@@ -166,7 +166,7 @@ public class TransitionPanelViewModel extends AndroidViewModel {
         mTransitionMaterials.postValue(list);
     }
 
-    public void downloadColumn(int previousPosition, int dataPosition, MaterialsCloudBean cutContent) {
+    public void downloadColumn(int previousPosition, int dataPosition, CloudMaterialBean cutContent) {
         MaterialsDownloadInfo downloadTransitionInfo = new MaterialsDownloadInfo();
         downloadTransitionInfo.setPreviousPosition(previousPosition);
         downloadTransitionInfo.setDataPosition(dataPosition);
@@ -206,7 +206,7 @@ public class TransitionPanelViewModel extends AndroidViewModel {
         return errorString;
     }
 
-    public MutableLiveData<List<MaterialsCloudBean>> getPageData() {
+    public MutableLiveData<List<CloudMaterialBean>> getPageData() {
         return mTransitionMaterials;
     }
 

@@ -35,7 +35,7 @@ import com.huawei.hms.videoeditor.materials.HVEColumnInfo;
 import com.huawei.hms.videoeditor.materials.HVEMaterialConstant;
 import com.huawei.hms.videoeditor.sdk.asset.HVEAsset;
 import com.huawei.hms.videoeditor.sdk.effect.HVEEffect;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.BaseFragment;
 import com.huawei.hms.videoeditor.ui.common.bean.Constant;
@@ -68,9 +68,9 @@ public class EditTextAnimateFragment extends BaseFragment implements AnimationBa
 
     private List<HVEColumnInfo> columnList = new ArrayList<>();
 
-    private List<MaterialsCloudBean> animList = new ArrayList<>();
+    private List<CloudMaterialBean> animList = new ArrayList<>();
 
-    private List<MaterialsCloudBean> initAnim = new ArrayList<>(1);
+    private List<CloudMaterialBean> initAnim = new ArrayList<>(1);
 
     private HVEAsset hveAsset = null;
 
@@ -161,13 +161,13 @@ public class EditTextAnimateFragment extends BaseFragment implements AnimationBa
         textPanelViewModel = new ViewModelProvider(mActivity).get(TextPanelViewModel.class);
     }
 
-    public List<MaterialsCloudBean> loadLocalData() {
-        MaterialsCloudBean transitionNothing = new MaterialsCloudBean();
+    public List<CloudMaterialBean> loadLocalData() {
+        CloudMaterialBean transitionNothing = new CloudMaterialBean();
         transitionNothing.setName(
                 this.getResources().getString(R.string.none));
         transitionNothing.setLocalDrawableId(R.drawable.icon_no);
         transitionNothing.setId("-1");
-        List<MaterialsCloudBean> list = new ArrayList<>();
+        List<CloudMaterialBean> list = new ArrayList<>();
         list.add(transitionNothing);
         return list;
     }
@@ -288,7 +288,7 @@ public class EditTextAnimateFragment extends BaseFragment implements AnimationBa
                 if (animList == null || animList.isEmpty()) {
                     return;
                 }
-                MaterialsCloudBean content1 = animList.get(position);
+                CloudMaterialBean content1 = animList.get(position);
                 if (content1 == null) {
                     return;
                 }
@@ -552,7 +552,7 @@ public class EditTextAnimateFragment extends BaseFragment implements AnimationBa
         textAnimationItemAdapter.notifyItemChanged(downloadPosition);
     }
 
-    private void setAnimationSelected(HVEAsset hveAsset, List<MaterialsCloudBean> animList, String animType) {
+    private void setAnimationSelected(HVEAsset hveAsset, List<CloudMaterialBean> animList, String animType) {
         int selectedPosition = textAnimationViewModel.getSelectedPosition(hveAsset, animList, animType);
         textAnimationItemAdapter.setSelectPosition(selectedPosition);
     }

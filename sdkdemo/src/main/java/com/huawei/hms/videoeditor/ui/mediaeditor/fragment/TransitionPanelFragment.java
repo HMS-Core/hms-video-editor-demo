@@ -36,7 +36,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.huawei.hms.videoeditor.common.utils.LanguageUtils;
 import com.huawei.hms.videoeditor.materials.HVEColumnInfo;
 import com.huawei.hms.videoeditor.materials.HVEMaterialConstant;
 import com.huawei.hms.videoeditor.sdk.HuaweiVideoEditor;
@@ -46,10 +45,11 @@ import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.BaseFragment;
 import com.huawei.hms.videoeditor.ui.common.EditorManager;
 import com.huawei.hms.videoeditor.ui.common.adapter.TransitionItemAdapter;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.bean.MaterialsDownloadInfo;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.BigDecimalUtils;
+import com.huawei.hms.videoeditor.ui.common.utils.LanguageUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.ScreenUtil;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.ToastWrapper;
@@ -108,9 +108,9 @@ public class TransitionPanelFragment extends BaseFragment {
 
     private List<HVEColumnInfo> columnList = new ArrayList<>();
 
-    private List<MaterialsCloudBean> animList = new ArrayList<>();
+    private List<CloudMaterialBean> animList = new ArrayList<>();
 
-    private List<MaterialsCloudBean> initAnim = new ArrayList<>(1);
+    private List<CloudMaterialBean> initAnim = new ArrayList<>(1);
 
     private int mCurrentIndex = 0;
 
@@ -128,7 +128,7 @@ public class TransitionPanelFragment extends BaseFragment {
 
     private LoadingIndicatorView mLoadingIndicatorView;
 
-    public MaterialsCloudBean mLastContent;
+    public CloudMaterialBean mLastContent;
 
     private TextView tv_title;
 
@@ -138,7 +138,7 @@ public class TransitionPanelFragment extends BaseFragment {
 
     private HVEColumnInfo mContent;
 
-    private MaterialsCloudBean mMaterialsCutContent;
+    private CloudMaterialBean mMaterialsCutContent;
 
     @Override
     protected void initViewModelObserve() {
@@ -186,13 +186,13 @@ public class TransitionPanelFragment extends BaseFragment {
         transTime.setLayoutParams(transParams);
     }
 
-    public List<MaterialsCloudBean> loadLocalData() {
-        MaterialsCloudBean transitionNothing = new MaterialsCloudBean();
+    public List<CloudMaterialBean> loadLocalData() {
+        CloudMaterialBean transitionNothing = new CloudMaterialBean();
         transitionNothing.setName(
                 this.getResources().getString(R.string.none));
         transitionNothing.setLocalDrawableId(R.drawable.icon_no);
         transitionNothing.setId("-1");
-        List<MaterialsCloudBean> list = new ArrayList<>();
+        List<CloudMaterialBean> list = new ArrayList<>();
         list.add(transitionNothing);
         return list;
     }
@@ -436,7 +436,7 @@ public class TransitionPanelFragment extends BaseFragment {
                 mLastPosition = position;
                 int previousPosition = transitionItemAdapter.getSelectPosition();
                 transitionItemAdapter.setSelectPosition(position);
-                MaterialsCloudBean content = animList.get(position);
+                CloudMaterialBean content = animList.get(position);
                 if (content != null) {
                     transitionItemAdapter.addDownloadMaterial(content);
                     transitionPanelViewModel.downloadColumn(previousPosition, position, content);
@@ -482,7 +482,7 @@ public class TransitionPanelFragment extends BaseFragment {
 
             transitionItemAdapter.setItemClick(true);
             if (downloadPosition == transitionItemAdapter.getSelectPosition()) {
-                MaterialsCloudBean materialsCutContent = downloadInfo.getMaterialBean();
+                CloudMaterialBean materialsCutContent = downloadInfo.getMaterialBean();
                 addByPosition(materialsCutContent, true);
             }
         });
@@ -520,7 +520,7 @@ public class TransitionPanelFragment extends BaseFragment {
 
         mApplyToAllTv.setOnClickListener(new OnClickRepeatedListener(v -> {
             boolean isSuccess = false;
-            MaterialsCloudBean beforeContent = getBeforeContent();
+            CloudMaterialBean beforeContent = getBeforeContent();
             if (mLastPosition == 0) {
                 isSuccess = mMenuViewModel.removeAllTransition();
             } else if (beforeContent != null) {
@@ -556,7 +556,7 @@ public class TransitionPanelFragment extends BaseFragment {
         }
     }
 
-    public void addByPosition(MaterialsCloudBean content, boolean preview) {
+    public void addByPosition(CloudMaterialBean content, boolean preview) {
         hasAddPosition = true;
         if (mLastPosition == 0) {
             deleteTransitionEffect();
@@ -634,7 +634,7 @@ public class TransitionPanelFragment extends BaseFragment {
         isFirst = false;
     }
 
-    public MaterialsCloudBean getBeforeContent() {
+    public CloudMaterialBean getBeforeContent() {
         HVEEffect effect = mEditPreviewViewModel.getEffectedTransition();
         if (effect != null) {
             String name = effect.getOptions().getEffectName();

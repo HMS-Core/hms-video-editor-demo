@@ -38,7 +38,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
@@ -54,15 +54,15 @@ public class StickerAnimationItemAdapter extends RecyclerView.Adapter<StickerAni
 
     private Context mContext;
 
-    private List<MaterialsCloudBean> mList;
+    private List<CloudMaterialBean> mList;
 
-    private final Map<String, MaterialsCloudBean> bDownloadingMap = new LinkedHashMap<>();
+    private final Map<String, CloudMaterialBean> bDownloadingMap = new LinkedHashMap<>();
 
     private int bSelectPosition = 0;
 
     private OnItemClickListener mOnItemClickListener;
 
-    public StickerAnimationItemAdapter(Context context, List<MaterialsCloudBean> list) {
+    public StickerAnimationItemAdapter(Context context, List<CloudMaterialBean> list) {
         mContext = context;
         mList = list;
     }
@@ -71,7 +71,7 @@ public class StickerAnimationItemAdapter extends RecyclerView.Adapter<StickerAni
         mOnItemClickListener = listener;
     }
 
-    public void setData(List<MaterialsCloudBean> list) {
+    public void setData(List<CloudMaterialBean> list) {
         this.mList = list;
         notifyDataSetChanged();
     }
@@ -86,7 +86,7 @@ public class StickerAnimationItemAdapter extends RecyclerView.Adapter<StickerAni
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        MaterialsCloudBean item = mList.get(position);
+        CloudMaterialBean item = mList.get(position);
 
         Glide.with(mContext)
             .load(!StringUtil.isEmpty(item.getPreviewUrl()) ? item.getPreviewUrl() : item.getLocalDrawableId())
@@ -153,7 +153,7 @@ public class StickerAnimationItemAdapter extends RecyclerView.Adapter<StickerAni
         this.bSelectPosition = selectPosition;
     }
 
-    public void addDownloadMaterial(MaterialsCloudBean item) {
+    public void addDownloadMaterial(CloudMaterialBean item) {
         if (!bDownloadingMap.containsKey(item.getId())) {
             bDownloadingMap.put(item.getId(), item);
         }

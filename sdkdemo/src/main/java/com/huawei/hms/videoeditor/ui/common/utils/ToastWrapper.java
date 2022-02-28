@@ -16,13 +16,6 @@
 
 package com.huawei.hms.videoeditor.ui.common.utils;
 
-import java.lang.reflect.Field;
-import java.security.AccessController;
-import java.security.PrivilegedAction;
-import java.util.Optional;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
@@ -37,10 +30,17 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
+
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
-import androidx.annotation.RequiresApi;
+import java.lang.reflect.Field;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
+import java.util.Optional;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ToastWrapper {
     private static final String TAG = "ToastWrapper";
@@ -134,13 +134,22 @@ public class ToastWrapper {
         }
 
         int tvToastId = Resources.getSystem().getIdentifier("message", "id", "android");
-        mToast.getView().setBackgroundColor(Color.TRANSPARENT);
-        TextView textView = mToast.getView().findViewById(tvToastId);
-        textView.setBackground(context.getDrawable(R.drawable.bg_toast_show));
-        textView.setGravity(Gravity.CENTER);
-        textView.setTextColor(context.getResources().getColor(R.color.clip_color_E6FFFFFF));
-        textView.setPadding(SizeUtils.dp2Px(context, 16), SizeUtils.dp2Px(context, 8), SizeUtils.dp2Px(context, 16),
-            SizeUtils.dp2Px(context, 8));
+
+        View view = mToast.getView();
+        if (view == null) {
+            mToast.setGravity(Gravity.CENTER, 0, -SizeUtils.dp2Px(context, 30));
+            return new ToastWrapper(mToast);
+        }
+
+        view.setBackgroundColor(Color.TRANSPARENT);
+        TextView textView = view.findViewById(tvToastId);
+        if (textView != null) {
+            textView.setBackground(context.getDrawable(R.drawable.bg_toast_show));
+            textView.setGravity(Gravity.CENTER);
+            textView.setTextColor(context.getResources().getColor(R.color.clip_color_E6FFFFFF));
+            textView.setPadding(SizeUtils.dp2Px(context, 16), SizeUtils.dp2Px(context, 8), SizeUtils.dp2Px(context, 16),
+                    SizeUtils.dp2Px(context, 8));
+        }
         mToast.setGravity(Gravity.CENTER, 0, -SizeUtils.dp2Px(context, 30));
         return new ToastWrapper(mToast);
     }
@@ -159,25 +168,31 @@ public class ToastWrapper {
 
     @SuppressLint("UseCompatLoadingForDrawables")
     public void makeTextWithShow(Context context, String text, int duration) {
-        TextView textView;
+        TextView textView = null;
         int tvToastId = Resources.getSystem().getIdentifier("message", "id", "android");
         if (toast == null) {
             toast = Toast.makeText(context.getApplicationContext(), text, duration);
-            toast.getView().setBackgroundColor(Color.TRANSPARENT);
-            textView = toast.getView().findViewById(tvToastId);
-            if (textView != null) {
-                textView.setBackground(context.getResources().getDrawable(R.drawable.bg_toast_show));
-                textView.setGravity(Gravity.CENTER);
-                textView.setTextColor(context.getResources().getColor(R.color.clip_color_E6FFFFFF));
+            View view = toast.getView();
+            if (view != null) {
+                view.setBackgroundColor(Color.TRANSPARENT);
+                textView = view.findViewById(tvToastId);
+                if (textView != null) {
+                    textView.setBackground(context.getResources().getDrawable(R.drawable.bg_toast_show));
+                    textView.setGravity(Gravity.CENTER);
+                    textView.setTextColor(context.getResources().getColor(R.color.clip_color_E6FFFFFF));
+                }
             }
         } else {
-            toast.getView().setBackgroundColor(Color.TRANSPARENT);
-            textView = toast.getView().findViewById(tvToastId);
-            if (textView != null) {
-                textView.setBackground(context.getResources().getDrawable(R.drawable.bg_toast_show));
-                textView.setGravity(Gravity.CENTER);
-                textView.setText(text);
-                textView.setTextColor(context.getResources().getColor(R.color.clip_color_E6FFFFFF));
+            View view = toast.getView();
+            if (view != null) {
+                view.setBackgroundColor(Color.TRANSPARENT);
+                textView = view.findViewById(tvToastId);
+                if (textView != null) {
+                    textView.setBackground(context.getResources().getDrawable(R.drawable.bg_toast_show));
+                    textView.setGravity(Gravity.CENTER);
+                    textView.setText(text);
+                    textView.setTextColor(context.getResources().getColor(R.color.clip_color_E6FFFFFF));
+                }
             }
         }
 
@@ -186,7 +201,7 @@ public class ToastWrapper {
             return;
         }
         textView.setPadding(SizeUtils.dp2Px(context, 16), SizeUtils.dp2Px(context, 8), SizeUtils.dp2Px(context, 16),
-            SizeUtils.dp2Px(context, 8));
+                SizeUtils.dp2Px(context, 8));
         toast.setGravity(Gravity.CENTER, 0, -SizeUtils.dp2Px(context, 30));
         // hook(toast);
         final Timer timer = new Timer();

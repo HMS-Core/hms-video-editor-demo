@@ -41,7 +41,7 @@ import com.huawei.hms.videoeditor.sdk.effect.impl.HairDyeingEffect;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.BaseFragment;
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RViewHolder;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.bean.MaterialsDownloadInfo;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.FileUtil;
@@ -89,7 +89,7 @@ public class AiHairFragment extends BaseFragment {
 
     private List<HVEColumnInfo> currentAiHairColumnList;
 
-    private List<MaterialsCloudBean> currentAiHairContentList;
+    private List<CloudMaterialBean> currentAiHairContentList;
 
     private AiHairAdapter mAiHairAdapter;
 
@@ -117,7 +117,7 @@ public class AiHairFragment extends BaseFragment {
 
     private String currentSelectedName;
 
-    private MaterialsCloudBean currentSelectedContent;
+    private CloudMaterialBean currentSelectedContent;
 
     private CommonProgressDialog aiHairProgressDialog;
 
@@ -405,7 +405,7 @@ public class AiHairFragment extends BaseFragment {
                         && currentAiHairContentList.size() > 0) {
                         isFirst = true;
                         for (int i = 0; i < visibleItemCount - 1; i++) {
-                            MaterialsCloudBean cutContent = currentAiHairContentList.get(i);
+                            CloudMaterialBean cutContent = currentAiHairContentList.get(i);
                             mAiHairAdapter.addFirstScreenData(cutContent);
                         }
                     }
@@ -450,7 +450,7 @@ public class AiHairFragment extends BaseFragment {
             public void onItemDownloadClick(int position, int dataPosition) {
                 int previousPosition = mAiHairAdapter.getSelectPosition();
                 mAiHairAdapter.setSelectPosition(position);
-                MaterialsCloudBean content = currentAiHairContentList.get(dataPosition);
+                CloudMaterialBean content = currentAiHairContentList.get(dataPosition);
 
                 mAiHairAdapter.addDownloadMap(content);
                 mAiHairViewModel.downloadAiHairMaterial(previousPosition, position, dataPosition, content);

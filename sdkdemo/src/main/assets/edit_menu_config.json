@@ -60,6 +60,16 @@
           "children": []
         },
         {
+          "id": 101224,
+          "name": "cut_second_menu_keyframe",
+          "cnName": "关键帧",
+          "drawableName": "icon_add_keyframe",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
           "id": 101218,
           "name": "first_menu_filter",
           "cnName": "滤镜",
@@ -442,6 +452,16 @@
           "name": "cut_second_menu_crop",
           "cnName": "裁切",
           "drawableName": "edit_menu_crop",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 201124,
+          "name": "cut_second_menu_keyframe",
+          "cnName": "关键帧",
+          "drawableName": "icon_add_keyframe",
           "parentId": 101,
           "enable": 1,
           "isAdvanced": 0,

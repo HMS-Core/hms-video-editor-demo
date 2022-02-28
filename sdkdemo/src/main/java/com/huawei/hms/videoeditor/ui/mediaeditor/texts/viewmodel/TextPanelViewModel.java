@@ -18,7 +18,7 @@ package com.huawei.hms.videoeditor.ui.mediaeditor.texts.viewmodel;
 
 import android.app.Application;
 
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -26,13 +26,13 @@ import androidx.lifecycle.MutableLiveData;
 
 public class TextPanelViewModel extends AndroidViewModel {
 
-    private MaterialsCloudBean mFontContent;
+    private CloudMaterialBean mFontContent;
 
-    private MaterialsCloudBean mBubblesContent;
+    private CloudMaterialBean mBubblesContent;
 
-    private MaterialsCloudBean mFlowerContent;
+    private CloudMaterialBean mFlowerContent;
 
-    private MaterialsCloudBean mAnimaText;
+    private CloudMaterialBean mAnimaText;
 
     private MutableLiveData<String> animColumn = new MutableLiveData<>();
 
@@ -43,31 +43,31 @@ public class TextPanelViewModel extends AndroidViewModel {
 
     }
 
-    public MaterialsCloudBean getFontContent() {
+    public CloudMaterialBean getFontContent() {
         return mFontContent;
     }
 
-    public void setFontContent(MaterialsCloudBean mFontContent) {
+    public void setFontContent(CloudMaterialBean mFontContent) {
         this.mFontContent = mFontContent;
     }
 
-    public MaterialsCloudBean getBubblesContent() {
+    public CloudMaterialBean getBubblesContent() {
         return mBubblesContent;
     }
 
-    public void setBubblesContent(MaterialsCloudBean mBubblesContent) {
+    public void setBubblesContent(CloudMaterialBean mBubblesContent) {
         this.mBubblesContent = mBubblesContent;
     }
 
-    public MaterialsCloudBean getFlowerContent() {
+    public CloudMaterialBean getFlowerContent() {
         return mFlowerContent;
     }
 
-    public void setFlowerContent(MaterialsCloudBean mFlowerContent) {
+    public void setFlowerContent(CloudMaterialBean mFlowerContent) {
         this.mFlowerContent = mFlowerContent;
     }
 
-    public MaterialsCloudBean getAnimaText() {
+    public CloudMaterialBean getAnimaText() {
         return mAnimaText;
     }
 
@@ -87,7 +87,7 @@ public class TextPanelViewModel extends AndroidViewModel {
         return fontColumn;
     }
 
-    public void setAnimaText(MaterialsCloudBean animaText) {
+    public void setAnimaText(CloudMaterialBean animaText) {
         this.mAnimaText = animaText;
     }
 }

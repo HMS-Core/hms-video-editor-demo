@@ -17,10 +17,10 @@
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.repository;
 
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 
 public class LoadUrlEvent {
-    private MaterialsCloudBean content;
+    private CloudMaterialBean content;
 
     private int previousPosition;
 
@@ -30,11 +30,11 @@ public class LoadUrlEvent {
 
     }
 
-    public MaterialsCloudBean getContent() {
+    public CloudMaterialBean getContent() {
         return content;
     }
 
-    public void setContent(MaterialsCloudBean content) {
+    public void setContent(CloudMaterialBean content) {
         this.content = content;
     }
 

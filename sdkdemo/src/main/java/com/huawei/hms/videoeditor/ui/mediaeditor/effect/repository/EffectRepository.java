@@ -23,11 +23,11 @@ import com.huawei.hms.videoeditor.sdk.effect.HVEEffect;
 import com.huawei.hms.videoeditor.sdk.lane.HVEEffectLane;
 import com.huawei.hms.videoeditor.sdk.lane.HVEVideoLane;
 import com.huawei.hms.videoeditor.ui.common.EditorManager;
-import com.huawei.hms.videoeditor.sdk.materials.network.response.MaterialsCloudBean;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.utils.LaneSizeCheckUtils;
 
 public class EffectRepository {
-    public static HVEEffect addEffect(MaterialsCloudBean content, long startTime) {
+    public static HVEEffect addEffect(CloudMaterialBean content, long startTime) {
         if (content == null) {
             return null;
         }
@@ -67,7 +67,7 @@ public class EffectRepository {
         return isDelete;
     }
 
-    public static HVEEffect replaceEffect(HVEEffect lastEffect, MaterialsCloudBean cutContent) {
+    public static HVEEffect replaceEffect(HVEEffect lastEffect, CloudMaterialBean cutContent) {
         if (cutContent == null || lastEffect == null) {
             return null;
         }
