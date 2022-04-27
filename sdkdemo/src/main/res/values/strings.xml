@@ -151,7 +151,7 @@
     <string name="edit_tail" priority="translator">Touch to edit text</string>
     <string name="choice_template" priority="translator">Select theme</string>
     <string name="recommend_template" priority="translator">Recommended templates</string>
-    <string name="auto_template" priority="translator">Auto-create</string>
+    <string name="auto_template" priority="translator">Highlight</string>
     <string name="auto_template_none" priority="translator">None</string>
     <string name="auto_template_custom" priority="translator">Custom</string>
     <string name="auto_template_landscape" priority="translator">Scenery</string>
@@ -629,6 +629,8 @@
     <string name="cut_second_menu_ai_hair" priority="translator">Color hair</string>
     <string name="ai_hair_fail" priority="translator">Hair coloring failed.</string>
 
+    <string name="cut_second_menu_ai_selection" priority="translator">highlight</string>
+
     <string name="action_add_mask_undo" priority="translator">Undo: Add mask.</string>
     <string name="action_add_mask_redo" priority="translator">Redo: Add mask.</string>
     <string name="action_delete_filter_undo" priority="translator">Undo: Delete filter.</string>
@@ -702,4 +704,38 @@
     <string name="reenact_limit" priority="translator">This function supports only images.</string>
     <string name="crop_limit" priority="translator">Please select a video to trim.</string>
     <string name="keyframe" priority="translator">Keyframe</string>
+
+    <string name="main_template_template_text" priority="translator">Templates</string>
+    <string name="use_module" priority="LT">Start</string>
+    <plurals name="piece_material_number">
+        <item priority="LT" quantity="one">%s item selected</item>
+        <item priority="LT" quantity="other">%s items selected</item>
+    </plurals>
+    <string name="is_give_up_download" priority="translator">No Wi-Fi connection. Continue to download template?</string>
+    <plurals name="part_number">
+        <item priority="LT" quantity="one">Parts: %s</item>
+        <item priority="translator" quantity="other">Parts: %s</item>
+    </plurals>
+    <string name="preview" priority="LT">Preview</string>
+    <string name="no_wifi" priority="translator">No Wi-Fi connection. Currently using mobile data.</string>
+
+    <!--一键动效-->
+    <string name="cut_second_menu_time_lapse" priority="translator">Auto-timelapse</string>
+    <string name="time_lapse_sky" priority="translator">sky</string>
+    <string name="time_lapse_river" priority="translator">river</string>
+    <string name="time_lapse_flow_speed" priority="translator">flow speed</string>
+    <string name="time_lapse_speed_slow" priority="translator">slow</string>
+    <string name="time_lapse_speed_standard" priority="translator">standard</string>
+    <string name="time_lapse_speed_fast" priority="translator">fast</string>
+    <string name="time_lapse_start" priority="translator">start generating dynamic effects</string>
+    <string name="time_lapse_process" priority="translator">The effect is being generated.</string>
+    <string name="time_lapse_exception" priority="translator">The sky and water are not recognized.</string>
+    <string name="time_lapse_cancel" priority="translator">Cancel the Auto-timelapse.</string>
+    <string name="time_lapse_complete" priority="translator">Auto-timelapse completion</string>
+    <string name="time_lapse_reset_result" priority="translator">Clicking this button will cancel the current effect. Please confirm.</string>
+    <string name="time_lapse_resource_not_support">The current resource is not supported</string>
+
+    <string name="cut_second_menu_video_selection" priority="translator">highlight</string>
+
+    <string name="auto_mark_description" priority="translator">An effects package needs to be downloaded to use this feature. Continue?</string>
 </resources>

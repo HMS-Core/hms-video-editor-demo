@@ -128,7 +128,7 @@ public class EditTextFlowerFragment extends BaseFragment {
         setTimeoutEnable();
         previewViewModel = new ViewModelProvider(mActivity, mFactory).get(EditPreviewViewModel.class);
         mMaterialEditViewModel = new ViewModelProvider(mActivity, mFactory).get(MaterialEditViewModel.class);
-        mTextFlowerViewModel = new ViewModelProvider(this, mFactory).get(TextFlowerViewModel.class);
+        mTextFlowerViewModel = new ViewModelProvider(mActivity, mFactory).get(TextFlowerViewModel.class);
         textPanelViewModel = new ViewModelProvider(mActivity, mFactory).get(TextPanelViewModel.class);
 
         int widthHeight = 0;
@@ -198,6 +198,7 @@ public class EditTextFlowerFragment extends BaseFragment {
         mTextFlowerViewModel.getErrorString().observe(this, errorString -> {
             if (!TextUtils.isEmpty(errorString) && mFlowerList.size() == 0) {
                 mFlowerLoadingLayout.setVisibility(View.GONE);
+                mFlowerRecyclerView.setVisibility(View.GONE);
                 mFlowerIndicatorView.hide();
                 mFlowerErrorTv.setText(errorString);
                 mFlowerErrorLayout.setVisibility(View.VISIBLE);
@@ -211,6 +212,10 @@ public class EditTextFlowerFragment extends BaseFragment {
             }
             ToastWrapper.makeText(mActivity, emptyString, Toast.LENGTH_SHORT).show();
         });
+
+        mTextFlowerViewModel.getClear().observe(this,clear -> {
+            clearFlowText();
+        });
     }
 
     @Override
@@ -219,13 +224,7 @@ public class EditTextFlowerFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 relativeLayout.setBackground(mActivity.getResources().getDrawable(R.drawable.edit_text_style_shape));
-                setFlowerPath("");
-                setEditPanelFlower(null);
-                int mSelectPosition = textFlowerAdapter.getSelectPosition();
-                if (mSelectPosition != -1) {
-                    textFlowerAdapter.setSelectPosition(-1);
-                    textFlowerAdapter.notifyItemChanged(mSelectPosition);
-                }
+                clearFlowText();
             }
         });
 
@@ -349,6 +348,16 @@ public class EditTextFlowerFragment extends BaseFragment {
         mTextFlowerViewModel.getBoundaryPageData().observe(this, aBoolean -> {
             mHasNextPage = aBoolean;
         });
+    }
+
+    public void clearFlowText() {
+        setFlowerPath("");
+        setEditPanelFlower(null);
+        int mSelectPosition = textFlowerAdapter.getSelectPosition();
+        if (mSelectPosition != -1) {
+            textFlowerAdapter.setSelectPosition(-1);
+            textFlowerAdapter.notifyItemChanged(mSelectPosition);
+        }
     }
 
     @Override

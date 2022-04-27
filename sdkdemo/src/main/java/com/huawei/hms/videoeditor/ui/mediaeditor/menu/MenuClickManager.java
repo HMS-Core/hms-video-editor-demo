@@ -75,6 +75,7 @@ import com.huawei.hms.videoeditor.ui.mediaeditor.pip.PicInPicMixFragment;
 import com.huawei.hms.videoeditor.ui.mediaeditor.sticker.fragment.StickerPanelFragment;
 import com.huawei.hms.videoeditor.ui.mediaeditor.sticker.stickeranimation.fragment.StickerAnimationPanelFragment;
 import com.huawei.hms.videoeditor.ui.mediaeditor.texts.fragment.EditPanelFragment;
+import com.huawei.hms.videoeditor.ui.mediaeditor.timelapse.TimeLapseViewModel;
 import com.huawei.hms.videoeditor.ui.mediaeditor.trackview.viewmodel.EditPreviewViewModel;
 import com.huawei.hms.videoeditor.ui.mediapick.activity.MediaPickActivity;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
@@ -90,6 +91,14 @@ public class MenuClickManager {
 
     private final static String FACE_BLOCKING_KEY = "FACE_BLOCKING_KEY";
 
+    public final static String TIME_LAPSE = "TIME_LAPSE";
+
+    public final static String TIME_LAPSE_KEY = "TIME_LAPSE_KEY";
+
+    public final static String VIDEO_SELECTION = "VIDEO_SELECTION";
+
+    public final static String VIDEO_SELECTION_KEY = "VIDEO_SELECTION_KEY";
+
     private VideoClipsActivity mActivity;
 
     private EditMenuContentLayout menuContentLayout;
@@ -103,6 +112,8 @@ public class MenuClickManager {
     private MaterialEditViewModel mMaterialEditViewModel;
 
     private PersonTrackingViewModel mPersonTrackingViewModel;
+
+    private TimeLapseViewModel mTimeLapseViewModel;
 
     private OnAssetDeleteListener mOnAssetDeleteListener;
 
@@ -118,12 +129,13 @@ public class MenuClickManager {
 
     public void init(VideoClipsActivity activity, EditMenuContentLayout menuContentLayout, MenuViewModel menuViewModel,
         EditPreviewViewModel editPreviewViewModel, MaterialEditViewModel materialEditViewModel,
-        PersonTrackingViewModel personTrackingViewModel) {
+        PersonTrackingViewModel personTrackingViewModel, TimeLapseViewModel timeLapseViewModel) {
         this.mActivity = activity;
         this.mMenuViewModel = menuViewModel;
         this.editPreviewViewModel = editPreviewViewModel;
         this.mMaterialEditViewModel = materialEditViewModel;
         this.mPersonTrackingViewModel = personTrackingViewModel;
+        this.mTimeLapseViewModel = timeLapseViewModel;
         this.menuContentLayout = menuContentLayout;
         mMenuControlViewRouter =
             new MenuControlViewRouter(mActivity, R.id.fragment_container, menuContentLayout, mMenuViewModel);
@@ -815,6 +827,30 @@ public class MenuClickManager {
                         });
                     }
                 });
+                break;
+
+            case EDIT_PIP_OPERATION_AI_SELECTION:
+            case EDIT_VIDEO_STATE_AI_SELECTION:
+            case EDIT_VIDEO_OPERATION_AI_SELECTION:
+                if (mMenuViewModel != null) {
+                    mMenuViewModel.setVideoSelectionEnter(id);
+                }
+                break;
+
+            case EDIT_VIDEO_STATE_TIME_LAPSE:
+            case EDIT_VIDEO_OPERATION_TIME_LAPSE:
+            case EDIT_PIP_OPERATION_TIME_LAPSE:
+                HVEAsset selectedAsset = editPreviewViewModel.getSelectedAsset();
+                if (selectedAsset == null) {
+                    selectedAsset = editPreviewViewModel.getMainLaneAsset();
+                }
+                if (selectedAsset == null) {
+                    return;
+                }
+                if (mTimeLapseViewModel != null) {
+                    mTimeLapseViewModel.setSelectedAsset(selectedAsset);
+                    mTimeLapseViewModel.setTimeLapseEnter(id);
+                }
                 break;
             case EDIT_VIDEO_STATE_AI_FUN:
             case EDIT_VIDEO_OPERATION_AI_FUN:

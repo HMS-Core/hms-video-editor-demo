@@ -26,6 +26,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.huawei.hms.videoeditor.sdk.HVETimeLine;
 import com.huawei.hms.videoeditor.sdk.HuaweiVideoEditor;
+import com.huawei.hms.videoeditor.sdk.ai.HVEAIInitialCallback;
+import com.huawei.hms.videoeditor.sdk.ai.HVEVideoSelection;
 import com.huawei.hms.videoeditor.sdk.asset.HVEAsset;
 import com.huawei.hms.videoeditor.sdk.asset.HVEAudioAsset;
 import com.huawei.hms.videoeditor.sdk.asset.HVEImageAsset;
@@ -48,6 +50,7 @@ import com.huawei.hms.videoeditor.ui.common.utils.LaneSizeCheckUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.SPManager;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.ToastWrapper;
+import com.huawei.hms.videoeditor.ui.mediaeditor.materialedit.MaterialEditViewModel;
 import com.huawei.hms.videoeditor.ui.mediaeditor.trackview.viewmodel.EditPreviewViewModel;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
@@ -61,9 +64,17 @@ import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.viewmodel.Edit
 public class MenuViewModel extends AndroidViewModel {
     private static final String TAG = "MenuViewModel";
 
+    private static final long VIDEO_DURATION = 3000;
+
     private EditPreviewViewModel mEditPreviewViewModel;
 
+    private MaterialEditViewModel mMaterialEditViewModel;
+
+    private HVEVideoSelection hveVideoSelection;
+
     public MutableLiveData<Boolean> isShowMenuPanel = new MutableLiveData<>();
+
+    private MutableLiveData<Integer> videoSelectionEnter = new MutableLiveData<>();
 
     private int mCopyTextAndStickerDistance;
 
@@ -74,6 +85,10 @@ public class MenuViewModel extends AndroidViewModel {
 
     public void setEditPreviewViewModel(EditPreviewViewModel mEditPreviewViewModel) {
         this.mEditPreviewViewModel = mEditPreviewViewModel;
+    }
+
+    public void setMaterialEditViewModel(MaterialEditViewModel mMaterialEditViewModel) {
+        this.mMaterialEditViewModel = mMaterialEditViewModel;
     }
 
     private HuaweiVideoEditor getEditor() {
@@ -91,12 +106,41 @@ public class MenuViewModel extends AndroidViewModel {
         mEditPreviewViewModel.setSelectedUUID(choiceViewUUID);
     }
 
-    private HVEAsset addVideo(HVEVideoLane videoLane, MediaData data, long startTime) {
+    public MutableLiveData<Integer> getVideoSelectionEnter() {
+        return videoSelectionEnter;
+    }
+
+    public void setVideoSelectionEnter(int videoSelectionEnter) {
+        this.videoSelectionEnter.postValue(videoSelectionEnter);
+    }
+
+    public void initVideoSelection(HVEAIInitialCallback callback) {
+        if (hveVideoSelection == null) {
+            hveVideoSelection = new HVEVideoSelection();
+        }
+        hveVideoSelection.initVideoSelectionEngine(callback);
+    }
+
+    private HVEAsset addVideo(HVEVideoLane videoLane, MediaData data, long startTime, boolean isVideoSelection) {
         HVEAsset asset;
         try {
             if (data.getType() == MediaData.MEDIA_VIDEO) {
                 asset = videoLane.appendVideoAsset(data.getPath(), (int) startTime, data.getDuration(), data.getWidth(),
                         data.getHeight());
+                if (isVideoSelection) {
+                    hveVideoSelection.getHighLight(data.getPath(), VIDEO_DURATION, start -> {
+                        if (start < 0) {
+                            SmartLog.e(TAG, "illegal trimIn");
+                            return;
+                        }
+                        long trimOut = data.getDuration() - start - VIDEO_DURATION;
+                        videoLane.cutAsset(asset.getIndex(), start, HVELane.HVETrimType.TRIM_IN);
+                        videoLane.cutAsset(asset.getIndex(), trimOut, HVELane.HVETrimType.TRIM_OUT);
+                        mEditPreviewViewModel.updateDuration();
+                        mEditPreviewViewModel.refreshAssetList();
+                        hveVideoSelection.releaseVideoSelectionEngine();
+                    });
+                }
             } else {
                 asset = videoLane.appendImageAsset(data.getPath(), (int) startTime);
             }
@@ -107,7 +151,7 @@ public class MenuViewModel extends AndroidViewModel {
         return asset;
     }
 
-    public List<HVEAsset> addVideos(List<MediaData> dataList) {
+    public List<HVEAsset> addVideos(List<MediaData> dataList, boolean isVideoSelection) {
         HVEVideoLane videoLane = EditorManager.getInstance().getMainLane();
         HVETimeLine timeLine = EditorManager.getInstance().getTimeLine();
         List<HVEAsset> result = new ArrayList<>();
@@ -127,7 +171,7 @@ public class MenuViewModel extends AndroidViewModel {
         startTime = mainLaneAsset.getEndTime();
 
         for (int i = dataList.size() - 1; i >= 0; i--) {
-            HVEAsset asset = addVideo(videoLane, dataList.get(i), startTime);
+            HVEAsset asset = addVideo(videoLane, dataList.get(i), startTime, isVideoSelection);
             if (asset instanceof HVEVisibleAsset) {
                 cutAssetNoSeekTimeLine(dataList.get(i), (HVEVisibleAsset) asset);
             }
@@ -333,6 +377,9 @@ public class MenuViewModel extends AndroidViewModel {
         if (newAsset != null) {
             setSelectedUUID(newAsset.getUuid());
             mEditPreviewViewModel.updateDuration();
+            getEditor().seekTimeLine(timeLine.getCurrentTime(), () -> {
+                mMaterialEditViewModel.refresh();
+            });
         } else {
             ToastWrapper.makeText(getApplication(), getApplication().getString(R.string.copyfailed), Toast.LENGTH_SHORT)
                     .show();
@@ -738,13 +785,12 @@ public class MenuViewModel extends AndroidViewModel {
         mEditor.seekTimeLine(timeLine.getCurrentTime());
     }
 
-    public HVEWordAsset addText(String text) {
+    public HVEWordAsset addText(String text, long startTime) {
         HuaweiVideoEditor mEditor = EditorManager.getInstance().getEditor();
         HVETimeLine timeLine = EditorManager.getInstance().getTimeLine();
         if (mEditor == null || timeLine == null) {
             return null;
         }
-        long startTime = timeLine.getCurrentTime();
         long endTime = startTime + 3000;
 
         HVEStickerLane stickerLane =

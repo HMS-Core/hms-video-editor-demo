@@ -75,7 +75,7 @@ public class CoverTrackView extends View {
 
     private Bitmap imageAssetBitmap;
 
-    private final Rect rectF = new Rect(0, 0, imageWidth, imageWidth);
+    private Rect rectF = new Rect(0, 0, imageWidth, imageWidth);
 
     private Handler mHandler = new Handler();
 
@@ -91,6 +91,11 @@ public class CoverTrackView extends View {
     public CoverTrackView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.onInitializeImageTrackView(context, attrs);
+    }
+
+    public void setImageWidth(int imageWidth) {
+        this.imageWidth = imageWidth;
+        rectF = new Rect(0, 0, imageWidth, imageWidth);
     }
 
     @Override

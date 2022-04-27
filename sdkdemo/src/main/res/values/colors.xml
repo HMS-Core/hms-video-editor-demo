@@ -205,4 +205,6 @@
 
     <color name="mini_movie_dialog_button_down_color">#F2F2F2</color>
     <color name="home_color_FF181818">#FF181818</color>
+
+    <color name="color_000_40">#66000000</color>
 </resources>

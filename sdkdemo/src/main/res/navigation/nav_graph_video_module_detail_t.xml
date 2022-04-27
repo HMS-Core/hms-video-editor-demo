@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/videoModuleEditFragment"
+    tools:ignore="UnusedNavigation">
+
+    <fixfragment
+        android:id="@+id/videoModuleEditFragment"
+        android:name="com.huawei.hms.videoeditor.ui.template.module.VideoModuleEditFragment"
+        android:label="VideoModuleEditFragment">
+
+        <action
+            android:id="@+id/action_edit_to_replace"
+            app:destination="@id/videoModulePickFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out" />
+
+
+    </fixfragment>
+
+    <fixfragment
+        android:id="@+id/videoModuleReplaceFragment"
+        android:name="com.huawei.hms.videoeditor.ui.template.module.VideoModuleReplaceFragment"
+        android:label="VideoModuleReplaceFragment">
+
+    </fixfragment>
+
+</navigation>

@@ -16,14 +16,15 @@
 
 package com.huawei.hms.videoeditor.ui.common.utils;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.huawei.hms.videoeditor.VideoEditorApplication;
 import com.huawei.hms.videoeditor.utils.SmartLog;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public final class SPManager {
     public static final String LOG_PREFIX = "SP_";
@@ -43,6 +44,10 @@ public final class SPManager {
             sharedPreferences = context.getSharedPreferences(name, Context.MODE_PRIVATE);
         }
         editor = sharedPreferences.edit();
+    }
+
+    public static SPManager get(String name) {
+        return get(name, VideoEditorApplication.getInstance().getContext());
     }
 
     public static SPManager get(String name, Context context) {

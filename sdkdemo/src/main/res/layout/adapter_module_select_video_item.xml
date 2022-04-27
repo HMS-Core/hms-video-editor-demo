@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/dp_60"
+    android:layout_height="@dimen/dp_68"
+    android:background="@color/app_main_color">
+
+    <ImageView
+        android:id="@+id/iv_no_path_select"
+        android:layout_width="@dimen/dp_56"
+        android:layout_height="@dimen/dp_56"
+        android:layout_marginTop="@dimen/dp_12"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/module_select_bg"
+        android:visibility="invisible"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/iv_no_path_normal"
+        android:layout_width="@dimen/dp_56"
+        android:layout_height="@dimen/dp_56"
+        android:layout_marginTop="@dimen/dp_12"
+        android:background="@drawable/module_unselect_bg"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="invisible"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/iv_media"
+        android:layout_width="@dimen/dp_56"
+        android:layout_height="@dimen/dp_56"
+        android:layout_marginTop="@dimen/dp_12"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:scaleType="centerCrop"
+        tools:ignore="MissingConstraints" />
+
+    <View
+        android:id="@+id/mask_view"
+        android:layout_width="@dimen/dp_56"
+        android:layout_height="@dimen/dp_56"
+        android:layout_marginTop="@dimen/dp_12"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/emui_mask_thin"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/iv_delete"
+        android:layout_width="@dimen/dp_14"
+        android:layout_height="@dimen/dp_14"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/pick_delete"
+        tools:ignore="MissingConstraints"
+        android:contentDescription="@string/cut_second_menu_delete"/>
+
+    <TextView
+        android:id="@+id/tv_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/iv_no_path_select"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_no_path_select"
+        app:layout_constraintStart_toStartOf="@+id/iv_no_path_select"
+        app:layout_constraintEnd_toEndOf="@+id/iv_no_path_select"
+        android:fontFamily="Roboto"
+        android:gravity="center"
+        android:textColor="@color/color_70"
+        android:textSize="@dimen/sp_12"
+        tools:ignore="MissingConstraints" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

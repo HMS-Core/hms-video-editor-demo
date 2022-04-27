@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/image_main_tab_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_16" />
+
+    <TextView
+        android:id="@+id/text_main_tab_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/image_main_tab_item"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_2"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:fontFamily="PingFangSC"
+        android:textColor="@drawable/home_tab_text_selector"
+        android:textSize="@dimen/sp_10_home"
+        tools:ignore="SpUsage" />
+
+    <TextView
+        android:id="@+id/tv_update_red_point"
+        android:layout_width="6dp"
+        android:layout_height="6dp"
+        android:layout_toEndOf="@id/image_main_tab_item"
+        android:layout_marginTop="@dimen/dp_4"
+        android:background="@drawable/shape_red_point"
+        android:visibility="gone"
+        tools:visibility="visible" />
+</RelativeLayout>

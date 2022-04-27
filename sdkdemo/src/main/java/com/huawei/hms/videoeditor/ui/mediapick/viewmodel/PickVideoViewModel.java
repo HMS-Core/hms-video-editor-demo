@@ -153,16 +153,21 @@ public class PickVideoViewModel extends AndroidViewModel {
         try {
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
                 Bundle bundle = new Bundle();
-                bundle.putString(ContentResolver.QUERY_ARG_SQL_SELECTION, StringUtil.isEmpty(aDirName) ? null : mVideoSelection);
-                bundle.putStringArray(ContentResolver.QUERY_ARG_SQL_SELECTION_ARGS, StringUtil.isEmpty(aDirName) ? null : mVideoSelectionArgs);
-                bundle.putString(ContentResolver.QUERY_ARG_SORT_DIRECTION, videoProjections[5] + " DESC LIMIT " + page * aPageSize + " , " + aPageSize);
-                cursor = context.getContentResolver().query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, videoProjections, bundle, null);
+                bundle.putString(ContentResolver.QUERY_ARG_SQL_SELECTION,
+                    StringUtil.isEmpty(aDirName) ? null : mVideoSelection);
+                bundle.putStringArray(ContentResolver.QUERY_ARG_SQL_SELECTION_ARGS,
+                    StringUtil.isEmpty(aDirName) ? null : mVideoSelectionArgs);
+                bundle.putString(ContentResolver.QUERY_ARG_SQL_SORT_ORDER, videoProjections[5] + " DESC");
+                bundle.putInt(ContentResolver.QUERY_ARG_LIMIT, aPageSize);
+                bundle.putInt(ContentResolver.QUERY_ARG_OFFSET, page * aPageSize);
+                cursor = context.getContentResolver()
+                    .query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, videoProjections, bundle, null);
             } else {
                 cursor = context.getContentResolver()
-                        .query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, videoProjections,
-                                StringUtil.isEmpty(aDirName) ? null : mVideoSelection,
-                                StringUtil.isEmpty(aDirName) ? null : mVideoSelectionArgs,
-                                videoProjections[5] + " DESC LIMIT " + page * aPageSize + " , " + aPageSize);
+                    .query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, videoProjections,
+                        StringUtil.isEmpty(aDirName) ? null : mVideoSelection,
+                        StringUtil.isEmpty(aDirName) ? null : mVideoSelectionArgs,
+                        videoProjections[5] + " DESC LIMIT " + page * aPageSize + " , " + aPageSize);
             }
         } catch (Exception exception) {
             SmartLog.e(TAG, exception.getMessage());

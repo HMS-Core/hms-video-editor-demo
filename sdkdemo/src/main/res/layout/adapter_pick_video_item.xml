@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/content_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.utils.widget.ImageFilterView
+        android:id="@+id/iv_media"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        app:round="@dimen/dp_8"
+        tools:ignore="ContentDescription" />
+
+    <View
+        android:id="@+id/mask_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/tv_has_import"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/has_choice_bg"
+        android:fontFamily="HarmonyHeiTi"
+        android:gravity="end|center_vertical"
+        android:text="@string/media_imported"
+        android:paddingStart="@dimen/dp_4"
+        android:paddingEnd="@dimen/dp_4"
+        android:paddingTop="@dimen/dp_1"
+        android:paddingBottom="@dimen/dp_1"
+        android:textColor="@color/color_text_first_level"
+        android:textSize="@dimen/sp_8"
+        android:visibility="gone"
+        android:layout_marginStart="@dimen/dp_34"
+        android:layout_marginTop="@dimen/dp_4"
+        android:layout_marginEnd="@dimen/dp_4"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true" />
+
+    <LinearLayout
+        android:id="@+id/tv_index_layout"
+        android:layout_width="@dimen/dp_28"
+        android:layout_height="@dimen/dp_28"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_index"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_18"
+            android:layout_margin="@dimen/dp_5"
+            android:background="@drawable/media_bg_recycle_item_index_btn_selector"
+            android:fontFamily="Huawei Sans"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_10" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/dp_4"
+        android:layout_marginBottom="@dimen/dp_4"
+        android:background="@drawable/has_choice_bg"
+        android:fontFamily="HarmonyHeiTi"
+        android:gravity="center"
+        android:paddingStart="@dimen/dp_4"
+        android:paddingTop="@dimen/dp_2"
+        android:paddingEnd="@dimen/dp_4"
+        android:paddingBottom="@dimen/dp_2"
+        android:textColor="@color/color_text_first_level"
+        android:textSize="@dimen/sp_10"
+        tools:ignore="SpUsage" />
+
+</RelativeLayout>

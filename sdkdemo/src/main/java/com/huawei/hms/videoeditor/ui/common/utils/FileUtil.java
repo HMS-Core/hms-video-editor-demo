@@ -195,6 +195,42 @@ public class FileUtil {
 
     /**
      * bitmap 2 File
+     *
+     * @param bitmap bitmap
+     * @param bitName bitName
+     * @throws IOException
+     */
+    public static String saveBitmap(Context context, Bitmap bitmap, String bitName) throws IOException {
+        String sdPath = context.getFilesDir().getAbsolutePath();
+        File file = new File(sdPath + File.separator + bitName);
+        if (file.exists()) {
+            if (!file.delete()) {
+                SmartLog.i(TAG, "saveBitmap file.delete fail");
+            }
+        }
+        FileOutputStream out = null;
+        try {
+            out = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            SmartLog.e(TAG, e.getMessage());
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                SmartLog.e(TAG, e.getMessage());
+            }
+        }
+        return sdPath + File.separator + bitName;
+    }
+
+
+    /**
+     * bitmap 2 File
      */
     public static String saveBitmap(Context context, String projectId, Bitmap bitmap, String bitName) {
         String sdPath = context.getFilesDir().getAbsolutePath() + File.separator + HVEApplication.getInstance().getTag()

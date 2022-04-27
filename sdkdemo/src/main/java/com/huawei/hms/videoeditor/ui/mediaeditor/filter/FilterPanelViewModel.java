@@ -117,7 +117,7 @@ public class FilterPanelViewModel extends AndroidViewModel {
 
         if (materialsCutContents != null && materialsCutContents.size() == 0) {
             SmartLog.i(TAG, "materialsCutContents:" + materialsCutContents.size());
-            emptyString.postValue(null);
+            errorString.postValue(getApplication().getString(R.string.result_empty));
         }
 
         if (materialsCutContents == null || materialsCutContents.isEmpty()) {
@@ -127,7 +127,7 @@ public class FilterPanelViewModel extends AndroidViewModel {
         for (HVETopColumnInfo filterCutColumn : materialsCutContents) {
             List<HVEColumnInfo> materialsCutContentList = filterCutColumn.getChildInfoList();
             if (materialsCutContentList.size() == 0) {
-                emptyString.postValue(null);
+                errorString.postValue(getApplication().getString(R.string.result_empty));
                 break;
             }
 
@@ -174,7 +174,7 @@ public class FilterPanelViewModel extends AndroidViewModel {
             SmartLog.i(TAG, "hasDownload:" + materialsCutContents.toString());
             queryDownloadStatus(materialsCutContents);
         } else {
-            emptyString.postValue(null);
+            errorString.postValue(getApplication().getString(R.string.result_empty));
         }
     }
 

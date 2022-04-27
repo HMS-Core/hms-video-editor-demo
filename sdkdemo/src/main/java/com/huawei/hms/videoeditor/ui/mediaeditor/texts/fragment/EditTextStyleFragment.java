@@ -45,7 +45,6 @@ import com.huawei.hms.videoeditor.sdk.HuaweiVideoEditor;
 import com.huawei.hms.videoeditor.sdk.asset.HVEAsset;
 import com.huawei.hms.videoeditor.sdk.asset.HVEWordAsset;
 import com.huawei.hms.videoeditor.sdk.bean.HVEWordStyle;
-import com.huawei.hms.videoeditor.sdk.engine.word.FontFileManager;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.adapter.SelectAdapter;
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RCommandAdapter;
@@ -61,7 +60,6 @@ import com.huawei.hms.videoeditor.ui.common.utils.LanguageUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.ScreenUtil;
 import com.huawei.hms.videoeditor.ui.common.utils.SharedPreferencesUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
-import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
 import com.huawei.hms.videoeditor.ui.common.utils.ToastWrapper;
 import com.huawei.hms.videoeditor.ui.common.view.EditorTextView;
 import com.huawei.hms.videoeditor.ui.common.view.decoration.GridItemDividerDecoration;
@@ -75,6 +73,7 @@ import com.huawei.hms.videoeditor.ui.mediaeditor.texts.adapter.EditTextFontAdapt
 import com.huawei.hms.videoeditor.ui.mediaeditor.texts.custom.CustomNestedScrollView;
 import com.huawei.hms.videoeditor.ui.mediaeditor.texts.viewmodel.TextEditFontViewModel;
 import com.huawei.hms.videoeditor.ui.mediaeditor.texts.viewmodel.TextEditViewModel;
+import com.huawei.hms.videoeditor.ui.mediaeditor.texts.viewmodel.TextFlowerViewModel;
 import com.huawei.hms.videoeditor.ui.mediaeditor.texts.viewmodel.TextPanelViewModel;
 import com.huawei.hms.videoeditor.ui.mediaeditor.trackview.viewmodel.EditPreviewViewModel;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
@@ -174,6 +173,8 @@ public class EditTextStyleFragment extends Fragment {
 
     private boolean isFirst;
 
+    private TextFlowerViewModel mTextFlowerViewModel;
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -188,6 +189,8 @@ public class EditTextStyleFragment extends Fragment {
             }
             mFontViewModel =
                 new ViewModelProvider((ViewModelStoreOwner) fragmentContext).get(TextEditFontViewModel.class);
+            mTextFlowerViewModel =
+                new ViewModelProvider((ViewModelStoreOwner) fragmentContext).get(TextFlowerViewModel.class);
             mEditPreviewViewModel =
                 new ViewModelProvider((ViewModelStoreOwner) fragmentContext).get(EditPreviewViewModel.class);
             mMaterialEditViewModel =
@@ -291,26 +294,11 @@ public class EditTextStyleFragment extends Fragment {
             tabToTextFont(index);
         });
 
-        mEditPreviewViewModel.getDefaultFontContent()
-            .observe(getViewLifecycleOwner(), new Observer<CloudMaterialBean>() {
-                @Override
-                public void onChanged(CloudMaterialBean materialsCutContent) {
-                    if (materialsCutContent != null && !StringUtil.isEmpty(materialsCutContent.getLocalPath())) {
-                        FontFileManager.setDefaultFontFile(materialsCutContent.getLocalPath());
-                        isDefaultFont = true;
-                        headerSelect.setVisibility(View.VISIBLE);
-                        headerNormal.setVisibility(View.INVISIBLE);
-                        textEditViewModel.setFontPath(materialsCutContent.getLocalPath(), materialsCutContent.getId());
-                    }
-                }
-            });
-
-        mEditPreviewViewModel.getTimeout()
-            .observe(getViewLifecycleOwner(), isTimeout -> {
-                if (isTimeout && !isBackground) {
-                    mActivity.onBackPressed();
-                }
-            });
+        mEditPreviewViewModel.getTimeout().observe(getViewLifecycleOwner(), isTimeout -> {
+            if (isTimeout && !isBackground) {
+                mActivity.onBackPressed();
+            }
+        });
     }
 
     private class ViewPagerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -454,6 +442,11 @@ public class EditTextStyleFragment extends Fragment {
                     @Override
                     public void onItemClick(Object k, int position) {
                         textEditViewModel.setStylePosition(position);
+                        HVEAsset asset = mEditPreviewViewModel.getSelectedAsset();
+                        if (asset instanceof HVEWordAsset) {
+                            ((HVEWordAsset) asset).setFlowerWord("");
+                            mTextFlowerViewModel.clear();
+                        }
                         if (position == 0) {
                             mSeekBarLayout.setVisibility(View.GONE);
                         } else {
@@ -1350,12 +1343,7 @@ public class EditTextStyleFragment extends Fragment {
                         mEditTextFontAdapter.notifyItemChanged(mSelectPosition);
                     }
                     setEditPanelFont(null);
-                    CloudMaterialBean materialsCutContent = mEditPreviewViewModel.getDefaultFontContent().getValue();
-                    if (materialsCutContent == null) {
-                        textEditViewModel.setFontPath(Constant.DEFAULT_FONT_PATH, "");
-                        return;
-                    }
-                    textEditViewModel.setFontPath(materialsCutContent.getLocalPath(), materialsCutContent.getId());
+                    textEditViewModel.setFontPath(Constant.DEFAULT_FONT_PATH, "");
                 }
             }
         });

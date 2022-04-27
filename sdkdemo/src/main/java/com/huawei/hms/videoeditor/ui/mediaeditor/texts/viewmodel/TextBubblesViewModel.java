@@ -123,7 +123,7 @@ public class TextBubblesViewModel extends AndroidViewModel {
             boundaryPageData.postValue(response.isHasMoreItem());
             queryDownloadStatus(bubblesContents);
         } else {
-            emptyBubblesString.postValue(getApplication().getString(p));
+            errorBubblesString.postValue(getApplication().getString(p));
         }
     }
 
@@ -136,6 +136,7 @@ public class TextBubblesViewModel extends AndroidViewModel {
 
         HVETopColumnInfo topColumnInfo = columns.get(0);
         if (topColumnInfo == null || topColumnInfo.getChildInfoList().isEmpty()) {
+            errorBubblesString.postValue(getApplication().getString(R.string.result_empty));
             return;
         }
 

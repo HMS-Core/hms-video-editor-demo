@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/home_color_FF181818"
+    tools:ignore="MissingConstraints">
+
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_16"
+        android:background="@drawable/white_back_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/tv_back"/>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/title_template"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_56"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/dp_16"
+        android:paddingEnd="@dimen/dp_16"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_back"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/tv_title_template"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="HarmonyHeiTi"
+            android:singleLine="true"
+            android:gravity="center_horizontal"
+            android:text="@string/main_template_template_text"
+            android:textColor="@color/translucent_white_10"
+            android:textSize="@dimen/sp_24"
+            tools:ignore="SpUsage" />
+
+        <TextView
+            android:id="@+id/tv_title_guide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_16"
+            android:fontFamily="HarmonyHeiTi"
+            android:gravity="center_horizontal"
+            android:text="@string/main_template_guide_text"
+            android:textColor="@color/color_text_second_level"
+            android:textSize="@dimen/sp_16"
+            android:visibility="gone"
+            tools:ignore="SpUsage" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fragment_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_template"
+        tools:ignore="MissingConstraints" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -82,12 +82,14 @@ import com.huawei.hms.videoeditor.ui.mediaeditor.preview.view.MaskEffectContaine
 import com.huawei.hms.videoeditor.ui.mediaeditor.sticker.fragment.StickerPanelFragment;
 import com.huawei.hms.videoeditor.ui.mediaeditor.texts.fragment.EditPanelFragment;
 import com.huawei.hms.videoeditor.ui.mediaeditor.texts.viewmodel.TextEditViewModel;
+import com.huawei.hms.videoeditor.ui.mediaeditor.timelapse.TimeLapseViewModel;
 import com.huawei.hms.videoeditor.ui.mediaeditor.trackview.viewmodel.EditPreviewViewModel;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -127,6 +129,8 @@ public class MenuFragment extends Fragment {
     private PersonTrackingViewModel mPersonTrackingViewModel;
 
     private MenuViewModel mMenuViewModel;
+
+    private TimeLapseViewModel mTimeLapseViewModel;
 
     private long mLastClickTime = 0;
 
@@ -196,6 +200,7 @@ public class MenuFragment extends Fragment {
         mMaterialEditViewModel = new ViewModelProvider(mActivity, mFactory).get(MaterialEditViewModel.class);
         mMenuViewModel = new ViewModelProvider(mActivity, mFactory).get(MenuViewModel.class);
         mPersonTrackingViewModel = new ViewModelProvider(mActivity, mFactory).get(PersonTrackingViewModel.class);
+        mTimeLapseViewModel = new ViewModelProvider(mActivity, mFactory).get(TimeLapseViewModel.class);
     }
 
     private void initView(View view) {
@@ -207,7 +212,7 @@ public class MenuFragment extends Fragment {
         mGraffitiView = view.findViewById(R.id.graffiti_view);
         MenuClickManager.getInstance()
             .init(mActivity, menuContentLayout, mMenuViewModel, mEditPreviewViewModel, mMaterialEditViewModel,
-                mPersonTrackingViewModel);
+                mPersonTrackingViewModel, mTimeLapseViewModel);
     }
 
     private void initData() {
@@ -538,7 +543,7 @@ public class MenuFragment extends Fragment {
                             if (isVideoReverse) {
                                 unableIds.addAll(MenuClickManager.getInstance().getUnableOperateIds(8));
                             }
-                            boolean isHumanTracking =isContainHumanTrackingEffect(selectedHveAsset);
+                            boolean isHumanTracking = isContainHumanTrackingEffect(selectedHveAsset);
                             if (isHumanTracking) {
                                 unableIds.addAll(MenuClickManager.getInstance().getUnableOperateIds(9));
                             }
@@ -706,7 +711,15 @@ public class MenuFragment extends Fragment {
                         }
                         HVEWordAsset wordAsset = null;
                         if (mEditViewModel.getItemsSecondSelected().getValue() != null) {
-                            wordAsset = mMenuViewModel.addText(getResources().getString(R.string.inputtext));
+                            long startTime = 0;
+                            MutableLiveData<Long> value = mEditPreviewViewModel.getCurrentTime();
+                            if (value != null) {
+                                Long valueLong = value.getValue();
+                                if (valueLong != null) {
+                                    startTime = valueLong;
+                                }
+                            }
+                            wordAsset = mMenuViewModel.addText(getResources().getString(R.string.inputtext), startTime);
                         }
                         if (wordAsset == null) {
                             SmartLog.e(TAG, "wordAsset is null");

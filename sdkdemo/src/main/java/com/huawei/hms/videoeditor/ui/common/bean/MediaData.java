@@ -97,6 +97,40 @@ public class MediaData implements Parcelable {
 
     private long validDuration = 0;
 
+    public float getTemplateScaleWidth() {
+        return templateScaleWidth;
+    }
+
+    public void setTemplateScaleWidth(float templateScaleWidth) {
+        this.templateScaleWidth = templateScaleWidth;
+    }
+
+    public float getTemplateScaleHeight() {
+        return templateScaleHeight;
+    }
+
+    public void setTemplateScaleHeight(float templateScaleHeight) {
+        this.templateScaleHeight = templateScaleHeight;
+    }
+
+    public float getTemplateCenterX() {
+        return templateCenterX;
+    }
+
+    public void setTemplateCenterX(float templateCenterX) {
+        this.templateCenterX = templateCenterX;
+    }
+    public void setVerticalMirrorStatus(boolean verticalMirrorStatus) {
+        this.verticalMirrorStatus = verticalMirrorStatus;
+    }
+    public float getTemplateCenterY() {
+        return templateCenterY;
+    }
+
+    public void setTemplateCenterY(float templateCenterY) {
+        this.templateCenterY = templateCenterY;
+    }
+
     protected float templateScaleWidth;
 
     protected float templateScaleHeight;
@@ -108,6 +142,14 @@ public class MediaData implements Parcelable {
     public MediaData setUri(Uri uri) {
         this.uri = uri;
         return this;
+    }
+
+    public long getValidDuration() {
+        return validDuration;
+    }
+
+    public void setValidDuration(long validDuration) {
+        this.validDuration = validDuration;
     }
 
     public void setAddTime(long addTime) {

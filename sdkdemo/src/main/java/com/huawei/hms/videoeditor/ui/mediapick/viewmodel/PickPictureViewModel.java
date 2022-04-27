@@ -142,14 +142,9 @@ public class PickPictureViewModel extends AndroidViewModel {
 
     private List<MediaData> loadImageData(Context context, int page) {
         List<MediaData> mediaDataList = new ArrayList<>();
-        final String[] imageProjection = {
-            MediaStore.Images.Media._ID, MediaStore.Images.Media.DISPLAY_NAME,
-            MediaStore.Images.Media.DATA,
-            MediaStore.Images.Media.SIZE,
-            MediaStore.Images.Media.MIME_TYPE,
-            MediaStore.Images.Media.DATE_ADDED,
-            MediaStore.MediaColumns.WIDTH,
-            MediaStore.MediaColumns.HEIGHT,
+        final String[] imageProjection = {MediaStore.Images.Media._ID, MediaStore.Images.Media.DISPLAY_NAME,
+            MediaStore.Images.Media.DATA, MediaStore.Images.Media.SIZE, MediaStore.Images.Media.MIME_TYPE,
+            MediaStore.Images.Media.DATE_ADDED, MediaStore.MediaColumns.WIDTH, MediaStore.MediaColumns.HEIGHT,
             MediaStore.MediaColumns.BUCKET_DISPLAY_NAME};
         String mImageSelection = MediaStore.Images.Media.DATA + " like?";
         String[] mImageSelectionArgs = new String[] {"%" + dirPathName + "%"};
@@ -157,16 +152,21 @@ public class PickPictureViewModel extends AndroidViewModel {
         try {
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
                 Bundle bundle = new Bundle();
-                bundle.putString(ContentResolver.QUERY_ARG_SQL_SELECTION, StringUtil.isEmpty(dirPathName) ? null : mImageSelection);
-                bundle.putStringArray(ContentResolver.QUERY_ARG_SQL_SELECTION_ARGS, StringUtil.isEmpty(dirPathName) ? null : mImageSelectionArgs);
-                bundle.putString(ContentResolver.QUERY_ARG_SORT_DIRECTION, imageProjection[5] + " DESC LIMIT " + page * pageSizeData + " , " + pageSizeData);
-                cursor = context.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, imageProjection, bundle, null);
+                bundle.putString(ContentResolver.QUERY_ARG_SQL_SELECTION,
+                    StringUtil.isEmpty(dirPathName) ? null : mImageSelection);
+                bundle.putStringArray(ContentResolver.QUERY_ARG_SQL_SELECTION_ARGS,
+                    StringUtil.isEmpty(dirPathName) ? null : mImageSelectionArgs);
+                bundle.putString(ContentResolver.QUERY_ARG_SQL_SORT_ORDER, imageProjection[5] + " DESC");
+                bundle.putInt(ContentResolver.QUERY_ARG_LIMIT, pageSizeData);
+                bundle.putInt(ContentResolver.QUERY_ARG_OFFSET, page * pageSizeData);
+                cursor = context.getContentResolver()
+                    .query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, imageProjection, bundle, null);
             } else {
                 cursor = context.getContentResolver()
-                        .query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, imageProjection,
-                                StringUtil.isEmpty(dirPathName) ? null : mImageSelection,
-                                StringUtil.isEmpty(dirPathName) ? null : mImageSelectionArgs,
-                                imageProjection[5] + " DESC LIMIT " + page * pageSizeData + " , " + pageSizeData);
+                    .query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, imageProjection,
+                        StringUtil.isEmpty(dirPathName) ? null : mImageSelection,
+                        StringUtil.isEmpty(dirPathName) ? null : mImageSelectionArgs,
+                        imageProjection[5] + " DESC LIMIT " + page * pageSizeData + " , " + pageSizeData);
             }
 
         } catch (SecurityException e) {

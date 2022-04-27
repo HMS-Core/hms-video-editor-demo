@@ -264,6 +264,7 @@ public class TransformView extends View {
                 return true;
             }
         }
+        int minDistance = 10;
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN:
                 mOldX = event.getX();
@@ -308,14 +309,18 @@ public class TransformView extends View {
                 mOldRotation = getRotation(event);
                 break;
             case MotionEvent.ACTION_MOVE:
+                float dx = event.getX() - mOldX;
+                float dy = event.getY() - mOldY;
+
                 if (mCurrentMode == Mode.ZOOM) {
                     getMoveEventByZoom(event);
                 } else if (mCurrentMode == Mode.IMG_ZOOM) {
+                    if (Math.abs(dx) <= minDistance && Math.abs(dy) <= minDistance) {
+                        break;
+                    }
                     getMoveEventByImgZoom(event);
                 } else {
-                    float dx = event.getX() - mOldX;
-                    float dy = event.getY() - mOldY;
-                    if (Math.abs(dx) > 10 || Math.abs(dy) > 10) {
+                    if (Math.abs(dx) > minDistance || Math.abs(dy) > minDistance) {
                         mCurrentMode = Mode.DRAG;
                         getMoveEventByDrag(event);
                     }

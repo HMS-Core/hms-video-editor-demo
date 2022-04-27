@@ -376,6 +376,8 @@ public class EffectPanelFragment extends BaseFragment {
             } else if (errorType == ColumnsRespository.RESULT_EMPTY) {
                 SmartLog.i(TAG, "No data.");
                 mLoadingLayout.setVisibility(View.GONE);
+                mEffectErrorView.setText(getString(R.string.result_empty));
+                mEffectErrorLayout.setVisibility(View.VISIBLE);
                 mIndicatorView.hide();
             }
         });

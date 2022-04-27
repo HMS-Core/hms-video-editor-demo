@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/dp_120"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginBottom="@dimen/dp_16"
+        android:background="@drawable/bg_dialog_downloading"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:paddingStart="@dimen/dp_16"
+            android:paddingEnd="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_24"
+            android:textColor="@color/translucent_white_90"
+            android:fontFamily="HarmonyHeiTi"
+            android:textSize="@dimen/dp_16"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SpUsage" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:paddingStart="@dimen/dp_16"
+            android:paddingEnd="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_24"
+            android:textColor="@color/translucent_white_90"
+            android:fontFamily="HarmonyHeiTi"
+            android:text="@string/time_lapse_reset_result"
+            android:textSize="@dimen/dp_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title"
+            tools:ignore="SpUsage" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_16"
+            android:layout_marginBottom="@dimen/dp_8"
+            android:layout_gravity="bottom"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/home_clip_delete_dialog_cancel"
+                android:layout_width="@dimen/dp_148"
+                android:layout_height="@dimen/dp_40"
+                android:layout_marginEnd="@dimen/dp_4"
+                android:fontFamily="HarmonyHeiTi"
+                android:gravity="center"
+                android:text="@string/ai_button_cancel"
+                android:textColor="@color/color_text_focus"
+                android:textSize="@dimen/dp_16"
+                android:textAllCaps="true"
+                tools:ignore="SpUsage" />
+
+            <View
+                android:layout_width="@dimen/dp_1"
+                android:layout_height="@dimen/dp_24"
+                android:background="#33FFFFFF" />
+
+            <TextView
+                android:id="@+id/home_clip_delete_dialog_ok"
+                android:layout_width="@dimen/dp_148"
+                android:layout_height="@dimen/dp_40"
+                android:layout_marginStart="@dimen/dp_4"
+                android:fontFamily="HarmonyHeiTi"
+                android:gravity="center"
+                android:text="@string/ai_button_ok"
+                android:textColor="@color/color_text_focus"
+                android:textSize="@dimen/dp_16"
+                android:textAllCaps="true"
+                tools:ignore="SpUsage" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

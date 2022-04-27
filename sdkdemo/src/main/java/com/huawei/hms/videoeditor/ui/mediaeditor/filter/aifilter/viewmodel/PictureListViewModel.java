@@ -144,16 +144,21 @@ public class PictureListViewModel extends AndroidViewModel {
         try {
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
                 Bundle bundle = new Bundle();
-                bundle.putString(ContentResolver.QUERY_ARG_SQL_SELECTION, StringUtil.isEmpty(dirName) ? null : mImageSelection);
-                bundle.putStringArray(ContentResolver.QUERY_ARG_SQL_SELECTION_ARGS, StringUtil.isEmpty(dirName) ? null : mImageSelectionArgs);
-                bundle.putString(ContentResolver.QUERY_ARG_SORT_DIRECTION, imageDataList[5] + " DESC LIMIT " + page * PAGE_SIZE + " , " + PAGE_SIZE);
-                cursor = context.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, imageDataList, bundle, null);
+                bundle.putString(ContentResolver.QUERY_ARG_SQL_SELECTION,
+                    StringUtil.isEmpty(dirName) ? null : mImageSelection);
+                bundle.putStringArray(ContentResolver.QUERY_ARG_SQL_SELECTION_ARGS,
+                    StringUtil.isEmpty(dirName) ? null : mImageSelectionArgs);
+                bundle.putString(ContentResolver.QUERY_ARG_SQL_SORT_ORDER, imageDataList[5] + " DESC");
+                bundle.putInt(ContentResolver.QUERY_ARG_LIMIT, PAGE_SIZE);
+                bundle.putInt(ContentResolver.QUERY_ARG_OFFSET, page * PAGE_SIZE);
+                cursor = context.getContentResolver()
+                    .query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, imageDataList, bundle, null);
             } else {
                 cursor = context.getContentResolver()
-                        .query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, imageDataList,
-                                StringUtil.isEmpty(dirName) ? null : mImageSelection,
-                                StringUtil.isEmpty(dirName) ? null : mImageSelectionArgs,
-                                imageDataList[5] + " DESC LIMIT " + page * PAGE_SIZE + " , " + PAGE_SIZE);
+                    .query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, imageDataList,
+                        StringUtil.isEmpty(dirName) ? null : mImageSelection,
+                        StringUtil.isEmpty(dirName) ? null : mImageSelectionArgs,
+                        imageDataList[5] + " DESC LIMIT " + page * PAGE_SIZE + " , " + PAGE_SIZE);
             }
         } catch (SecurityException e) {
             SmartLog.e(TAG, e.getMessage());

@@ -371,6 +371,8 @@ public class StickerPanelFragment extends BaseFragment {
                 }
             } else if (errorType == ColumnsRespository.RESULT_EMPTY) {
                 SmartLog.i(TAG, "No data.");
+                mStickerErrorView.setText(getString(R.string.result_empty));
+                mStickerErrorLayout.setVisibility(View.VISIBLE);
                 mLoadingLayout.setVisibility(View.GONE);
                 mIndicatorView.hide();
             }

@@ -200,4 +200,29 @@
         <attr name="anim_lineLength" format="dimension" />
         <attr name="anim_degreeCount" format="integer" />
     </declare-styleable>
+
+    <declare-styleable name="ScaleBar">
+        <!--总刻度值-->
+        <attr name="scale_degreeCount" format="integer" />
+        <!--刻度值文字颜色-->
+        <attr name="scale_textColor" format="color" />
+        <!--大刻度线颜色-->
+        <attr name="scale_degreeBigColor" format="color" />
+        <!--小刻度线颜色-->
+        <attr name="scale_degreeSmallColor" format="color" />
+        <!--游标颜色-->
+        <attr name="cursor_color" format="color" />
+        <!--刻度线宽度-->
+        <attr name="scale_degreeWidth" format="dimension" />
+        <!--刻度文字尺寸-->
+        <attr name="scale_textSize" format="dimension" />
+        <!--游标文字尺寸-->
+        <attr name="cursor_textSize" format="dimension" />
+        <!--刻度间距-->
+        <attr name="cursor_margin" format="dimension" />
+        <!--刻度值长度-->
+        <attr name="scale_length" format="dimension" />
+        <!--游标图片-->
+        <attr name="scale_thumb" format="reference" />
+    </declare-styleable>
 </resources>

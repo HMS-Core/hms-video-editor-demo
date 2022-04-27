@@ -77,7 +77,9 @@ import androidx.navigation.fragment.NavHostFragment;
 public class VideoExportActivity extends BaseActivity
     implements TextureView.SurfaceTextureListener, MediaPlayer.OnPreparedListener, MediaPlayer.OnInfoListener,
     MediaPlayer.OnCompletionListener, MediaPlayer.OnVideoSizeChangedListener {
+    public static final String TEMPLATE_NAME = "templateName";
 
+    public static final int TEMPLATE_EXPORT_TYPE = 101;
     private static final String TAG = "VideoExportActivity";
 
     private static final String SHORTCUT_IS_FIRST = "SHORTCUT_IS_FIRST";

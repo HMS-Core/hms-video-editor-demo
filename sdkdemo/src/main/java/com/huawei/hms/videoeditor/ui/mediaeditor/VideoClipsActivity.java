@@ -17,6 +17,28 @@
 
 package com.huawei.hms.videoeditor.ui.mediaeditor;
 
+import static com.huawei.hms.videoeditor.ui.common.bean.Constant.IntentFrom.INTENT_FROM_IMAGE_LIB;
+import static com.huawei.hms.videoeditor.ui.mediaeditor.menu.MenuClickManager.TIME_LAPSE;
+import static com.huawei.hms.videoeditor.ui.mediaeditor.menu.MenuClickManager.TIME_LAPSE_KEY;
+import static com.huawei.hms.videoeditor.ui.mediaeditor.menu.MenuClickManager.VIDEO_SELECTION;
+import static com.huawei.hms.videoeditor.ui.mediaeditor.menu.MenuClickManager.VIDEO_SELECTION_KEY;
+import static com.huawei.hms.videoeditor.ui.mediaeditor.timelapse.TimeLapseViewModel.STATE_ERROR;
+import static com.huawei.hms.videoeditor.ui.mediaeditor.timelapse.TimeLapseViewModel.STATE_NO_SKY_WATER;
+import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_AUDIO_CUSTOM_CURVESPEED;
+import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_PIP_OPERATION_HUMAN_TRACKING;
+import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_PIP_OPERATION_TIME_LAPSE;
+import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.viewmodel.EditPreviewViewModel.AUDIO_TYPE_MUSIC;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Stack;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -36,20 +58,12 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.Guideline;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.huawei.hms.videoeditor.sdk.HVETimeLine;
 import com.huawei.hms.videoeditor.sdk.HuaweiVideoEditor;
@@ -77,17 +91,21 @@ import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.BigDecimalUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.CodecUtil;
 import com.huawei.hms.videoeditor.ui.common.utils.FileUtil;
+import com.huawei.hms.videoeditor.ui.common.utils.SharedPreferenceUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.SharedPreferencesUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.SoftKeyBoardUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
 import com.huawei.hms.videoeditor.ui.common.utils.ThumbNailMemoryCache;
+import com.huawei.hms.videoeditor.ui.common.utils.ToastUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.ToastWrapper;
 import com.huawei.hms.videoeditor.ui.common.utils.VolumeChangeObserver;
 import com.huawei.hms.videoeditor.ui.common.view.EditorTextView;
 import com.huawei.hms.videoeditor.ui.common.view.dialog.AdvanceExitDialog;
+import com.huawei.hms.videoeditor.ui.common.view.dialog.CommonProgressDialog;
 import com.huawei.hms.videoeditor.ui.common.view.dialog.HumanTrackingProgressDialog;
 import com.huawei.hms.videoeditor.ui.common.view.dialog.ProgressDialog;
+import com.huawei.hms.videoeditor.ui.mediaeditor.aifun.AIBlockingHintDialog;
 import com.huawei.hms.videoeditor.ui.mediaeditor.blockface.FaceBlockingFragment;
 import com.huawei.hms.videoeditor.ui.mediaeditor.blockface.FaceBlockingViewModel;
 import com.huawei.hms.videoeditor.ui.mediaeditor.blockface.FaceProgressDialog;
@@ -112,6 +130,9 @@ import com.huawei.hms.videoeditor.ui.mediaeditor.speed.CustomCurveSpeedFragment;
 import com.huawei.hms.videoeditor.ui.mediaeditor.split.AssetSplitFragment;
 import com.huawei.hms.videoeditor.ui.mediaeditor.texts.fragment.EditPanelFragment;
 import com.huawei.hms.videoeditor.ui.mediaeditor.texts.fragment.TrailerFragment;
+import com.huawei.hms.videoeditor.ui.mediaeditor.timelapse.TimeLapseConfirmDialog;
+import com.huawei.hms.videoeditor.ui.mediaeditor.timelapse.TimeLapseFragment;
+import com.huawei.hms.videoeditor.ui.mediaeditor.timelapse.TimeLapseViewModel;
 import com.huawei.hms.videoeditor.ui.mediaeditor.trackview.fragment.EditPreviewFragment;
 import com.huawei.hms.videoeditor.ui.mediaeditor.trackview.viewmodel.EditPreviewViewModel;
 import com.huawei.hms.videoeditor.ui.mediaexport.VideoExportActivity;
@@ -119,20 +140,12 @@ import com.huawei.hms.videoeditor.ui.mediapick.activity.MediaPickActivity;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 import com.huawei.secure.android.common.intent.SafeIntent;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Stack;
-import java.util.concurrent.atomic.AtomicBoolean;
-
-import static com.huawei.hms.videoeditor.ui.common.bean.Constant.IntentFrom.INTENT_FROM_IMAGE_LIB;
-import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_AUDIO_CUSTOM_CURVESPEED;
-import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_PIP_OPERATION_HUMAN_TRACKING;
-import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.viewmodel.EditPreviewViewModel.AUDIO_TYPE_MUSIC;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.Guideline;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 public class VideoClipsActivity extends BaseActivity implements DefaultPlayControlView.HideLockButton {
     private static final String TAG = "VideoClipsActivity";
@@ -174,6 +187,8 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
     public static final int ACTION_CLIP_REQUEST_CODE = 1008;
 
     public static final int ACTION_ADD_BLOCKING_STICKER_REQUEST_CODE = 1015;
+
+    public static final int ACTION_ADD_SELECTION_REQUEST_CODE = 1017;
 
     public static final String MAIN_ACTIVITY_NAME = "com.huawei.hms.ml.mediacreative.MainActivity";
 
@@ -281,6 +296,10 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
 
     private HuaweiVideoEditor mEditor;
 
+    private TimeLapseViewModel mTimeLapseViewModel;
+
+    private CommonProgressDialog mCommonProgressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         statusBarColor = R.color.home_color_FF181818;
@@ -308,6 +327,7 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
         if (mEditor != null) {
             EditorManager.getInstance().setEditor(mEditor);
             mMenuViewModel.setEditPreviewViewModel(mEditPreviewViewModel);
+            mMenuViewModel.setMaterialEditViewModel(mMaterialEditViewModel);
         }
     }
 
@@ -319,6 +339,9 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
         }
         if (mFaceProgressDialog != null && mFaceProgressDialog.isShowing()) {
             mFaceProgressDialog.reSizeDialog();
+        }
+        if (mCommonProgressDialog != null && mCommonProgressDialog.isShowing()) {
+            mCommonProgressDialog.reSizeDialog();
         }
         if (isSoftKeyboardShow) {
             hideKeyboard();
@@ -339,10 +362,10 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
 
         mSdkPlayLayout = findViewById(R.id.id_edit_play_layout);
         mVideoClipsPlayFragment =
-                (VideoClipsPlayFragment) getSupportFragmentManager().findFragmentById(R.id.id_edit_play_fragment);
+            (VideoClipsPlayFragment) getSupportFragmentManager().findFragmentById(R.id.id_edit_play_fragment);
 
         mEditPreviewFragment =
-                (EditPreviewFragment) getSupportFragmentManager().findFragmentById(R.id.id_edit_preview_fragment);
+            (EditPreviewFragment) getSupportFragmentManager().findFragmentById(R.id.id_edit_preview_fragment);
         mMenuFragment = (MenuFragment) getSupportFragmentManager().findFragmentById(R.id.id_menu_fragment);
         mTextTemplateLayout = findViewById(R.id.include_edit);
         mTextTemplateEdit = findViewById(R.id.edit_text_template);
@@ -362,6 +385,7 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
         mMaterialEditViewModel = new ViewModelProvider(this, factory).get(MaterialEditViewModel.class);
         mEditViewModel = new ViewModelProvider(this, factory).get(EditItemViewModel.class);
         mMenuViewModel = new ViewModelProvider(this, factory).get(MenuViewModel.class);
+        mTimeLapseViewModel = new ViewModelProvider(this, factory).get(TimeLapseViewModel.class);
 
         seekHandler = new Handler();
         lastSeeKTime = System.currentTimeMillis();
@@ -377,7 +401,7 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
         ArrayList<MediaData> list = safeIntent.getParcelableArrayListExtra(Constant.EXTRA_SELECT_RESULT);
 
         Constant.IntentFrom.INTENT_WHERE_FROM =
-                ("highlight".equals(safeIntent.getStringExtra(SOURCE)) ? INTENT_FROM_IMAGE_LIB : 0);
+            ("highlight".equals(safeIntent.getStringExtra(SOURCE)) ? INTENT_FROM_IMAGE_LIB : 0);
         String editorUuid = safeIntent.getStringExtra(EDITOR_UUID);
 
         if (!TextUtils.isEmpty(editorUuid)) {
@@ -418,9 +442,9 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
                         if (data != null) {
                             if (data.getType() == MediaData.MEDIA_VIDEO) {
                                 HVEVideoAsset hveVideoAsset = EditorManager.getInstance()
-                                        .getMainLane()
-                                        .appendVideoAsset(data.getPath(), data.getDuration(), data.getWidth(),
-                                                data.getHeight());
+                                    .getMainLane()
+                                    .appendVideoAsset(data.getPath(), data.getDuration(), data.getWidth(),
+                                        data.getHeight());
                                 mMenuViewModel.cutAssetNoSeekTimeLine(data, hveVideoAsset);
 
                                 if (mMediaDataList.size() == 1 && !isFromSelf) {
@@ -428,9 +452,9 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
                                 }
                             } else {
                                 HVEImageAsset imageAsset = EditorManager.getInstance()
-                                        .getMainLane()
-                                        .appendImageAsset(data.getPath(), data.getDuration(), data.getWidth(),
-                                                data.getHeight());
+                                    .getMainLane()
+                                    .appendImageAsset(data.getPath(), data.getDuration(), data.getWidth(),
+                                        data.getHeight());
 
                                 mMenuViewModel.cutAssetNoSeekTimeLine(data, imageAsset);
 
@@ -625,8 +649,8 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
                     return;
                 }
                 if (!StringUtil.isEmpty(str) && (str.equals(getString(R.string.reverse_success))
-                        || str.equals(getString(R.string.reverse_cancel))
-                        || str.equals(getString(R.string.reverse_fail)))) {
+                    || str.equals(getString(R.string.reverse_cancel))
+                    || str.equals(getString(R.string.reverse_fail)))) {
                     mEditPreviewViewModel.setCurrentTime(mCurrentTime);
                 }
             }
@@ -683,8 +707,8 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.length() > 50) {
                     ToastWrapper.makeText(mContext, String.format(Locale.ROOT,
-                            getResources().getString(R.string.most_text), NumberFormat.getInstance().format(MAX_TEXT)))
-                            .show();
+                        getResources().getString(R.string.most_text), NumberFormat.getInstance().format(MAX_TEXT)))
+                        .show();
                 }
             }
 
@@ -747,62 +771,62 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
                     return;
                 }
                 mEditor.getBitmapAtSelectedLan(trackingAsset.getLaneIndex(), mEditPreviewViewModel.getSeekTime(),
-                        new HuaweiVideoEditor.ImageCallback() {
-                            @Override
-                            public void onSuccess(Bitmap bitmap, long time) {
-                                if (bitmap == null) {
-                                    return;
-                                }
-                                int width = bitmap.getWidth();
-                                int height = bitmap.getHeight();
-                                Point point = CodecUtil.calculateEnCodeWH(width, height);
-                                float scale = BigDecimalUtils.div(width, point.x);
+                    new HuaweiVideoEditor.ImageCallback() {
+                        @Override
+                        public void onSuccess(Bitmap bitmap, long time) {
+                            if (bitmap == null) {
+                                return;
+                            }
+                            int width = bitmap.getWidth();
+                            int height = bitmap.getHeight();
+                            Point point = CodecUtil.calculateEnCodeWH(width, height);
+                            float scale = BigDecimalUtils.div(width, point.x);
 
-                                HVEPosition2D position2D = new HVEPosition2D(BigDecimalUtils.div(pointList.x, scale),
-                                        BigDecimalUtils.div(pointList.y, scale));
+                            HVEPosition2D position2D = new HVEPosition2D(BigDecimalUtils.div(pointList.x, scale),
+                                BigDecimalUtils.div(pointList.y, scale));
 
-                                Bitmap dstBitmap = Bitmap.createScaledBitmap(bitmap, point.x, point.y, true);
-                                List<Float> aiHumanTracking = null;
-                                if (trackingAsset instanceof HVEVideoAsset) {
-                                    aiHumanTracking =
-                                            ((HVEVideoAsset) trackingAsset).selectHumanTrackingPerson(dstBitmap, position2D);
-                                }
-
-                                if (aiHumanTracking != null) {
-                                    mPersonTrackingViewModel.setTrackingIsReady(true);
-                                    float minx = aiHumanTracking.get(0);
-                                    float miny = aiHumanTracking.get(1);
-                                    float maxx = aiHumanTracking.get(2);
-                                    float maxy = aiHumanTracking.get(3);
-                                    List<MaterialEditData> mMaterialEditDataList = new ArrayList<>();
-                                    MaterialEditData materialEditData = DrawBoxUtil.drawBox(
-                                            mPersonTrackingViewModel.getSelectedTracking(), mEditor.getTimeLine(),
-                                            MaterialEditData.MaterialType.PERSON, minx, miny, maxx, maxy);
-                                    mMaterialEditDataList.add(materialEditData);
-                                    mMaterialEditViewModel.addMaterialEditDataList(mMaterialEditDataList);
-                                } else {
-                                    mPersonTrackingViewModel.setTrackingIsReady(false);
-                                    runOnUiThread(() -> ToastWrapper
-                                            .makeText(VideoClipsActivity.this, R.string.no_person_selected, Toast.LENGTH_SHORT)
-                                            .show());
-                                }
-
-                                if (!bitmap.isRecycled()) {
-                                    bitmap.recycle();
-                                }
-                                if (!dstBitmap.isRecycled()) {
-                                    dstBitmap.recycle();
-                                }
+                            Bitmap dstBitmap = Bitmap.createScaledBitmap(bitmap, point.x, point.y, true);
+                            List<Float> aiHumanTracking = null;
+                            if (trackingAsset instanceof HVEVideoAsset) {
+                                aiHumanTracking =
+                                    ((HVEVideoAsset) trackingAsset).selectHumanTrackingPerson(dstBitmap, position2D);
                             }
 
-                            @Override
-                            public void onFail(int errorCode) {
-                                SmartLog.e(TAG, getString(R.string.result_illegal));
+                            if (aiHumanTracking != null) {
+                                mPersonTrackingViewModel.setTrackingIsReady(true);
+                                float minx = aiHumanTracking.get(0);
+                                float miny = aiHumanTracking.get(1);
+                                float maxx = aiHumanTracking.get(2);
+                                float maxy = aiHumanTracking.get(3);
+                                List<MaterialEditData> mMaterialEditDataList = new ArrayList<>();
+                                MaterialEditData materialEditData = DrawBoxUtil.drawBox(
+                                    mPersonTrackingViewModel.getSelectedTracking(), mEditor.getTimeLine(),
+                                    MaterialEditData.MaterialType.PERSON, minx, miny, maxx, maxy);
+                                mMaterialEditDataList.add(materialEditData);
+                                mMaterialEditViewModel.addMaterialEditDataList(mMaterialEditDataList);
+                            } else {
                                 mPersonTrackingViewModel.setTrackingIsReady(false);
-                                ToastWrapper.makeText(VideoClipsActivity.this, R.string.result_illegal, Toast.LENGTH_SHORT)
-                                        .show();
+                                runOnUiThread(() -> ToastWrapper
+                                    .makeText(VideoClipsActivity.this, R.string.no_person_selected, Toast.LENGTH_SHORT)
+                                    .show());
                             }
-                        });
+
+                            if (!bitmap.isRecycled()) {
+                                bitmap.recycle();
+                            }
+                            if (!dstBitmap.isRecycled()) {
+                                dstBitmap.recycle();
+                            }
+                        }
+
+                        @Override
+                        public void onFail(int errorCode) {
+                            SmartLog.e(TAG, getString(R.string.result_illegal));
+                            mPersonTrackingViewModel.setTrackingIsReady(false);
+                            ToastWrapper.makeText(VideoClipsActivity.this, R.string.result_illegal, Toast.LENGTH_SHORT)
+                                .show();
+                        }
+                    });
             }
         });
 
@@ -850,8 +874,8 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
                         }
 
                         ToastWrapper
-                                .makeText(VideoClipsActivity.this, getString(R.string.tracking_success), Toast.LENGTH_SHORT)
-                                .show();
+                            .makeText(VideoClipsActivity.this, getString(R.string.tracking_success), Toast.LENGTH_SHORT)
+                            .show();
                     });
                 }
 
@@ -863,9 +887,9 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
                             mPersonTrackingDialog.dismiss();
                         }
                         ToastWrapper
-                                .makeText(VideoClipsActivity.this, getString(R.string.no_person_tracked),
-                                        Toast.LENGTH_SHORT)
-                                .show();
+                            .makeText(VideoClipsActivity.this, getString(R.string.no_person_tracked),
+                                Toast.LENGTH_SHORT)
+                            .show();
                     });
                 }
             });
@@ -877,6 +901,114 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
             public void onChanged(Integer integer) {
                 detectFace(integer);
             }
+        });
+
+        mMenuViewModel.getVideoSelectionEnter().observe(this, integer -> {
+            boolean isFirstShowDialog = SharedPreferenceUtils.get(getApplicationContext(), VIDEO_SELECTION)
+                .getBoolean(VIDEO_SELECTION_KEY, true);
+            if (isFirstShowDialog) {
+                AIBlockingHintDialog aiFunDialog = new AIBlockingHintDialog(VideoClipsActivity.this,
+                    getString(R.string.cut_second_menu_video_selection), getString(R.string.auto_mark_description));
+                aiFunDialog.setOnPositiveClickListener(() -> {
+                    SharedPreferenceUtils.get(getApplicationContext(), VIDEO_SELECTION).put(VIDEO_SELECTION_KEY, false);
+                    initVideoSelection(integer);
+                });
+                aiFunDialog
+                    .setOnCancelClickListener(() -> SharedPreferenceUtils.get(getApplicationContext(), VIDEO_SELECTION)
+                        .put(VIDEO_SELECTION_KEY, true));
+                aiFunDialog.show();
+            } else {
+                initVideoSelection(integer);
+            }
+        });
+
+        mTimeLapseViewModel.getTimeLapseEnter().observe(this, integer -> {
+            boolean isFirstShowDialog =
+                SharedPreferenceUtils.get(getApplicationContext(), TIME_LAPSE).getBoolean(TIME_LAPSE_KEY, true);
+            if (isFirstShowDialog) {
+                AIBlockingHintDialog aiFunDialog = new AIBlockingHintDialog(VideoClipsActivity.this,
+                    getString(R.string.cut_second_menu_time_lapse), getString(R.string.auto_mark_description));
+                aiFunDialog.setOnPositiveClickListener(() -> {
+                    SharedPreferenceUtils.get(getApplicationContext(), TIME_LAPSE).put(TIME_LAPSE_KEY, false);
+                    preDetectAsset(integer);
+                });
+                aiFunDialog.setOnCancelClickListener(
+                    () -> SharedPreferenceUtils.get(getApplicationContext(), TIME_LAPSE).put(TIME_LAPSE_KEY, true));
+                aiFunDialog.show();
+            } else {
+                preDetectAsset(integer);
+            }
+        });
+
+        mTimeLapseViewModel.getTimeLapseStart().observe(this, integer -> {
+            if (integer == -1) {
+                return;
+            }
+            mCommonProgressDialog = new CommonProgressDialog(VideoClipsActivity.this, () -> {
+                if (!isValidActivity()) {
+                    SmartLog.e(TAG, "Activity is valid!");
+                    return;
+                }
+                ToastWrapper.makeText(VideoClipsActivity.this, getString(R.string.time_lapse_cancel)).show();
+                new Thread(() -> mTimeLapseViewModel.stopTimeLapse()).start();
+                mCommonProgressDialog.dismiss();
+                mCommonProgressDialog = null;
+            });
+            mCommonProgressDialog.setTitleValue(getString(R.string.time_lapse_process));
+            mCommonProgressDialog.setCanceledOnTouchOutside(false);
+            mCommonProgressDialog.setCancelable(false);
+            mCommonProgressDialog.show();
+            mTimeLapseViewModel.addTimeLapseEffect(mTimeLapseViewModel.getSkyRiverType(),
+                (float) mTimeLapseViewModel.getSpeedSky() / 3, mTimeLapseViewModel.getScaleSky(),
+                (float) mTimeLapseViewModel.getSpeedRiver() / 3, mTimeLapseViewModel.getScaleRiver(),
+                new HVEAIProcessCallback() {
+                    @Override
+                    public void onProgress(int progress) {
+                        if (!isValidActivity()) {
+                            return;
+                        }
+                        runOnUiThread(() -> {
+                            if (mCommonProgressDialog != null) {
+                                if (!mCommonProgressDialog.isShowing()) {
+                                    mCommonProgressDialog.show();
+                                }
+                                mCommonProgressDialog.updateProgress(progress);
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onSuccess() {
+                        if (!isValidActivity()) {
+                            return;
+                        }
+                        runOnUiThread(() -> {
+                            ToastWrapper.makeText(VideoClipsActivity.this, getString(R.string.time_lapse_complete))
+                                .show();
+                            if (mCommonProgressDialog != null) {
+                                mCommonProgressDialog.updateProgress(0);
+                                mCommonProgressDialog.dismiss();
+                            }
+                            if (mEditPreviewViewModel != null) {
+                                mEditPreviewViewModel.updateVideoLane();
+                                mEditPreviewViewModel.refreshMenuState();
+                            }
+                            mTimeLapseViewModel.stopTimeLapse();
+                        });
+                    }
+
+                    @Override
+                    public void onError(int errorCode, String errorMsg) {
+                        if (!isValidActivity()) {
+                            return;
+                        }
+                        runOnUiThread(() -> {
+                            ToastWrapper.makeText(VideoClipsActivity.this, getString(R.string.ai_exception)).show();
+                        });
+                        mTimeLapseViewModel.stopTimeLapse();
+                    }
+                });
+            mTimeLapseViewModel.setTimeLapseStart(-1);
         });
     }
 
@@ -972,7 +1104,7 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
                                 return;
                             }
                             mFaceBlockingViewModel
-                                    .setFaceBlockingList(((HVEVisibleAsset) visibleAsset).getAIFaceTemplates());
+                                .setFaceBlockingList(((HVEVisibleAsset) visibleAsset).getAIFaceTemplates());
                             runOnUiThread(() -> {
                                 if (mFaceProgressDialog != null) {
                                     mFaceProgressDialog.dismiss();
@@ -1029,8 +1161,8 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
                         mVideoClipsPlayFragment.hideLoadingView();
                         showPersonTrackingFragment(operateId);
                         ToastWrapper
-                                .makeText(VideoClipsActivity.this, R.string.click_the_person_to_follow, Toast.LENGTH_SHORT)
-                                .show();
+                            .makeText(VideoClipsActivity.this, R.string.click_the_person_to_follow, Toast.LENGTH_SHORT)
+                            .show();
                     });
                 }
 
@@ -1086,7 +1218,7 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
         }
         mTextTemplateLayout.setVisibility(View.VISIBLE);
         ConstraintLayout.LayoutParams layoutParams =
-                (ConstraintLayout.LayoutParams) mTextTemplateLayout.getLayoutParams();
+            (ConstraintLayout.LayoutParams) mTextTemplateLayout.getLayoutParams();
         if (layoutParams != null) {
             layoutParams.setMargins(0, 0, 0, mSoftKeyboardHeight);
         }
@@ -1128,10 +1260,10 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
 
     private void initNavBarAnim() {
         mShowAnim = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-                Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+            Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
         mShowAnim.setDuration(500);
         mHiddenAnim = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, -1.0f);
+            Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, -1.0f);
         mHiddenAnim.setDuration(500);
     }
 
@@ -1241,7 +1373,7 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
                 textView.setGravity(Gravity.CENTER);
                 textView.setTextColor(getResources().getColor(R.color.clip_color_E6FFFFFF));
                 textView.setPadding(SizeUtils.dp2Px(this, 16), SizeUtils.dp2Px(this, 8), SizeUtils.dp2Px(this, 16),
-                        SizeUtils.dp2Px(this, 8));
+                    SizeUtils.dp2Px(this, 8));
                 toast.setGravity(Gravity.CENTER, 0, -SizeUtils.dp2Px(this, 30));
             }
         }
@@ -1251,7 +1383,7 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
     public void addMediaData() {
         Intent intent = new Intent(this, MediaPickActivity.class);
         intent.putParcelableArrayListExtra(Constant.EXTRA_SELECT_RESULT,
-                (ArrayList<? extends MediaData>) getVideoImageAssets());
+            (ArrayList<? extends MediaData>) getVideoImageAssets());
         intent.putExtra(MediaPickActivity.ACTION_TYPE, MediaPickActivity.ACTION_APPEND_MEDIA_TYPE);
         startActivityForResult(intent, ACTION_ADD_MEDIA_REQUEST_CODE);
     }
@@ -1272,7 +1404,7 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
         if (mEditPreviewViewModel.getVideoLane() != null) {
             for (HVEAsset asset : mEditPreviewViewModel.getVideoLane().getAssets()) {
                 if (!StringUtil.isEmpty(asset.getPath()) && (asset.getType() == HVEAsset.HVEAssetType.VIDEO
-                        || asset.getType() == HVEAsset.HVEAssetType.IMAGE)) {
+                    || asset.getType() == HVEAsset.HVEAssetType.IMAGE)) {
                     MediaData data = new MediaData();
                     data.setPath(asset.getPath());
                     data.setName(getSourceName(asset.getPath()));
@@ -1304,9 +1436,9 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
     }
 
     public void showCusterSpeedFragment(int position, HVEAsset selectedAsset, List<HVESpeedCurvePoint> temp,
-                                        List<HVESpeedCurvePoint> resetList, String curveName) {
+        List<HVESpeedCurvePoint> resetList, String curveName) {
         mMenuFragment.showFragment(EDIT_AUDIO_CUSTOM_CURVESPEED,
-                CustomCurveSpeedFragment.newInstance(position, selectedAsset, temp, resetList, curveName));
+            CustomCurveSpeedFragment.newInstance(position, selectedAsset, temp, resetList, curveName));
     }
 
     public void gotoCropVideoActivity() {
@@ -1324,7 +1456,7 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
 
         HVEAsset asset = mEditPreviewViewModel.getSelectedAsset();
         if (asset == null
-                || (asset.getType() != HVEAsset.HVEAssetType.VIDEO && asset.getType() != HVEAsset.HVEAssetType.IMAGE)) {
+            || (asset.getType() != HVEAsset.HVEAssetType.VIDEO && asset.getType() != HVEAsset.HVEAssetType.IMAGE)) {
             asset = mEditPreviewViewModel.getMainLaneAsset();
         }
 
@@ -1369,6 +1501,10 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
         }
     }
 
+    public void showTimeLapseFragment(int operateId) {
+        mMenuFragment.showFragment(operateId, TimeLapseFragment.newInstance(operateId));
+    }
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (MotionEvent.ACTION_DOWN == event.getAction()) {
@@ -1385,7 +1521,7 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
             if (requestCode == ACTION_ADD_MEDIA_REQUEST_CODE && resultCode == Constant.RESULT_CODE) {
                 ArrayList<MediaData> selectList = safeIntent.getParcelableArrayListExtra(Constant.EXTRA_SELECT_RESULT);
                 if (selectList != null) {
-                    mMenuViewModel.addVideos(selectList);
+                    mMenuViewModel.addVideos(selectList, false);
                     mMediaDataList.addAll(selectList);
                 }
             }
@@ -1393,7 +1529,7 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
             if (requestCode == ACTION_ADD_AUDIO_REQUEST_CODE && resultCode == Constant.RESULT_CODE) {
                 AudioData audioData = safeIntent.getParcelableExtra(Constant.EXTRA_AUDIO_SELECT_RESULT);
                 if (audioData != null && !StringUtil.isEmpty(audioData.getName())
-                        && !StringUtil.isEmpty(audioData.getPath())) {
+                    && !StringUtil.isEmpty(audioData.getPath())) {
                     boolean isExtraAudio = safeIntent.getBooleanExtra(Constant.IS_EXTRA_AUDIO, false);
                     mEditPreviewViewModel.addAudio(audioData.getName(), audioData.getPath(), AUDIO_TYPE_MUSIC);
                 }
@@ -1420,7 +1556,7 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
                 MediaData selectList = safeIntent.getParcelableExtra(Constant.EXTRA_SELECT_RESULT);
                 if (selectList != null) {
                     mMenuViewModel.replaceMainLaneAsset(selectList.getPath(), selectList.getCutTrimIn(),
-                            selectList.getCutTrimOut());
+                        selectList.getCutTrimOut());
                 }
             }
 
@@ -1428,7 +1564,7 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
                 MediaData selectList = safeIntent.getParcelableExtra(Constant.EXTRA_SELECT_RESULT);
                 if (selectList != null) {
                     mMenuViewModel.replacePipAsset(selectList.getPath(), selectList.getCutTrimIn(),
-                            selectList.getCutTrimOut());
+                        selectList.getCutTrimOut());
                 }
             }
 
@@ -1440,6 +1576,14 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
             if (requestCode == ACTION_ADD_BLOCKING_STICKER_REQUEST_CODE && resultCode == Constant.RESULT_CODE) {
                 String stickerPath = data.getStringExtra(Constant.EXTRA_SELECT_RESULT);
                 mEditPreviewViewModel.addBlockingSticker(stickerPath);
+            }
+
+            if (requestCode == ACTION_ADD_SELECTION_REQUEST_CODE && resultCode == Constant.RESULT_CODE) {
+                ArrayList<MediaData> selectList = safeIntent.getParcelableArrayListExtra(Constant.EXTRA_SELECT_RESULT);
+                if (selectList != null) {
+                    mMenuViewModel.addVideos(selectList, true);
+                    mMediaDataList.addAll(selectList);
+                }
             }
 
             if (requestCode == ACTION_ADD_STICKER_REQUEST_CODE && resultCode == Constant.RESULT_CODE) {
@@ -1482,8 +1626,8 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
                     float rotationAfterClip = 0F;
                     if (mediaData != null) {
                         hveCut = new HVECut(mediaData.getGlLeftBottomX(), mediaData.getGlLeftBottomY(),
-                                mediaData.getGlRightTopX(), mediaData.getGlRightTopY(), mediaData.getHVEWidth(),
-                                mediaData.getHVEHeight());
+                            mediaData.getGlRightTopX(), mediaData.getGlRightTopY(), mediaData.getHVEWidth(),
+                            mediaData.getHVEHeight());
                         rotationAfterClip = mediaData.getRotation();
                     }
 
@@ -1679,7 +1823,7 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
                 super.run();
                 try {
                     String path = FileUtil.saveBitmap(getApplication(), projectId, bitmap,
-                            System.currentTimeMillis() + "cover.png");
+                        System.currentTimeMillis() + "cover.png");
                     HVETimeLine timeLine = EditorManager.getInstance().getTimeLine();
                     if (timeLine != null) {
                         timeLine.addCoverImage(path);
@@ -1733,4 +1877,144 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
     public interface TimeOutOnTouchListener {
         boolean onTouch(MotionEvent ev);
     }
+
+    private void preDetectAsset(Integer integer) {
+        if (integer == -1) {
+            return;
+        }
+        HVEAsset imageAsset;
+        if (integer == EDIT_PIP_OPERATION_TIME_LAPSE) {
+            imageAsset = mEditPreviewViewModel.getSelectedAsset();
+        } else {
+            imageAsset = mEditPreviewViewModel.getMainLaneAsset();
+        }
+        if (imageAsset != null) {
+            mTimeLapseViewModel.setSelectedAsset(imageAsset);
+        }
+        if (imageAsset == null) {
+            SmartLog.e(TAG, "TimeLapse asset is null!");
+            return;
+        }
+        if (imageAsset instanceof HVEImageAsset) {
+            boolean isContain = ((HVEImageAsset) imageAsset).isContainTimeLapseEffect();
+            SmartLog.i(TAG, "isContainEffect:" + isContain);
+            if (!isContain) {
+                initTimeLapse(integer);
+            } else {
+                showDeleteConfirmDialog(integer, (HVEImageAsset) imageAsset);
+            }
+        } else {
+            ToastUtils.getInstance()
+                .showToast(this, getString(R.string.time_lapse_resource_not_support), Toast.LENGTH_SHORT);
+        }
+    }
+
+    private void showDeleteConfirmDialog(int operateId, HVEImageAsset imageAsset) {
+        TimeLapseConfirmDialog lapseConfirmDialog = new TimeLapseConfirmDialog(this);
+        lapseConfirmDialog.show();
+        lapseConfirmDialog.setOnPositiveClickListener(() -> {
+            imageAsset.removeTimeLapseEffect();
+            initTimeLapse(operateId);
+        });
+    }
+
+    private void initTimeLapse(int operateId) {
+        if (!isValidActivity()) {
+            return;
+        }
+        runOnUiThread(() -> {
+            if (mVideoClipsPlayFragment != null) {
+                mVideoClipsPlayFragment.showLoadingView();
+            }
+        });
+        mTimeLapseViewModel.initTimeLapse(new HVEAIInitialCallback() {
+            @Override
+            public void onProgress(int progress) {
+            }
+
+            @Override
+            public void onSuccess() {
+                if (!isValidActivity()) {
+                    return;
+                }
+                runOnUiThread(() -> {
+                    if (mVideoClipsPlayFragment != null) {
+                        mVideoClipsPlayFragment.hideLoadingView();
+                    }
+                    mTimeLapseViewModel.firstDetectTimeLapse((result) -> {
+                        runOnUiThread(() -> {
+                            if (STATE_NO_SKY_WATER == result || STATE_ERROR == result) {
+                                ToastWrapper.makeText(VideoClipsActivity.this, getString(R.string.time_lapse_exception))
+                                        .show();
+                                mTimeLapseViewModel.stopTimeLapse();
+                            } else {
+                                mTimeLapseViewModel.setTimeLapseResult(result);
+                                showTimeLapseFragment(operateId);
+                            }
+                        });
+                    });
+                });
+            }
+
+            @Override
+            public void onError(int errorCode, String errorMsg) {
+                SmartLog.e(TAG, errorMsg);
+                if (!isValidActivity()) {
+                    return;
+                }
+                runOnUiThread(() -> {
+                    if (mVideoClipsPlayFragment != null) {
+                        mVideoClipsPlayFragment.hideLoadingView();
+                    }
+                    ToastWrapper.makeText(VideoClipsActivity.this, R.string.result_illegal, Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
+    }
+
+    private void initVideoSelection(int operateId) {
+        if (!isValidActivity()) {
+            return;
+        }
+        runOnUiThread(() -> {
+            if (mVideoClipsPlayFragment != null) {
+                mVideoClipsPlayFragment.showLoadingView();
+            }
+        });
+        mMenuViewModel.initVideoSelection(new HVEAIInitialCallback() {
+            @Override
+            public void onProgress(int progress) {
+            }
+
+            @Override
+            public void onSuccess() {
+                if (!isValidActivity()) {
+                    return;
+                }
+                runOnUiThread(() -> {
+                    if (mVideoClipsPlayFragment != null) {
+                        mVideoClipsPlayFragment.hideLoadingView();
+                    }
+                    Intent intent = new Intent(VideoClipsActivity.this, MediaPickActivity.class);
+                    intent.putExtra(MediaPickActivity.ACTION_TYPE, MediaPickActivity.ACTION_AUTO_VIDEO_SELECTION_TYPE);
+                    startActivityForResult(intent, VideoClipsActivity.ACTION_ADD_SELECTION_REQUEST_CODE);
+                });
+            }
+
+            @Override
+            public void onError(int errorCode, String errorMsg) {
+                SmartLog.e(TAG, errorMsg);
+                if (!isValidActivity()) {
+                    return;
+                }
+                runOnUiThread(() -> {
+                    if (mVideoClipsPlayFragment != null) {
+                        mVideoClipsPlayFragment.hideLoadingView();
+                    }
+                    ToastWrapper.makeText(VideoClipsActivity.this, R.string.result_illegal, Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
+    }
+
 }

@@ -65,6 +65,8 @@ public class TextFlowerViewModel extends AndroidViewModel {
 
     private final MutableLiveData<Boolean> boundaryPageData = new MutableLiveData<>();
 
+    private final MutableLiveData<Boolean> clear = new MutableLiveData<>();
+
     private MutableLiveData<String> fontColumn = new MutableLiveData<>();
 
     public TextFlowerViewModel(@NonNull Application application) {
@@ -124,7 +126,7 @@ public class TextFlowerViewModel extends AndroidViewModel {
             boundaryPageData.postValue(response.isHasMoreItem());
             queryDownloadStatus(bubblesContents);
         } else {
-            emptyString.postValue(getApplication().getString(p));
+            errorString.postValue(getApplication().getString(p));
         }
     }
 
@@ -137,6 +139,7 @@ public class TextFlowerViewModel extends AndroidViewModel {
 
         HVETopColumnInfo topColumnInfo = columns.get(0);
         if (topColumnInfo == null || topColumnInfo.getChildInfoList().isEmpty()) {
+            errorString.postValue(getApplication().getString(R.string.result_empty));
             return;
         }
 
@@ -240,5 +243,13 @@ public class TextFlowerViewModel extends AndroidViewModel {
 
     public MutableLiveData<String> getFontColumn() {
         return fontColumn;
+    }
+
+    public MutableLiveData<Boolean> getClear() {
+        return clear;
+    }
+
+    public void clear(){
+        clear.postValue(true);
     }
 }

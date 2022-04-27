@@ -270,6 +270,8 @@ public class EffectItemFragment extends BaseFragment {
                 case MaterialsRespository.RESULT_EMPTY:
                     if (mCurrentPage == 0) {
                         mSTLoadingLayout.setVisibility(View.GONE);
+                        mSTErrorTv.setText(getString(R.string.result_empty));
+                        mSTErrorLayout.setVisibility(View.VISIBLE);
                         mSTIndicatorView.hide();
                     }
                     SmartLog.i(TAG, "No data.");

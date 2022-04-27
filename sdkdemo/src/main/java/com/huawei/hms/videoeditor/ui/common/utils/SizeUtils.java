@@ -23,10 +23,8 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.util.DisplayMetrics;
 
-import com.huawei.hms.videoeditor.HVEEditorLibraryApplication;
-import com.huawei.hms.videoeditor.sdk.MediaApplication;
-
 public class SizeUtils {
+
     public static int dp2Px(Context context, float dp) {
         Resources resources = context.getResources();
         if (resources == null) {

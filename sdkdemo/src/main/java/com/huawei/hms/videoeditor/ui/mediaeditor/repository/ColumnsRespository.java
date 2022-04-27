@@ -79,6 +79,10 @@ public class ColumnsRespository {
 
         for (HVETopColumnInfo columnInfo : topColumnInfos) {
             if (!columnInfo.getColumnId().equals(type) || columnInfo.getChildInfoList().size() <= 0) {
+                if (topColumnInfos.size() == 1) {
+                    columnsListener.errorType(RESULT_EMPTY);
+                    break;
+                }
                 continue;
             }
 

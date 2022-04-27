@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/videoModulePickFragment"
+    tools:ignore="UnusedNavigation">
+
+    <fixfragment
+        android:id="@+id/videoModulePickFragment"
+        android:name="com.huawei.hms.videoeditor.ui.template.module.VideoModulePickFragment"
+        android:label="VideoModulePickFragment">
+
+        <!--        <action-->
+        <!--            android:id="@+id/action_pick_to_choose"-->
+        <!--            app:destination="@id/videoModuleSourceEditFragment" />-->
+
+    </fixfragment>
+
+
+    <!--    <fixfragment-->
+    <!--        android:id="@+id/videoModuleSourceEditFragment"-->
+    <!--        android:name="com.huawei.hms.ml.mediacreative.model.fragment.module.VideoModuleSourceEditFragment"-->
+    <!--        android:label="VideoModuleSourceEditFragment" />-->
+
+</navigation>

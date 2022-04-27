@@ -22,6 +22,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.os.Build;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -33,6 +35,49 @@ public class ScreenUtil {
     private ScreenUtil() {
     }
 
+    public static int getStatusBarHeight(Context context) {
+        Resources resources = context.getResources();
+        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
+        return resources.getDimensionPixelSize(resourceId);
+    }
+    public static int getNavigationBarHeightIfRoom(Context context) {
+        if (navigationGestureEnabled(context)) {
+            return 0;
+        }
+        return getCurrentNavigationBarHeight((Activity) context);
+    }
+    private static boolean navigationGestureEnabled(Context context) {
+        int val = Settings.Global.getInt(context.getContentResolver(), getDeviceInfo(), 0);
+        return val != 0;
+    }
+    private static String getDeviceInfo() {
+        String brand = Build.BRAND;
+        if (TextUtils.isEmpty(brand)) {
+            return "navigationbar_is_min";
+        }
+        if (brand.equalsIgnoreCase("HUAWEI")) {
+            return "navigationbar_is_min";
+        } else if (brand.equalsIgnoreCase("XIAOMI")) {
+            return "force_fsg_nav_bar";
+        } else if (brand.equalsIgnoreCase("VIVO")) {
+            return "navigation_gesture_on";
+        } else if (brand.equalsIgnoreCase("OPPO")) {
+            return "navigation_gesture_on";
+        } else {
+            return "navigationbar_is_min";
+        }
+    }
+    private static int getCurrentNavigationBarHeight(Activity activity) {
+        return getNavigationBarHeight(activity);
+    }
+    private static int getNavigationBarHeight(Context context) {
+        int result = 0;
+        int resourceId = context.getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = context.getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
     public static int getScreenWidth(Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();

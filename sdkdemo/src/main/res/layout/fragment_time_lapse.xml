@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/custom_operate_title" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/title_layout"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include">
+
+        <com.huawei.hms.videoeditor.ui.common.view.EditorTextView
+            android:id="@+id/tv_sky"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_13"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="@string/time_lapse_sky"
+            android:textColor="@drawable/icon_apply_all_text_selector"
+            android:textSize="@dimen/dp_14"
+            android:fontFamily="HarmonyHeiTi"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toTopOf="@+id/view_sky"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SpUsage" />
+
+        <View
+            android:id="@+id/view_sky"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_2"
+            android:layout_marginBottom="@dimen/dp_7"
+            android:layout_marginTop="@dimen/dp_4"
+            android:background="@drawable/background_tab_view"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tv_sky"
+            app:layout_constraintStart_toStartOf="@+id/tv_sky"
+            app:layout_constraintTop_toBottomOf="@+id/tv_sky" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <com.huawei.hms.videoeditor.ui.common.view.EditorTextView
+            android:id="@+id/tv_river"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_13"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="@string/time_lapse_river"
+            android:textColor="@drawable/icon_apply_all_text_selector"
+            android:textSize="@dimen/dp_14"
+            android:fontFamily="HarmonyHeiTi"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toTopOf="@+id/view_river"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SpUsage" />
+
+        <View
+            android:id="@+id/view_river"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_2"
+            android:layout_marginBottom="@dimen/dp_7"
+            android:layout_marginTop="@dimen/dp_4"
+            android:background="@drawable/background_tab_view"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tv_river"
+            app:layout_constraintStart_toStartOf="@+id/tv_river"
+            app:layout_constraintTop_toBottomOf="@+id/tv_river" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_cursor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_layout">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_sky"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.huawei.hms.videoeditor.ui.common.view.ScaleBar
+                android:id="@+id/scale_bar_sky"
+                android:layout_width="@dimen/dp_300"
+                android:layout_height="@dimen/dp_70"
+                app:cursor_color="@color/color_text_focus"
+                app:cursor_margin="@dimen/dp_12"
+                app:cursor_textSize="@dimen/dp_14"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="6dp"
+                app:scale_degreeBigColor="@color/translucent_white_40"
+                app:scale_degreeCount="360"
+                app:scale_degreeSmallColor="@color/translucent_white_60"
+                app:scale_degreeWidth="@dimen/dp_2"
+                app:scale_length="@dimen/dp_300"
+                app:scale_textColor="@color/grey_text"
+                app:scale_textSize="@dimen/dp_12"
+                app:scale_thumb="@drawable/icon_cursor" />
+
+            <LinearLayout
+                android:id="@+id/ll_radio_group_sky"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_56"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/scale_bar_sky"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_10"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/dp_12"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/translucent_white_14"
+                    android:text="@string/time_lapse_flow_speed"
+                    android:fontFamily="HarmonyHeiTi"
+                    tools:ignore="SpUsage" />
+
+                <RadioGroup
+                    android:id="@+id/rg_speed_sky"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:orientation="horizontal" >
+
+                    <RadioButton
+                        android:id="@+id/rb_speed_slow_sky"
+                        android:layout_width="@dimen/dp_18"
+                        android:layout_height="@dimen/dp_18"
+                        android:layout_marginStart="@dimen/dp_18"
+                        android:background="@drawable/radio_button_speed_bg"
+                        android:layout_gravity="center_vertical"
+                        android:button="@null"
+                        android:checked="false"
+                        android:contentDescription="@string/time_lapse_speed_slow" />
+
+                    <TextView
+                        android:id="@+id/tv_speed_slow_sky"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:fontFamily="HarmonyHeiTi"
+                        android:textColor="@color/translucent_white_14"
+                        android:textSize="@dimen/dp_12"
+                        android:gravity="center"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/dp_8"
+                        android:text="@string/time_lapse_speed_slow"
+                        tools:ignore="SpUsage" />
+
+                    <RadioButton
+                        android:id="@+id/rb_speed_standard_sky"
+                        android:layout_width="@dimen/dp_18"
+                        android:layout_height="@dimen/dp_18"
+                        android:layout_marginStart="@dimen/dp_18"
+                        android:background="@drawable/radio_button_speed_bg"
+                        android:layout_gravity="center_vertical"
+                        android:button="@null"
+                        android:checked="true"
+                        android:contentDescription="@string/time_lapse_speed_standard" />
+
+                    <TextView
+                        android:id="@+id/tv_speed_standard_sky"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:fontFamily="HarmonyHeiTi"
+                        android:textColor="@color/translucent_white_14"
+                        android:textSize="@dimen/dp_12"
+                        android:gravity="center"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/dp_8"
+                        android:text="@string/time_lapse_speed_standard"
+                        tools:ignore="SpUsage" />
+
+                    <RadioButton
+                        android:id="@+id/rb_speed_fast_sky"
+                        android:layout_width="@dimen/dp_18"
+                        android:layout_height="@dimen/dp_18"
+                        android:layout_marginStart="@dimen/dp_18"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/radio_button_speed_bg"
+                        android:button="@null"
+                        android:checked="false"
+                        android:contentDescription="@string/time_lapse_speed_fast" />
+
+                    <TextView
+                        android:id="@+id/tv_speed_fast_sky"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:fontFamily="HarmonyHeiTi"
+                        android:textColor="@color/translucent_white_14"
+                        android:textSize="@dimen/dp_12"
+                        android:gravity="center"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/dp_8"
+                        android:text="@string/time_lapse_speed_fast"
+                        tools:ignore="SpUsage" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_river"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone">
+
+            <com.huawei.hms.videoeditor.ui.common.view.ScaleBar
+                android:id="@+id/scale_bar_river"
+                android:layout_width="@dimen/dp_300"
+                android:layout_height="@dimen/dp_70"
+                app:cursor_color="@color/color_text_focus"
+                app:cursor_margin="@dimen/dp_12"
+                app:cursor_textSize="@dimen/dp_14"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="6dp"
+                app:scale_degreeBigColor="@color/translucent_white_40"
+                app:scale_degreeCount="360"
+                app:scale_degreeSmallColor="@color/translucent_white_60"
+                app:scale_degreeWidth="@dimen/dp_2"
+                app:scale_length="@dimen/dp_300"
+                app:scale_textColor="@color/grey_text"
+                app:scale_textSize="@dimen/dp_12"
+                app:scale_thumb="@drawable/icon_cursor" />
+
+            <LinearLayout
+                android:id="@+id/ll_radio_group_river"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_56"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/scale_bar_river"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_10"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/dp_12"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/translucent_white_14"
+                    android:text="@string/time_lapse_flow_speed"
+                    android:fontFamily="HarmonyHeiTi"
+                    tools:ignore="SpUsage" />
+
+                <RadioGroup
+                    android:id="@+id/rg_speed_river"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:orientation="horizontal" >
+
+                    <RadioButton
+                        android:id="@+id/rb_speed_slow_river"
+                        android:layout_width="@dimen/dp_18"
+                        android:layout_height="@dimen/dp_18"
+                        android:layout_marginStart="@dimen/dp_18"
+                        android:background="@drawable/radio_button_speed_bg"
+                        android:layout_gravity="center_vertical"
+                        android:button="@null"
+                        android:checked="false"
+                        android:contentDescription="@string/time_lapse_speed_slow" />
+
+                    <TextView
+                        android:id="@+id/tv_speed_slow_river"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:fontFamily="HarmonyHeiTi"
+                        android:textColor="@color/translucent_white_14"
+                        android:textSize="@dimen/dp_12"
+                        android:gravity="center"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/dp_8"
+                        android:text="@string/time_lapse_speed_slow"
+                        tools:ignore="SpUsage" />
+
+                    <RadioButton
+                        android:id="@+id/rb_speed_standard_river"
+                        android:layout_width="@dimen/dp_18"
+                        android:layout_height="@dimen/dp_18"
+                        android:layout_marginStart="@dimen/dp_18"
+                        android:background="@drawable/radio_button_speed_bg"
+                        android:layout_gravity="center_vertical"
+                        android:button="@null"
+                        android:checked="true"
+                        android:contentDescription="@string/time_lapse_speed_standard" />
+
+                    <TextView
+                        android:id="@+id/tv_speed_standard_river"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:fontFamily="HarmonyHeiTi"
+                        android:textColor="@color/translucent_white_14"
+                        android:textSize="@dimen/dp_12"
+                        android:gravity="center"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/dp_8"
+                        android:text="@string/time_lapse_speed_standard"
+                        tools:ignore="SpUsage" />
+
+                    <RadioButton
+                        android:id="@+id/rb_speed_fast_river"
+                        android:layout_width="@dimen/dp_18"
+                        android:layout_height="@dimen/dp_18"
+                        android:layout_marginStart="@dimen/dp_18"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/radio_button_speed_bg"
+                        android:button="@null"
+                        android:checked="false"
+                        android:contentDescription="@string/time_lapse_speed_fast" />
+
+                    <TextView
+                        android:id="@+id/tv_speed_fast_river"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:fontFamily="HarmonyHeiTi"
+                        android:textColor="@color/translucent_white_14"
+                        android:textSize="@dimen/dp_12"
+                        android:gravity="center"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/dp_8"
+                        android:text="@string/time_lapse_speed_fast"
+                        tools:ignore="SpUsage" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tv_start_process"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/dp_30"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cl_cursor"
+        android:layout_marginTop="@dimen/dp_16"
+        android:paddingStart="@dimen/dp_16"
+        android:paddingEnd="@dimen/dp_16"
+        android:paddingTop="@dimen/dp_6"
+        android:paddingBottom="@dimen/dp_5"
+        android:background="@drawable/use_module_btn_bg"
+        android:fontFamily="HarmonyHeiTi"
+        android:gravity="center"
+        android:text="@string/time_lapse_start"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_14"
+        tools:ignore="SpUsage" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

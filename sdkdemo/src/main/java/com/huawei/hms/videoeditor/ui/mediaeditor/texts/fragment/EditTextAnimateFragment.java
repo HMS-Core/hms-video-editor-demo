@@ -368,6 +368,8 @@ public class EditTextAnimateFragment extends BaseFragment implements AnimationBa
                 case MaterialsRespository.RESULT_EMPTY:
                     if (currentPage == 0) {
                         loadingIndicatorView.hide();
+                        errorTv.setText(getString(R.string.result_empty));
+                        errorLayout.setVisibility(View.VISIBLE);
                     }
                     ToastWrapper.makeText(mActivity, getString(R.string.result_empty), Toast.LENGTH_SHORT).show();
                     break;

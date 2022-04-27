@@ -17,7 +17,6 @@
 package com.huawei.hms.videoeditor.ui.common.view.dialog;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Context;
 import android.view.Gravity;
 import android.view.View;
@@ -28,12 +27,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
+import com.huawei.hms.videoeditor.ui.common.BaseDialog;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
-public class CommonProgressDialog extends Dialog {
+public class CommonProgressDialog extends BaseDialog {
     private static final String TAG = "CommonProgressDialog";
 
     private final TextView titleTv;

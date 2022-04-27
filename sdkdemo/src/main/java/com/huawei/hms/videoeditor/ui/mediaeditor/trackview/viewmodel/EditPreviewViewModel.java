@@ -127,6 +127,8 @@ public class EditPreviewViewModel extends AndroidViewModel {
 
     private HVEAsset currentMainLaneAsset;
 
+    private MutableLiveData<Integer> rotation = new MutableLiveData<>();
+
     private MutableLiveData<String> mTextTempValue = new MutableLiveData<>();
 
     private MutableLiveData<String> mLastInputText = new MutableLiveData<>();
@@ -162,8 +164,6 @@ public class EditPreviewViewModel extends AndroidViewModel {
     private MutableLiveData<String> refreshRecorderCaption = new MutableLiveData<>();
 
     private MutableLiveData<String> toastTime = new MutableLiveData<>();
-
-    private MutableLiveData<CloudMaterialBean> defaultFontContent = new MutableLiveData<>();
 
     private MutableLiveData<Boolean> isFootShow = new MutableLiveData<Boolean>();
 
@@ -1194,10 +1194,6 @@ public class EditPreviewViewModel extends AndroidViewModel {
         isKeyBordShow.setValue(b);
     }
 
-    public MutableLiveData<CloudMaterialBean> getDefaultFontContent() {
-        return defaultFontContent;
-    }
-
     public MutableLiveData<String> getToastTime() {
         return toastTime;
     }
@@ -1362,5 +1358,9 @@ public class EditPreviewViewModel extends AndroidViewModel {
             }
         }
         return false;
+    }
+
+    public void setRotation(int rotation) {
+        this.rotation.postValue(rotation);
     }
 }

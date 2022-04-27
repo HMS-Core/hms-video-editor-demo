@@ -122,7 +122,7 @@ public class TextEditFontViewModel extends AndroidViewModel {
             boundaryPageData.postValue(response.isHasMoreItem());
             queryDownloadStatus(bubblesContents);
         } else {
-            emptyString.postValue(getApplication().getString(p));
+            errorString.postValue(getApplication().getString(p));
         }
     }
 

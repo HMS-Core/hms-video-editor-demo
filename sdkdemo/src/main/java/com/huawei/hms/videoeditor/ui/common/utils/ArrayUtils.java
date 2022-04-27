@@ -36,4 +36,11 @@ public class ArrayUtils {
     public static boolean isEmpty(List<Object> list) {
         return list == null || list.size() == 0;
     }
+
+    public static <T> T getListElement(final List<T> source, int index) {
+        if (!isEmpty(source) && index >= 0 && index < source.size()) {
+            return source.get(index);
+        }
+        return null;
+    }
 }

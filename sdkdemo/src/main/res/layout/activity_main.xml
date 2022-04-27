@@ -13,5 +13,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints" />
-
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/home_tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/home_color_FF181818"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:tabBackground="@null"
+        app:tabIndicator="@null"
+        app:tabIndicatorFullWidth="false"
+        app:tabMaxWidth="@dimen/dp_0"
+        app:tabRippleColor="@null" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/dp_56"
+    android:layout_height="@dimen/dp_56">
+
+    <androidx.constraintlayout.utils.widget.ImageFilterView
+        android:id="@+id/iv_media"
+        android:layout_width="@dimen/dp_54"
+        android:layout_height="@dimen/dp_54"
+        android:scaleType="centerCrop"
+        app:radius="@dimen/dp_4"
+        app:layout_constraintTop_toTopOf="@id/item_select_view"
+        app:layout_constraintBottom_toBottomOf="@id/item_select_view"
+        app:layout_constraintStart_toStartOf="@id/item_select_view"
+        app:layout_constraintEnd_toEndOf="@id/item_select_view"
+        tools:ignore="MissingConstraints" />
+
+    <View
+        android:id="@+id/mask_view"
+        android:layout_width="@dimen/dp_56"
+        android:layout_height="@dimen/dp_56"
+        android:layout_marginTop="@dimen/dp_21"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tv_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="HWtext 55ST"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_media"
+        app:layout_constraintEnd_toEndOf="@+id/iv_media"
+        app:layout_constraintStart_toStartOf="@+id/iv_media"
+        app:layout_constraintTop_toTopOf="@+id/iv_media"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tv_index"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="HWtext 55ST"
+        android:gravity="center"
+        android:textColor="@color/color_d1"
+        android:textSize="@dimen/sp_9"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/iv_media"
+        app:layout_constraintStart_toStartOf="@+id/iv_media"
+        app:layout_constraintTop_toBottomOf="@+id/iv_media"
+        tools:ignore="MissingConstraints" />
+
+    <View
+        android:id="@+id/item_select_view"
+        android:layout_width="@dimen/dp_56"
+        android:layout_height="@dimen/dp_56"
+        android:background="@drawable/sticker_select_bg"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/replace_layout"
+        android:layout_width="@dimen/dp_56"
+        android:layout_height="@dimen/dp_56"
+        android:background="@color/theme_color_80"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_media"
+        app:layout_constraintEnd_toEndOf="@+id/iv_media"
+        app:layout_constraintStart_toStartOf="@+id/iv_media"
+        app:layout_constraintTop_toTopOf="@+id/iv_media">
+
+        <ImageView
+            android:layout_width="@dimen/dp_16"
+            android:layout_height="@dimen/dp_21"
+            android:visibility="gone"
+            android:src="@drawable/select_replace"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_2"
+            android:fontFamily="HWtext 55ST"
+            android:gravity="center_horizontal"
+            android:text="@string/speed_edit"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_11"
+            tools:ignore="MissingConstraints" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

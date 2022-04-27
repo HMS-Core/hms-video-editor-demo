@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/dp_200"
+    android:layout_height="@dimen/dp_200"
+    android:layout_gravity="center_horizontal">
+
+    <LinearLayout
+        android:id="@+id/close_layout"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_marginStart="@dimen/dp_168"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:src="@drawable/close_icon"
+            android:contentDescription="@string/close_wza" />
+
+    </LinearLayout>
+
+    <com.huawei.hms.videoeditor.ui.common.view.loading.LoadingIndicatorView
+        android:id="@+id/indicator_community_detail"
+        android:layout_width="@dimen/dp_72"
+        android:layout_height="@dimen/dp_72"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_27"
+        android:layout_gravity="center"
+        tools:ignore="MissingClass" />
+
+    <TextView
+        android:id="@+id/tv_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/indicator_community_detail"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginStart="@dimen/dp_34"
+        android:layout_marginEnd="@dimen/dp_34"
+        android:fontFamily="HarmonyHeiTi"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_14"
+        tools:ignore="SpUsage"
+        android:text="@string/module_compose" />
+
+</RelativeLayout>

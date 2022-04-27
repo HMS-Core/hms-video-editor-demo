@@ -32,7 +32,7 @@
 
     <string name="choice_template" priority="translator">"主题选择"</string>
     <string name="recommend_template" priority="translator">"推荐模板"</string>
-    <string name="auto_template" priority="translator">"一键成片"</string>
+    <string name="auto_template" priority="translator">"精彩片段"</string>
     <string name="auto_template_none" priority="translator">"无"</string>
     <string name="auto_template_custom" priority="translator">"定制"</string>
     <string name="auto_template_landscape" priority="translator">"风光"</string>
@@ -542,6 +542,8 @@
     <string name="cut_second_menu_ai_hair" priority="translator">一键染发</string>
     <string name="ai_hair_fail" priority="translator">染发失败</string>
 
+    <string name="cut_second_menu_ai_selection" priority="translator">精彩片段</string>
+
     <string name="action_add_mask_undo" priority="translator">"撤销：添加蒙版"</string>
     <string name="action_add_mask_redo" priority="translator">"重做：添加蒙版"</string>
     <string name="action_delete_filter_undo" priority="translator">"撤销：删除滤镜"</string>
@@ -616,4 +618,38 @@
     <string name="reenact_limit" priority="translator">该功能仅支持图片</string>
     <string name="crop_limit" priority="translator">请选择视频进行修剪</string>
     <string name="keyframe" priority="translator">"关键帧"</string>
+
+    <string name="home_tab1" priority="LT">"模板"</string>
+    <string name="main_template_template_text" priority="translator">"模板"</string>
+    <string name="use_module" priority="translator">"开始使用"</string>
+    <plurals name="piece_material_number">
+        <item priority="translator" quantity="other">选择 %s 段素材</item>
+    </plurals>
+
+    <string name="is_give_up_download" priority="translator">"当前非 Wi-Fi 环境。是否继续下载？"</string>
+    <plurals name="part_number">
+        <item quantity="other" priority="translator">"片段数 %s"</item>
+    </plurals>
+    <string name="preview" priority="translator">"预览"</string>
+    <string name="no_wifi" priority="translator">"当前非 Wi-Fi 环境，请注意流量消耗"</string>
+
+    <!--一键动效-->
+    <string name="cut_second_menu_time_lapse" priority="translator">一键动效</string>
+    <string name="time_lapse_sky" priority="translator">天空</string>
+    <string name="time_lapse_river" priority="translator">水面</string>
+    <string name="time_lapse_flow_speed" priority="translator">流动速度</string>
+    <string name="time_lapse_speed_slow" priority="translator">慢速</string>
+    <string name="time_lapse_speed_standard" priority="translator">标准</string>
+    <string name="time_lapse_speed_fast" priority="translator">快速</string>
+    <string name="time_lapse_start" priority="translator">开始生成动效</string>
+    <string name="time_lapse_process" priority="translator">效果生成中</string>
+    <string name="time_lapse_exception" priority="translator">未识别到天空和水面</string>
+    <string name="time_lapse_cancel" priority="translator">取消一键动效</string>
+    <string name="time_lapse_complete" priority="translator">一键动效完成</string>
+    <string name="time_lapse_reset_result" priority="translator">本次点击会撤销当前效果，请确认</string>
+    <string name="time_lapse_resource_not_support">当前资源不支持</string>
+
+    <string name="cut_second_menu_video_selection" priority="translator">精彩片段</string>
+
+    <string name="auto_mark_description" priority="translator">"本服务提供最新奇有趣的 AI 玩法。需下载 AI 算法包。"</string>
 </resources>

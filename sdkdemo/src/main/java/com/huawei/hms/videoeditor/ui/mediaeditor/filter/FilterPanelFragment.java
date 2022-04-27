@@ -389,6 +389,8 @@ public class FilterPanelFragment extends BaseFragment {
                     if (mCurrentPage == 0) {
                         mLoadingLayout.setVisibility(View.GONE);
                         mRecyclerView.setVisibility(View.INVISIBLE);
+                        mErrorTv.setText(getString(R.string.result_empty));
+                        mErrorTv.setVisibility(View.VISIBLE);
                         showSeekBar(false);
                     }
                 }

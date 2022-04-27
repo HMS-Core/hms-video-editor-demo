@@ -64,9 +64,15 @@ dependencies {
     implementation "com.huawei.android.hms:security-base:1.1.5.306"
     implementation 'com.huawei.hms:network-grs:5.0.1.303'
 
-    implementation 'com.huawei.hms:video-editor-sdk:1.4.0.300'
-	
-    implementation 'com.huawei.hms:video-editor-ai-common:1.3.0.300'
+    // TEMPLATE
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.12.2'
+    implementation 'com.google.android.exoplayer:exoplayer-dash:2.12.2'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:2.12.2'
+    implementation 'com.danikula:videocache:2.7.0'
+
+    implementation 'com.huawei.hms:video-editor-sdk:1.5.0.300'
+
+    implementation 'com.huawei.hms:video-editor-ai-common:1.5.0.300'
     implementation 'com.huawei.hms:video-editor-ai-faceprivacy:1.3.0.300'
     implementation 'com.huawei.hms:video-editor-ai-faceprivacy-model:1.3.0.300'
 
@@ -78,4 +84,10 @@ dependencies {
 
     implementation 'com.huawei.hms:video-editor-ai-hairdyeing:1.3.0.300'
     implementation 'com.huawei.hms:video-editor-ai-hairdyeing-model:1.3.0.300'
+
+    implementation 'com.huawei.hms:video-editor-ai-imagetimelapse:1.5.0.300'
+    implementation 'com.huawei.hms:video-editor-ai-imagetimelapse-model:1.5.0.300'
+
+    implementation 'com.huawei.hms:video-editor-ai-videoselection:1.5.0.300'
+    implementation 'com.huawei.hms:video-editor-ai-videoselection-model:1.5.0.300'
 }
