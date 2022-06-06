@@ -28,7 +28,6 @@ import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.BaseFragment;
 import com.huawei.hms.videoeditor.ui.common.bean.Constant;
 import com.huawei.hms.videoeditor.ui.common.bean.MediaData;
@@ -36,6 +35,7 @@ import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.DrawableUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.FileUtil;
 import com.huawei.hms.videoeditor.ui.common.view.image.crop.ClipImageView;
+import com.huawei.hms.videoeditor.utils.SmartLog;
 import com.huawei.secure.android.common.intent.SafeBundle;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 

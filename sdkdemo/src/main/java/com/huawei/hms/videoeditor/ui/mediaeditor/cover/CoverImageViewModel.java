@@ -16,15 +16,17 @@
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.cover;
 
-import java.io.File;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import android.app.Application;
 import android.graphics.Bitmap;
 import android.text.TextUtils;
 
-import com.huawei.hms.videoeditor.common.agc.HVEApplication;
-import com.huawei.hms.videoeditor.sdk.util.SmartLog;
+import com.huawei.hms.videoeditor.sdk.HVETimeLine;
+import com.huawei.hms.videoeditor.sdk.HuaweiVideoEditor;
 import com.huawei.hms.videoeditor.ui.common.utils.FileUtil;
+import com.huawei.hms.videoeditor.utils.SmartLog;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -88,92 +90,64 @@ public class CoverImageViewModel extends AndroidViewModel {
         }.start();
     }
 
-    public void removeBitmapCover(String projectId) {
-        if (TextUtils.isEmpty(projectId)) {
-            return;
-        }
-        String sdPath = new StringBuilder(getApplication().getFilesDir().getAbsolutePath() + File.separator)
-            .append(HVEApplication.getInstance().getTag())
-            .append("project/")
-            .append(projectId)
-            .toString();
-        String sdTempPath = new StringBuilder(getApplication().getFilesDir().getAbsolutePath() + File.separator)
-            .append(HVEApplication.getInstance().getTag())
-            .append("project")
-            .append(File.separator)
-            .append(projectId)
-            .append(File.separator)
-            .append("temp")
-            .toString();
-
-        File[] files = new File(sdPath).listFiles();
-        if (files == null) {
-            return;
-        }
-        for (File file : files) {
-            if (file.getName().contains(COVER_IMAGE_NAME_SUFFIX)) {
-                File tempFile = new File(sdTempPath + File.separator + file.getName());
-                if (!tempFile.getParentFile().exists()) {
-                    if (!tempFile.getParentFile().mkdirs()) {
-                        SmartLog.e("CropImageLayout", "fail to make dir parent file");
-                    }
-                }
-                if (!file.renameTo(tempFile)) {
-                    SmartLog.e("CropImageLayout", "fail rename temp file");
-                }
-            }
-        }
-    }
-
-    public void removePictureByProjectId(String projectId) {
-        if (TextUtils.isEmpty(projectId)) {
-            SmartLog.e(TAG, "projectId is empty");
-            return;
-        }
-        try {
-            String sdPath = getApplication().getFilesDir().getAbsolutePath() + File.separator
-                + HVEApplication.getInstance().getTag() + "project/" + projectId;
-            File[] files = new File(sdPath).listFiles();
-            if (files == null) {
-                return;
-            }
-            for (File file : files) {
-                if (file.getName().contains(COVER_IMAGE_NAME_SUFFIX)
-                    || file.getName().contains(SOURCE_COVER_IMAGE_NAME_SUFFIX)) {
-                    boolean delete = file.delete();
-                    if (!delete) {
-                        SmartLog.e(TAG, "removeSourcePicture false");
-                    }
-                }
-            }
-        } catch (NullPointerException | SecurityException e) {
-            SmartLog.e(TAG, "removeSourcePictureByProjectId error");
-        }
-    }
-
-    public void removeSourcePicture(String filePath) {
-        if (TextUtils.isEmpty(filePath)) {
-            SmartLog.e(TAG, "filePath is empty");
-            return;
-        }
-        try {
-            File source = new File(filePath);
-            if (source.exists()) {
-                boolean delete = source.delete();
-                if (!delete) {
-                    SmartLog.e(TAG, "removeSourcePicture false");
-                }
-            }
-        } catch (NullPointerException | SecurityException e) {
-            SmartLog.e(TAG, "removeSourcePicture error");
-        }
-    }
-
     public boolean isForCover() {
         return isForCover;
     }
 
     public void setForCover(boolean forCover) {
         isForCover = forCover;
+    }
+
+    public void updateDefaultCover(HuaweiVideoEditor editor, long lastTime) {
+        if (editor == null) {
+            SmartLog.w(TAG, "updateDefaultCover editor null return");
+            return;
+        }
+
+        HVETimeLine timeLine = editor.getTimeLine();
+        if (timeLine == null) {
+            SmartLog.w(TAG, "updateDefaultCover timeLine or cover type invalid return ");
+            return;
+        }
+
+        try {
+            CountDownLatch countDownLatch = new CountDownLatch(1);
+
+            editor.getBitmapAtSelectedTime(0, new HuaweiVideoEditor.ImageCallback() {
+                @Override
+                public void onSuccess(Bitmap bitmap, long time) {
+                    SmartLog.i(TAG, "updateDefaultCover success time:" + time + "  bitmap:" + bitmap);
+                    if (bitmap != null) {
+                        String path = FileUtil.saveBitmap(getApplication(), editor.getProjectId(), bitmap,
+                                System.currentTimeMillis() + COVER_IMAGE_NAME_SUFFIX);
+                        if (timeLine != null) {
+                            timeLine.addCoverImage(path);
+                        }
+                        setInitImageData(path);
+                    } else {
+                        SmartLog.d(TAG, "setBitmapCover bitmap is null");
+                    }
+                    countDownLatch.countDown();
+                    if (lastTime != 0) {
+                        editor.seekTimeLine(lastTime);
+                    }
+                }
+
+                @Override
+                public void onFail(int errorCode) {
+                    SmartLog.e(TAG, "setBitmapCover errorCode " + errorCode);
+                    countDownLatch.countDown();
+                }
+            });
+
+            boolean isCountDown = countDownLatch.await(500, TimeUnit.MILLISECONDS);
+
+            if (!isCountDown) {
+                SmartLog.e(TAG, "updateDefaultCover timeOut !");
+            }
+
+        } catch (InterruptedException e) {
+            SmartLog.e(TAG, "updateDefaultCover error " + e.getMessage());
+        }
     }
 }

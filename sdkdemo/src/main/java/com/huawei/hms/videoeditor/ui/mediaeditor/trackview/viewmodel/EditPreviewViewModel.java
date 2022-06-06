@@ -22,15 +22,14 @@ import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewS
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_SPECIAL_STATE;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.TRANSITION_PANEL;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-
 import android.app.AlarmManager;
 import android.app.Application;
 import android.text.TextUtils;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.MutableLiveData;
 
 import com.huawei.hms.videoeditor.sdk.HVETimeLine;
 import com.huawei.hms.videoeditor.sdk.HuaweiVideoEditor;
@@ -48,9 +47,9 @@ import com.huawei.hms.videoeditor.sdk.lane.HVEEffectLane;
 import com.huawei.hms.videoeditor.sdk.lane.HVELane;
 import com.huawei.hms.videoeditor.sdk.lane.HVEStickerLane;
 import com.huawei.hms.videoeditor.sdk.lane.HVEVideoLane;
-import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.EditorManager;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.utils.LaneSizeCheckUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.ScreenUtil;
 import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
@@ -62,9 +61,11 @@ import com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainRecyclerData
 import com.huawei.hms.videoeditor.ui.mediaeditor.trackview.fragment.EditPreviewFragment;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.MutableLiveData;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 public class EditPreviewViewModel extends AndroidViewModel {
     private static final String TAG = "EditPreviewViewModel";
@@ -340,6 +341,8 @@ public class EditPreviewViewModel extends AndroidViewModel {
 
     private boolean isFaceBlockingStatus = false;
 
+    private boolean isSegmentationStatus = false;
+
     public boolean isEditTextStatus() {
         return isEditTextStatus;
     }
@@ -386,6 +389,14 @@ public class EditPreviewViewModel extends AndroidViewModel {
 
     public void setPersonTrackingStatus(boolean isPersonTrackingStatus) {
         this.isPersonTrackingStatus = isPersonTrackingStatus;
+    }
+
+    public boolean isSegmentationStatus() {
+        return isSegmentationStatus;
+    }
+
+    public void setSegmentationStatus(boolean segmentationStatus) {
+        isSegmentationStatus = segmentationStatus;
     }
 
     private final MutableLiveData<String> mEditPanelInputValue = new MutableLiveData<>();
@@ -666,12 +677,12 @@ public class EditPreviewViewModel extends AndroidViewModel {
         }
         long endTime = hveTimeLine.getEndTime();
         HVEAudioLane audioLane =
-                LaneSizeCheckUtils.getAudioFreeLan(editor, startTime, hveTimeLine.getEndTime(), getApplication());
+            LaneSizeCheckUtils.getAudioFreeLan(editor, startTime, hveTimeLine.getEndTime(), getApplication());
         if (audioLane == null) {
             ToastWrapper
-                    .makeText(getApplication(), getApplication().getString(R.string.audio_lane_out_of_size),
-                            Toast.LENGTH_SHORT)
-                    .show();
+                .makeText(getApplication(), getApplication().getString(R.string.audio_lane_out_of_size),
+                    Toast.LENGTH_SHORT)
+                .show();
             return null;
         }
         HVEAudioAsset asset = audioLane.appendAudioAsset(path, startTime);
@@ -794,40 +805,6 @@ public class EditPreviewViewModel extends AndroidViewModel {
                 mainData.getWholeListData().pipTrackItemList.add(
                     new MainRecyclerData.NormalTrackItem(videoLanes.get(i).getIndex(), videoLanes.get(i).getAssets()));
             }
-        }
-        for (HVEEffectLane lane : hveTimeLine.getAllEffectLane(HVEEffectLane.HVEEffectLaneType.NORMAL)) {
-            List<HVEEffect> specials = new ArrayList<>();
-            List<HVEEffect> filters = new ArrayList<>();
-            for (HVEEffect effect : lane.getEffects()) {
-                if (effect.getEffectType() == HVEEffect.HVEEffectType.NORMAL
-                    || effect.getEffectType() == HVEEffect.HVEEffectType.MASK) {
-                    specials.add(effect);
-                }
-                if (effect.getEffectType() == HVEEffect.HVEEffectType.FILTER
-                    || effect.getEffectType() == HVEEffect.HVEEffectType.ADJUST) {
-                    filters.add(effect);
-                }
-            }
-            mainData.getWholeListData().specialTrackItemList
-                .add(new MainRecyclerData.NormalTrackItem(lane.getIndex(), specials, EDIT_SPECIAL_STATE));
-            mainData.getWholeListData().filterTrackItemList
-                .add(new MainRecyclerData.NormalTrackItem(lane.getIndex(), filters, EDIT_FILTER_STATE));
-        }
-
-        for (HVEEffectLane lane : EditorManager.getInstance()
-            .getTimeLine()
-            .getAllEffectLane(HVEEffectLane.HVEEffectLaneType.EFFECT)) {
-            List<HVEEffect> effects = new ArrayList<>(lane.getEffects());
-            mainData.getWholeListData().specialTrackItemList
-                .add(new MainRecyclerData.NormalTrackItem(lane.getIndex(), effects, EDIT_SPECIAL_STATE));
-        }
-
-        for (HVEEffectLane lane : EditorManager.getInstance()
-            .getTimeLine()
-            .getAllEffectLane(HVEEffectLane.HVEEffectLaneType.ADJUST)) {
-            List<HVEEffect> effects = new ArrayList<>(lane.getEffects());
-            mainData.getWholeListData().filterTrackItemList
-                .add(new MainRecyclerData.NormalTrackItem(lane.getIndex(), effects, EDIT_FILTER_STATE));
         }
     }
 

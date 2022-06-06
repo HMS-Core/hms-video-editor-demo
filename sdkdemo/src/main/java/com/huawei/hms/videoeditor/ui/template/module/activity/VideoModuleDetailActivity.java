@@ -16,9 +16,13 @@
 
 package com.huawei.hms.videoeditor.ui.template.module.activity;
 
-import java.util.List;
-
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.NavigatorProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.huawei.hms.videoeditor.ui.common.utils.GsonUtils;
 import com.huawei.hms.videoeditor.ui.common.view.navigator.FixFragmentNavigator;
@@ -29,11 +33,7 @@ import com.huawei.hms.videoeditor.ui.template.viewmodel.ModuleEditViewModel;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 import com.huawei.secure.android.common.intent.SafeIntent;
 
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.NavigatorProvider;
-import androidx.navigation.fragment.NavHostFragment;
+import java.util.List;
 
 public class VideoModuleDetailActivity extends BaseActivity {
     private String mName;
@@ -65,8 +65,10 @@ public class VideoModuleDetailActivity extends BaseActivity {
             provider.addNavigator(fragmentNavigator);
 
             Bundle bundle = safeIntent.getExtras();
-            bundle.putString(Constant.TEMPLATE_KEY_DETAIL, templatedetail);
-            navController.setGraph(R.navigation.nav_graph_video_module_detail_t, bundle);
+            if (bundle != null) {
+                bundle.putString(Constant.TEMPLATE_KEY_DETAIL, templatedetail);
+                navController.setGraph(R.navigation.nav_graph_video_module_detail_t, bundle);
+            }
         }
     }
 

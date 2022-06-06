@@ -390,7 +390,14 @@
     <plurals name="preview_select">
         <item priority="translator" quantity="other">"选取 %ss"</item>
     </plurals>
-
+    <!--人像分割-->
+    <string name="cut_second_menu_segmentation" priority="translator">目标分割</string>
+    <string name="segmentation_select" priority="translator">请画线选择一个目标</string>
+    <string name="segmentation_cancel" priority="translator">"取消目标分割"</string>
+    <string name="ai_segmentation" priority="translator">"目标分割处理中…"</string>
+    <string name="ai_segmentation_title" priority="translator">"目标分割"</string>
+    <string name="ai_segmentation_success" priority="translator">"目标分割完成"</string>
+    <string name="ai_segmentation_fail" priority="translator">"啊哦~目标分割异常"</string>
     <string name="redo_failed" priority="translator">重做失败</string>
     <string name="undo_failed" priority="translator">撤销失败</string>
     <string name="action_1" priority="translator">添加贴纸</string>
@@ -514,6 +521,10 @@
     <string name="ai_button_cancel" priority="translator">取消</string>
     <string name="ai_cropping" priority="translator">裁剪</string>
     <string name="ai_cropping_text" priority="translator">拖动或双指缩放选择图片区域</string>
+    
+    <string name="ai_face_smile_no_face">无法识别人脸</string>
+    <string name="ai_face_smile_select_frontal_face">请选择正脸照</string>
+    <string name="ai_face_smile_network_timeout">网络超时</string>
 
     <string name="mix_mode1" priority="translator">正常</string>
     <string name="mix_mode2" priority="translator">变暗</string>
@@ -558,19 +569,24 @@
     <string name="cut_second_menu_block" priority="translator">AI 去遮挡</string>
     <string name="block_description" priority="translator">将所选素材上传至云端处理，以获得最佳遮挡效果，处理完成后云端不会存储。</string>
     <string name="motion_photo_fail" priority="translator">"动态照片生成失败"</string>
+    <string name="face_smile_fail">一键微笑生成失败</string>
     <string name="ai_color_fail" priority="translator">"AI着色生成失败"</string>
     <string name="fun_description" priority="translator">"本服务提供最新奇有趣的 AI 玩法。您所选的素材会上传至云端处理，处理完成后云端不会储存。"</string>
     <string name="motion_photo_success" priority="translator">动态照片生成成功</string>
+    <string name="face_smile_success">一键微笑生成成功</string>
     <string name="ai_color_success" priority="translator">AI着色生成成功</string>
     <string name="motion_photo" priority="translator">动态照片</string>
+    <string name="face_smile">一键微笑</string>
     <string name="ai_color" priority="translator">AI着色</string>
     <string name="motion_photo_generated" priority="translator">动态照片生成中</string>
     <string name="ai_color_generated" priority="translator">AI着色生成中</string>
+    <string name="ai_face_smile_generated">一键微笑生成中</string>
     <string name="ai_hair_generated" priority="translator">一键染发生成中</string>
     <string name="ai_color_cancel" priority="translator">取消AI着色</string>
     <string name="ai_hair_cancel" priority="translator">取消一键染发</string>
     <string name="motion_photo_cancel" priority="translator">取消动态照片</string>
-    <string name="ai_limit" priority="translator">仅支持同时使用一种AI功能</string>
+    <string name="face_smile_cancel">取消一键微笑</string>
+    <string name="ai_limit" priority="translator">仅支持同时使用一种AI功能，请先移除已使用的AI功能再重试。</string>
 
     <string-array name="rotation_menu">
         <item priority="translator">"全部"</item>

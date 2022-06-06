@@ -35,13 +35,13 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.huawei.hms.videoeditor.common.agc.HVEApplication;
+import com.huawei.hms.videoeditor.VideoEditorApplication;
 import com.huawei.hms.videoeditor.sdk.HuaweiVideoEditor;
-import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.mediaeditor.graffiti.DrawPath;
 import com.huawei.hms.videoeditor.ui.mediaeditor.graffiti.DrawingListChangedListener;
 import com.huawei.hms.videoeditor.ui.mediaeditor.graffiti.EarserChangedListener;
 import com.huawei.hms.videoeditor.ui.mediaeditor.graffiti.GraffitiInfo;
+import com.huawei.hms.videoeditor.utils.SmartLog;
 
 public class GraffitiView extends View {
     private static final String TAG = "GraffitiView";
@@ -373,7 +373,7 @@ public class GraffitiView extends View {
     public String saveBitmap() {
         String fraffiFilePath = "";
         try {
-            File dir = new File(HVEApplication.getInstance().getAppContext().getFilesDir().getCanonicalFile()
+            File dir = new File(VideoEditorApplication.getInstance().getContext().getFilesDir().getCanonicalFile()
                 + File.separator + "doodleview");
             if (!dir.exists()) {
                 if (!dir.mkdirs()) {

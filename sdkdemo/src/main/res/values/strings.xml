@@ -477,6 +477,15 @@
     </plurals>
     <string name="redo_failed" priority="LT">Unable to redo.</string>
     <string name="undo_failed" priority="translator">Unable to undo.</string>
+
+    <string name="cut_second_menu_segmentation" priority="translator">Cut out</string>
+    <string name="segmentation_select" priority="translator">select one object.</string>
+    <string name="segmentation_cancel" priority="translator">Cancelled cutting out.</string>
+    <string name="ai_segmentation" priority="translator">Processing…</string>
+    <string name="ai_segmentation_title" priority="translator">Cut out</string>
+    <string name="ai_segmentation_success" priority="translator">cut out.</string>
+    <string name="ai_segmentation_fail" priority="translator">Error cutting out.</string>
+
     <string name="action_1" priority="translator">Add sticker</string>
     <string name="action_2" priority="translator">Add video</string>
     <string name="action_3" priority="translator">Add music</string>
@@ -601,6 +610,10 @@
     <string name="ai_cropping" priority="translator">Crop</string>
     <string name="ai_cropping_text" priority="translator">Drag or pinch to select part of the image</string>
 
+    <string name="ai_face_smile_no_face">Faces cannot be recognized.</string>
+    <string name="ai_face_smile_select_frontal_face">Please select a face photo.</string>
+    <string name="ai_face_smile_network_timeout">Network timeout</string>
+
     <string name="mix_mode1" priority="translator">Normal</string>
     <string name="mix_mode2" priority="translator">Darken</string>
     <string name="mix_mode3" priority="translator">Screen</string>
@@ -646,14 +659,18 @@
     <string name="block_description" priority="translator">Selected content will be uploaded to the cloud for processing. This content will not be saved on the cloud.</string>
 
     <string name="motion_photo_fail" priority="translator">Unable to generate moving picture.</string>
+    <string name="face_smile_fail">Failed to generate one-click smile.</string>
     <string name="ai_color_fail" priority="translator">Unable to generate ai color.</string>
     <string name="fun_description" priority="translator">Experiment and have fun with a range of AI features. Selected content will be uploaded to the cloud for processing. This content will not be saved on the cloud.</string>
     <string name="motion_photo_success" priority="translator">Moving picture generated.</string>
+    <string name="face_smile_success">One-click smile generated successfully.</string>
     <string name="ai_color_success" priority="translator">The AI color is generated successfully.</string>
     <string name="motion_photo" priority="translator">Moving picture</string>
+    <string name="face_smile">One-click smile</string>
     <string name="ai_color" priority="translator">AI color</string>
     <string name="motion_photo_generated" priority="translator">Generating moving picture…</string>
     <string name="ai_color_generated" priority="translator">Generating ai color…</string>
+    <string name="ai_face_smile_generated">One-click smile generation…</string>
     <string name="ai_hair_generated" priority="translator">Generating hari dying…</string>
 
     <string-array name="rotation_menu">
@@ -697,7 +714,8 @@
     <string name="ai_color_cancel" priority="translator">Cancel ai color</string>
     <string name="ai_hair_cancel" priority="translator">Cancel ai hair</string>
     <string name="motion_photo_cancel" priority="translator">Cancel motion photo</string>
-    <string name="ai_limit" priority="translator">Only one AI function can be used at the same time.</string>
+    <string name="face_smile_cancel">Cancel One-Click Smile</string>
+    <string name="ai_limit" priority="translator">Only one AI function can be used at the same time. Remove the used AI function and try again.</string>
     <string name="license_invalid" priority="translator">License verification failed.</string>
     <string name="ai_color_limit" priority="translator">AI color supports only videos less than 100M.</string>
     <string name="cpu_limit" priority="translator">The 32-bit system does not support the AI function.</string>

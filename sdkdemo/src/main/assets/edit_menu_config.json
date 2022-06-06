@@ -100,6 +100,16 @@
           "children": []
         },
         {
+          "id": 101225,
+          "name": "cut_second_menu_segmentation",
+          "cnName": "目标分割",
+          "drawableName": "edit_menu_segmentation",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        },
+        {
           "id": 101226,
           "name": "cut_second_menu_time_lapse",
           "cnName": "一键动效",
@@ -568,6 +578,16 @@
           "children": []
         },
         {
+          "id": 201127,
+          "name": "cut_second_menu_segmentation",
+          "cnName": "目标分割",
+          "drawableName": "edit_menu_segmentation",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
           "id": 201125,
           "name": "cut_second_menu_time_lapse",
           "cnName": "一键动效",
@@ -984,6 +1004,16 @@
           "name": "cut_second_menu_mask",
           "cnName": "蒙版",
           "drawableName": "edit_menu_mask",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        },
+        {
+          "id": 207124,
+          "name": "cut_second_menu_segmentation",
+          "cnName": "目标分割",
+          "drawableName": "edit_menu_segmentation",
           "parentId": 101,
           "enable": 1,
           "isAdvanced": 2,

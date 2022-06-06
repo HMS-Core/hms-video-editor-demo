@@ -22,11 +22,6 @@ import static com.huawei.hms.videoeditor.ui.template.module.VideoModulePagerFrag
 import static com.huawei.hms.videoeditor.ui.template.module.VideoModulePagerFragment.TEMPLATES_PAGING;
 import static com.huawei.hms.videoeditor.ui.template.module.VideoModulePagerFragment.TEMPLATES_POSITION;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-
 import android.content.Intent;
 import android.icu.text.CompactDecimalFormat;
 import android.os.Build;
@@ -38,6 +33,14 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.huawei.hms.videoeditor.common.network.http.ability.util.network.NetworkStartup;
@@ -59,13 +62,10 @@ import com.huawei.hms.videoeditor.ui.template.viewmodel.HVETemplateDetailModel;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 import com.huawei.secure.android.common.intent.SafeIntent;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.PagerSnapHelper;
-import androidx.recyclerview.widget.RecyclerView;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 public class TemplateDetailActivity extends BaseActivity implements NetworkStartup.INetworkChangeListener {
     public static final String TAG = "TemplateDetailActivity";
@@ -430,6 +430,10 @@ public class TemplateDetailActivity extends BaseActivity implements NetworkStart
 
     @Override
     public void onNetworkChange() {
+        if (SP == null) {
+            SmartLog.i(TAG, "SP is null");
+            return;
+        }
         boolean isNetWork = SP.getBoolean("NetWork", false);
         if (NetworkStartup.isOnlyMobileConn() && !isNetWork) {
             SmartLog.i(TAG, "MobileConn");

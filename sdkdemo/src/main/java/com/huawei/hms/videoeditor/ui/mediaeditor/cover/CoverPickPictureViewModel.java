@@ -30,9 +30,9 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 
 import com.huawei.hms.videoeditor.sdk.util.HVEUtil;
-import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.bean.MediaData;
 import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
+import com.huawei.hms.videoeditor.utils.SmartLog;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;

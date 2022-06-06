@@ -47,10 +47,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.huawei.hms.videoeditor.template.HVETemplateManager;
+import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.template.HVETemplateElement;
 import com.huawei.hms.videoeditor.template.HVETemplateInfo;
-import com.huawei.hms.videoeditor.sdk.util.SmartLog;
+import com.huawei.hms.videoeditor.template.HVETemplateManager;
 import com.huawei.hms.videoeditor.ui.common.BaseFragment;
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RMCommandAdapter;
 import com.huawei.hms.videoeditor.ui.common.bean.MediaData;
@@ -281,8 +281,8 @@ public class VideoModulePickFragment extends BaseFragment {
         String templatedetail = bundle.getString(Constant.TEMPLATE_KEY_DETAIL);
         templateInfo = GsonUtils.fromJson(templateinfo, HVETemplateInfo.class);
         templateProjectBean = GsonUtils.fromJson(templatedetail, TemplateProjectBean.class);
-        mName = templateInfo.getName();
-        mDescription = templateInfo.getDescription();
+        mName = templateInfo == null ? "" : templateInfo.getName();
+        mDescription = templateInfo == null ? "" : templateInfo.getDescription();
         mSource = bundle.getString("source");
 
         mModulePickSelectAdapter = new ModulePickSelectAdapter(context, mMaterialDatas);
@@ -580,7 +580,9 @@ public class VideoModulePickFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        TEMPLATE_VIDEO_SP.clear();
+        if (TEMPLATE_VIDEO_SP != null) {
+            TEMPLATE_VIDEO_SP.clear();
+        }
     }
 
     private void checkCurrentPosition() {

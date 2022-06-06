@@ -113,7 +113,7 @@ public class EditMenuContentLayout extends LinearLayout {
         mSecondMenus = new ArrayList<>();
         mOperateMenus = new ArrayList<>();
         mUnVisibleIds = new ArrayList<>();
-        mMenuSecondAdapter = new MenuAdapter(getContext(), mSecondMenus, R.layout.adapter_menu_second_item, false);
+        mMenuSecondAdapter = new MenuAdapter(getContext(), mSecondMenus, R.layout.adapter_menu_second_item);
         mMenuSecondRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
         mMenuSecondRecyclerView.addItemDecoration(
             new HorizontalDividerDecoration(ContextCompat.getColor(getContext(), R.color.transparent),
@@ -128,7 +128,7 @@ public class EditMenuContentLayout extends LinearLayout {
         mMenuSecondAdapter.addHeaderView(header);
         mMenuSecondAdapter.addFooterView(foot);
 
-        mMenuOperateAdapter = new MenuAdapter(getContext(), mOperateMenus, R.layout.adapter_menu_operate_item, true);
+        mMenuOperateAdapter = new MenuAdapter(getContext(), mOperateMenus, R.layout.adapter_menu_operate_item);
         mMenuOperateRecyclerView
             .setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
         mMenuOperateRecyclerView.addItemDecoration(
@@ -147,20 +147,10 @@ public class EditMenuContentLayout extends LinearLayout {
             mCurrentFirstIndex = index;
             EditMenuBean editMenuBean = mFirstMenus.get(index);
             mSecondMenus.clear();
-            String maxLengthNameValue = "";
+
             if (editMenuBean.getChildren() != null && editMenuBean.getChildren().size() > 0) {
                 List<EditMenuBean> children = editMenuBean.getChildren();
                 for (EditMenuBean item : children) {
-                    boolean stringValid = LocalResourceUtil.getStringId(getContext(), item.getName()) != 0;
-                    if (!stringValid) {
-                        continue;
-                    }
-                    String nameValue =
-                        getContext().getString(LocalResourceUtil.getStringId(getContext(), item.getName()));
-                    if (!StringUtil.isEmpty(nameValue) && nameValue.length() > maxLengthNameValue.length()) {
-                        maxLengthNameValue = nameValue;
-                    }
-
                     if (mUnVisibleIds.contains(item.getId())) {
                         continue;
                     }
@@ -169,14 +159,6 @@ public class EditMenuContentLayout extends LinearLayout {
                 mMenuSecondRecyclerView.setVisibility(VISIBLE);
             } else {
                 mMenuSecondRecyclerView.setVisibility(GONE);
-            }
-
-            if (!StringUtil.isEmpty(maxLengthNameValue)) {
-                Paint paint = new Paint();
-                Rect rect = new Rect();
-                paint.getTextBounds(maxLengthNameValue, 0, maxLengthNameValue.length(), rect);
-                int itemWidth = (int) (SizeUtils.screenWidth(getContext()) / 6.5f) - SizeUtils.dp2Px(getContext(), 4);
-                mMenuSecondAdapter.setNeedMaxHeight(rect.width() > itemWidth);
             }
 
             mMenuSecondAdapter.notifyDataSetChanged();

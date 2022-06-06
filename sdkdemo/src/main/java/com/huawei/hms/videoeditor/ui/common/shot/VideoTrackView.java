@@ -16,9 +16,6 @@
 
 package com.huawei.hms.videoeditor.ui.common.shot;
 
-import java.util.List;
-import java.util.Vector;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -27,14 +24,17 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
+import androidx.annotation.Nullable;
+
 import com.huawei.hms.videoeditor.sdk.asset.HVEVideoAsset;
-import com.huawei.hms.videoeditor.sdk.util.HVEUtil;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.utils.BigDecimalUtil;
 import com.huawei.hms.videoeditor.ui.common.utils.BigDecimalUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.ScreenUtil;
+import com.huawei.hms.videoeditor.utils.Utils;
 
-import androidx.annotation.Nullable;
+import java.util.List;
+import java.util.Vector;
 
 public class VideoTrackView extends View {
     private static final String TAG = "VideoTrackView";
@@ -113,9 +113,9 @@ public class VideoTrackView extends View {
 
     public void getThumbNail() {
         bitmaps.clear();
-        HVEUtil.getThumbnails(asset.getPath(),
+        Utils.getThumbnails(asset.getPath(),
             (long) Math.floor(BigDecimalUtil.div(asset.getOriginLength(), getImageCount())), imageWidth, imageWidth,
-            new HVEUtil.HVEThumbnailCallback() {
+            new Utils.ThumbnailCallback() {
 
                 @Override
                 public void onBitmap(Bitmap bitmap) {

@@ -122,6 +122,11 @@
         <item name="android:thumb">@drawable/ic_icon_circle_pre_crop</item>
     </style>
 
+    <style name="CustomDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
     <declare-styleable name="ProgressView">
         <attr name="firstColor" format="color" />
         <attr name="secondColor" format="color" />

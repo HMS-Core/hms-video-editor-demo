@@ -7,6 +7,7 @@
  *
  *        http://www.apache.org/licenses/LICENSE-2.0
  *
+ *
  *      Unless required by applicable law or agreed to in writing, software
  *      distributed under the License is distributed on an "AS IS" BASIS,
  *      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -50,17 +51,21 @@ public class PageListPlayManager {
     static {
         try {
             Context context = VideoEditorApplication.getInstance().getContext();
-            SmartLog.i(TAG, "getCanonicalPath failed! +++");
-            DefaultHttpDataSourceFactory dataSourceFactory = new DefaultHttpDataSourceFactory(
-                Util.getUserAgent(context, context.getPackageName()), 5 * 1000, 5 * 1000, false);
-            File file = new File(context.getCacheDir().getCanonicalPath() + "/video_cache");
-            Cache cache = new SimpleCache(file, new LeastRecentlyUsedCacheEvictor(1024 * 1024 * 200));
-            CacheDataSinkFactory cacheDataSinkFactory = new CacheDataSinkFactory(cache, Long.MAX_VALUE);
+            if (context != null) {
+                SmartLog.i(TAG, "getCanonicalPath failed! +++");
+                DefaultHttpDataSourceFactory dataSourceFactory = new DefaultHttpDataSourceFactory(
+                    Util.getUserAgent(context, context.getPackageName()), 5 * 1000, 5 * 1000, false);
+                File file = new File(context.getCacheDir().getCanonicalPath() + "/video_cache");
+                Cache cache = new SimpleCache(file, new LeastRecentlyUsedCacheEvictor(1024 * 1024 * 200));
+                CacheDataSinkFactory cacheDataSinkFactory = new CacheDataSinkFactory(cache, Long.MAX_VALUE);
 
-            CacheDataSourceFactory cacheDataSourceFactory = new CacheDataSourceFactory(cache, dataSourceFactory,
-                new FileDataSourceFactory(), cacheDataSinkFactory, CacheDataSource.FLAG_BLOCK_ON_CACHE, null);
+                CacheDataSourceFactory cacheDataSourceFactory = new CacheDataSourceFactory(cache, dataSourceFactory,
+                    new FileDataSourceFactory(), cacheDataSinkFactory, CacheDataSource.FLAG_BLOCK_ON_CACHE, null);
 
-            MEDIA_SOURCE_FACTORY = new ProgressiveMediaSource.Factory(cacheDataSourceFactory);
+                MEDIA_SOURCE_FACTORY = new ProgressiveMediaSource.Factory(cacheDataSourceFactory);
+            } else {
+                MEDIA_SOURCE_FACTORY = null;
+            }
         } catch (IOException e) {
             SmartLog.i(TAG, "getCanonicalPath failed!");
             MEDIA_SOURCE_FACTORY = null;

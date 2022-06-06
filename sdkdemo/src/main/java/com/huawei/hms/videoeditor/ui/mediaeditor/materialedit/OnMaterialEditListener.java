@@ -16,6 +16,8 @@
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.materialedit;
 
+import android.view.MotionEvent;
+
 import com.huawei.hms.videoeditor.sdk.bean.HVEPosition2D;
 
 public interface OnMaterialEditListener {
@@ -41,4 +43,10 @@ public interface OnMaterialEditListener {
     void onDoubleFingerTap();
 
     void onCopy();
+
+    void onKeyDown(MotionEvent event);
+
+    void onKeyMove(MotionEvent event);
+
+    void onKeyUp(MotionEvent event);
 }

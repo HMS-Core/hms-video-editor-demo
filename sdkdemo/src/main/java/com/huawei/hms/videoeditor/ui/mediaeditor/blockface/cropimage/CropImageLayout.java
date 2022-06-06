@@ -16,6 +16,10 @@
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.blockface.cropimage;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -23,13 +27,7 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.widget.RelativeLayout;
 
-import com.huawei.hms.videoeditor.common.agc.HVEApplication;
-import com.huawei.hms.videoeditor.common.utils.CloseUtils;
-import com.huawei.hms.videoeditor.sdk.util.SmartLog;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import com.huawei.hms.videoeditor.utils.SmartLog;
 
 public class CropImageLayout extends RelativeLayout {
     private CropZoomImageView zoomImageView;
@@ -68,8 +66,7 @@ public class CropImageLayout extends RelativeLayout {
     }
 
     public String clip() {
-        String sdPath =
-            getContext().getFilesDir().getAbsolutePath() + File.separator + HVEApplication.getInstance().getTag();
+        String sdPath = getContext().getFilesDir().getAbsolutePath();
         File appDir = new File(sdPath);
         if (!appDir.exists()) {
             if (!appDir.mkdir()) {
@@ -93,7 +90,13 @@ public class CropImageLayout extends RelativeLayout {
         } catch (IOException e) {
             SmartLog.w("CropImageLayout", "clip:" + e.getMessage());
         } finally {
-            CloseUtils.close(fos);
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return filePath;
     }

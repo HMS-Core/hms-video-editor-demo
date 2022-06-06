@@ -34,7 +34,7 @@
         android:gravity="center"
         android:text="@string/none"
         android:textColor="#DBFFFFFF"
-        android:textSize="@dimen/dp_10"
+        android:textSize="@dimen/dp_8"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/item_image_view_mask_header"
         app:layout_constraintStart_toStartOf="@+id/item_image_view_mask_header" />

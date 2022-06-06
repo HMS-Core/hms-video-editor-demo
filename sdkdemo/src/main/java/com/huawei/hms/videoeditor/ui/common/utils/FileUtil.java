@@ -36,7 +36,6 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.huawei.hms.videoeditor.common.agc.HVEApplication;
 import com.huawei.hms.videoeditor.sdk.bean.HVEVisibleFormatBean;
 import com.huawei.hms.videoeditor.sdk.util.HVEUtil;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
@@ -233,8 +232,7 @@ public class FileUtil {
      * bitmap 2 File
      */
     public static String saveBitmap(Context context, String projectId, Bitmap bitmap, String bitName) {
-        String sdPath = context.getFilesDir().getAbsolutePath() + File.separator + HVEApplication.getInstance().getTag()
-            + "project/" + projectId;
+        String sdPath = context.getFilesDir().getAbsolutePath() + File.separator + "project/" + projectId;
         File fileDir = new File(sdPath);
         if (!fileDir.exists()) {
             if (!fileDir.mkdirs()) {

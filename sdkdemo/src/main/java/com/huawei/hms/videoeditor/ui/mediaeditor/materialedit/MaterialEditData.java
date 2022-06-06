@@ -29,6 +29,8 @@ public class MaterialEditData {
 
     private List<HVEPosition2D> mFaceBoxList;
 
+    private List<HVEPosition2D> mSegmentationList;
+
     public MaterialEditData(HVEVisibleAsset asset, MaterialType materialType) {
         this.mAsset = asset;
         this.mMaterialType = materialType;
@@ -64,6 +66,14 @@ public class MaterialEditData {
         mFaceBoxList = faceBoxList;
     }
 
+    public List<HVEPosition2D> getSegmentationList() {
+        return mSegmentationList;
+    }
+
+    public void setSegmentationList(List<HVEPosition2D> segmentationList) {
+        this.mSegmentationList = segmentationList;
+    }
+
     @Override
     public String toString() {
         return "MaterialEditData{" + "mAsset=" + mAsset + ", mMaterialType=" + mMaterialType + ", mFaceBoxList="
@@ -78,5 +88,6 @@ public class MaterialEditData {
         WORD_TAIL,
         FACE,
         PERSON,
+        SEGMENTATION,
     }
 }

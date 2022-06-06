@@ -16,6 +16,7 @@
 
 package com.huawei.hms.videoeditor.ui.common.utils;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.Resources.NotFoundException;
 
@@ -29,10 +30,14 @@ public final class ResUtils {
     }
 
     public static Resources getResources() {
-        return VideoEditorApplication.getInstance().getContext().getResources();
+        Context context = VideoEditorApplication.getInstance().getContext();
+        return context == null ? null : context.getResources();
     }
 
     public static int getColor(int resId) {
+        if (getResources() == null) {
+            return 0;
+        }
         try {
             return getResources().getColor(resId);
         } catch (NotFoundException e) {

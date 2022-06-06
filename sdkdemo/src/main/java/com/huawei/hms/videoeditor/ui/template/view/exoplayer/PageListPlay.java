@@ -35,7 +35,6 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.ui.DefaultTimeBar;
 import com.google.android.exoplayer2.ui.PlayerControlView;
 import com.google.android.exoplayer2.ui.PlayerView;
-import com.huawei.hms.videoeditor.HVEEditorLibraryApplication;
 import com.huawei.hms.videoeditor.VideoEditorApplication;
 import com.huawei.hms.videoeditor.ui.common.utils.ResUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.ScreenUtil;
@@ -46,6 +45,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class PageListPlay {
     public static final int VIDEO_DETAIL_HEIGHT = 60;
+
     public SimpleExoPlayer exoPlayer;
 
     public PlayerView playerView;
@@ -60,15 +60,19 @@ public class PageListPlay {
 
     private ConstraintLayout controlLayout;
 
-    private final View navBarView;
+    private View navBarView;
 
     private boolean isLayout = true;
 
     private OnStylePlayListener stylePlayListener;
 
     private DefaultTimeBar defaultTimeBar;
+
     public PageListPlay() {
         Context context = VideoEditorApplication.getInstance().getContext();
+        if (context == null) {
+            return;
+        }
         exoPlayer = ExoPlayerFactory.newSimpleInstance(context, new DefaultRenderersFactory(context),
             new DefaultTrackSelector(), new DefaultLoadControl());
         playerView = (PlayerView) LayoutInflater.from(context).inflate(R.layout.layout_exo_player_view, null, false);
@@ -76,8 +80,10 @@ public class PageListPlay {
         controlView = (PlayerControlView) LayoutInflater.from(context)
             .inflate(R.layout.layout_exo_player_controller_view, null, false);
         defaultTimeBar = controlView.findViewById(R.id.exo_progress);
-        defaultTimeBar.setBufferedColor(ResUtils.getResources().getColor(R.color.pick_line_color));
-        defaultTimeBar.setPlayedColor(ResUtils.getResources().getColor(R.color.color_text_focus));
+        if (ResUtils.getResources() != null) {
+            defaultTimeBar.setBufferedColor(ResUtils.getResources().getColor(R.color.pick_line_color));
+            defaultTimeBar.setPlayedColor(ResUtils.getResources().getColor(R.color.color_text_focus));
+        }
         refreshRtl();
         controlLayout = controlView.findViewById(R.id.linearLayout2);
         navBarView = controlView.findViewById(R.id.nav_bar_view);
@@ -88,8 +94,13 @@ public class PageListPlay {
         playerView.setPlayer(exoPlayer);
         controlView.setPlayer(exoPlayer);
 
-        int resourceId = ResUtils.getResources().getIdentifier("navigation_bar_height", "dimen", "android");
-        int height = ResUtils.getResources().getDimensionPixelSize(resourceId);
+        int resourceId = 1;
+        int height = 0;
+        if (ResUtils.getResources() != null) {
+            resourceId = ResUtils.getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+            height = ResUtils.getResources().getDimensionPixelSize(resourceId);
+        }
+
         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) navBarView.getLayoutParams();
         layoutParams.height = height;
         navBarView.setLayoutParams(layoutParams);

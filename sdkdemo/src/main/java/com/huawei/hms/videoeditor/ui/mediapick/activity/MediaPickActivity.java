@@ -249,7 +249,7 @@ public class MediaPickActivity extends BaseActivity {
             mQualityLayout.setVisibility(View.VISIBLE);
         }
 
-        if (!SystemUtils.isLowDevice(this)) {
+        if (!SystemUtils.isQCOM() && !SystemUtils.isLowDevice(this)) {
             isQualitySelect = true;
             mQualityIcon.setSelected(true);
         }

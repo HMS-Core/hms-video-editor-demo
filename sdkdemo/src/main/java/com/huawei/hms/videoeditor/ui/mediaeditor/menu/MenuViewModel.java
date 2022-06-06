@@ -50,6 +50,7 @@ import com.huawei.hms.videoeditor.ui.common.utils.LaneSizeCheckUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.SPManager;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.ToastWrapper;
+import com.huawei.hms.videoeditor.ui.common.view.dialog.LoadingDialog;
 import com.huawei.hms.videoeditor.ui.mediaeditor.materialedit.MaterialEditViewModel;
 import com.huawei.hms.videoeditor.ui.mediaeditor.trackview.viewmodel.EditPreviewViewModel;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
@@ -75,6 +76,8 @@ public class MenuViewModel extends AndroidViewModel {
     public MutableLiveData<Boolean> isShowMenuPanel = new MutableLiveData<>();
 
     private MutableLiveData<Integer> videoSelectionEnter = new MutableLiveData<>();
+
+    private MutableLiveData<Integer> videoSelectionFinish = new MutableLiveData<>();
 
     private int mCopyTextAndStickerDistance;
 
@@ -114,6 +117,14 @@ public class MenuViewModel extends AndroidViewModel {
         this.videoSelectionEnter.postValue(videoSelectionEnter);
     }
 
+    public MutableLiveData<Integer> getVideoSelectionFinish() {
+        return videoSelectionFinish;
+    }
+
+    public void setVideoSelectionFnish(int videoSelectionFinish) {
+        this.videoSelectionFinish.postValue(videoSelectionFinish);
+    }
+
     public void initVideoSelection(HVEAIInitialCallback callback) {
         if (hveVideoSelection == null) {
             hveVideoSelection = new HVEVideoSelection();
@@ -126,9 +137,11 @@ public class MenuViewModel extends AndroidViewModel {
         try {
             if (data.getType() == MediaData.MEDIA_VIDEO) {
                 asset = videoLane.appendVideoAsset(data.getPath(), (int) startTime, data.getDuration(), data.getWidth(),
-                        data.getHeight());
+                    data.getHeight());
                 if (isVideoSelection) {
+                    setVideoSelectionFnish(0);
                     hveVideoSelection.getHighLight(data.getPath(), VIDEO_DURATION, start -> {
+                        setVideoSelectionFnish(1);
                         if (start < 0) {
                             SmartLog.e(TAG, "illegal trimIn");
                             return;
@@ -205,9 +218,9 @@ public class MenuViewModel extends AndroidViewModel {
 
         if (mediaData.getCutTrimIn() != 0 || mediaData.getCutTrimOut() != 0) {
             timeLine.getVideoLane(mHveAsset.getLaneIndex())
-                    .cutAsset(mHveAsset.getIndex(), mediaData.getCutTrimIn(), HVELane.HVETrimType.TRIM_IN);
+                .cutAsset(mHveAsset.getIndex(), mediaData.getCutTrimIn(), HVELane.HVETrimType.TRIM_IN);
             timeLine.getVideoLane(mHveAsset.getLaneIndex())
-                    .cutAsset(mHveAsset.getIndex(), mediaData.getCutTrimOut(), HVELane.HVETrimType.TRIM_OUT);
+                .cutAsset(mHveAsset.getIndex(), mediaData.getCutTrimOut(), HVELane.HVETrimType.TRIM_OUT);
             mEditPreviewViewModel.updateDuration();
         }
     }
@@ -244,10 +257,10 @@ public class MenuViewModel extends AndroidViewModel {
         SmartLog.i(TAG, "MenuViewModel: " + this + "mEditPreviewViewModel: " + mEditPreviewViewModel);
         HVEAsset asset = mEditPreviewViewModel.getMainLaneAsset();
         if (asset == null || mEditPreviewViewModel.getCurrentTime().getValue() == null
-                || currentTime - asset.getStartTime() < EditPreviewViewModel.MIN_DURATION
-                || asset.getEndTime() - currentTime < EditPreviewViewModel.MIN_DURATION) {
+            || currentTime - asset.getStartTime() < EditPreviewViewModel.MIN_DURATION
+            || asset.getEndTime() - currentTime < EditPreviewViewModel.MIN_DURATION) {
             ToastWrapper.makeText(getApplication(), getApplication().getString(R.string.nodivision), Toast.LENGTH_SHORT)
-                    .show();
+                .show();
             return;
         }
         splitPoint = currentTime - asset.getStartTime();
@@ -278,8 +291,8 @@ public class MenuViewModel extends AndroidViewModel {
         HVEVideoLane videoLane = EditorManager.getInstance().getMainLane();
         if (asset == null || videoLane == null) {
             ToastWrapper
-                    .makeText(getApplication(), getApplication().getString(R.string.replacefailed), Toast.LENGTH_SHORT)
-                    .show();
+                .makeText(getApplication(), getApplication().getString(R.string.replacefailed), Toast.LENGTH_SHORT)
+                .show();
             return;
         }
         boolean isSuccess = videoLane.replaceAssetPath(path, asset.getIndex(), trimIn, trimOut);
@@ -290,8 +303,8 @@ public class MenuViewModel extends AndroidViewModel {
             });
         } else {
             ToastWrapper
-                    .makeText(getApplication(), getApplication().getString(R.string.replacefailed), Toast.LENGTH_SHORT)
-                    .show();
+                .makeText(getApplication(), getApplication().getString(R.string.replacefailed), Toast.LENGTH_SHORT)
+                .show();
         }
     }
 
@@ -305,8 +318,8 @@ public class MenuViewModel extends AndroidViewModel {
         HVELane selectedLane = mEditPreviewViewModel.getSelectedLane();
         if (asset == null || selectedLane == null) {
             ToastWrapper
-                    .makeText(getApplication(), getApplication().getString(R.string.replacefailed), Toast.LENGTH_SHORT)
-                    .show();
+                .makeText(getApplication(), getApplication().getString(R.string.replacefailed), Toast.LENGTH_SHORT)
+                .show();
             return;
         }
         if (selectedLane instanceof HVEVideoLane) {
@@ -317,8 +330,8 @@ public class MenuViewModel extends AndroidViewModel {
                 setSelectedUUID("");
             } else {
                 ToastWrapper
-                        .makeText(getApplication(), getApplication().getString(R.string.replacefailed), Toast.LENGTH_SHORT)
-                        .show();
+                    .makeText(getApplication(), getApplication().getString(R.string.replacefailed), Toast.LENGTH_SHORT)
+                    .show();
             }
         }
     }
@@ -352,7 +365,7 @@ public class MenuViewModel extends AndroidViewModel {
             mEditPreviewViewModel.updateDuration();
         } else {
             ToastWrapper.makeText(getApplication(), getApplication().getString(R.string.copyfailed), Toast.LENGTH_SHORT)
-                    .show();
+                .show();
         }
     }
 
@@ -368,9 +381,9 @@ public class MenuViewModel extends AndroidViewModel {
         HVEVideoLane lane = LaneSizeCheckUtils.getPipFreeLan(mEditor, startTime, endTime, getApplication());
         if (lane == null) {
             ToastWrapper
-                    .makeText(getApplication(), getApplication().getString(R.string.pip_lane_out_of_size),
-                            Toast.LENGTH_SHORT)
-                    .show();
+                .makeText(getApplication(), getApplication().getString(R.string.pip_lane_out_of_size),
+                    Toast.LENGTH_SHORT)
+                .show();
             return;
         }
         HVEAsset newAsset = timeLine.copyAndInsertAsset(asset, lane.getIndex(), startTime);
@@ -382,7 +395,7 @@ public class MenuViewModel extends AndroidViewModel {
             });
         } else {
             ToastWrapper.makeText(getApplication(), getApplication().getString(R.string.copyfailed), Toast.LENGTH_SHORT)
-                    .show();
+                .show();
         }
     }
 
@@ -397,8 +410,8 @@ public class MenuViewModel extends AndroidViewModel {
         }
         try {
             HVEEffect effect = videoLane.bindTransitionEffect(
-                    new HVEEffect.Options(content.getName(), content.getId(), content.getLocalPath()), mTransIndex,
-                    duration);
+                new HVEEffect.Options(content.getName(), content.getId(), content.getLocalPath()), mTransIndex,
+                duration);
             if (effect != null && preview) {
                 mEditPreviewViewModel.playTimeLine(Math.max(0, effect.getStartTime() - 300), effect.getEndTime() + 300);
             }
@@ -440,7 +453,7 @@ public class MenuViewModel extends AndroidViewModel {
                 duration = durationTime;
             }
             videoLane.bindTransitionEffect(
-                    new HVEEffect.Options(content.getName(), content.getId(), content.getLocalPath()), i, duration);
+                new HVEEffect.Options(content.getName(), content.getId(), content.getLocalPath()), i, duration);
         }
         return true;
     }
@@ -517,7 +530,7 @@ public class MenuViewModel extends AndroidViewModel {
             HVEPosition2D hvePosition2D = hveStickerAsset.getPosition();
             if (hvePosition2D != null) {
                 hveStickerAsset.setPosition(hvePosition2D.xPos + mCopyTextAndStickerDistance,
-                        hvePosition2D.yPos + mCopyTextAndStickerDistance);
+                    hvePosition2D.yPos + mCopyTextAndStickerDistance);
             }
         }
         mEditor.seekTimeLine(startTime, () -> {
@@ -587,9 +600,9 @@ public class MenuViewModel extends AndroidViewModel {
         HVEAudioLane audioLane = LaneSizeCheckUtils.getAudioFreeLan(mEditor, startTime, endTime, getApplication());
         if (audioLane == null) {
             ToastWrapper
-                    .makeText(getApplication(), getApplication().getString(R.string.audio_lane_out_of_size),
-                            Toast.LENGTH_SHORT)
-                    .show();
+                .makeText(getApplication(), getApplication().getString(R.string.audio_lane_out_of_size),
+                    Toast.LENGTH_SHORT)
+                .show();
             return;
         }
 
@@ -640,13 +653,13 @@ public class MenuViewModel extends AndroidViewModel {
             return;
         }
         if (hveAsset.getStartTime() == timeLine.getCurrentTime()
-                || hveAsset.getEndTime() == timeLine.getCurrentTime()) {
+            || hveAsset.getEndTime() == timeLine.getCurrentTime()) {
             return;
         }
         if ((timeLine.getCurrentTime() - hveAsset.getStartTime() < EditPreviewViewModel.MIN_DURATION
-                || hveAsset.getEndTime() - timeLine.getCurrentTime() < EditPreviewViewModel.MIN_DURATION)) {
+            || hveAsset.getEndTime() - timeLine.getCurrentTime() < EditPreviewViewModel.MIN_DURATION)) {
             ToastWrapper.makeText(getApplication(), getApplication().getString(R.string.nodivision), Toast.LENGTH_SHORT)
-                    .show();
+                .show();
             return;
         }
         if (timeLine.getCurrentTime() > hveAsset.getStartTime() && timeLine.getCurrentTime() < hveAsset.getEndTime()) {
@@ -691,24 +704,24 @@ public class MenuViewModel extends AndroidViewModel {
         try {
             if (data.getType() == MediaData.MEDIA_VIDEO) {
                 videoLane = LaneSizeCheckUtils.getPipFreeLan(mEditor, timeLine.getCurrentTime(),
-                        timeLine.getCurrentTime() + data.getDuration(), getApplication());
+                    timeLine.getCurrentTime() + data.getDuration(), getApplication());
                 if (videoLane == null) {
                     ToastWrapper
-                            .makeText(getApplication(), getApplication().getString(R.string.pip_lane_out_of_size),
-                                    Toast.LENGTH_SHORT)
-                            .show();
+                        .makeText(getApplication(), getApplication().getString(R.string.pip_lane_out_of_size),
+                            Toast.LENGTH_SHORT)
+                        .show();
                     return null;
                 }
                 asset = videoLane.appendVideoAsset(data.getPath(), (int) timeLine.getCurrentTime(), data.getDuration(),
-                        data.getWidth(), data.getHeight());
+                    data.getWidth(), data.getHeight());
             } else {
                 videoLane = LaneSizeCheckUtils.getPipFreeLan(mEditor, timeLine.getCurrentTime(),
-                        timeLine.getCurrentTime() + 3000, getApplication());
+                    timeLine.getCurrentTime() + 3000, getApplication());
                 if (videoLane == null) {
                     ToastWrapper
-                            .makeText(getApplication(), getApplication().getString(R.string.pip_lane_out_of_size),
-                                    Toast.LENGTH_SHORT)
-                            .show();
+                        .makeText(getApplication(), getApplication().getString(R.string.pip_lane_out_of_size),
+                            Toast.LENGTH_SHORT)
+                        .show();
                     return null;
                 }
                 HVEImageAsset imageAsset = videoLane.appendImageAsset(data.getPath(), timeLine.getCurrentTime());
@@ -793,8 +806,7 @@ public class MenuViewModel extends AndroidViewModel {
         }
         long endTime = startTime + 3000;
 
-        HVEStickerLane stickerLane =
-                LaneSizeCheckUtils.getStickerFreeLan(mEditor, startTime, endTime);
+        HVEStickerLane stickerLane = LaneSizeCheckUtils.getStickerFreeLan(mEditor, startTime, endTime);
         if (stickerLane == null) {
             return null;
         }
@@ -831,22 +843,22 @@ public class MenuViewModel extends AndroidViewModel {
         }
 
         if (aHveAsset.getStartTime() == timeLine.getCurrentTime()
-                || aHveAsset.getEndTime() == timeLine.getCurrentTime()) {
+            || aHveAsset.getEndTime() == timeLine.getCurrentTime()) {
             ToastWrapper.makeText(getApplication(), getApplication().getString(R.string.nodivision), Toast.LENGTH_SHORT)
-                    .show();
+                .show();
             return;
         }
 
         if ((timeLine.getCurrentTime() - aHveAsset.getStartTime() < EditPreviewViewModel.MIN_DURATION
-                || aHveAsset.getEndTime() - timeLine.getCurrentTime() < EditPreviewViewModel.MIN_DURATION)) {
+            || aHveAsset.getEndTime() - timeLine.getCurrentTime() < EditPreviewViewModel.MIN_DURATION)) {
             ToastWrapper.makeText(getApplication(), getApplication().getString(R.string.nodivision), Toast.LENGTH_SHORT)
-                    .show();
+                .show();
             return;
         }
 
         long splitPoint = 0;
         if (timeLine.getCurrentTime() > aHveAsset.getStartTime()
-                && timeLine.getCurrentTime() < aHveAsset.getEndTime()) {
+            && timeLine.getCurrentTime() < aHveAsset.getEndTime()) {
             splitPoint = timeLine.getCurrentTime() - aHveAsset.getStartTime();
         }
         if (splitPoint == 0) {
@@ -868,7 +880,7 @@ public class MenuViewModel extends AndroidViewModel {
                 return;
             }
             mEditor.seekTimeLine(hveAsset.getStartTime(),
-                    () -> mEditPreviewViewModel.setSelectedUUID(hveAsset.getUuid()));
+                () -> mEditPreviewViewModel.setSelectedUUID(hveAsset.getUuid()));
         }
     }
 
@@ -887,22 +899,22 @@ public class MenuViewModel extends AndroidViewModel {
         }
 
         if (bHveAsset.getStartTime() == timeLine.getCurrentTime()
-                || bHveAsset.getEndTime() == timeLine.getCurrentTime()) {
+            || bHveAsset.getEndTime() == timeLine.getCurrentTime()) {
             ToastWrapper.makeText(getApplication(), getApplication().getString(R.string.nodivision), Toast.LENGTH_SHORT)
-                    .show();
+                .show();
             return;
         }
 
         if ((timeLine.getCurrentTime() - bHveAsset.getStartTime() < EditPreviewViewModel.MIN_DURATION
-                || bHveAsset.getEndTime() - timeLine.getCurrentTime() < EditPreviewViewModel.MIN_DURATION)) {
+            || bHveAsset.getEndTime() - timeLine.getCurrentTime() < EditPreviewViewModel.MIN_DURATION)) {
             ToastWrapper.makeText(getApplication(), getApplication().getString(R.string.nodivision), Toast.LENGTH_SHORT)
-                    .show();
+                .show();
             return;
         }
 
         long splitPoint = 0;
         if (timeLine.getCurrentTime() > bHveAsset.getStartTime()
-                && timeLine.getCurrentTime() < bHveAsset.getEndTime()) {
+            && timeLine.getCurrentTime() < bHveAsset.getEndTime()) {
             splitPoint = timeLine.getCurrentTime() - bHveAsset.getStartTime();
         }
         if (splitPoint == 0) {
@@ -924,7 +936,7 @@ public class MenuViewModel extends AndroidViewModel {
                 return;
             }
             mEditor.seekTimeLine(hveAsset.getStartTime(),
-                    () -> mEditPreviewViewModel.setSelectedUUID(hveAsset.getUuid()));
+                () -> mEditPreviewViewModel.setSelectedUUID(hveAsset.getUuid()));
         }
     }
 
@@ -958,7 +970,7 @@ public class MenuViewModel extends AndroidViewModel {
             HVEPosition2D hvePosition2D = hveStickerAsset.getPosition();
             if (hvePosition2D != null) {
                 hveStickerAsset.setPosition(hvePosition2D.xPos + mCopyTextAndStickerDistance,
-                        hvePosition2D.yPos + mCopyTextAndStickerDistance);
+                    hvePosition2D.yPos + mCopyTextAndStickerDistance);
             }
         }
         mEditor.seekTimeLine(startTime, new HuaweiVideoEditor.SeekCallback() {

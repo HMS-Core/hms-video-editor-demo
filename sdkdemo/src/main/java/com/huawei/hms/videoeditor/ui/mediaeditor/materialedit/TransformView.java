@@ -84,6 +84,8 @@ public class TransformView extends View {
 
     protected List<HVEPosition2D> mHVEPosition2DList = new ArrayList<>();
 
+    protected List<HVEPosition2D> mHVEDrawList = new ArrayList<>();
+
     private HVESize mSize;
 
     private final PointF mDoubleCenterPoint = new PointF();
@@ -91,6 +93,8 @@ public class TransformView extends View {
     protected Mode mCurrentMode = Mode.NONE;
 
     protected boolean isTransForm = true;
+
+    protected boolean isSegmentation = false;
 
     protected boolean isTouchAble = true;
 
@@ -200,6 +204,20 @@ public class TransformView extends View {
     protected void onDraw(Canvas canvas) {
         canvas.setDrawFilter(new PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG));
         Path path = new Path();
+
+        if (isSegmentation) {
+            int size = mHVEDrawList.size();
+            SmartLog.i(TAG, "zdp onDraw size  " + size);
+            if (size > 0) {
+                path.moveTo(mHVEDrawList.get(0).xPos, mHVEDrawList.get(0).yPos);
+                for (int i = 1; i < size; i++) {
+                    path.lineTo(mHVEDrawList.get(i).xPos, mHVEDrawList.get(i).yPos);
+                }
+                canvas.drawPath(path, mPaint);
+                return;
+            }
+        }
+
         if (mHVEPosition2DList.size() != 4) {
             return;
         }
@@ -267,6 +285,12 @@ public class TransformView extends View {
         int minDistance = 10;
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN:
+                if (isSegmentation) {
+                    if (onEditListener != null) {
+                        onEditListener.onKeyDown(event);
+                        return true;
+                    }
+                }
                 mOldX = event.getX();
                 mOldY = event.getY();
                 if (isDrawScale && mScaleRect.contains(event.getX(), event.getY())) {
@@ -309,6 +333,12 @@ public class TransformView extends View {
                 mOldRotation = getRotation(event);
                 break;
             case MotionEvent.ACTION_MOVE:
+                if (isSegmentation) {
+                    if (onEditListener != null) {
+                        onEditListener.onKeyMove(event);
+                        return true;
+                    }
+                }
                 float dx = event.getX() - mOldX;
                 float dy = event.getY() - mOldY;
 
@@ -329,6 +359,10 @@ public class TransformView extends View {
             case MotionEvent.ACTION_UP:
                 if (onEditListener == null) {
                     break;
+                }
+                if (isSegmentation) {
+                    onEditListener.onKeyUp(event);
+                    return true;
                 }
                 mEventUpX = event.getX();
                 mEventUpY = event.getY();
@@ -542,6 +576,14 @@ public class TransformView extends View {
         isTransForm = transForm;
     }
 
+    public boolean isSegmentation() {
+        return isSegmentation;
+    }
+
+    public void setSegmentation(boolean segmentation) {
+        isSegmentation = segmentation;
+    }
+
     public void setTouchAble(boolean touchAble) {
         isTouchAble = touchAble;
     }
@@ -607,6 +649,14 @@ public class TransformView extends View {
         }
         this.mHVEPosition2DList = list;
         calculateBitmapRect();
+        invalidate();
+    }
+
+    public void setDrawPoints(List<HVEPosition2D> list) {
+        if (list == null || list.isEmpty()) {
+            return;
+        }
+        this.mHVEDrawList = list;
         invalidate();
     }
 

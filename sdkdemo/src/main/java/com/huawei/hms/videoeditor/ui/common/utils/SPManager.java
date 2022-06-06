@@ -16,15 +16,15 @@
 
 package com.huawei.hms.videoeditor.ui.common.utils;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.huawei.hms.videoeditor.VideoEditorApplication;
 import com.huawei.hms.videoeditor.utils.SmartLog;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public final class SPManager {
     public static final String LOG_PREFIX = "SP_";
@@ -51,6 +51,9 @@ public final class SPManager {
     }
 
     public static SPManager get(String name, Context context) {
+        if (context == null) {
+            return null;
+        }
         if (instanceMap.get(name) == null) {
             synchronized (SPManager.class) {
                 if (instanceMap.get(name) == null) {

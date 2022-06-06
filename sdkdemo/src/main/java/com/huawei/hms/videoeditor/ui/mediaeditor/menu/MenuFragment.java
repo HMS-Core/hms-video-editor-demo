@@ -37,6 +37,7 @@ import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewS
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_TEXT_STATE;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_VIDEO_OPERATION;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_VIDEO_STATE;
+import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_VIDEO_STATE_AI_SEGMENTATION;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_VIDEO_STATE_HUMAN_TRACKING;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_VIDEO_STATE_INVERTED;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_VIDEO_STATE_MASK;
@@ -72,6 +73,7 @@ import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.BaseFragment;
 import com.huawei.hms.videoeditor.ui.common.EditorManager;
 import com.huawei.hms.videoeditor.ui.mediaeditor.VideoClipsActivity;
+import com.huawei.hms.videoeditor.ui.mediaeditor.aisegmantation.SegmentationViewModel;
 import com.huawei.hms.videoeditor.ui.mediaeditor.graffiti.GraffitiManager;
 import com.huawei.hms.videoeditor.ui.mediaeditor.graffiti.view.GraffitiView;
 import com.huawei.hms.videoeditor.ui.mediaeditor.materialedit.MaterialEditData;
@@ -127,6 +129,8 @@ public class MenuFragment extends Fragment {
     private MaterialEditViewModel mMaterialEditViewModel;
 
     private PersonTrackingViewModel mPersonTrackingViewModel;
+
+    private SegmentationViewModel mSegmentationViewModel;
 
     private MenuViewModel mMenuViewModel;
 
@@ -201,6 +205,7 @@ public class MenuFragment extends Fragment {
         mMenuViewModel = new ViewModelProvider(mActivity, mFactory).get(MenuViewModel.class);
         mPersonTrackingViewModel = new ViewModelProvider(mActivity, mFactory).get(PersonTrackingViewModel.class);
         mTimeLapseViewModel = new ViewModelProvider(mActivity, mFactory).get(TimeLapseViewModel.class);
+        mSegmentationViewModel = new ViewModelProvider(mActivity, mFactory).get(SegmentationViewModel.class);
     }
 
     private void initView(View view) {
@@ -212,7 +217,7 @@ public class MenuFragment extends Fragment {
         mGraffitiView = view.findViewById(R.id.graffiti_view);
         MenuClickManager.getInstance()
             .init(mActivity, menuContentLayout, mMenuViewModel, mEditPreviewViewModel, mMaterialEditViewModel,
-                mPersonTrackingViewModel, mTimeLapseViewModel);
+                mPersonTrackingViewModel, mTimeLapseViewModel, mSegmentationViewModel);
     }
 
     private void initData() {
@@ -234,7 +239,7 @@ public class MenuFragment extends Fragment {
         }
         MenuClickManager.getInstance()
             .update(mActivity, menuContentLayout, mMenuViewModel, mEditPreviewViewModel, mMaterialEditViewModel,
-                mPersonTrackingViewModel);
+                mPersonTrackingViewModel, mSegmentationViewModel);
     }
 
     private void initEvent(View view) {
@@ -425,6 +430,7 @@ public class MenuFragment extends Fragment {
                 if (hveAsset instanceof HVEImageAsset) {
                     ableIds.add(EDIT_VIDEO_STATE_SPEED);
                     ableIds.add(EDIT_VIDEO_STATE_HUMAN_TRACKING);
+                    ableIds.add(EDIT_VIDEO_STATE_AI_SEGMENTATION);
                     if (menuContentLayout != null) {
                         menuContentLayout.updateUnAbleMenus(false, ableIds);
                     }
@@ -436,6 +442,10 @@ public class MenuFragment extends Fragment {
                         }
                         boolean isHumanTracking = isContainHumanTrackingEffect(hveAsset);
                         if (isHumanTracking) {
+                            ableIds.add(EDIT_VIDEO_STATE_INVERTED);
+                        }
+                        boolean isSegmentation = isSegmentationEnabled(hveAsset);
+                        if (isSegmentation) {
                             ableIds.add(EDIT_VIDEO_STATE_INVERTED);
                         }
                         menuContentLayout.updateUnAbleMenus(false, ableIds);
@@ -456,7 +466,8 @@ public class MenuFragment extends Fragment {
                     if (mEditPreviewViewModel.isEditTextStatus() || mEditPreviewViewModel.isEditTextTemplateStatus()
                         || mEditPreviewViewModel.isEditStickerStatus() || mEditPreviewViewModel.isTrailerStatus()
                         || mEditPreviewViewModel.isFaceBlockingStatus()
-                        || mEditPreviewViewModel.isPersonTrackingStatus()) {
+                        || mEditPreviewViewModel.isPersonTrackingStatus()
+                        || mEditPreviewViewModel.isSegmentationStatus()) {
                         menuContentLayout.hideOperateMenu();
                         return;
                     }
@@ -544,7 +555,8 @@ public class MenuFragment extends Fragment {
                                 unableIds.addAll(MenuClickManager.getInstance().getUnableOperateIds(8));
                             }
                             boolean isHumanTracking = isContainHumanTrackingEffect(selectedHveAsset);
-                            if (isHumanTracking) {
+                            boolean isSegmentation = isSegmentationEnabled(selectedHveAsset);
+                            if (isHumanTracking || isSegmentation) {
                                 unableIds.addAll(MenuClickManager.getInstance().getUnableOperateIds(9));
                             }
                         }
@@ -563,7 +575,8 @@ public class MenuFragment extends Fragment {
                                 unableIds.addAll(MenuClickManager.getInstance().getUnableOperateIds(8));
                             }
                             boolean isHumanTracking = isContainHumanTrackingEffect(selectedHveAsset);
-                            if (isHumanTracking) {
+                            boolean isSegmentation = isSegmentationEnabled(selectedHveAsset);
+                            if (isHumanTracking || isSegmentation) {
                                 unableIds.addAll(MenuClickManager.getInstance().getUnableOperateIds(9));
                             }
                         }
@@ -669,6 +682,11 @@ public class MenuFragment extends Fragment {
         });
 
         initAnimation();
+    }
+
+    private boolean isSegmentationEnabled(HVEAsset asset) {
+        List<HVEEffect> effects = asset.getEffectsWithType(HVEEffect.HVEEffectType.SEGMENTATION);
+        return !effects.isEmpty();
     }
 
     private boolean isContainHumanTrackingEffect(HVEAsset asset) {

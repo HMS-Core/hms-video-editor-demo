@@ -47,11 +47,13 @@ import com.huawei.hms.videoeditor.ui.common.utils.LaneSizeCheckUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.SPManager;
 import com.huawei.hms.videoeditor.ui.common.utils.ToastUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.ToastWrapper;
+import com.huawei.hms.videoeditor.ui.common.view.dialog.CommonProgressDialog;
 import com.huawei.hms.videoeditor.ui.common.view.loading.LoadingDialogUtils;
 import com.huawei.hms.videoeditor.ui.mediaeditor.VideoClipsActivity;
 import com.huawei.hms.videoeditor.ui.mediaeditor.aifun.AIBlockingHintDialog;
 import com.huawei.hms.videoeditor.ui.mediaeditor.aifun.fragment.AiFunFragment;
 import com.huawei.hms.videoeditor.ui.mediaeditor.aihair.fragment.AiHairFragment;
+import com.huawei.hms.videoeditor.ui.mediaeditor.aisegmantation.SegmentationViewModel;
 import com.huawei.hms.videoeditor.ui.mediaeditor.animation.videoanimation.fragment.AnimationPanelFragment;
 import com.huawei.hms.videoeditor.ui.mediaeditor.audio.activity.AudioPickActivity;
 import com.huawei.hms.videoeditor.ui.mediaeditor.audio.fragment.SoundEffectFragment;
@@ -115,6 +117,8 @@ public class MenuClickManager {
 
     private TimeLapseViewModel mTimeLapseViewModel;
 
+    private SegmentationViewModel mSegmentationViewModel;
+
     private OnAssetDeleteListener mOnAssetDeleteListener;
 
     private List<Integer> cloudMaterialsIdList;
@@ -129,13 +133,15 @@ public class MenuClickManager {
 
     public void init(VideoClipsActivity activity, EditMenuContentLayout menuContentLayout, MenuViewModel menuViewModel,
         EditPreviewViewModel editPreviewViewModel, MaterialEditViewModel materialEditViewModel,
-        PersonTrackingViewModel personTrackingViewModel, TimeLapseViewModel timeLapseViewModel) {
+        PersonTrackingViewModel personTrackingViewModel, TimeLapseViewModel timeLapseViewModel,
+        SegmentationViewModel mSegmentationViewModel) {
         this.mActivity = activity;
         this.mMenuViewModel = menuViewModel;
         this.editPreviewViewModel = editPreviewViewModel;
         this.mMaterialEditViewModel = materialEditViewModel;
         this.mPersonTrackingViewModel = personTrackingViewModel;
         this.mTimeLapseViewModel = timeLapseViewModel;
+        this.mSegmentationViewModel = mSegmentationViewModel;
         this.menuContentLayout = menuContentLayout;
         mMenuControlViewRouter =
             new MenuControlViewRouter(mActivity, R.id.fragment_container, menuContentLayout, mMenuViewModel);
@@ -144,12 +150,14 @@ public class MenuClickManager {
 
     public void update(VideoClipsActivity activity, EditMenuContentLayout menuContentLayout,
         MenuViewModel menuViewModel, EditPreviewViewModel editPreviewViewModel,
-        MaterialEditViewModel materialEditViewModel, PersonTrackingViewModel personTrackingViewModel) {
+        MaterialEditViewModel materialEditViewModel, PersonTrackingViewModel personTrackingViewModel,
+        SegmentationViewModel mSegmentationViewModel) {
         this.mActivity = activity;
         this.mMenuViewModel = menuViewModel;
         this.editPreviewViewModel = editPreviewViewModel;
         this.mMaterialEditViewModel = materialEditViewModel;
         this.mPersonTrackingViewModel = personTrackingViewModel;
+        this.mSegmentationViewModel = mSegmentationViewModel;
         this.menuContentLayout = menuContentLayout;
         if (mMenuControlViewRouter != null) {
             mMenuControlViewRouter.updateMenuViewModel(mMenuViewModel);
@@ -893,6 +901,11 @@ public class MenuClickManager {
                     MenuClickManager.getInstance().showPanelViewPrepare(id, AiFunFragment.newInstance(id));
                 }
                 break;
+            case EDIT_VIDEO_STATE_AI_SEGMENTATION:
+            case EDIT_VIDEO_OPERATION_AI_SEGMENTATION:
+            case EDIT_PIP_OPERATION_AI_SEGMENTATION:
+                mSegmentationViewModel.setSegmentationEnter(id);
+                break;
             default:
                 break;
         }
@@ -964,6 +977,7 @@ public class MenuClickManager {
                 unableMenuId.add(EDIT_VIDEO_OPERATION_VOLUME);
                 unableMenuId.add(EDIT_VIDEO_OPERATION_INVERTED);
                 unableMenuId.add(EDIT_VIDEO_OPERATION_HUMAN_TRACKING);
+                unableMenuId.add(EDIT_VIDEO_OPERATION_AI_SEGMENTATION);
                 break;
             case 3:
                 unableMenuId.add(EDIT_VIDEO_OPERATION_SPLIT);

@@ -36,11 +36,11 @@ import com.huawei.hms.videoeditor.sdk.asset.HVEAsset;
 import com.huawei.hms.videoeditor.sdk.asset.HVEImageAsset;
 import com.huawei.hms.videoeditor.sdk.asset.HVEThumbnailCallback;
 import com.huawei.hms.videoeditor.sdk.asset.HVEVideoAsset;
-import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.utils.BigDecimalUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.BitmapUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.ScreenUtil;
 import com.huawei.hms.videoeditor.ui.common.utils.ThumbNailMemoryCache;
+import com.huawei.hms.videoeditor.utils.SmartLog;
 
 import androidx.annotation.Nullable;
 

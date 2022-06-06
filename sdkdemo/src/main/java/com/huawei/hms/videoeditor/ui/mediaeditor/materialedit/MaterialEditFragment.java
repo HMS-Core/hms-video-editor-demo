@@ -37,6 +37,7 @@ import com.huawei.hms.videoeditor.ui.common.BaseFragment;
 import com.huawei.hms.videoeditor.ui.common.EditorManager;
 import com.huawei.hms.videoeditor.ui.common.utils.LaneSizeCheckUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
+import com.huawei.hms.videoeditor.ui.mediaeditor.aisegmantation.SegmentationViewModel;
 import com.huawei.hms.videoeditor.ui.mediaeditor.menu.MenuClickManager;
 import com.huawei.hms.videoeditor.ui.mediaeditor.menu.VideoClipsPlayViewModel;
 import com.huawei.hms.videoeditor.ui.mediaeditor.persontrack.PersonTrackingViewModel;
@@ -46,6 +47,9 @@ import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MaterialEditFragment extends BaseFragment {
     private static final String TAG = "MaterialEditFragment";
@@ -60,6 +64,8 @@ public class MaterialEditFragment extends BaseFragment {
 
     private PersonTrackingViewModel mPersonTrackingViewModel;
 
+    private SegmentationViewModel mSegmentationViewModel;
+
     private TextEditViewModel mTextEditViewModel;
 
     private VideoClipsPlayViewModel mSdkPlayViewModel;
@@ -69,6 +75,18 @@ public class MaterialEditFragment extends BaseFragment {
     private String mLastSelectWordUUID = "";
 
     private long mLastSelectWordTime = 0;
+
+    private List<HVEPosition2D> points = new ArrayList<>();
+
+    private List<Point> drawPoints = new ArrayList<>();
+
+    private float mOldX;
+
+    private float mOldY;
+
+    private float mKeyDownX;
+
+    private float mKeyDownY;
 
     @Override
     protected void initViewModelObserve() {
@@ -91,6 +109,7 @@ public class MaterialEditFragment extends BaseFragment {
         mMaterialEditViewModel = new ViewModelProvider(mActivity, mFactory).get(MaterialEditViewModel.class);
         mEditPreviewViewModel = new ViewModelProvider(mActivity, mFactory).get(EditPreviewViewModel.class);
         mPersonTrackingViewModel = new ViewModelProvider(mActivity, mFactory).get(PersonTrackingViewModel.class);
+        mSegmentationViewModel = new ViewModelProvider(mActivity, mFactory).get(SegmentationViewModel.class);
         mTextEditViewModel = new ViewModelProvider(mActivity, mFactory).get(TextEditViewModel.class);
         mSdkPlayViewModel = new ViewModelProvider(mActivity, mFactory).get(VideoClipsPlayViewModel.class);
     }
@@ -121,7 +140,7 @@ public class MaterialEditFragment extends BaseFragment {
                     }
                     boolean isPersonTrackingEdit = mEditPreviewViewModel.isPersonTrackingStatus();
                     if (isPersonTrackingEdit) {
-                        getPoint(event.getX(), event.getY());
+                        getPoint(event.getX(), event.getY(), false, false);
                         return false;
                     }
                     HVEAsset asset = getIEditable(position2D, mMaterialEditViewModel.getCurrentFirstMenuId());
@@ -298,10 +317,15 @@ public class MaterialEditFragment extends BaseFragment {
         });
     }
 
-    private void getPoint(float posX, float posY) {
+    private void getPoint(float posX, float posY, boolean isUp, boolean isSegmentation) {
         float x = posX;
         float y = posY;
-        HVEAsset selectedAsset = mPersonTrackingViewModel.getSelectedTracking();
+        HVEAsset selectedAsset;
+        if (isSegmentation) {
+            selectedAsset = mSegmentationViewModel.getSelectedAsset();
+        } else {
+            selectedAsset = mPersonTrackingViewModel.getSelectedTracking();
+        }
         HVEVisibleAsset hveVisibleAsset = (HVEVisibleAsset) selectedAsset;
         int w = hveVisibleAsset.getWidth();
         int h = hveVisibleAsset.getHeight();
@@ -333,7 +357,18 @@ public class MaterialEditFragment extends BaseFragment {
             }
 
             Point position2D = new Point((int) (f[0] * w), (int) ((1 - f[1]) * h));
-            mPersonTrackingViewModel.setTrackingPoint(position2D);
+            Point drawPosition2D = new Point((int) (f[0] * vw + leftTop.xPos), (int) ((1 - f[1]) * vh + leftTop.yPos));
+
+            if (isSegmentation) {
+                points.add(new HVEPosition2D(position2D.x, position2D.y));
+                drawPoints.add(drawPosition2D);
+                if (isUp) {
+                    mSegmentationViewModel.setPoints(points);
+                    mSegmentationViewModel.setDrawPoints(drawPoints);
+                }
+            } else {
+                mPersonTrackingViewModel.setTrackingPoint(position2D);
+            }
         }
     }
 
@@ -419,6 +454,11 @@ public class MaterialEditFragment extends BaseFragment {
                 transformView.setTouchAble(true);
                 transformView.setDrawIconStatus(false, false, false, false);
                 break;
+            case SEGMENTATION:
+                transformView = new TransformView(mActivity);
+                transformView.setSegmentation(true);
+                transformView.setDrawIconStatus(false, false, false, false);
+                break;
             case FACE:
             case WORD_TAIL:
                 transformView = new TransformView(mActivity);
@@ -442,6 +482,8 @@ public class MaterialEditFragment extends BaseFragment {
         if (data.getMaterialType() == MaterialEditData.MaterialType.FACE
             || data.getMaterialType() == MaterialEditData.MaterialType.PERSON) {
             transformView.setRectangularPoints(data.getFaceBoxList());
+        } else if (data.getMaterialType() == MaterialEditData.MaterialType.SEGMENTATION) {
+            transformView.setDrawPoints(data.getSegmentationList());
         } else {
             transformView.setRectangularPoints(data.getAsset().getRect(), data.getAsset().getSize(),
                 data.getAsset().getRotation());
@@ -466,7 +508,7 @@ public class MaterialEditFragment extends BaseFragment {
                         return;
                     }
                     mMaterialEditViewModel.clearMaterialEditData();
-                    getPoint(position2D.xPos, position2D.yPos);
+                    getPoint(position2D.xPos, position2D.yPos, false, false);
                     return;
                 }
                 HVEAsset asset = getIEditable(position2D, mMaterialEditViewModel.getCurrentFirstMenuId());
@@ -629,6 +671,42 @@ public class MaterialEditFragment extends BaseFragment {
                 mMaterialEditViewModel.setMaterialCopy(data);
             }
 
+            @Override
+            public void onKeyDown(MotionEvent event) {
+                mOldX = event.getX();
+                mOldY = event.getY();
+                mKeyDownX = event.getX();
+                mKeyDownY = event.getY();
+                boolean isSegmentationStatus = mEditPreviewViewModel.isSegmentationStatus();
+                if (isSegmentationStatus) {
+                    points.clear();
+                    drawPoints.clear();
+                    getPoint(event.getX(), event.getY(), false, true);
+                }
+            }
+
+            @Override
+            public void onKeyMove(MotionEvent event) {
+                int minDistance = 20;
+                float dx = event.getX() - mOldX;
+                float dy = event.getY() - mOldY;
+
+                if (Math.abs(dx) > minDistance || Math.abs(dy) > minDistance) {
+                    mOldX = event.getX();
+                    mOldY = event.getY();
+                    getPoint(event.getX(), event.getY(), false, true);
+                }
+            }
+
+            @Override
+            public void onKeyUp(MotionEvent event) {
+                int minDistance = 20;
+                float dx = event.getX() - mKeyDownX;
+                float dy = event.getY() - mKeyDownY;
+                if (Math.abs(dx) > minDistance || Math.abs(dy) > minDistance) {
+                    getPoint(event.getX(), event.getY(), true, true);
+                }
+            }
         });
         FrameLayout.LayoutParams params =
             new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);

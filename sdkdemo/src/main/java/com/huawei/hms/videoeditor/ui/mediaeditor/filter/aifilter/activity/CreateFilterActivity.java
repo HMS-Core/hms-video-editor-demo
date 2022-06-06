@@ -347,7 +347,7 @@ public class CreateFilterActivity extends BaseActivity implements MediaPickManag
             if (item.getIndex() <= 0) {
                 return;
             }
-            if (mFilterType.equals(FILTER_CLONE)) {
+            if (FILTER_CLONE.equals(mFilterType)) {
                 if (mOriginalItem.isSelected() && !isOriginalView) {
                     addPicturesToSelect(item, mOriginalItem, item.getIndex());
                 } else if (mRenderingItem.isSelected() && !isRenderingView) {
@@ -498,7 +498,7 @@ public class CreateFilterActivity extends BaseActivity implements MediaPickManag
     private void eleteRendering() {
         mRenderingData = null;
         isRenderingView = false;
-        if (mFilterType.equals(FILTER_CLONE)) {
+        if (FILTER_CLONE.equals(mFilterType)) {
             mRenderingDelete.setVisibility(View.GONE);
             mRenderingItem.setImageDrawable(null);
             mRenderingItem.setImageResource(R.drawable.icon_tag_photo);
@@ -772,7 +772,7 @@ public class CreateFilterActivity extends BaseActivity implements MediaPickManag
         HVELocalMaterialInfo materialInfo = HVEMaterialsManager.queryLocalMaterialById(resp);
 
         Intent intent = new Intent();
-        if (mFilterType.equals(FILTER_CLONE)) {
+        if (FILTER_CLONE.equals(mFilterType)) {
             intent.putExtra("FilterType", FILTER_TYPE_CLONE);
         } else {
             intent.putExtra("FilterType", FILTER_TYPE_SINGLE);

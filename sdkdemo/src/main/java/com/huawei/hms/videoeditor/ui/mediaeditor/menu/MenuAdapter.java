@@ -17,20 +17,21 @@
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.menu;
 
-import java.util.List;
-
 import android.content.Context;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RCommandAdapter;
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RViewHolder;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.FoldScreenUtil;
+import com.huawei.hms.videoeditor.ui.common.utils.LanguageUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.LocalResourceUtil;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
+import java.util.List;
 
 public class MenuAdapter extends RCommandAdapter<EditMenuBean> {
 
@@ -38,25 +39,16 @@ public class MenuAdapter extends RCommandAdapter<EditMenuBean> {
 
     private final ConstraintLayout.LayoutParams contentParams;
 
-    private final boolean isOperateMenu;
-
-    private boolean isNeedMaxHeight = false;
-
     private OnItemClickListener mOnItemClickListener;
-
-    public void setNeedMaxHeight(boolean needMaxHeight) {
-        isNeedMaxHeight = needMaxHeight;
-    }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         mOnItemClickListener = listener;
     }
 
-    public MenuAdapter(Context context, List<EditMenuBean> list, int layoutId, boolean isOperateMenu) {
+    public MenuAdapter(Context context, List<EditMenuBean> list, int layoutId) {
         super(context, list, layoutId);
-        this.isOperateMenu = isOperateMenu;
         int itemWidth = (int) (SizeUtils.screenWidth(mContext) / 6.5f);
-        int itemHeight = SizeUtils.dp2Px(mContext, 64);
+        int itemHeight = LanguageUtils.isZh() ? SizeUtils.dp2Px(mContext, 56) : SizeUtils.dp2Px(mContext, 64);
         if (FoldScreenUtil.isFoldable() && FoldScreenUtil.isFoldableScreenExpand(context)) {
             itemWidth = (int) (SizeUtils.screenWidth(mContext) / 12.5f);
         }
@@ -65,9 +57,13 @@ public class MenuAdapter extends RCommandAdapter<EditMenuBean> {
 
     @Override
     protected void convert(RViewHolder holder, EditMenuBean editMenuBean, int dataPosition, int position) {
-        if (isOperateMenu || isNeedMaxHeight) {
-            holder.itemView.setLayoutParams(contentParams);
+        if (contentParams == null) {
+            SmartLog.e(TAG, "contentParams is null");
+            return;
         }
+
+        holder.itemView.setLayoutParams(contentParams);
+
         holder.itemView.setEnabled(editMenuBean.isEnable());
         holder.setViewAlpha(R.id.iv_icon, editMenuBean.isEnable() ? 1f : 0.45f);
         holder.setViewAlpha(R.id.tv_name, editMenuBean.isEnable() ? 1f : 0.45f);

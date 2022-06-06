@@ -16,17 +16,19 @@
 
 package com.huawei.hms.videoeditor.ui.common.utils;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Locale;
-
 import android.content.Context;
+import android.media.MediaCodecInfo;
+import android.media.MediaCodecList;
 import android.os.Build;
 import android.text.TextUtils;
 
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.tools.SystemPropertiesInvoke;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Locale;
 
 public class SystemUtils {
     private static final String TAG = "SystemUtils";
@@ -56,6 +58,8 @@ public class SystemUtils {
     private static String sName;
 
     private static String sVersion;
+
+    private static int deviceQCOM = -1;
 
     public static String getName() {
         if (sName == null) {
@@ -119,6 +123,27 @@ public class SystemUtils {
             }
         }
         return line;
+    }
+
+    public static boolean isQCOM() {
+        if (deviceQCOM != -1) {
+            return deviceQCOM != 0;
+        }
+
+        MediaCodecInfo[] codecInfos = (new MediaCodecList(MediaCodecList.ALL_CODECS)).getCodecInfos();
+        for (MediaCodecInfo codecInfo : codecInfos) {
+            if (codecInfo.isEncoder()) {
+                continue;
+            }
+            if (codecInfo.getName().contains("qcom") || codecInfo.getName().contains("QCOM")) {
+                deviceQCOM = 1;
+                SmartLog.i(TAG, "isQCOM true");
+                return true;
+            }
+        }
+        deviceQCOM = 0;
+        SmartLog.i(TAG, "isQCOM false");
+        return false;
     }
 
     public static boolean isLowDevice(Context context) {
