@@ -18,19 +18,23 @@ package com.huawei.hms.videoeditor.ui.template.module;
 
 import static android.app.Activity.RESULT_OK;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.huawei.hms.videoeditor.materials.HVEColumnInfo;
@@ -52,13 +56,8 @@ import com.huawei.hms.videoeditor.ui.template.viewmodel.HVETemplateCategoryModel
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 import com.huawei.secure.android.common.intent.SafeBundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import java.util.ArrayList;
+import java.util.List;
 
 public class VideoModulePagerFragment extends LazyFragment {
 

@@ -19,11 +19,6 @@ package com.huawei.hms.videoeditor.ui.mediaeditor.fragment;
 import static com.huawei.hms.videoeditor.ui.common.bean.Constant.LTR_UI;
 import static com.huawei.hms.videoeditor.ui.common.bean.Constant.RTL_UI;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -37,6 +32,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.huawei.hms.videoeditor.materials.HVEColumnInfo;
 import com.huawei.hms.videoeditor.materials.HVEMaterialConstant;
 import com.huawei.hms.videoeditor.sdk.HVETimeLine;
@@ -47,10 +50,10 @@ import com.huawei.hms.videoeditor.sdk.asset.HVEImageAsset;
 import com.huawei.hms.videoeditor.sdk.asset.HVEVideoAsset;
 import com.huawei.hms.videoeditor.sdk.bean.HVESpeedCurvePoint;
 import com.huawei.hms.videoeditor.sdk.lane.HVEVideoLane;
-import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.BaseFragment;
 import com.huawei.hms.videoeditor.ui.common.adapter.comment.RViewHolder;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.bean.MaterialsDownloadInfo;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.ScreenUtil;
@@ -61,18 +64,16 @@ import com.huawei.hms.videoeditor.ui.common.view.SpeedBar;
 import com.huawei.hms.videoeditor.ui.common.view.decoration.HorizontalDividerDecoration;
 import com.huawei.hms.videoeditor.ui.mediaeditor.VideoClipsActivity;
 import com.huawei.hms.videoeditor.ui.mediaeditor.filter.FilterLinearLayoutManager;
+import com.huawei.hms.videoeditor.ui.mediaeditor.menu.DefaultPlayControlView;
 import com.huawei.hms.videoeditor.ui.mediaeditor.speed.CurveSpeedItemAdapter;
 import com.huawei.hms.videoeditor.ui.mediaeditor.speed.CurveSpeedViewModel;
 import com.huawei.hms.videoeditor.ui.mediaeditor.trackview.viewmodel.EditPreviewViewModel;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GeneralSpeedFragment extends BaseFragment {
     private static final String TAG = "GeneralSpeedFragment";
@@ -89,7 +90,7 @@ public class GeneralSpeedFragment extends BaseFragment {
 
     private HuaweiVideoEditor mEditor;
 
-    private float speed = 1;
+    private float speed = 1f;
 
     private EditorTextView generalSpeed;
 
@@ -103,7 +104,6 @@ public class GeneralSpeedFragment extends BaseFragment {
 
     private int currentSelectPosition = -1;
 
-    // private HVEVideoLane videoLane;
     private HVEAsset currentSelectedAsset;
 
     private List<HVEColumnInfo> mColumnList;
@@ -177,9 +177,9 @@ public class GeneralSpeedFragment extends BaseFragment {
         generalView = view.findViewById(R.id.general_view);
         mRecyclerView = view.findViewById(R.id.rv_speed);
         View mCancelHeaderView =
-                LayoutInflater.from(mActivity).inflate(R.layout.adapter_add_filter_header, null, false);
+            LayoutInflater.from(mActivity).inflate(R.layout.adapter_add_filter_header, null, false);
         mCancelHeaderView.setLayoutParams(
-                new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, SizeUtils.dp2Px(context, 75)));
+            new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, SizeUtils.dp2Px(context, 75)));
 
         mFilterCancelRl = mCancelHeaderView.findViewById(R.id.rl_cancel);
         mFilterCancelRl.setSelected(true);
@@ -187,12 +187,12 @@ public class GeneralSpeedFragment extends BaseFragment {
         currentSelectedCurveSpeedPoints = new ArrayList<>();
         mCutContentList = new ArrayList<>();
         curveSpeedItemAdapter =
-                new CurveSpeedItemAdapter(mActivity, mCutContentList, R.layout.adapter_add_curve_speed_item);
+            new CurveSpeedItemAdapter(mActivity, mCutContentList, R.layout.adapter_add_curve_speed_item);
         mRecyclerView.setLayoutManager(new FilterLinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false));
         if (mRecyclerView.getItemDecorationCount() == 0) {
             mRecyclerView
-                    .addItemDecoration(new HorizontalDividerDecoration(ContextCompat.getColor(mActivity, R.color.color_20),
-                            SizeUtils.dp2Px(mActivity, 75), SizeUtils.dp2Px(mActivity, 8)));
+                .addItemDecoration(new HorizontalDividerDecoration(ContextCompat.getColor(mActivity, R.color.color_20),
+                    SizeUtils.dp2Px(mActivity, 75), SizeUtils.dp2Px(mActivity, 8)));
         }
         mRecyclerView.setItemAnimator(null);
         mRecyclerView.setAdapter(curveSpeedItemAdapter);
@@ -235,6 +235,9 @@ public class GeneralSpeedFragment extends BaseFragment {
             }
         });
         addCustomDataIntoList();
+        if (mActivity instanceof VideoClipsActivity) {
+            DefaultPlayControlView.setNeedSeek(false);
+        }
     }
 
     private void showGeneral() {
@@ -268,7 +271,7 @@ public class GeneralSpeedFragment extends BaseFragment {
             if (!TextUtils.isEmpty(errorString) && mCutContentList.size() == 0) {
                 if (mActivity != null) {
                     ToastWrapper.makeText(mActivity, mActivity.getString(R.string.result_illegal), Toast.LENGTH_SHORT)
-                            .show();
+                        .show();
                 }
                 curveSpeedItemAdapter.setSelectPosition(-1);
                 mCutContentList.clear();
@@ -329,7 +332,7 @@ public class GeneralSpeedFragment extends BaseFragment {
                         if (mCurrentIndex > 0) {
                             mCurrentPage++;
                             mFilterPanelViewModel.loadMaterials(mCutContentList.get(mCurrentIndex).getId(),
-                                    mCurrentPage);
+                                mCurrentPage);
                         }
                     }
                 }
@@ -345,7 +348,7 @@ public class GeneralSpeedFragment extends BaseFragment {
                     int visibleItemCount = manager.getChildCount();
                     int firstPosition = manager.findFirstVisibleItemPosition();
                     if (firstPosition != -1 && visibleItemCount > 0 && mCutContentList != null
-                            && mCutContentList.size() > 0 && !isFirst) {
+                        && mCutContentList.size() > 0 && !isFirst) {
                         int num = visibleItemCount;
                         isFirst = true;
                         if (visibleItemCount > mCutContentList.size()) {
@@ -417,7 +420,7 @@ public class GeneralSpeedFragment extends BaseFragment {
                     currentSelectedCurveSpeedPoints = ((HVEVideoAsset) currentSelectedAsset).getCurvePoints();
                     if (position == 1) {
                         showBottomDialog(position, currentSelectedAsset, currentSelectedCurveSpeedPoints,
-                                currentSelectedCurveSpeedPoints, currentSelectedName);
+                            currentSelectedCurveSpeedPoints, currentSelectedName);
                     }
                 }
             }
@@ -443,7 +446,7 @@ public class GeneralSpeedFragment extends BaseFragment {
             curveSpeedItemAdapter.removeDownloadMaterial(downloadInfo.getContentId());
             int downloadPosition = downloadInfo.getPosition();
             if (downloadPosition >= 0 && (downloadInfo.getDataPosition() < mCutContentList.size()
-                    && downloadInfo.getContentId().equals(mCutContentList.get(downloadInfo.getDataPosition()).getId()))) {
+                && downloadInfo.getContentId().equals(mCutContentList.get(downloadInfo.getDataPosition()).getId()))) {
                 mFilterCancelRl.setSelected(false);
                 curveSpeedItemAdapter.setSelectPosition(downloadPosition);
                 CloudMaterialBean materialsCutContent = downloadInfo.getMaterialBean();
@@ -513,7 +516,7 @@ public class GeneralSpeedFragment extends BaseFragment {
     }
 
     public void showBottomDialog(int position, HVEAsset selectedAsset, List<HVESpeedCurvePoint> temp,
-                                 List<HVESpeedCurvePoint> resetList, String curveName) {
+        List<HVESpeedCurvePoint> resetList, String curveName) {
         ((VideoClipsActivity) mActivity).showCusterSpeedFragment(position, selectedAsset, temp, resetList, curveName);
     }
 
@@ -569,11 +572,12 @@ public class GeneralSpeedFragment extends BaseFragment {
         if (currentSelectedAsset == null || currentSelectedAsset.getType() != HVEAsset.HVEAssetType.VIDEO) {
             return;
         }
-        if (mEditPreviewViewModel.getTimeLine() == null) {
+        HVETimeLine timeLine = mEditPreviewViewModel.getTimeLine();
+        if (timeLine == null) {
             return;
         }
 
-        List<HVEVideoLane> videoLanes = mEditPreviewViewModel.getTimeLine().getAllVideoLane();
+        List<HVEVideoLane> videoLanes = timeLine.getAllVideoLane();
         if (videoLanes.isEmpty()) {
             return;
         }
@@ -584,7 +588,14 @@ public class GeneralSpeedFragment extends BaseFragment {
         boolean isSuccess = videoLane.addCurveSpeed(currentSelectedAsset.getIndex(), mSelectName, speedPoints);
         if (isSuccess) {
             mEditPreviewViewModel.reloadMainLane();
-            mEditor.playTimeLine(currentSelectedAsset.getStartTime(), currentSelectedAsset.getEndTime());
+            long currentTime = timeLine.getCurrentTime();
+            if (currentTime == currentSelectedAsset.getStartTime()) {
+                mEditor.playTimeLine(currentSelectedAsset.getStartTime(), currentSelectedAsset.getEndTime());
+            } else {
+                mEditor.seekTimeLine(currentSelectedAsset.getStartTime(), () -> {
+                    mEditor.playTimeLine(currentSelectedAsset.getStartTime(), currentSelectedAsset.getEndTime());
+                });
+            }
         } else {
             ToastWrapper.makeText(mActivity, mActivity.getString(R.string.set_seeped_fail), Toast.LENGTH_SHORT).show();
         }
@@ -598,11 +609,12 @@ public class GeneralSpeedFragment extends BaseFragment {
         if (currentSelectedAsset == null || currentSelectedAsset.getType() != HVEAsset.HVEAssetType.VIDEO) {
             return;
         }
-        if (mEditPreviewViewModel.getTimeLine() == null) {
+        HVETimeLine timeLine = mEditPreviewViewModel.getTimeLine();
+        if (timeLine == null) {
             return;
         }
 
-        List<HVEVideoLane> videoLanes = mEditPreviewViewModel.getTimeLine().getAllVideoLane();
+        List<HVEVideoLane> videoLanes = timeLine.getAllVideoLane();
         if (videoLanes.isEmpty()) {
             return;
         }
@@ -619,7 +631,14 @@ public class GeneralSpeedFragment extends BaseFragment {
 
         if (isSuccess) {
             mEditPreviewViewModel.reloadMainLane();
-            mEditor.playTimeLine(currentSelectedAsset.getStartTime(), currentSelectedAsset.getEndTime());
+            long currentTime = timeLine.getCurrentTime();
+            if (currentTime == currentSelectedAsset.getStartTime()) {
+                mEditor.playTimeLine(currentSelectedAsset.getStartTime(), currentSelectedAsset.getEndTime());
+            } else {
+                mEditor.seekTimeLine(currentSelectedAsset.getStartTime(), () -> {
+                    mEditor.playTimeLine(currentSelectedAsset.getStartTime(), currentSelectedAsset.getEndTime());
+                });
+            }
 
             currentSelectedCurveSpeedPoints.clear();
             currentSelectedCurveSpeedPoints.addAll(((HVEVideoAsset) currentSelectedAsset).getCurvePoints());
@@ -646,8 +665,15 @@ public class GeneralSpeedFragment extends BaseFragment {
             return;
         }
 
+        DefaultPlayControlView.setNeedSeek(true);
         ((VideoClipsActivity) mActivity).unregisterMyOnTouchListener(onTouchListener);
         super.onBackPressed();
+    }
+
+    @Override
+    public void onDestroy() {
+        DefaultPlayControlView.setNeedSeek(true);
+        super.onDestroy();
     }
 
     VideoClipsActivity.TimeOutOnTouchListener onTouchListener = new VideoClipsActivity.TimeOutOnTouchListener() {
@@ -661,9 +687,9 @@ public class GeneralSpeedFragment extends BaseFragment {
     private void updateProgress(MaterialsDownloadInfo downloadInfo) {
         int downloadPosition = downloadInfo.getPosition();
         if (downloadPosition >= 0 && downloadInfo.getDataPosition() < mCutContentList.size()
-                && downloadInfo.getContentId().equals(mCutContentList.get(downloadInfo.getDataPosition()).getId())) {
+            && downloadInfo.getContentId().equals(mCutContentList.get(downloadInfo.getDataPosition()).getId())) {
             RViewHolder viewHolder =
-                    (RViewHolder) mRecyclerView.findViewHolderForAdapterPosition(downloadInfo.getPosition());
+                (RViewHolder) mRecyclerView.findViewHolderForAdapterPosition(downloadInfo.getPosition());
             if (viewHolder != null) {
                 ProgressBar mDownloadPb = viewHolder.itemView.findViewById(R.id.item_progress_curve_speed);
                 mDownloadPb.setProgress(downloadInfo.getProgress());
@@ -674,9 +700,9 @@ public class GeneralSpeedFragment extends BaseFragment {
     private void cancelProgress(MaterialsDownloadInfo downloadInfo) {
         int downloadPosition = downloadInfo.getPosition();
         if (downloadPosition >= 0 && downloadInfo.getDataPosition() < mCutContentList.size()
-                && downloadInfo.getContentId().equals(mCutContentList.get(downloadInfo.getDataPosition()).getId())) {
+            && downloadInfo.getContentId().equals(mCutContentList.get(downloadInfo.getDataPosition()).getId())) {
             RViewHolder viewHolder =
-                    (RViewHolder) mRecyclerView.findViewHolderForAdapterPosition(downloadInfo.getPosition());
+                (RViewHolder) mRecyclerView.findViewHolderForAdapterPosition(downloadInfo.getPosition());
             if (viewHolder != null) {
                 ProgressBar mDownloadPb = viewHolder.itemView.findViewById(R.id.item_progress_curve_speed);
                 mDownloadPb.setVisibility(View.GONE);

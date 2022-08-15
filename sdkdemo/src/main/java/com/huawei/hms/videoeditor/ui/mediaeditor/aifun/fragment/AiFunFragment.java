@@ -16,11 +16,10 @@
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.aifun.fragment;
 
-import static com.huawei.hms.videoeditor.sdk.ai.HVEAIError.AI_ERROR_FACE_SMILE_NO_FACE;
-import static com.huawei.hms.videoeditor.sdk.ai.HVEAIError.AI_ERROR_FACE_SMILE_POSTURE;
-import static com.huawei.hms.videoeditor.sdk.ai.HVEAIError.AI_ERROR_TIMEOUT;
-import static com.huawei.hms.videoeditor.sdk.effect.HVEEffect.HVEEffectType.AI_COLOR;
-import static com.huawei.hms.videoeditor.sdk.effect.HVEEffect.HVEEffectType.FACE_REENACT;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -38,7 +37,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.huawei.hms.videoeditor.sdk.HuaweiVideoEditor;
-import com.huawei.hms.videoeditor.sdk.ai.HVEAIError;
 import com.huawei.hms.videoeditor.sdk.ai.HVEAIProcessCallback;
 import com.huawei.hms.videoeditor.sdk.asset.HVEAsset;
 import com.huawei.hms.videoeditor.sdk.asset.HVEImageAsset;
@@ -62,10 +60,15 @@ import com.huawei.hms.videoeditor.ui.mediaeditor.trackview.viewmodel.EditPreview
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 import com.huawei.secure.android.common.intent.SafeBundle;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import static com.huawei.hms.videoeditor.sdk.ai.HVEAIError.AI_ERROR_EXCEED_CONCURRENT_NUMBER;
+import static com.huawei.hms.videoeditor.sdk.ai.HVEAIError.AI_ERROR_FACE_REENACT_NO_FACE;
+import static com.huawei.hms.videoeditor.sdk.ai.HVEAIError.AI_ERROR_FACE_SMILE_NO_FACE;
+import static com.huawei.hms.videoeditor.sdk.ai.HVEAIError.AI_ERROR_FACE_SMILE_POSTURE;
+import static com.huawei.hms.videoeditor.sdk.ai.HVEAIError.AI_ERROR_NO_PERMISSION_IS_GRANTED;
+import static com.huawei.hms.videoeditor.sdk.ai.HVEAIError.AI_ERROR_TIMEOUT;
+import static com.huawei.hms.videoeditor.sdk.ai.HVEAIError.AI_ERROR_USAGE_EXCESS;
+import static com.huawei.hms.videoeditor.sdk.effect.HVEEffect.HVEEffectType.AI_COLOR;
+import static com.huawei.hms.videoeditor.sdk.effect.HVEEffect.HVEEffectType.FACE_REENACT;
 
 public class AiFunFragment extends BaseFragment {
     private static final String TAG = "AiFunFragment";
@@ -145,13 +148,7 @@ public class AiFunFragment extends BaseFragment {
             return false;
         };
 
-        currentSelectedAsset = mEditPreviewViewModel.getSelectedAsset();
-        if (currentSelectedAsset == null) {
-            currentSelectedAsset = mEditPreviewViewModel.getMainLaneAsset();
-        }
-        if (!(currentSelectedAsset instanceof HVEImageAsset)) {
-            return;
-        }
+        getCurrentAsset();
 
         ((VideoClipsActivity) mActivity).registerMyOnTouchListener(mOnAiFunTouchListener);
     }
@@ -199,18 +196,16 @@ public class AiFunFragment extends BaseFragment {
         currentAiFunContentList.add(materialsCutContent2);
         currentAiFunContentList.add(materialsCutContent3);
 
-        if(currentSelectedAsset instanceof HVEImageAsset) {
-            if (isFaceSmileEnabled((HVEImageAsset) currentSelectedAsset)) {
-                mAiFunAdapter.setSelectPosition(3);
-            }
+        if (isFaceSmileEnabled(currentSelectedAsset)) {
+            mAiFunAdapter.setSelectPosition(3);
+        }
 
-            if (isAIColorEnabled((HVEImageAsset) currentSelectedAsset)) {
-                mAiFunAdapter.setSelectPosition(2);
-            }
+        if (isAIColorEnabled(currentSelectedAsset)) {
+            mAiFunAdapter.setSelectPosition(2);
+        }
 
-            if (isFaceReenactEnabled((HVEImageAsset) currentSelectedAsset)) {
-                mAiFunAdapter.setSelectPosition(1);
-            }
+        if (isFaceReenactEnabled(currentSelectedAsset)) {
+            mAiFunAdapter.setSelectPosition(1);
         }
 
         mAiFunAdapter.notifyDataSetChanged();
@@ -223,14 +218,15 @@ public class AiFunFragment extends BaseFragment {
             if (position == mAiFunAdapter.getSelectPosition()) {
                 return;
             }
-            if (currentSelectedAsset.getType() != HVEAsset.HVEAssetType.IMAGE
-                    || !(currentSelectedAsset instanceof HVEImageAsset)) {
-                ToastWrapper.makeText(context, context.getResources().getString(R.string.reenact_limit)).show();
-                return;
+            if (!currentAiFunContentList.get(dataPosition).getName().equals(context.getString(R.string.ai_color))) {
+                if (currentSelectedAsset.getType() != HVEAsset.HVEAssetType.IMAGE
+                        || !(currentSelectedAsset instanceof HVEImageAsset)) {
+                    ToastWrapper.makeText(context, context.getResources().getString(R.string.reenact_limit)).show();
+                    return;
+                }
             }
-            if (isFaceSmileEnabled((HVEImageAsset) currentSelectedAsset)
-                    || isAIColorEnabled((HVEImageAsset) currentSelectedAsset)
-                    || isFaceReenactEnabled((HVEImageAsset) currentSelectedAsset)) {
+            if (isFaceSmileEnabled(currentSelectedAsset) || isAIColorEnabled(currentSelectedAsset)
+                    || isFaceReenactEnabled(currentSelectedAsset)) {
                 ToastWrapper.makeText(context, context.getResources().getString(R.string.ai_limit)).show();
                 return;
             }
@@ -299,21 +295,22 @@ public class AiFunFragment extends BaseFragment {
 
                 boolean isCanceled;
                 if (currentSelectedAsset.getType() == HVEAsset.HVEAssetType.IMAGE) {
-                    HVEImageAsset imageAsset = (HVEImageAsset) currentSelectedAsset;
-                    if (isFaceReenactEnabled(imageAsset)) {
-                        isCanceled = imageAsset.removeFaceReenactAIEffect();
+                    if (isFaceReenactEnabled(currentSelectedAsset) && currentSelectedAsset instanceof HVEImageAsset) {
+                        isCanceled = ((HVEImageAsset) currentSelectedAsset).removeFaceReenactAIEffect();
                         if (isCanceled) {
                             showToast(getString(R.string.motion_photo_cancel));
+                            getCurrentAsset();
                             refreshMainLaneAndUIData();
                         } else {
                             showToast(getString(R.string.motion_photo_fail));
                         }
                     }
 
-                    if (isFaceSmileEnabled(imageAsset)) {
-                        isCanceled = imageAsset.removeFaceSmileAIEffect();
+                    if (isFaceSmileEnabled(currentSelectedAsset) && currentSelectedAsset instanceof HVEImageAsset) {
+                        isCanceled = ((HVEImageAsset) currentSelectedAsset).removeFaceSmileAIEffect();
                         if (isCanceled) {
                             showToast(getString(R.string.face_smile_cancel));
+                            getCurrentAsset();
                             refreshMainLaneAndUIData();
                         } else {
                             showToast(getString(R.string.face_smile_fail));
@@ -327,6 +324,7 @@ public class AiFunFragment extends BaseFragment {
                         isCanceled = ((HVEVisibleAsset) currentSelectedAsset).removeAIColorEffect();
                         if (isCanceled) {
                             showToast(getString(R.string.ai_color_cancel));
+                            getCurrentAsset();
                             refreshMainLaneAndUIData();
                         } else {
                             showToast(getString(R.string.ai_color_fail));
@@ -336,6 +334,17 @@ public class AiFunFragment extends BaseFragment {
             }
         });
 
+    }
+
+    private HVEAsset getCurrentAsset() {
+        if (mEditPreviewViewModel == null) {
+            return null;
+        }
+        currentSelectedAsset = mEditPreviewViewModel.getSelectedAsset();
+        if (currentSelectedAsset == null) {
+            currentSelectedAsset = mEditPreviewViewModel.getMainLaneAsset();
+        }
+        return currentSelectedAsset;
     }
 
     private boolean isAIColorEnabled(HVEAsset asset) {
@@ -380,6 +389,7 @@ public class AiFunFragment extends BaseFragment {
                         mAIFunProgressDialog.dismiss();
                     }
                     refreshMainLaneAndUIData();
+                    getCurrentAsset();
                     showToast(getString(R.string.motion_photo_success));
                 });
 
@@ -396,13 +406,7 @@ public class AiFunFragment extends BaseFragment {
                         mAIFunProgressDialog.updateProgress(0);
                         mAIFunProgressDialog.dismiss();
                     }
-
-                    if (detailAIType == 1) {
-                        showToast(getString(R.string.motion_photo_fail));
-                    }
-                    if (detailAIType == 2) {
-                        showToast(getString(R.string.ai_color_fail));
-                    }
+                    showToast(getErrorMessage(errorCode));
                 });
             }
         });
@@ -441,6 +445,7 @@ public class AiFunFragment extends BaseFragment {
                         mAIFunProgressDialog.dismiss();
                     }
                     refreshMainLaneAndUIData();
+                    getCurrentAsset();
                     showToast(getString(R.string.face_smile_success));
                 });
 
@@ -450,7 +455,6 @@ public class AiFunFragment extends BaseFragment {
             public void onError(int errorCode, String errorMessage) {
                 isSmileEnd = true;
                 SmartLog.i(TAG, "onAICloudError==" + errorMessage);
-                SmartLog.d("wang", "error code: " + errorCode + ", error message: " + errorMessage);
                 if (!isValidActivity()) {
                     return;
                 }
@@ -463,27 +467,6 @@ public class AiFunFragment extends BaseFragment {
                 });
             }
         });
-    }
-
-    private String getErrorMessage(int errorCode) {
-        String errorMessage = getString(R.string.face_smile_fail);
-        switch (errorCode) {
-            case HVEAIError.AI_ERROR_NO_NETWORK:
-                errorMessage = getString(R.string.result_illegal);
-                break;
-            case AI_ERROR_FACE_SMILE_NO_FACE:
-                errorMessage = getString(R.string.ai_face_smile_no_face);
-                break;
-            case AI_ERROR_FACE_SMILE_POSTURE:
-                errorMessage = getString(R.string.ai_face_smile_select_frontal_face);
-                break;
-            case AI_ERROR_TIMEOUT:
-                errorMessage = getString(R.string.ai_face_smile_network_timeout);
-                break;
-            default:
-                break;
-        }
-        return errorMessage;
     }
 
     private void addAIColorEffect() {
@@ -517,6 +500,7 @@ public class AiFunFragment extends BaseFragment {
                         mAIFunProgressDialog.dismiss();
                     }
                     refreshMainLaneAndUIData();
+                    getCurrentAsset();
                     showToast(getString(R.string.ai_color_success));
                 });
 
@@ -533,10 +517,47 @@ public class AiFunFragment extends BaseFragment {
                         mAIFunProgressDialog.updateProgress(0);
                         mAIFunProgressDialog.dismiss();
                     }
-                    showToast(getString(R.string.ai_color_fail));
+                    showToast(getErrorMessage(errorCode));
                 });
             }
         });
+    }
+
+    private String getErrorMessage(int errorCode) {
+        String errorMessage;
+        switch (errorCode) {
+            case AI_ERROR_TIMEOUT:
+                errorMessage = getString(R.string.ai_network_timeout);
+                break;
+            case AI_ERROR_FACE_SMILE_NO_FACE:
+            case AI_ERROR_FACE_REENACT_NO_FACE:
+                errorMessage = getString(R.string.ai_face_smile_no_face);
+                break;
+            case AI_ERROR_FACE_SMILE_POSTURE:
+                errorMessage = getString(R.string.ai_face_smile_select_frontal_face);
+                break;
+            case AI_ERROR_USAGE_EXCESS:
+                errorMessage = getString(R.string.ai_generate_excess);
+                break;
+            case AI_ERROR_EXCEED_CONCURRENT_NUMBER:
+                errorMessage = getString(R.string.ai_exceed_concurrent_number);
+                break;
+            case AI_ERROR_NO_PERMISSION_IS_GRANTED:
+                errorMessage = getString(R.string.algorithm_is_not_enabled);
+                break;
+            default:
+                if (detailAIType == 1) {
+                    errorMessage = getString(R.string.motion_photo_fail);
+                } else if (detailAIType == 2) {
+                    errorMessage = getString(R.string.ai_color_fail);
+                } else if (detailAIType == 3) {
+                    errorMessage = getString(R.string.face_smile_fail);
+                } else {
+                    errorMessage = getString(R.string.result_illegal);
+                }
+                break;
+        }
+        return errorMessage;
     }
 
     private void resetTimer() {
@@ -566,15 +587,16 @@ public class AiFunFragment extends BaseFragment {
                 }
             }
         };
-        mTimer.schedule(mTimerTask, 15000);
+        mTimer.schedule(mTimerTask, 60000);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         if (currentSelectedAsset != null && currentSelectedAsset.getType() == HVEAsset.HVEAssetType.IMAGE) {
-            HVEImageAsset imageAsset = (HVEImageAsset) currentSelectedAsset;
-            if (mAiFunAdapter != null && (isFaceSmileEnabled(imageAsset) || isFaceReenactEnabled(imageAsset)) || isAIColorEnabled(imageAsset)) {
+            if (mAiFunAdapter != null
+                    && (isFaceSmileEnabled(currentSelectedAsset) || isFaceReenactEnabled(currentSelectedAsset))
+                    || isAIColorEnabled(currentSelectedAsset)) {
                 mAiFunNone.setSelected(false);
                 mAiFunAdapter.notifyDataSetChanged();
             }
@@ -621,8 +643,8 @@ public class AiFunFragment extends BaseFragment {
         super.onDestroy();
     }
 
-    private boolean isFaceSmileEnabled(HVEImageAsset imageAsset) {
-        List<HVEEffect> effects = imageAsset.getEffectsWithType(HVEEffect.HVEEffectType.FACE_SMILE);
+    private boolean isFaceSmileEnabled(HVEAsset asset) {
+        List<HVEEffect> effects = asset.getEffectsWithType(HVEEffect.HVEEffectType.FACE_SMILE);
         return !effects.isEmpty();
     }
 

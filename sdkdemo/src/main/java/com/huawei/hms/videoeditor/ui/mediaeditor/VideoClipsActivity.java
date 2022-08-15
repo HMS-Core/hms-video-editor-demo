@@ -18,6 +18,12 @@
 package com.huawei.hms.videoeditor.ui.mediaeditor;
 
 import static com.huawei.hms.videoeditor.ui.common.bean.Constant.IntentFrom.INTENT_FROM_IMAGE_LIB;
+import static com.huawei.hms.videoeditor.ui.mediaeditor.menu.MenuClickManager.AI_BODY_SEG;
+import static com.huawei.hms.videoeditor.ui.mediaeditor.menu.MenuClickManager.AI_BODY_SEG_KEY;
+import static com.huawei.hms.videoeditor.ui.mediaeditor.menu.MenuClickManager.AI_HEAD_SEG;
+import static com.huawei.hms.videoeditor.ui.mediaeditor.menu.MenuClickManager.AI_HEAD_SEG_KEY;
+import static com.huawei.hms.videoeditor.ui.mediaeditor.menu.MenuClickManager.AI_SEGMENTATION;
+import static com.huawei.hms.videoeditor.ui.mediaeditor.menu.MenuClickManager.AI_SEGMENTATION_KEY;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.menu.MenuClickManager.TIME_LAPSE;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.menu.MenuClickManager.TIME_LAPSE_KEY;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.menu.MenuClickManager.VIDEO_SELECTION;
@@ -26,10 +32,15 @@ import static com.huawei.hms.videoeditor.ui.mediaeditor.timelapse.TimeLapseViewM
 import static com.huawei.hms.videoeditor.ui.mediaeditor.timelapse.TimeLapseViewModel.STATE_NO_SKY_WATER;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_AUDIO_CUSTOM_CURVESPEED;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_PIP_OPERATION_AI_SEGMENTATION;
+import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_PIP_OPERATION_BODY_SEG;
+import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_PIP_OPERATION_HEAD_SEG;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_PIP_OPERATION_HUMAN_TRACKING;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_PIP_OPERATION_TIME_LAPSE;
+import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_PIP_OPERATION_WINGS;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_VIDEO_OPERATION_AI_SEGMENTATION;
+import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_VIDEO_OPERATION_HEAD_SEG;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_VIDEO_STATE_AI_SEGMENTATION;
+import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_VIDEO_STATE_HEAD_SEG;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.viewmodel.EditPreviewViewModel.AUDIO_TYPE_MUSIC;
 
 import android.annotation.SuppressLint;
@@ -106,6 +117,7 @@ import com.huawei.hms.videoeditor.ui.common.view.dialog.CommonProgressDialog;
 import com.huawei.hms.videoeditor.ui.common.view.dialog.HumanTrackingProgressDialog;
 import com.huawei.hms.videoeditor.ui.common.view.dialog.LoadingDialog;
 import com.huawei.hms.videoeditor.ui.common.view.dialog.ProgressDialog;
+import com.huawei.hms.videoeditor.ui.mediaeditor.aibodyseg.BodySegViewModel;
 import com.huawei.hms.videoeditor.ui.mediaeditor.aifun.AIBlockingHintDialog;
 import com.huawei.hms.videoeditor.ui.mediaeditor.aisegmantation.SegmentationFragment;
 import com.huawei.hms.videoeditor.ui.mediaeditor.aisegmantation.SegmentationViewModel;
@@ -140,6 +152,7 @@ import com.huawei.hms.videoeditor.ui.mediaeditor.timelapse.TimeLapseViewModel;
 import com.huawei.hms.videoeditor.ui.mediaeditor.trackview.fragment.EditPreviewFragment;
 import com.huawei.hms.videoeditor.ui.mediaeditor.trackview.viewmodel.EditPreviewViewModel;
 import com.huawei.hms.videoeditor.ui.mediaexport.VideoExportActivity;
+import com.huawei.hms.videoeditor.ui.mediaexport.model.ExportConstants;
 import com.huawei.hms.videoeditor.ui.mediapick.activity.MediaPickActivity;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 import com.huawei.secure.android.common.intent.SafeIntent;
@@ -239,6 +252,8 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
 
     private SegmentationViewModel mSegmentationViewModel;
 
+    private BodySegViewModel mBodySegViewModel;
+
     private CoverImageViewModel mCoverImageViewModel;
 
     private MenuViewModel mMenuViewModel;
@@ -283,6 +298,8 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
 
     private CommonProgressDialog mSegmentationDialog;
 
+    private CommonProgressDialog mBodySegDialog;
+
     private RelativeLayout mTextTemplateLayout;
 
     private EditText mTextTemplateEdit;
@@ -312,6 +329,8 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
     private TimeLapseViewModel mTimeLapseViewModel;
 
     private CommonProgressDialog mCommonProgressDialog;
+
+    private long segTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -401,6 +420,7 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
         mTimeLapseViewModel = new ViewModelProvider(this, factory).get(TimeLapseViewModel.class);
         mSegmentationViewModel = new ViewModelProvider(this, factory).get(SegmentationViewModel.class);
         mCoverImageViewModel = new ViewModelProvider(this, factory).get(CoverImageViewModel.class);
+        mBodySegViewModel = new ViewModelProvider(this, factory).get(BodySegViewModel.class);
 
         seekHandler = new Handler();
         lastSeeKTime = System.currentTimeMillis();
@@ -513,26 +533,24 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
                 Intent intentSdk = new Intent(mContext, VideoExportActivity.class);
 
                 HuaweiVideoEditor editor = EditorManager.getInstance().getEditor();
-                if (mCoverImageViewModel != null) {
-                    mCoverImageViewModel.updateDefaultCover(editor, 0);
-                }
-                if (editor != null) {
-                    intentSdk.putExtra(VideoExportActivity.EDITOR_UUID, editor.getUuid());
-                } else {
+                if (editor == null) {
                     SmartLog.e(TAG, "Export Clicked but editor is null");
                     return;
                 }
-
                 HVETimeLine timeLine = editor.getTimeLine();
                 if (timeLine == null) {
                     return;
                 }
+                if (mCoverImageViewModel != null) {
+                    mCoverImageViewModel.updateDefaultCover(editor, timeLine.getCurrentTime());
+                }
+                intentSdk.putExtra(ExportConstants.EDITOR_UUID, editor.getUuid());
 
                 SafeIntent safeIntent = new SafeIntent(getIntent());
                 intentSdk.putExtra(SOURCE, safeIntent.getStringExtra(SOURCE));
 
                 if (timeLine.getCoverImage() != null) {
-                    intentSdk.putExtra(VideoExportActivity.COVER_URL, timeLine.getCoverImage().getPath());
+                    intentSdk.putExtra(ExportConstants.COVER_URL, timeLine.getCoverImage().getPath());
                 }
 
                 startActivityForResult(intentSdk, ACTION_EXPORT_REQUEST_CODE);
@@ -810,7 +828,7 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
                                             ((HVEVideoAsset) trackingAsset).selectHumanTrackingPerson(dstBitmap, position2D);
                                 }
 
-                                if (aiHumanTracking != null) {
+                                if (aiHumanTracking != null && !aiHumanTracking.isEmpty()) {
                                     mPersonTrackingViewModel.setTrackingIsReady(true);
                                     float minx = aiHumanTracking.get(0);
                                     float miny = aiHumanTracking.get(1);
@@ -915,6 +933,8 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
         });
 
         mSegmentationViewModel.getSegmentationEnter().observe(this, integer -> {
+            boolean isSegFirst = SharedPreferenceUtils.get(getApplicationContext(), AI_SEGMENTATION)
+                    .getBoolean(AI_SEGMENTATION_KEY, false);
             if (integer == -1) {
                 return;
             }
@@ -928,9 +948,21 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
                 SmartLog.e(TAG, "Segmentation asset is null!");
                 return;
             }
-
             mSegmentationViewModel.setSelectedAsset(selectedAsset);
-            handleSegmentation(selectedAsset, integer);
+            if (!isSegFirst) {
+                AIBlockingHintDialog dg = new AIBlockingHintDialog(VideoClipsActivity.this,
+                        (VideoClipsActivity.this).getString(R.string.cut_second_menu_segmentation),
+                        (VideoClipsActivity.this).getString(R.string.auto_mark_description));
+                dg.show();
+                dg.setOnPositiveClickListener(() -> {
+                    SharedPreferenceUtils.get(getApplicationContext(), AI_SEGMENTATION).put(AI_SEGMENTATION_KEY, true);
+                    handleSegmentation(selectedAsset, integer);
+                });
+                dg.setOnCancelClickListener(() -> SharedPreferenceUtils.get(getApplicationContext(), AI_SEGMENTATION)
+                        .put(AI_SEGMENTATION_KEY, false));
+            } else {
+                handleSegmentation(selectedAsset, integer);
+            }
         });
 
         mSegmentationViewModel.getIsInit().observe(this, aBoolean -> {
@@ -1178,6 +1210,58 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
                     });
             mTimeLapseViewModel.setTimeLapseStart(-1);
         });
+
+        mBodySegViewModel.getBodySegEnter().observe(this, integer -> {
+            int segPart = 0;
+            String sTitle = (VideoClipsActivity.this).getString(R.string.cut_second_menu_body_seg);
+            String aiName = AI_BODY_SEG;
+            String aiNameKey = AI_BODY_SEG_KEY;
+            switch (integer) {
+                case EDIT_VIDEO_STATE_HEAD_SEG:
+                case EDIT_VIDEO_OPERATION_HEAD_SEG:
+                case EDIT_PIP_OPERATION_HEAD_SEG:
+                    segPart = 1;
+                    sTitle = (VideoClipsActivity.this).getString(R.string.cut_second_menu_head_seg);
+                    aiName = AI_HEAD_SEG;
+                    aiNameKey = AI_HEAD_SEG_KEY;
+                    break;
+                default:
+                    break;
+            }
+            boolean isShowDialog =
+                    SharedPreferenceUtils.get(getApplicationContext(), aiName).getBoolean(aiNameKey, false);
+            if (integer == -1) {
+                return;
+            }
+            HVEAsset selectedAsset;
+            if (integer == EDIT_PIP_OPERATION_BODY_SEG || integer == EDIT_PIP_OPERATION_HEAD_SEG) {
+                selectedAsset = mEditPreviewViewModel.getSelectedAsset();
+            } else {
+                selectedAsset = mEditPreviewViewModel.getMainLaneAsset();
+            }
+            if (selectedAsset == null) {
+                SmartLog.e(TAG, "Segmentation asset is null!");
+                return;
+            }
+            mBodySegViewModel.setSelectedAsset(selectedAsset);
+            int finalSegPart = segPart;
+            if (!isShowDialog) {
+                AIBlockingHintDialog dg = new AIBlockingHintDialog(VideoClipsActivity.this, sTitle,
+                        (VideoClipsActivity.this).getString(R.string.auto_mark_description));
+                dg.show();
+                String finalAiName = aiName;
+                String finalAiNameKey = aiNameKey;
+                dg.setOnPositiveClickListener(() -> {
+                    SharedPreferenceUtils.get(getApplicationContext(), finalAiName).put(finalAiNameKey, true);
+                    handleBodySeg(selectedAsset, integer, finalSegPart);
+                });
+                dg.setOnCancelClickListener(
+                        () -> SharedPreferenceUtils.get(getApplicationContext(), finalAiName).put(finalAiNameKey, false));
+            } else {
+                handleBodySeg(selectedAsset, integer, finalSegPart);
+            }
+        });
+
     }
 
     private void handleSegmentation(HVEAsset selectedAsset, int integer) {
@@ -1203,6 +1287,33 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
             }
         }
         mSegmentationViewModel.setSegmentationEnter(-1);
+    }
+
+    private void handleBodySeg(HVEAsset selectedAsset, int integer, int segPart) {
+        if (selectedAsset == null) {
+            SmartLog.e(TAG, "handleBodySeg asset is null!");
+            return;
+        }
+        List<HVEEffect> effects = selectedAsset.getEffectsWithType(HVEEffect.HVEEffectType.BODY_SEG);
+        if (effects.isEmpty()) {
+            initBodySeg(segPart, integer);
+        } else {
+            mEditPreviewViewModel.updateVideoLane();
+            if (!isValidActivity()) {
+                return;
+            }
+            if (!mBodySegViewModel.removeCurrentEffect()) {
+                return;
+            }
+            runOnUiThread(() -> {
+                ToastWrapper.makeText(VideoClipsActivity.this, R.string.body_seg_cancel, Toast.LENGTH_SHORT).show();
+            });
+            if (mEditPreviewViewModel != null) {
+                mEditPreviewViewModel.updateVideoLane();
+                mEditPreviewViewModel.refreshMenuState();
+            }
+        }
+        mBodySegViewModel.setBodySegEnter(-1);
     }
 
     private boolean isContainHumanTrackingEffect(HVEAsset asset) {
@@ -1371,6 +1482,9 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
     }
 
     public void initSegmentation(Integer integer) {
+        if (mVideoClipsPlayFragment != null) {
+            mVideoClipsPlayFragment.showLoadingView();
+        }
         mSegmentationViewModel.initializeSegmentation(new HVEAIInitialCallback() {
             @Override
             public void onProgress(int progress) {
@@ -1412,6 +1526,152 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
             mEditPreviewViewModel.updateVideoLane();
             mEditPreviewViewModel.refreshMenuState();
         }
+    }
+
+    public void initBodySeg(Integer segPart, Integer integer) {
+        if (mVideoClipsPlayFragment != null) {
+            mVideoClipsPlayFragment.showLoadingView();
+        }
+        segTime = System.currentTimeMillis();
+        mBodySegViewModel.initializeBodySeg(segPart, new HVEAIInitialCallback() {
+            @Override
+            public void onProgress(int progress) {
+
+            }
+
+            @Override
+            public void onSuccess() {
+                if (!isValidActivity()) {
+                    return;
+                }
+                runOnUiThread(() -> {
+                    if (mVideoClipsPlayFragment != null) {
+                        mVideoClipsPlayFragment.hideLoadingView();
+                    }
+                    if (mEditor != null) {
+                        mEditor.pauseTimeLine();
+                    }
+                });
+                bodySegDetect(integer);
+            }
+
+            @Override
+            public void onError(int errorCode, String errorMessage) {
+                if (!isValidActivity()) {
+                    return;
+                }
+                runOnUiThread(() -> {
+                    if (mVideoClipsPlayFragment != null) {
+                        mVideoClipsPlayFragment.hideLoadingView();
+                    }
+                    ToastWrapper.makeText(VideoClipsActivity.this, R.string.result_illegal, Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
+        if (mEditPreviewViewModel != null) {
+            mEditPreviewViewModel.updateVideoLane();
+            mEditPreviewViewModel.refreshMenuState();
+        }
+    }
+
+    public void bodySegDetect(Integer integer) {
+        initBodySegProgressDialog(integer);
+        String sSuccess = getString(R.string.ai_body_seg_success);
+        String sFail = getString(R.string.ai_body_seg_fail);
+        switch (integer) {
+            case EDIT_VIDEO_STATE_HEAD_SEG:
+            case EDIT_VIDEO_OPERATION_HEAD_SEG:
+            case EDIT_PIP_OPERATION_HEAD_SEG:
+                sSuccess = getString(R.string.ai_head_seg_success);
+                sFail = getString(R.string.ai_head_seg_fail);
+                break;
+            default:
+                break;
+        }
+        String finalSSuccess = sSuccess;
+        String finalSFail = sFail;
+        mBodySegViewModel.bodySegDetect(new HVEAIProcessCallback() {
+            @Override
+            public void onProgress(int progress) {
+                if (!isValidActivity()) {
+                    return;
+                }
+                runOnUiThread(() -> {
+                    if (mBodySegDialog != null) {
+                        if (!mBodySegDialog.isShowing()) {
+                            mBodySegDialog.show();
+                        }
+                        mBodySegDialog.updateProgress(progress);
+                    }
+                });
+            }
+
+            @Override
+            public void onSuccess() {
+                long time = System.currentTimeMillis() - segTime;
+                SmartLog.i(TAG, "seg cost time: " + time);
+
+                if (!isValidActivity()) {
+                    return;
+                }
+                runOnUiThread(() -> {
+                    if (mBodySegDialog != null) {
+                        mBodySegDialog.updateProgress(0);
+                        mBodySegDialog.dismiss();
+                    }
+                    if (mBodySegViewModel != null) {
+                        mBodySegViewModel.releaseBodySegEngine();
+                    }
+                    if (mEditPreviewViewModel != null) {
+                        mEditPreviewViewModel.updateVideoLane();
+                        mEditPreviewViewModel.refreshMenuState();
+                    }
+                    ToastUtils.getInstance().showToast(VideoClipsActivity.this, finalSSuccess, Toast.LENGTH_SHORT);
+                });
+            }
+
+            @Override
+            public void onError(int errorCode, String errorMsg) {
+                if (!isValidActivity()) {
+                    return;
+                }
+                runOnUiThread(
+                        () -> ToastWrapper.makeText(VideoClipsActivity.this, finalSFail, Toast.LENGTH_SHORT).show());
+                if (mBodySegDialog != null) {
+                    mBodySegDialog.updateProgress(0);
+                    mBodySegDialog.dismiss();
+                }
+            }
+        });
+    }
+
+    private void initBodySegProgressDialog(int operateId) {
+        if (!isValidActivity()) {
+            return;
+        }
+        String sProcess = getString(R.string.ai_body_seg);
+        switch (operateId) {
+            case EDIT_VIDEO_STATE_HEAD_SEG:
+            case EDIT_VIDEO_OPERATION_HEAD_SEG:
+            case EDIT_PIP_OPERATION_HEAD_SEG:
+                sProcess = getString(R.string.ai_head_seg);
+                break;
+            default:
+                break;
+        }
+        mBodySegDialog = new CommonProgressDialog(VideoClipsActivity.this, () -> {
+            mBodySegViewModel.interruptCurrentEffect();
+            ToastWrapper.makeText(VideoClipsActivity.this, getString(R.string.segmentation_cancel), Toast.LENGTH_SHORT)
+                    .show();
+            if (mBodySegDialog != null && mBodySegDialog.isShowing()) {
+                mBodySegDialog.dismiss();
+            }
+            mBodySegDialog = null;
+        });
+        mBodySegDialog.setTitleValue(sProcess);
+        mBodySegDialog.setCanceledOnTouchOutside(false);
+        mBodySegDialog.setCancelable(false);
+        mBodySegDialog.show();
     }
 
     public void segmentationDetect(Integer integer) {
@@ -1770,7 +2030,8 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
         if (timeLine == null) {
             return;
         }
-        EditorManager.getInstance().getEditor().stopRenderer();
+
+        EditorManager.getInstance().getEditor().pauseTimeLine();
         Intent intent = new Intent(this, CropNewActivity.class);
         intent.putExtra(CropNewActivity.EDITOR_UUID, editor.getUuid());
 
@@ -1875,6 +2136,9 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
             if (requestCode == ACTION_REPLACE_VIDEO_ASSET && resultCode == Constant.RESULT_CODE) {
                 MediaData selectList = safeIntent.getParcelableExtra(Constant.EXTRA_SELECT_RESULT);
                 if (selectList != null) {
+                    if (mBodySegViewModel != null) {
+                        mBodySegViewModel.removeCurrentEffect();
+                    }
                     mMenuViewModel.replaceMainLaneAsset(selectList.getPath(), selectList.getCutTrimIn(),
                             selectList.getCutTrimOut());
                 }
@@ -1928,34 +2192,25 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
                 if (selectedAsset == null) {
                     return;
                 }
+
+                HVEVisibleAsset visibleAsset = (HVEVisibleAsset) selectedAsset;
+
                 MediaData mediaData = safeIntent.getParcelableExtra(CropNewActivity.MEDIA_RTN);
-
-                boolean isNoActionAfterReset = safeIntent.getBooleanExtra(CropNewActivity.NO_ACTION_AFTER_RESET, false);
-                HVEVideoLane videoLane = null;
-                HuaweiVideoEditor editor = mEditPreviewViewModel.getEditor();
-                HVETimeLine timeLine = null;
-                if (editor != null) {
-                    timeLine = editor.getTimeLine();
-                }
-                if (timeLine != null) {
-                    videoLane = timeLine.getVideoLane(selectedAsset.getLaneIndex());
+                if (mediaData == null) {
+                    SmartLog.e(TAG, "media data is null");
+                    return;
                 }
 
-                if (videoLane != null) {
-                    HVECut hveCut = null;
-                    float rotationAfterClip = 0F;
-                    if (mediaData != null) {
-                        hveCut = new HVECut(mediaData.getGlLeftBottomX(), mediaData.getGlLeftBottomY(),
-                                mediaData.getGlRightTopX(), mediaData.getGlRightTopY(), mediaData.getHVEWidth(),
-                                mediaData.getHVEHeight());
-                        rotationAfterClip = mediaData.getRotation();
-                    }
+                float rotation = mediaData.getRotation();
+                HVECut hveCut = mediaData.getCut();
+                if (hveCut == null) {
+                    SmartLog.e(TAG, "get hve cut from media data failed");
+                    return;
+                }
 
-                    if (isNoActionAfterReset) {
-                        ((HVEVisibleAsset) selectedAsset).setHVECut(hveCut, 0);
-                    } else {
-                        ((HVEVisibleAsset) selectedAsset).setHVECut(hveCut, rotationAfterClip);
-                    }
+                if (!visibleAsset.setHVECut(hveCut, rotation)) {
+                    SmartLog.e(TAG, "set hve failed");
+                    return;
                 }
             }
         }

@@ -1,0 +1,41 @@
+{
+  "deviceModels": [
+    {
+      "value": "GRE-,YLW-,ABR-,ABR-AL00,JAD-,JAD-AL50,JAD-AL00,JAD-LX9,JAD-AN00,JAD-AL60,BAL-L49,BAL-AL00,ABR-AL90,ABR-AL80,JAD-AL80",
+      "key": "productModelForP50"
+    },
+    {
+      "value": "NCO-,GLA-,NCO-AL00,GLA-AL00",
+      "key": "productModelForNOVA10"
+    },
+    {
+      "value": "NAM-AL00,NLJ-AL00,NAM-LX9,NLJ-LX9,RTE-AL00,REX-AL00,NAM-,NLJ-,RTE-,REX-,Hera-BD00,Hebe-BD00,Hera-,Hebe-",
+      "key": "productModelForNOVA9"
+    },
+    {
+      "value": "JLN-,JLN-AL00,JLN-L21,JLN-L01,JLN-L23,JLN-L03,TNY-AL00",
+      "key": "productModelForNOVA9SE"
+    },
+    {
+      "value": "ABR-AL60",
+      "key": "productModelForP50E"
+    },
+    {
+      "value": "ELS-AN10",
+      "key": "productModelForP40PRJ"
+    },
+    {
+      "value": "LIO-AN00M,TAS-AL00,TAS-AN00,LIO-AL00,LIO-AN00",
+      "key": "productModelForMATE30"
+    },
+    {
+      "value": "LYA-",
+      "key": "productModelForMate20Pro"
+    },
+    {
+      "value": "CET-AL00,DCO-AL00,BAU-AL00",
+      "key": "productModelForMATE50"
+    }
+  ],
+  "desc": "机型限制格式为productModelForxxx, 对某个功能key的复合限制需要在filter中添加"
+}

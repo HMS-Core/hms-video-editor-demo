@@ -16,10 +16,6 @@
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.texts.adapter;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -28,6 +24,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.utils.widget.ImageFilterView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -44,34 +45,24 @@ import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.utils.widget.ImageFilterView;
-import androidx.recyclerview.widget.RecyclerView;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class TextAnimationItemAdapter extends RecyclerView.Adapter<TextAnimationItemAdapter.ViewHolder> {
-    private Context mContext;
+    private Context context;
 
-    private List<CloudMaterialBean> mList;
+    private List<CloudMaterialBean> list;
 
-    private final Map<String, CloudMaterialBean> bDownloadingMap = new LinkedHashMap<>();
+    private final Map<String, CloudMaterialBean> map = new LinkedHashMap<>();
 
-    private int bSelectPosition = 0;
+    private int selectposition = 0;
 
-    private OnItemClickListener mOnItemClickListener;
+    private OnItemClickListener clickListener;
 
     public TextAnimationItemAdapter(Context context, List<CloudMaterialBean> list) {
-        mContext = context;
-        mList = list;
-    }
-
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        mOnItemClickListener = listener;
-    }
-
-    public void setData(List<CloudMaterialBean> list) {
-        this.mList = list;
-        notifyDataSetChanged();
+        this.context = context;
+        this.list = list;
     }
 
     @NonNull
@@ -83,13 +74,13 @@ public class TextAnimationItemAdapter extends RecyclerView.Adapter<TextAnimation
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        CloudMaterialBean item = mList.get(position);
+    public void onBindViewHolder(@NonNull ViewHolder vHolder, int position) {
+        CloudMaterialBean item = list.get(position);
 
-        Glide.with(mContext)
+        Glide.with(context)
             .load(!StringUtil.isEmpty(item.getPreviewUrl()) ? item.getPreviewUrl() : item.getLocalDrawableId())
             .apply(new RequestOptions().transform(
-                new MultiTransformation(new CenterInside(), new RoundedCorners(SizeUtils.dp2Px(mContext, 4)))))
+                new MultiTransformation(new CenterInside(), new RoundedCorners(SizeUtils.dp2Px(context, 4)))))
             .addListener(new RequestListener<Drawable>() {
                 @Override
                 public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target,
@@ -103,36 +94,36 @@ public class TextAnimationItemAdapter extends RecyclerView.Adapter<TextAnimation
                     return false;
                 }
             })
-            .into(holder.mItemIv);
-        holder.mSelectView.setVisibility(bSelectPosition == position ? View.VISIBLE : View.INVISIBLE);
-        holder.mNameTv.setText(item.getName());
+            .into(vHolder.mItemIv);
+        vHolder.view.setVisibility(selectposition == position ? View.VISIBLE : View.INVISIBLE);
+        vHolder.mNameTv.setText(item.getName());
 
         if (!StringUtil.isEmpty(item.getLocalPath()) || position == 0) {
-            holder.mDownloadIv.setVisibility(View.GONE);
-            holder.mDownloadPb.setVisibility(View.GONE);
+            vHolder.mDownloadIv.setVisibility(View.GONE);
+            vHolder.mDownloadPb.setVisibility(View.GONE);
         } else {
-            holder.mDownloadIv.setVisibility(bSelectPosition == position ? View.INVISIBLE : View.VISIBLE);
-            holder.mDownloadPb.setVisibility(bSelectPosition == position ? View.VISIBLE : View.INVISIBLE);
+            vHolder.mDownloadIv.setVisibility(selectposition == position ? View.INVISIBLE : View.VISIBLE);
+            vHolder.mDownloadPb.setVisibility(selectposition == position ? View.VISIBLE : View.INVISIBLE);
         }
 
-        if (bDownloadingMap.containsKey(item.getId())) {
-            holder.mDownloadIv.setVisibility(View.GONE);
-            holder.mDownloadPb.setVisibility(View.VISIBLE);
+        if (map.containsKey(item.getId())) {
+            vHolder.mDownloadIv.setVisibility(View.GONE);
+            vHolder.mDownloadPb.setVisibility(View.VISIBLE);
         }
 
-        holder.itemView.setOnClickListener(new OnClickRepeatedListener((v) -> {
-            if (mOnItemClickListener == null) {
+        vHolder.itemView.setOnClickListener(new OnClickRepeatedListener((v) -> {
+            if (clickListener == null) {
                 return;
             }
             if (position == 0) {
-                mOnItemClickListener.onItemClick(position);
+                clickListener.onItemClick(position);
                 return;
             }
             if (!StringUtil.isEmpty(item.getLocalPath())) {
-                mOnItemClickListener.onItemClick(position);
+                clickListener.onItemClick(position);
             } else {
-                if (!bDownloadingMap.containsKey(item.getId())) {
-                    mOnItemClickListener.onDownloadClick(position);
+                if (!map.containsKey(item.getId())) {
+                    clickListener.onDownloadClick(position);
                 }
             }
         }));
@@ -140,25 +131,34 @@ public class TextAnimationItemAdapter extends RecyclerView.Adapter<TextAnimation
 
     @Override
     public int getItemCount() {
-        return mList == null ? 0 : mList.size();
+        return list == null ? 0 : list.size();
     }
 
-    public int getSelectPosition() {
-        return bSelectPosition;
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        clickListener = listener;
     }
 
-    public void setSelectPosition(int selectPosition) {
-        this.bSelectPosition = selectPosition;
+    public void setData(List<CloudMaterialBean> list) {
+        this.list = list;
+        notifyDataSetChanged();
     }
 
     public void addDownloadMaterial(CloudMaterialBean item) {
-        if (!bDownloadingMap.containsKey(item.getId())) {
-            bDownloadingMap.put(item.getId(), item);
+        if (!map.containsKey(item.getId())) {
+            map.put(item.getId(), item);
         }
     }
 
     public void removeDownloadMaterial(String contentId) {
-        bDownloadingMap.remove(contentId);
+        map.remove(contentId);
+    }
+
+    public int getSelectPosition() {
+        return selectposition;
+    }
+
+    public void setSelectPosition(int selectPosition) {
+        this.selectposition = selectPosition;
     }
 
     public interface OnItemClickListener {
@@ -168,7 +168,7 @@ public class TextAnimationItemAdapter extends RecyclerView.Adapter<TextAnimation
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        View mSelectView;
+        View view;
 
         ImageFilterView mItemIv;
 
@@ -178,13 +178,13 @@ public class TextAnimationItemAdapter extends RecyclerView.Adapter<TextAnimation
 
         ProgressBar mDownloadPb;
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            mSelectView = itemView.findViewById(R.id.item_select_view);
-            mItemIv = itemView.findViewById(R.id.item_image_view);
-            mNameTv = itemView.findViewById(R.id.item_name);
-            mDownloadIv = itemView.findViewById(R.id.item_download_view);
-            mDownloadPb = itemView.findViewById(R.id.item_progress);
+        public ViewHolder(@NonNull View view) {
+            super(view);
+            this.view = view.findViewById(R.id.item_select_view);
+            mItemIv = view.findViewById(R.id.item_image_view);
+            mNameTv = view.findViewById(R.id.item_name);
+            mDownloadIv = view.findViewById(R.id.item_download_view);
+            mDownloadPb = view.findViewById(R.id.item_progress);
         }
     }
 }

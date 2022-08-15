@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:fillViewport="true">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hms_scr_color_black"
+    tools:context=".activity.SettingsActivity">
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/radioGuideLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.55" />
+
+    <LinearLayout
+        android:id="@+id/cLayout_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/_16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/hms_scr_drawable_baseline_arrow_back_24" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_16dp"
+            android:text="@string/hms_scr_str_configurations"
+            android:textColor="@color/hms_scr_color_white"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/switchMicStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_16dp"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:padding="4dp"
+        android:text="@string/hms_scr_str_microphone"
+        android:textColor="@color/hms_scr_color_white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cLayout_toolbar"
+        app:trackTint="@color/hms_scr_color_main" />
+
+    <TextView
+        android:id="@+id/switchMicStatusDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_16dp"
+        android:layout_weight="1"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:padding="4dp"
+        android:text="@string/hms_scr_str_enable_microphone"
+        android:textColor="@color/hms_scr_color_white"
+        android:textSize="@dimen/_12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switchMicStatus" />
+
+    <View
+        android:id="@+id/view_first"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="@dimen/_16dp"
+        android:background="@color/hms_scr_color_grey_500"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/switchMicStatusDetail" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/switch_notification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_16dp"
+        android:layout_weight="1"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:padding="4dp"
+        android:text="@string/hms_scr_str_custom_notification"
+        android:textColor="@color/hms_scr_color_white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_first"
+        app:trackTint="@color/hms_scr_color_main" />
+
+    <TextView
+        android:id="@+id/switch_notification_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_16dp"
+        android:layout_weight="1"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:padding="4dp"
+        android:text="Apply your custom notification"
+        android:textColor="@color/hms_scr_color_white"
+        android:textSize="@dimen/_12sp"
+        app:layout_constraintBottom_toTopOf="@+id/view_third"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switch_notification" />
+
+    <View
+        android:id="@+id/view_third"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="@dimen/_16dp"
+        android:background="@color/hms_scr_color_grey_500"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/switch_notification_detail" />
+
+
+    <TextView
+        android:id="@+id/txtResolution"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_16dp"
+        android:layout_weight="1"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:padding="4dp"
+        android:text="Resolution"
+        android:textColor="@color/hms_scr_color_white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@id/view_fourth"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switch_notification" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_16dp"
+        android:layout_weight="1"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:padding="4dp"
+        android:text="@string/hms_scr_str_videos_look_better_in_hd"
+        android:textColor="@color/hms_scr_color_white"
+        android:textSize="@dimen/_12sp"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtResolution" />
+
+    <RadioGroup
+        android:id="@+id/radio_group_resolution"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/_16dp"
+        app:layout_constraintBottom_toTopOf="@id/view_fourth"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/radioGuideLine"
+        app:layout_constraintTop_toBottomOf="@+id/view_third">
+
+        <RadioButton
+            android:id="@+id/radio_button_480"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/hms_scr_color_main"
+            android:layoutDirection="rtl"
+            android:text="480"
+            android:textColor="@color/hms_scr_color_white" />
+
+        <RadioButton
+            android:id="@+id/radio_button_720"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/hms_scr_color_main"
+            android:layoutDirection="rtl"
+            android:text="720"
+            android:textColor="@color/hms_scr_color_white" />
+
+        <RadioButton
+            android:id="@+id/radio_button_1080"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/hms_scr_color_main"
+            android:checked="true"
+            android:layoutDirection="rtl"
+            android:text="1080"
+            android:textColor="@color/hms_scr_color_white" />
+    </RadioGroup>
+
+    <View
+        android:id="@+id/view_fourth"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="@dimen/_16dp"
+        android:background="@color/hms_scr_color_grey_500"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/radio_group_resolution" />
+
+    <TextView
+        android:id="@+id/txtOrientation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_16dp"
+        android:layout_weight="1"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:padding="4dp"
+        android:text="Orientation"
+        android:textColor="@color/hms_scr_color_white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_fourth" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_16dp"
+        android:layout_weight="1"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:padding="4dp"
+        android:text="@string/hms_scr_str_change_record_orientation"
+        android:textColor="@color/hms_scr_color_white"
+        android:textSize="@dimen/_12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtOrientation" />
+
+
+    <RadioGroup
+        android:id="@+id/radio_group_orientation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_16dp"
+        app:layout_constraintBottom_toTopOf="@id/view_fifth"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toStartOf="@+id/radioGuideLine"
+        app:layout_constraintTop_toBottomOf="@id/view_fourth">
+
+        <RadioButton
+            android:id="@+id/radio_button_adaptive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/hms_scr_color_main"
+            android:checked="true"
+            android:layoutDirection="rtl"
+            android:text="ADAPTIVE"
+            android:textColor="@color/hms_scr_color_white"
+            android:textSize="10sp" />
+
+        <RadioButton
+            android:id="@+id/radio_button_portrait"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/hms_scr_color_main"
+            android:layoutDirection="rtl"
+            android:text="PORTRAIT"
+            android:textColor="@color/hms_scr_color_white"
+            android:textSize="10sp" />
+
+        <RadioButton
+            android:id="@+id/radio_button_landscape"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/hms_scr_color_main"
+            android:layoutDirection="rtl"
+            android:text="LANDSCAPE"
+            android:textColor="@color/hms_scr_color_white"
+            android:textSize="10sp" />
+    </RadioGroup>
+
+    <View
+        android:id="@+id/view_fifth"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="@dimen/_16dp"
+        android:background="@color/hms_scr_color_grey_500"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/radio_group_orientation" />
+
+
+    <TextView
+        android:id="@+id/txtMemory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_16dp"
+        android:layout_weight="1"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:padding="4dp"
+        android:text="Directory"
+        android:textColor="@color/hms_scr_color_white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_fifth" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_weight="1"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:padding="4dp"
+        android:text="@string/hms_scr_str_change_record_folder"
+        android:textColor="@color/hms_scr_color_white"
+        android:textSize="@dimen/_12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtMemory" />
+
+    <RadioGroup
+        android:id="@+id/radio_group_memory"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_16dp"
+        android:gravity="end"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/radioGuideLine"
+        app:layout_constraintTop_toBottomOf="@+id/view_fifth">
+
+        <RadioButton
+            android:id="@+id/radio_storage_default_internal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/hms_scr_color_main"
+            android:checked="true"
+            android:layoutDirection="rtl"
+            android:text="@string/hms_scr_str_default_internal"
+            android:textColor="@color/hms_scr_color_white"
+            android:textSize="10sp" />
+
+        <RadioButton
+            android:id="@+id/radio_storage_custom_internal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/hms_scr_color_main"
+            android:layoutDirection="rtl"
+            android:text="@string/hms_scr_str_custom_internal"
+            android:textColor="@color/hms_scr_color_white"
+            android:textSize="10sp" />
+
+        <RadioButton
+            android:id="@+id/radio_storage_dcim_camera"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/hms_scr_color_main"
+            android:layoutDirection="rtl"
+            android:text="@string/hms_scr_str_camera_in_dcim"
+            android:textColor="@color/hms_scr_color_white"
+            android:textSize="10sp" />
+        <RadioButton
+            android:id="@+id/radio_button_dcim_custom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/hms_scr_color_main"
+            android:layoutDirection="rtl"
+            android:text="@string/hms_scr_str_custom_in_dcim"
+            android:textColor="@color/hms_scr_color_white"
+            android:textSize="10sp" />
+    </RadioGroup>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="@dimen/_16dp"
+        android:background="@color/hms_scr_color_grey_500"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/radio_group_memory" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -137,12 +137,4 @@ public class AnimationRepository {
         HVEVisibleAsset hveVisibleAsset = (HVEVisibleAsset) asset;
         return hveVisibleAsset.getCycleAnimation();
     }
-
-    public static HVEEffect getCombineAnimation(HVEAsset asset) {
-        if (!(asset instanceof HVEVisibleAsset)) {
-            return null;
-        }
-        HVEVisibleAsset hveVisibleAsset = (HVEVisibleAsset) asset;
-        return hveVisibleAsset.getCombineAnimation();
-    }
 }

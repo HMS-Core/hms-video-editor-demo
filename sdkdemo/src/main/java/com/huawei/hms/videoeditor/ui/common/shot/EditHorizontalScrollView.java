@@ -20,8 +20,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.HorizontalScrollView;
 
-import com.huawei.hms.videoeditor.sdk.util.SmartLog;
-
 public class EditHorizontalScrollView extends HorizontalScrollView {
     private ScrollChangeCallback scrollChangeCallback;
 

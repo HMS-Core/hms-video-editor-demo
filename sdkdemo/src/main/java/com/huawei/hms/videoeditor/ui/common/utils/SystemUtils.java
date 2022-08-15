@@ -55,11 +55,18 @@ public class SystemUtils {
 
     private static final String KEY_VERSION_VIVO = "ro.vivo.os.version";
 
-    private static String sName;
-
     private static String sVersion;
 
+    private static String sName;
+
     private static int deviceQCOM = -1;
+
+    public static String getVersion() {
+        if (sVersion == null) {
+            check("");
+        }
+        return sVersion;
+    }
 
     public static String getName() {
         if (sName == null) {
@@ -68,11 +75,27 @@ public class SystemUtils {
         return sName;
     }
 
-    public static String getVersion() {
-        if (sVersion == null) {
-            check("");
+    public static String getProp(String name) {
+        String line = null;
+        BufferedReader input = null;
+        try {
+            Process p = Runtime.getRuntime().exec("getprop " + name);
+            input = new BufferedReader(new InputStreamReader(p.getInputStream(), "UTF-8"), 1024);
+            line = input.readLine();
+            input.close();
+        } catch (IOException ex) {
+            SmartLog.e(TAG, "Unable to read prop " + name, ex);
+            return null;
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    SmartLog.e(TAG, e.getMessage());
+                }
+            }
         }
-        return sVersion;
+        return line;
     }
 
     public static boolean check(String rom) {
@@ -102,27 +125,11 @@ public class SystemUtils {
         return sName.equals(rom);
     }
 
-    public static String getProp(String name) {
-        String line = null;
-        BufferedReader input = null;
-        try {
-            Process p = Runtime.getRuntime().exec("getprop " + name);
-            input = new BufferedReader(new InputStreamReader(p.getInputStream(), "UTF-8"), 1024);
-            line = input.readLine();
-            input.close();
-        } catch (IOException ex) {
-            SmartLog.e(TAG, "Unable to read prop " + name, ex);
-            return null;
-        } finally {
-            if (input != null) {
-                try {
-                    input.close();
-                } catch (IOException e) {
-                    SmartLog.e(TAG, e.getMessage());
-                }
-            }
-        }
-        return line;
+    public static boolean isLowDevice(Context context) {
+        boolean ultraLite = SystemPropertiesInvoke.getBoolean("ro.build.hw_emui_ultra_lite", false);
+        boolean emuiLite = SystemPropertiesInvoke.getBoolean("ro.build.hw_emui_lite.enable", false);
+        boolean isLowMem = MemoryInfoUtil.isLowMemoryDevice(MemoryInfoUtil.MEMORY_THRESHOLD_6G, context);
+        return ultraLite || emuiLite || isLowMem;
     }
 
     public static boolean isQCOM() {
@@ -144,12 +151,5 @@ public class SystemUtils {
         deviceQCOM = 0;
         SmartLog.i(TAG, "isQCOM false");
         return false;
-    }
-
-    public static boolean isLowDevice(Context context) {
-        boolean ultraLite = SystemPropertiesInvoke.getBoolean("ro.build.hw_emui_ultra_lite", false);
-        boolean emuiLite = SystemPropertiesInvoke.getBoolean("ro.build.hw_emui_lite.enable", false);
-        boolean isLowMem = MemoryInfoUtil.isLowMemoryDevice(MemoryInfoUtil.MEMORY_THRESHOLD_6G, context);
-        return ultraLite || emuiLite || isLowMem;
     }
 }

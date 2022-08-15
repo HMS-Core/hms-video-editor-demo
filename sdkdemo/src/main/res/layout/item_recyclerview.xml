@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/constraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/item_bg"
+    android:paddingStart="@dimen/dp_16"
+    android:paddingEnd="@dimen/dp_0">
+
+    <ImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="@dimen/dp_25"
+        android:layout_height="@dimen/dp_25"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_12"
+        android:orientation="vertical"
+        app:layout_constraintStart_toEndOf="@+id/iv_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:layout_gravity="center_vertical"
+            android:fontFamily="HarmonyHeiTi"
+            android:maxLines="4"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_14"
+            tools:ignore="SpUsage" />
+
+        <TextView
+            android:id="@+id/tv_sub_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_2"
+            android:ellipsize="end"
+            android:layout_gravity="center_vertical"
+            android:fontFamily="HarmonyHeiTi"
+            android:maxLines="4"
+            android:textColor="@color/clip_color_A8A8A8"
+            android:textSize="@dimen/dp_10"
+            tools:ignore="SpUsage" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

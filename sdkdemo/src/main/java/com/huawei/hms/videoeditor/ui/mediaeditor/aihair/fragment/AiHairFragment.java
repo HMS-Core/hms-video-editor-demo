@@ -624,6 +624,9 @@ public class AiHairFragment extends BaseFragment {
                 @Override
                 public void onError(int errorCode, String errorMessage) {
                     showToast();
+                    if (aiHairProgressDialog != null) {
+                        aiHairProgressDialog.dismiss();
+                    }
                 }
             }, currentSelectPath, currentSelectedColorProgress);
         }

@@ -1660,7 +1660,7 @@ public class MStaggeredGridLayoutManager extends RecyclerView.LayoutManager
                     final boolean hasInvalidGap;
                     if (layoutState.mLayoutDirection == LayoutState.LAYOUT_END) {
                         hasInvalidGap = !areAllEndsEqual();
-                    } else { // layoutState.mLayoutDirection == LAYOUT_START
+                    } else {
                         hasInvalidGap = !areAllStartsEqual();
                     }
                     if (hasInvalidGap) {
@@ -2193,7 +2193,7 @@ public class MStaggeredGridLayoutManager extends RecyclerView.LayoutManager
             totalScroll = dt;
         } else if (dt < 0) {
             totalScroll = -consumed;
-        } else { // dt > 0
+        } else {
             totalScroll = consumed;
         }
         if (DEBUG) {

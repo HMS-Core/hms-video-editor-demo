@@ -18,9 +18,6 @@ package com.huawei.hms.videoeditor.ui.template.view.exoplayer;
 
 import static android.content.Context.ALARM_SERVICE;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.content.Context;
@@ -41,6 +38,9 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -51,7 +51,6 @@ import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.ui.PlayerControlView;
 import com.google.android.exoplayer2.ui.PlayerView;
-import com.huawei.hms.videoeditor.template.HVETemplateInfo;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.ScreenUtil;
@@ -59,8 +58,8 @@ import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
 import com.huawei.hms.videoeditor.ui.common.view.loading.LoadingIndicatorView;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ListPlayerView extends FrameLayout
     implements IPlayTarget, Player.EventListener, PlayerControlView.VisibilityListener {
@@ -241,7 +240,9 @@ public class ListPlayerView extends FrameLayout
         pageListPlay = PageListPlayManager.get(mCategory);
         PlayerView playerView = pageListPlay.playerView;
         PlayerControlView playerControlView = pageListPlay.controlView;
-        playerControlView.addVisibilityListener(this);
+        if (playerControlView != null) {
+            playerControlView.addVisibilityListener(this);
+        }
         SimpleExoPlayer exoPlayer = pageListPlay.exoPlayer;
         if (playerView == null) {
             return;

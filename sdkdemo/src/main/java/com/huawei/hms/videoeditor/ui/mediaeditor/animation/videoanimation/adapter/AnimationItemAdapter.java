@@ -17,10 +17,6 @@
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.animation.videoanimation.adapter;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -29,6 +25,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.utils.widget.ImageFilterView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -45,34 +46,33 @@ import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.utils.widget.ImageFilterView;
-import androidx.recyclerview.widget.RecyclerView;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class AnimationItemAdapter extends RecyclerView.Adapter<AnimationItemAdapter.ViewHolder> {
     private Context mContext;
 
-    private List<CloudMaterialBean> mList;
+    private List<CloudMaterialBean> mCloudMaterialBeanList;
 
-    private final Map<String, CloudMaterialBean> bDownloadingMap = new LinkedHashMap<>();
+    private final Map<String, CloudMaterialBean> mCloudMaterialBeanMap = new LinkedHashMap<>();
 
-    private int bSelectPosition = 0;
+    private int mSelectPosition = 0;
 
-    private OnItemClickListener mOnItemClickListener;
+    private OnItemClickListener mItemClickListener;
 
     public AnimationItemAdapter(Context context, List<CloudMaterialBean> list) {
         mContext = context;
-        mList = list;
-    }
-
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        mOnItemClickListener = listener;
+        mCloudMaterialBeanList = list;
     }
 
     public void setData(List<CloudMaterialBean> list) {
-        this.mList = list;
+        this.mCloudMaterialBeanList = list;
         notifyDataSetChanged();
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mItemClickListener = listener;
     }
 
     @NonNull
@@ -84,11 +84,12 @@ public class AnimationItemAdapter extends RecyclerView.Adapter<AnimationItemAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        CloudMaterialBean item = mList.get(position);
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
+        CloudMaterialBean materialBean = mCloudMaterialBeanList.get(position);
 
         Glide.with(mContext)
-            .load(!StringUtil.isEmpty(item.getPreviewUrl()) ? item.getPreviewUrl() : item.getLocalDrawableId())
+            .load(!StringUtil.isEmpty(materialBean.getPreviewUrl()) ? materialBean.getPreviewUrl()
+                : materialBean.getLocalDrawableId())
             .apply(new RequestOptions().transform(
                 new MultiTransformation(new CenterInside(), new RoundedCorners(SizeUtils.dp2Px(mContext, 4)))))
             .addListener(new RequestListener<Drawable>() {
@@ -104,36 +105,36 @@ public class AnimationItemAdapter extends RecyclerView.Adapter<AnimationItemAdap
                     return false;
                 }
             })
-            .into(holder.mItemIv);
-        holder.mSelectView.setVisibility(bSelectPosition == position ? View.VISIBLE : View.INVISIBLE);
-        holder.mNameTv.setText(item.getName());
+            .into(viewHolder.mItemIv);
+        viewHolder.mSelectView.setVisibility(mSelectPosition == position ? View.VISIBLE : View.INVISIBLE);
+        viewHolder.mNameTv.setText(materialBean.getName());
 
-        if (!StringUtil.isEmpty(item.getLocalPath()) || position == 0) {
-            holder.mDownloadIv.setVisibility(View.GONE);
-            holder.mDownloadPb.setVisibility(View.GONE);
+        if (!StringUtil.isEmpty(materialBean.getLocalPath()) || position == 0) {
+            viewHolder.mDownloadIv.setVisibility(View.GONE);
+            viewHolder.mDownloadPb.setVisibility(View.GONE);
         } else {
-            holder.mDownloadIv.setVisibility(bSelectPosition == position ? View.INVISIBLE : View.VISIBLE);
-            holder.mDownloadPb.setVisibility(bSelectPosition == position ? View.VISIBLE : View.INVISIBLE);
+            viewHolder.mDownloadIv.setVisibility(mSelectPosition == position ? View.INVISIBLE : View.VISIBLE);
+            viewHolder.mDownloadPb.setVisibility(mSelectPosition == position ? View.VISIBLE : View.INVISIBLE);
         }
 
-        if (bDownloadingMap.containsKey(item.getId())) {
-            holder.mDownloadIv.setVisibility(View.GONE);
-            holder.mDownloadPb.setVisibility(View.VISIBLE);
+        if (mCloudMaterialBeanMap.containsKey(materialBean.getId())) {
+            viewHolder.mDownloadIv.setVisibility(View.GONE);
+            viewHolder.mDownloadPb.setVisibility(View.VISIBLE);
         }
 
-        holder.itemView.setOnClickListener(new OnClickRepeatedListener((v) -> {
-            if (mOnItemClickListener == null) {
+        viewHolder.itemView.setOnClickListener(new OnClickRepeatedListener((v) -> {
+            if (mItemClickListener == null) {
                 return;
             }
             if (position == 0) {
-                mOnItemClickListener.onItemClick(position);
+                mItemClickListener.onItemClick(position);
                 return;
             }
-            if (!StringUtil.isEmpty(item.getLocalPath())) {
-                mOnItemClickListener.onItemClick(position);
+            if (!StringUtil.isEmpty(materialBean.getLocalPath())) {
+                mItemClickListener.onItemClick(position);
             } else {
-                if (!bDownloadingMap.containsKey(item.getId())) {
-                    mOnItemClickListener.onDownloadClick(position);
+                if (!mCloudMaterialBeanMap.containsKey(materialBean.getId())) {
+                    mItemClickListener.onDownloadClick(position);
                 }
             }
         }));
@@ -141,31 +142,25 @@ public class AnimationItemAdapter extends RecyclerView.Adapter<AnimationItemAdap
 
     @Override
     public int getItemCount() {
-        return mList == null ? 0 : mList.size();
-    }
-
-    public int getSelectPosition() {
-        return bSelectPosition;
-    }
-
-    public void setSelectPosition(int selectPosition) {
-        this.bSelectPosition = selectPosition;
+        return mCloudMaterialBeanList == null ? 0 : mCloudMaterialBeanList.size();
     }
 
     public void addDownloadMaterial(CloudMaterialBean item) {
-        if (!bDownloadingMap.containsKey(item.getId())) {
-            bDownloadingMap.put(item.getId(), item);
+        if (!mCloudMaterialBeanMap.containsKey(item.getId())) {
+            mCloudMaterialBeanMap.put(item.getId(), item);
         }
     }
 
     public void removeDownloadMaterial(String contentId) {
-        bDownloadingMap.remove(contentId);
+        mCloudMaterialBeanMap.remove(contentId);
     }
 
-    public interface OnItemClickListener {
-        void onItemClick(int position);
+    public int getSelectPosition() {
+        return mSelectPosition;
+    }
 
-        void onDownloadClick(int position);
+    public void setSelectPosition(int selectPosition) {
+        this.mSelectPosition = selectPosition;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -187,5 +182,11 @@ public class AnimationItemAdapter extends RecyclerView.Adapter<AnimationItemAdap
             mDownloadIv = itemView.findViewById(R.id.item_download_view);
             mDownloadPb = itemView.findViewById(R.id.item_progress);
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+
+        void onDownloadClick(int position);
     }
 }

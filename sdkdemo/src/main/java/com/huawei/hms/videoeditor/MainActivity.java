@@ -1,5 +1,5 @@
 /*
- *   Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
+ *   Copyright 2022. Huawei Technologies Co., Ltd. All rights reserved.
  *
  *      Licensed under the Apache License, Version 2.0 (the "License");
  *      you may not use this file except in compliance with the License.
@@ -18,10 +18,6 @@ package com.huawei.hms.videoeditor;
 
 import static com.huawei.hms.videoeditor.ui.template.module.TemplateHomeFragment.SOURCE_KEY;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -31,26 +27,31 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.material.tabs.TabLayout;
-import com.huawei.hms.videoeditor.fragment.ClipFragment;
-import com.huawei.hms.videoeditor.sdk.MediaApplication;
-import com.huawei.hms.videoeditor.ui.common.BaseActivity;
-import com.huawei.hms.videoeditor.ui.mediaeditor.menu.MenuConfig;
-import com.huawei.hms.videoeditor.ui.template.module.TemplateHomeFragment;
-import com.huawei.hms.videoeditor.utils.SmartLog;
-import com.huawei.hms.videoeditor.view.NoScrollViewPager;
-import com.huawei.hms.videoeditorkit.sdkdemo.R;
-import com.huawei.secure.android.common.intent.SafeIntent;
-
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.google.android.material.tabs.TabLayout;
+import com.huawei.hms.videoeditor.fragment.ClipFragment;
+import com.huawei.hms.videoeditor.sdk.MediaApplication;
+import com.huawei.hms.videoeditor.ui.common.BaseActivity;
+import com.huawei.hms.videoeditor.ui.mediaeditor.menu.MenuConfig;
+import com.huawei.hms.videoeditor.ui.mediaexport.utils.InfoStateUtil;
+import com.huawei.hms.videoeditor.ui.template.module.TemplateHomeFragment;
+import com.huawei.hms.videoeditor.utils.SmartLog;
+import com.huawei.hms.videoeditor.view.NoScrollViewPager;
+import com.huawei.hms.videoeditorkit.sdkdemo.R;
+import com.huawei.secure.android.common.intent.SafeIntent;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 public class MainActivity extends BaseActivity {
     private final String[] mPermissions = new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.INTERNET};
+            Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.INTERNET, Manifest.permission.READ_PHONE_STATE};
 
     private NoScrollViewPager viewPager;
 
@@ -70,6 +71,7 @@ public class MainActivity extends BaseActivity {
         statusBarColor = R.color.home_color_FF181818;
         navigationBarColor = R.color.home_color_FF181818;
         super.onCreate(savedInstanceState);
+        InfoStateUtil.getInstance().checkInfoState(this);
         VideoEditorApplication.getInstance().setContext(this);
         setTheme(R.style.AppTheme);
         setContentView(R.layout.activity_main);
@@ -87,7 +89,6 @@ public class MainActivity extends BaseActivity {
 
     private void initData() {
         MediaApplication.getInstance().setApiKey("please set your apikey");
-
         UUID uuid = UUID.randomUUID();
         MediaApplication.getInstance().setLicenseId(uuid.toString());
 
@@ -103,36 +104,36 @@ public class MainActivity extends BaseActivity {
         mFragments.add(new ClipFragment());
         mFragments.add(templateFragment);
         FragmentPagerAdapter mAdapter =
-            new FragmentPagerAdapter(mFragmentManager, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-                @NonNull
-                @Override
-                public Fragment getItem(int position) {
-                    return mFragments.get(position);
-                }
-
-                @Override
-                public int getCount() {
-                    return mFragments.size();
-                }
-
-                @NonNull
-                @Override
-                public Object instantiateItem(@NonNull ViewGroup container, int position) {
-                    Fragment fragment = (Fragment) super.instantiateItem(container, position);
-                    if (!mFragmentManager.isDestroyed()) {
-                        mFragmentManager.beginTransaction().show(fragment).commitAllowingStateLoss();
+                new FragmentPagerAdapter(mFragmentManager, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+                    @NonNull
+                    @Override
+                    public Fragment getItem(int position) {
+                        return mFragments.get(position);
                     }
-                    return fragment;
-                }
 
-                @Override
-                public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-                    Fragment fragment = mFragments.get(position);
-                    if (!mFragmentManager.isDestroyed()) {
-                        mFragmentManager.beginTransaction().hide(fragment).commitAllowingStateLoss();
+                    @Override
+                    public int getCount() {
+                        return mFragments.size();
                     }
-                }
-            };
+
+                    @NonNull
+                    @Override
+                    public Object instantiateItem(@NonNull ViewGroup container, int position) {
+                        Fragment fragment = (Fragment) super.instantiateItem(container, position);
+                        if (!mFragmentManager.isDestroyed()) {
+                            mFragmentManager.beginTransaction().show(fragment).commitAllowingStateLoss();
+                        }
+                        return fragment;
+                    }
+
+                    @Override
+                    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+                        Fragment fragment = mFragments.get(position);
+                        if (!mFragmentManager.isDestroyed()) {
+                            mFragmentManager.beginTransaction().hide(fragment).commitAllowingStateLoss();
+                        }
+                    }
+                };
 
         viewPager.setAdapter(mAdapter);
         viewPager.setOffscreenPageLimit(4);
@@ -178,19 +179,15 @@ public class MainActivity extends BaseActivity {
     }
 
     private void verifyStoragePermissions(MainActivity activity) {
-        final int REQUEST_EXTERNAL_STORAGE = 1;
-
+        final int requestCode = 1;
         try {
-            int permissionRead =
-                ActivityCompat.checkSelfPermission(activity, "android.permission.READ_EXTERNAL_STORAGE");
-            if (permissionRead != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(activity, mPermissions, REQUEST_EXTERNAL_STORAGE);
-            }
-
-            int permissionWrite =
-                ActivityCompat.checkSelfPermission(activity, "android.permission.WRITE_EXTERNAL_STORAGE");
-            if (permissionWrite != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(activity, mPermissions, REQUEST_EXTERNAL_STORAGE);
+            for (int i = 0; i < mPermissions.length; i++) {
+                String permisson = mPermissions[i];
+                int permissionRead =
+                        ActivityCompat.checkSelfPermission(activity, permisson);
+                if (permissionRead != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(activity, mPermissions, requestCode);
+                }
             }
         } catch (Exception e) {
             SmartLog.e("MainActivity", e.getMessage());

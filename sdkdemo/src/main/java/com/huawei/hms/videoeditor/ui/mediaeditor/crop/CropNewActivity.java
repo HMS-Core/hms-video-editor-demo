@@ -18,10 +18,6 @@ package com.huawei.hms.videoeditor.ui.mediaeditor.crop;
 
 import static com.huawei.hms.videoeditor.ui.common.utils.ImageUtil.correctionWH;
 
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.RectF;
@@ -33,11 +29,17 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.huawei.hms.videoeditor.sdk.HVETimeLine;
 import com.huawei.hms.videoeditor.sdk.HuaweiVideoEditor;
 import com.huawei.hms.videoeditor.sdk.LicenseException;
 import com.huawei.hms.videoeditor.sdk.asset.HVEAsset;
 import com.huawei.hms.videoeditor.sdk.asset.HVEVisibleAsset;
+import com.huawei.hms.videoeditor.sdk.bean.HVECanvas;
+import com.huawei.hms.videoeditor.sdk.bean.HVEColor;
 import com.huawei.hms.videoeditor.sdk.bean.HVERational;
 import com.huawei.hms.videoeditor.sdk.bean.HVESize;
 import com.huawei.hms.videoeditor.sdk.lane.HVELane;
@@ -54,9 +56,9 @@ import com.huawei.hms.videoeditor.ui.common.view.crop.CropView;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 import com.huawei.secure.android.common.intent.SafeIntent;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CropNewActivity extends BaseActivity
     implements CropView.ICropListener, HuaweiVideoEditor.PlayCallback, HuaweiVideoEditor.SurfaceCallback {
@@ -172,13 +174,18 @@ public class CropNewActivity extends BaseActivity
         mEditor.setDisplay(mPreview);
         mEditor.setPlayCallback(this);
 
+        HVEVisibleAsset hveVisibleAsset;
         HVEVideoLane hveVideoLane = mEditor.getTimeLine().appendVideoLane();
         if (HVEUtil.isLegalImage(path)) {
-            hveVideoLane.appendImageAsset(path);
+            hveVisibleAsset = hveVideoLane.appendImageAsset(path);
         } else {
-            hveVideoLane.appendVideoAsset(path);
+            hveVisibleAsset = hveVideoLane.appendVideoAsset(path);
             hveVideoLane.cutAsset(0, mMediaData.getCutTrimIn(), HVELane.HVETrimType.TRIM_IN);
             hveVideoLane.cutAsset(0, mMediaData.getCutTrimOut(), HVELane.HVETrimType.TRIM_OUT);
+        }
+
+        if (hveVisibleAsset != null) {
+            hveVisibleAsset.setCanvas(new HVECanvas(new HVEColor(26, 26, 26, 255)));
         }
 
         HVETimeLine timeLine = mEditor.getTimeLine();
@@ -186,12 +193,9 @@ public class CropNewActivity extends BaseActivity
             return;
         }
 
-        mEditor.seekTimeLine(editorCurrentTime, new HuaweiVideoEditor.SeekCallback() {
-            @Override
-            public void onSeekFinished() {
-                mVideoSeekBar.setProgress((int) (editorCurrentTime));
-                initCrop();
-            }
+        mEditor.seekTimeLine(editorCurrentTime, () -> {
+            mVideoSeekBar.setProgress((int) (editorCurrentTime));
+            initCrop();
         });
     }
 
@@ -277,11 +281,15 @@ public class CropNewActivity extends BaseActivity
     }
 
     private void initProgress() {
-        if (mEditor == null || mEditor.getTimeLine() == null) {
+        if (mEditor == null) {
+            return;
+        }
+        HVETimeLine timeLine = mEditor.getTimeLine();
+        if (timeLine == null) {
             return;
         }
 
-        long duration = mEditor.getTimeLine().getDuration();
+        long duration = timeLine.getDuration();
         mDuration.setText(TimeUtils.makeTimeString(this, duration));
         mStartTimeTxt.setText(TimeUtils.makeTimeString(this, editorCurrentTime));
         mVideoSeekBar.setMax((int) duration);
@@ -291,7 +299,10 @@ public class CropNewActivity extends BaseActivity
                 if (isPlaying()) {
                     mEditor.pauseTimeLine();
                 } else {
-                    mEditor.playTimeLine(editorCurrentTime, mEditor.getTimeLine().getEndTime());
+                    HVETimeLine line = mEditor.getTimeLine();
+                    if (line != null) {
+                        mEditor.playTimeLine(editorCurrentTime, line.getEndTime());
+                    }
                 }
                 mPlay.setSelected(!mPlay.isSelected());
             }
@@ -327,8 +338,7 @@ public class CropNewActivity extends BaseActivity
 
     private void release() {
         if (mEditor != null) {
-            mEditor.pauseTimeLine();
-            mEditor.stopRenderer();
+            mEditor.stopEditor();
         }
         finish();
     }
@@ -345,29 +355,17 @@ public class CropNewActivity extends BaseActivity
         if (crop == null) {
             return null;
         }
-        RectF screenBounds = new RectF(0, 0, mAssetWidth, mAssetHeight);
-        float cropWidth = crop.right - crop.left;
-        float cropHeight = crop.bottom - crop.top;
 
-        float mParentHeight = screenBounds.bottom;
-        float mParentWidth = screenBounds.right;
-
-        float mBottomLeftX = (crop.left - (mParentWidth - mAssetWidth) / 2) / mAssetWidth;
-        float mBottomLeftY = (mParentHeight - crop.bottom - (mParentHeight - mAssetHeight) / 2) / mAssetHeight;
-        float mRightTopX = (crop.right - (mParentWidth - mAssetWidth) / 2) / mAssetWidth;
-        float mRightTopY = (mParentHeight - crop.top - (mParentHeight - mAssetHeight) / 2) / mAssetHeight;
+        float mBottomLeftX = crop.left / mAssetWidth;
+        float mBottomLeftY = (mAssetHeight - crop.bottom) / mAssetHeight;
+        float mRightTopX = crop.right / mAssetWidth;
+        float mRightTopY = (mAssetHeight - crop.top) / mAssetHeight;
 
         rtnDate.setGlLeftBottomX(mBottomLeftX);
         rtnDate.setGlLeftBottomY(mBottomLeftY);
         rtnDate.setGlRightTopX(mRightTopX);
         rtnDate.setGlRightTopY(mRightTopY);
-        rtnDate.setScaleX(cropWidth);
-        rtnDate.setScaleY(cropHeight);
-
         rtnDate.setRotation(currentRotation);
-        float[] floats = correctionWH(mAssetWidth, mAssetHeight, cropWidth, cropHeight);
-        rtnDate.setHVEWidth(floats[0]);
-        rtnDate.setHVEHeight(floats[1]);
 
         return rtnDate;
     }

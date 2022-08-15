@@ -16,6 +16,10 @@
 
 package com.huawei.hms.videoeditor.ui.common.utils;
 
+import android.text.TextUtils;
+
+import java.util.List;
+
 public class StringUtil {
     public static boolean isEmpty(String input) {
         if (input == null || "".equals(input)) {
@@ -41,5 +45,20 @@ public class StringUtil {
             }
         }
         return true;
+    }
+
+    public static boolean match(List<String> list, String value) {
+        if (list == null || TextUtils.isEmpty(value)) {
+            return false;
+        }
+        for (String item : list) {
+            if (item == null) {
+                continue;
+            }
+            if (item.equalsIgnoreCase(value)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

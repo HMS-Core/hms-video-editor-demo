@@ -137,7 +137,9 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">8dp</item>
     </style>
-
+    <declare-styleable name="ItemVideoRegulatorView">
+        <attr name="video_regulator_type" format="integer" />
+    </declare-styleable>
     <style name="CheckboxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
         <item name="android:button">@drawable/shortcut_checkbox_selector</item>
     </style>

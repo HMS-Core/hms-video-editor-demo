@@ -75,6 +75,7 @@ public class ImageTrackRecyclerViewAdapter extends RecyclerView.Adapter {
                 } else {
                     setCurrentSelect(holder.getAdapterPosition() != getPosition(), holder.getAdapterPosition());
                 }
+
                 notifyDataSetChanged();
             }
         });
@@ -86,6 +87,9 @@ public class ImageTrackRecyclerViewAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         HVEAsset asset = dataList.get(position);
 
+        if (!(holder instanceof MainViewHolder)) {
+            return;
+        }
         if (position == (dataList.size() - 1)) {
             ((MainViewHolder) holder).trans.setVisibility(View.GONE);
         } else {
@@ -153,7 +157,9 @@ public class ImageTrackRecyclerViewAdapter extends RecyclerView.Adapter {
 
     class MainViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
+
         ImageView trans;
+
         View layout;
 
         MainViewHolder(@NonNull View itemView) {

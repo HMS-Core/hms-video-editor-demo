@@ -23,35 +23,33 @@ import android.util.AttributeSet;
 import androidx.annotation.Nullable;
 
 public class StickerView extends TransformView {
+    public StickerView(Context context, @Nullable AttributeSet attributeSet, int defStyleAttr) {
+        super(context, attributeSet, defStyleAttr);
+    }
 
     public StickerView(Context context) {
         this(context, null);
     }
 
-    public StickerView(Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public StickerView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+    public StickerView(Context context, @Nullable AttributeSet attributeSet) {
+        this(context, attributeSet, 0);
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
+    protected void onDraw(Canvas theCanvas) {
+        super.onDraw(theCanvas);
 
         if (isDrawDelete) {
-            canvas.drawBitmap(mDeleteBitmap, null, mDeleteRect, mPaint);
+            theCanvas.drawBitmap(mDeleteBitmap, null, mDeleteRect, mPaint);
         }
         if (isDrawScale) {
-            canvas.drawBitmap(mScaleBitmap, null, mScaleRect, mPaint);
+            theCanvas.drawBitmap(mScaleBitmap, null, mScaleRect, mPaint);
         }
         if (isDrawEdit) {
-            canvas.drawBitmap(mEditBitmap, null, mEditRect, mPaint);
+            theCanvas.drawBitmap(mEditBitmap, null, mEditRect, mPaint);
         }
         if (isDrawCopy) {
-            canvas.drawBitmap(mCopyBitmap, null, mCopyRect, mPaint);
+            theCanvas.drawBitmap(mCopyBitmap, null, mCopyRect, mPaint);
         }
     }
-
 }

@@ -117,8 +117,6 @@ public abstract class CropDrawingUtils {
     public static void drawIndicators(Canvas canvas, Drawable[] cropIndicators, int indicatorSize, RectF bounds,
         boolean fixedAspect, int selection) {
         boolean isMoving = (selection != CropObject.MOVE_NONE);
-        // cropIndicators:
-        // TOP_LEFT,TOP_RIGHT,BOTTON_LEFT_BOTTON_RIGHT,MOVE_LEFT_RIGHTL,MOVE_TOP_BOTTOM
         if ((selection == CropObject.TOP_LEFT) || !isMoving) {
             drawIndicator(canvas, cropIndicators[0], indicatorSize, bounds.left, bounds.top);
         }

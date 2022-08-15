@@ -24,6 +24,14 @@ import com.huawei.hms.videoeditor.sdk.effect.HVEEffect;
 import com.huawei.hms.videoeditor.ui.common.EditorManager;
 
 public class StickerAnimationRepository {
+    public static HVEEffect appendLeaveAnimation(HVEAsset asset, HVEEffect.Options options, long duration) {
+        if (!(asset instanceof HVEVisibleAsset)) {
+            return null;
+        }
+        HVEVisibleAsset hveVisibleAsset = (HVEVisibleAsset) asset;
+        return hveVisibleAsset.appendLeaveAnimationEffect(options, duration);
+    }
+
     public static HVEEffect appendEnterAnimation(HVEAsset asset, HVEEffect.Options options, long duration) {
         if (!(asset instanceof HVEVisibleAsset)) {
             return null;
@@ -32,12 +40,18 @@ public class StickerAnimationRepository {
         return hveVisibleAsset.appendEnterAnimationEffect(options, duration);
     }
 
-    public static HVEEffect appendLeaveAnimation(HVEAsset asset, HVEEffect.Options options, long duration) {
+    public static boolean removeEnterAnimation(HVEAsset asset) {
         if (!(asset instanceof HVEVisibleAsset)) {
-            return null;
+            return false;
+        }
+        HuaweiVideoEditor videoEditor = EditorManager.getInstance().getEditor();
+        HVETimeLine timeLine = EditorManager.getInstance().getTimeLine();
+        if (videoEditor == null || timeLine == null) {
+            return false;
         }
         HVEVisibleAsset hveVisibleAsset = (HVEVisibleAsset) asset;
-        return hveVisibleAsset.appendLeaveAnimationEffect(options, duration);
+        videoEditor.seekTimeLine(timeLine.getCurrentTime());
+        return hveVisibleAsset.removeEnterAnimationEffect();
     }
 
     public static HVEEffect appendCycleAnimation(HVEAsset asset, HVEEffect.Options options, long duration) {
@@ -48,32 +62,26 @@ public class StickerAnimationRepository {
         return hveVisibleAsset.appendCycleAnimationEffect(options, duration);
     }
 
-    public static boolean removeEnterAnimation(HVEAsset asset) {
-        if (!(asset instanceof HVEVisibleAsset)) {
-            return false;
-        }
-        HuaweiVideoEditor editor = EditorManager.getInstance().getEditor();
-        HVETimeLine timeLine = EditorManager.getInstance().getTimeLine();
-        if (editor == null || timeLine == null) {
-            return false;
-        }
-        HVEVisibleAsset hveVisibleAsset = (HVEVisibleAsset) asset;
-        editor.seekTimeLine(timeLine.getCurrentTime());
-        return hveVisibleAsset.removeEnterAnimationEffect();
-    }
-
     public static boolean removeLeaveAnimation(HVEAsset asset) {
         if (!(asset instanceof HVEVisibleAsset)) {
             return false;
         }
-        HuaweiVideoEditor editor = EditorManager.getInstance().getEditor();
+        HuaweiVideoEditor videoEditor = EditorManager.getInstance().getEditor();
         HVETimeLine timeLine = EditorManager.getInstance().getTimeLine();
-        if (editor == null || timeLine == null) {
+        if (videoEditor == null || timeLine == null) {
             return false;
         }
         HVEVisibleAsset hveVisibleAsset = (HVEVisibleAsset) asset;
-        editor.seekTimeLine(timeLine.getCurrentTime());
+        videoEditor.seekTimeLine(timeLine.getCurrentTime());
         return hveVisibleAsset.removeLeaveAnimationEffect();
+    }
+
+    public static boolean setEnterAnimationDuration(HVEAsset asset, long duration) {
+        if (!(asset instanceof HVEVisibleAsset)) {
+            return false;
+        }
+        HVEVisibleAsset hveVisibleAsset = (HVEVisibleAsset) asset;
+        return hveVisibleAsset.setEnterAnimationDuration(duration);
     }
 
     public static boolean removeCycleAnimation(HVEAsset asset) {
@@ -90,12 +98,12 @@ public class StickerAnimationRepository {
         return hveVisibleAsset.removeCycleAnimationEffect();
     }
 
-    public static boolean setEnterAnimationDuration(HVEAsset asset, long duration) {
+    public static boolean setCycleAnimationDuration(HVEAsset asset, long duration) {
         if (!(asset instanceof HVEVisibleAsset)) {
             return false;
         }
         HVEVisibleAsset hveVisibleAsset = (HVEVisibleAsset) asset;
-        return hveVisibleAsset.setEnterAnimationDuration(duration);
+        return hveVisibleAsset.setCycleAnimationDuration(duration);
     }
 
     public static boolean setLeaveAnimationDuration(HVEAsset asset, long duration) {
@@ -106,20 +114,12 @@ public class StickerAnimationRepository {
         return hveVisibleAsset.setLeaveAnimationDuration(duration);
     }
 
-    public static boolean setCycleAnimationDuration(HVEAsset asset, long duration) {
-        if (!(asset instanceof HVEVisibleAsset)) {
-            return false;
-        }
-        HVEVisibleAsset hveVisibleAsset = (HVEVisibleAsset) asset;
-        return hveVisibleAsset.setCycleAnimationDuration(duration);
-    }
-
-    public static HVEEffect getEnterAnimation(HVEAsset asset) {
+    public static HVEEffect getCycleAnimation(HVEAsset asset) {
         if (!(asset instanceof HVEVisibleAsset)) {
             return null;
         }
         HVEVisibleAsset hveVisibleAsset = (HVEVisibleAsset) asset;
-        return hveVisibleAsset.getEnterAnimation();
+        return hveVisibleAsset.getCycleAnimation();
     }
 
     public static HVEEffect getLeaveAnimation(HVEAsset asset) {
@@ -130,11 +130,11 @@ public class StickerAnimationRepository {
         return hveVisibleAsset.getLeaveAnimation();
     }
 
-    public static HVEEffect getCycleAnimation(HVEAsset asset) {
+    public static HVEEffect getEnterAnimation(HVEAsset asset) {
         if (!(asset instanceof HVEVisibleAsset)) {
             return null;
         }
         HVEVisibleAsset hveVisibleAsset = (HVEVisibleAsset) asset;
-        return hveVisibleAsset.getCycleAnimation();
+        return hveVisibleAsset.getEnterAnimation();
     }
 }

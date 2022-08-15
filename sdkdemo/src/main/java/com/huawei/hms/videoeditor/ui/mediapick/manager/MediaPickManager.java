@@ -17,14 +17,29 @@
 
 package com.huawei.hms.videoeditor.ui.mediapick.manager;
 
-import java.util.ArrayList;
-import java.util.List;
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.text.TextUtils;
+import android.widget.Toast;
 
+import com.huawei.hms.videoeditor.VideoEditorApplication;
+import com.huawei.hms.videoeditor.sdk.bean.HVEVisibleFormatBean;
+import com.huawei.hms.videoeditor.sdk.util.HVEUtil;
+import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.bean.Constant;
 import com.huawei.hms.videoeditor.ui.common.bean.MediaData;
 import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
+import com.huawei.hms.videoeditor.ui.common.utils.ToastUtils;
+import com.huawei.hms.videoeditorkit.sdkdemo.R;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class MediaPickManager {
+    private static final String TAG = "MediaPickManager";
+
     private List<MediaData> sSelectItemList = new ArrayList<>();
 
     private final List<OnSelectItemChangeListener> sOnSelectItemChangeListenerList = new ArrayList<>();
@@ -66,15 +81,78 @@ public class MediaPickManager {
         return data;
     }
 
-    public boolean addSelectItemAndSetIndex(MediaData item) {
-        if (sSelectItemList.size() >= maxSelectCount) {
+    @SuppressLint("StringFormatInvalid")
+    public boolean processVideoAndImage(MediaData item) {
+        String itemName = item.getName();
+        if (TextUtils.isEmpty(itemName)) {
             return false;
+        }
+
+        String itemPath = item.getPath();
+        if (TextUtils.isEmpty(itemPath)) {
+            return false;
+        }
+
+        if (item.isVideo()) {
+            double itemWidth = item.getWidth();
+            double itemHeight = item.getHeight();
+            long itemDuration = item.getDuration();
+            if (itemDuration < 500) {
+                return false;
+            }
+
+            if (Math.max(itemWidth, itemHeight) > 4096) {
+                return false;
+            }
+            SmartLog.i(TAG, "getVideoProperty start");
+            HVEVisibleFormatBean hveVisibleFormatBean = HVEUtil.getVideoProperty(item.getPath());
+            SmartLog.i(TAG, "getVideoProperty end");
+            if (hveVisibleFormatBean == null) {
+                return false;
+            }
+
+            if (itemWidth <= 0 || itemHeight <= 0) {
+                itemWidth = hveVisibleFormatBean.getWidth();
+                itemHeight = hveVisibleFormatBean.getHeight();
+            }
+
+            if (itemWidth <= 0 || itemHeight <= 0) {
+                return false;
+            }
+
+            if (itemName.toLowerCase(Locale.ENGLISH).endsWith(".ts")
+                || itemName.toLowerCase(Locale.ENGLISH).endsWith(".mts")
+                || itemName.toLowerCase(Locale.ENGLISH).endsWith(".msts")) {
+                return false;
+            }
+
+            File videoFile = new File(itemPath);
+            if (!videoFile.exists() || videoFile.length() <= 0) {
+                return false;
+            }
+            return true;
+        } else {
+            File imageFile = new File(item.getPath());
+            if (!imageFile.exists() || imageFile.length() <= 0) {
+                return false;
+            }
+            return HVEUtil.isLegalImage(item.getPath());
+        }
+    }
+
+    public int addSelectItemAndSetIndex(MediaData item) {
+        if (!processVideoAndImage(item)) {
+            return -1;
+        }
+
+        if (sSelectItemList.size() >= maxSelectCount) {
+            return 0;
         }
         item.setIndex(sSelectItemList.size() + 1);
         item.setSetSelected(true);
         sSelectItemList.add(item);
         notifySelectItemChange(item);
-        return true;
+        return 1;
     }
 
     public boolean addSelectItemAndSetIndexNum(MediaData item) {

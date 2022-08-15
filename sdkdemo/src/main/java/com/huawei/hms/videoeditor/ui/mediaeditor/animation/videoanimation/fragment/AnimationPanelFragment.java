@@ -22,9 +22,6 @@ import static com.huawei.hms.videoeditor.ui.common.bean.Constant.RTL_UI;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_VIDEO_OPERATION_ANIMATION;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_VIDEO_STATE_ANIMATION;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -34,6 +31,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.huawei.hms.videoeditor.materials.HVEColumnInfo;
 import com.huawei.hms.videoeditor.materials.HVEMaterialConstant;
@@ -58,23 +63,18 @@ import com.huawei.hms.videoeditor.ui.mediaeditor.VideoClipsActivity;
 import com.huawei.hms.videoeditor.ui.mediaeditor.animation.videoanimation.adapter.AnimationItemAdapter;
 import com.huawei.hms.videoeditor.ui.mediaeditor.animation.videoanimation.viewmodel.AnimationViewModel;
 import com.huawei.hms.videoeditor.ui.mediaeditor.repository.MaterialsRespository;
-import com.huawei.secure.android.common.intent.SafeBundle;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
+import com.huawei.secure.android.common.intent.SafeBundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AnimationPanelFragment extends BaseFragment implements AnimationBar.OnProgressChangedListener {
     private static final String TAG = "AnimationPanelFragment";
 
     private static final String VIDEO_MAIN = "video_main";
 
-    private List<HVEColumnInfo> columnList = new ArrayList<>();
+    private List<HVEColumnInfo> animationColumnList = new ArrayList<>();
 
     private List<CloudMaterialBean> initAnim = new ArrayList<>(1);
 
@@ -156,8 +156,8 @@ public class AnimationPanelFragment extends BaseFragment implements AnimationBar
         recyclerView.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false));
         if (recyclerView.getItemDecorationCount() == 0) {
             recyclerView
-                .addItemDecoration(new HorizontalDividerDecoration(ContextCompat.getColor(mActivity, R.color.color_20),
-                    SizeUtils.dp2Px(mActivity, 75), SizeUtils.dp2Px(mActivity, 8)));
+                    .addItemDecoration(new HorizontalDividerDecoration(ContextCompat.getColor(mActivity, R.color.color_20),
+                            SizeUtils.dp2Px(mActivity, 75), SizeUtils.dp2Px(mActivity, 8)));
         }
         recyclerView.setItemAnimator(null);
         recyclerView.setAdapter(animationItemAdapter);
@@ -175,11 +175,11 @@ public class AnimationPanelFragment extends BaseFragment implements AnimationBar
         LinearLayout.LayoutParams transParams;
         if (LanguageUtils.isZh()) {
             transParams = new LinearLayout.LayoutParams(SizeUtils.dp2Px(context, 36.0f),
-                ConstraintLayout.LayoutParams.WRAP_CONTENT);
+                    ConstraintLayout.LayoutParams.WRAP_CONTENT);
 
         } else {
             transParams = new LinearLayout.LayoutParams(SizeUtils.dp2Px(context, 64.0f),
-                ConstraintLayout.LayoutParams.WRAP_CONTENT);
+                    ConstraintLayout.LayoutParams.WRAP_CONTENT);
         }
         transParams.gravity = Gravity.BOTTOM;
         animationText.setLayoutParams(transParams);
@@ -208,8 +208,9 @@ public class AnimationPanelFragment extends BaseFragment implements AnimationBar
         if (hveAsset != null) {
             animationBar.setDuration(hveAsset.getDuration());
         }
-        initAnim.addAll(animationViewModel.loadLocalData(getActivity().getResources().getString(R.string.none)));
-
+        if (getActivity() != null) {
+            initAnim.addAll(animationViewModel.loadLocalData(getActivity().getResources().getString(R.string.none)));
+        }
         animationViewModel.initColumns(HVEMaterialConstant.VIDEO_ANIMATION_FATHER_COLUMN);
     }
 
@@ -219,7 +220,7 @@ public class AnimationPanelFragment extends BaseFragment implements AnimationBar
         certain.setOnClickListener(view -> mActivity.onBackPressed());
 
         tabTopLayout.addTabSelectedChangeListener((index, prevInfo, nextInfo) -> {
-            if (columnList == null) {
+            if (animationColumnList == null) {
                 return;
             }
             errorLayout.setVisibility(View.GONE);
@@ -240,7 +241,7 @@ public class AnimationPanelFragment extends BaseFragment implements AnimationBar
             animList.addAll(initAnim);
             animationItemAdapter.setData(animList);
 
-            content = columnList.get(currentIndex);
+            content = animationColumnList.get(currentIndex);
             if (content == null) {
                 return;
             }
@@ -385,16 +386,16 @@ public class AnimationPanelFragment extends BaseFragment implements AnimationBar
             } else {
                 animationItemAdapter.addDownloadMaterial(loadUrlEvent.getContent());
                 animationViewModel.downloadMaterials(loadUrlEvent.getPreviousPosition(), loadUrlEvent.getPosition(),
-                    loadUrlEvent.getContent());
+                        loadUrlEvent.getContent());
             }
         });
         selectDataObserve();
         viewModel.getTimeout()
-            .observe(this, isTimeout -> {
-                if (isTimeout && !isBackground) {
-                    mActivity.onBackPressed();
-                }
-            });
+                .observe(this, isTimeout -> {
+                    if (isTimeout && !isBackground) {
+                        mActivity.onBackPressed();
+                    }
+                });
     }
 
     private void selectDataObserve() {
@@ -416,9 +417,9 @@ public class AnimationPanelFragment extends BaseFragment implements AnimationBar
 
             HVEEffect enterEffect = animationViewModel.getEnterAnimation(hveAsset);
             HVEEffect leaveEffect = animationViewModel.getLeaveAnimation(hveAsset);
-            long startTime = 0;
-            long endTime = 0;
-            long duration = 500;
+            long startTime = 0L;
+            long endTime = 0L;
+            long duration = 500L;
             if (animType.equals(HVEEffect.ENTER_ANIMATION)) {
                 if (enterEffect != null) {
                     duration = enterEffect.getDuration();
@@ -442,15 +443,6 @@ public class AnimationPanelFragment extends BaseFragment implements AnimationBar
                     }
                 }
                 startTime = hveAsset.getEndTime() - duration;
-                endTime = startTime + duration;
-            } else if (animType.equals(HVEEffect.COMBINE_ANIMATION)) {
-                HVEEffect combineEffect = animationViewModel.getCombineAnimation(hveAsset);
-                if (combineEffect != null) {
-                    duration = combineEffect.getDuration();
-                } else {
-                    duration = hveAsset.getDuration();
-                }
-                startTime = hveAsset.getStartTime();
                 endTime = startTime + duration;
             }
             HVEEffect effect = animationViewModel.appendAnimation(hveAsset, cutContent, duration, animType);
@@ -536,14 +528,14 @@ public class AnimationPanelFragment extends BaseFragment implements AnimationBar
             if (list == null || list.isEmpty()) {
                 return;
             }
-            columnList.clear();
-            columnList.addAll(list);
+            animationColumnList.clear();
+            animationColumnList.addAll(list);
             List<TabTopInfo<?>> tabTopInfoList = new ArrayList<>();
             for (HVEColumnInfo item : list) {
                 tabTopInfoList.add(new TabTopInfo<>(item.getColumnName(), true,
-                    ContextCompat.getColor(mActivity, R.color.tab_text_default_color),
-                    ContextCompat.getColor(mActivity, R.color.tab_text_tint_color), SizeUtils.dp2Px(mActivity, 15),
-                    SizeUtils.dp2Px(mActivity, 15)));
+                        ContextCompat.getColor(mActivity, R.color.tab_text_default_color),
+                        ContextCompat.getColor(mActivity, R.color.tab_text_tint_color), SizeUtils.dp2Px(mActivity, 15),
+                        SizeUtils.dp2Px(mActivity, 15)));
             }
             tabTopLayout.inflateInfo(tabTopInfoList);
             loadingIndicatorView.hide();
@@ -592,8 +584,7 @@ public class AnimationPanelFragment extends BaseFragment implements AnimationBar
             return;
         }
         HVEEffect enterEffect = animationViewModel.getEnterAnimation(hveAsset);
-        HVEEffect combineEffect = animationViewModel.getCombineAnimation(hveAsset);
-        if (enterEffect == null && combineEffect == null) {
+        if (enterEffect == null) {
             return;
         }
 
@@ -601,12 +592,8 @@ public class AnimationPanelFragment extends BaseFragment implements AnimationBar
         long startTime = hveAsset.getStartTime();
         long endTime = startTime + duration;
 
-        if (enterEffect != null) {
-            animationViewModel.setAnimationDuration(hveAsset, duration, HVEEffect.ENTER_ANIMATION);
-        }
-        if (combineEffect != null) {
-            animationViewModel.setAnimationDuration(hveAsset, duration, HVEEffect.COMBINE_ANIMATION);
-        }
+        animationViewModel.setAnimationDuration(hveAsset, duration, HVEEffect.ENTER_ANIMATION);
+
         if (endTime >= hveAsset.getEndTime()) {
             endTime = endTime - 1;
         }
@@ -661,8 +648,7 @@ public class AnimationPanelFragment extends BaseFragment implements AnimationBar
         HVEEffect cycleEffect = animationViewModel.getCycleAnimation(hveAsset);
         HVEEffect enterEffect = animationViewModel.getEnterAnimation(hveAsset);
         HVEEffect leaveEffect = animationViewModel.getLeaveAnimation(hveAsset);
-        HVEEffect combineEffect = animationViewModel.getCombineAnimation(hveAsset);
-        if (cycleEffect != null || (enterEffect == null && leaveEffect == null && combineEffect == null)) {
+        if (cycleEffect != null || (enterEffect == null && leaveEffect == null)) {
             animationBar.setEnterShow(false);
             animationBar.setLeaveShow(false);
             seek_container.setVisibility(View.GONE);
@@ -683,12 +669,6 @@ public class AnimationPanelFragment extends BaseFragment implements AnimationBar
             animationBar.setLeaveDuration(leaveEffect.getDuration());
         } else {
             animationBar.setLeaveShow(false);
-        }
-
-        if (combineEffect != null) {
-            seek_container.setVisibility(View.VISIBLE);
-            animationBar.setEnterShow(true);
-            animationBar.setEnterDuration(combineEffect.getDuration());
         }
     }
 }

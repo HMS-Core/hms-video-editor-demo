@@ -24,55 +24,55 @@ import com.huawei.hms.videoeditor.sdk.effect.HVEEffect;
 import com.huawei.hms.videoeditor.ui.common.EditorManager;
 
 public class TextAnimationRepository {
-    public static HVEEffect appendEnterAnimation(HVEAsset asset, HVEEffect.Options options, long duration) {
-        if (!(asset instanceof HVEVisibleAsset)) {
+    public static HVEEffect appendEnterAnimation(HVEAsset hveAsset, HVEEffect.Options options, long duration) {
+        if (!(hveAsset instanceof HVEVisibleAsset)) {
             return null;
         }
-        HVEVisibleAsset hveVisibleAsset = (HVEVisibleAsset) asset;
-        return hveVisibleAsset.appendEnterAnimationEffect(options, duration);
+        HVEVisibleAsset visibleAsset = (HVEVisibleAsset) hveAsset;
+        return visibleAsset.appendEnterAnimationEffect(options, duration);
     }
 
-    public static HVEEffect appendLeaveAnimation(HVEAsset asset, HVEEffect.Options options, long duration) {
-        if (!(asset instanceof HVEVisibleAsset)) {
+    public static HVEEffect appendLeaveAnimation(HVEAsset hveAsset, HVEEffect.Options options, long duration) {
+        if (!(hveAsset instanceof HVEVisibleAsset)) {
             return null;
         }
-        HVEVisibleAsset hveVisibleAsset = (HVEVisibleAsset) asset;
-        return hveVisibleAsset.appendLeaveAnimationEffect(options, duration);
+        HVEVisibleAsset visibleAsset = (HVEVisibleAsset) hveAsset;
+        return visibleAsset.appendLeaveAnimationEffect(options, duration);
     }
 
-    public static HVEEffect appendCycleAnimation(HVEAsset asset, HVEEffect.Options options, long duration) {
-        if (!(asset instanceof HVEVisibleAsset)) {
+    public static HVEEffect appendCycleAnimation(HVEAsset hveAsset, HVEEffect.Options options, long duration) {
+        if (!(hveAsset instanceof HVEVisibleAsset)) {
             return null;
         }
-        HVEVisibleAsset hveVisibleAsset = (HVEVisibleAsset) asset;
-        return hveVisibleAsset.appendCycleAnimationEffect(options, duration);
+        HVEVisibleAsset visibleAsset = (HVEVisibleAsset) hveAsset;
+        return visibleAsset.appendCycleAnimationEffect(options, duration);
     }
 
-    public static boolean removeEnterAnimation(HVEAsset asset) {
-        if (!(asset instanceof HVEVisibleAsset)) {
+    public static boolean removeEnterAnimation(HVEAsset hveAsset) {
+        if (!(hveAsset instanceof HVEVisibleAsset)) {
             return false;
         }
-        HuaweiVideoEditor editor = EditorManager.getInstance().getEditor();
-        HVETimeLine timeLine = EditorManager.getInstance().getTimeLine();
-        if (editor == null || timeLine == null) {
+        HuaweiVideoEditor huaweiVideoEditor = EditorManager.getInstance().getEditor();
+        HVETimeLine hveTimeLine = EditorManager.getInstance().getTimeLine();
+        if (huaweiVideoEditor == null || hveTimeLine == null) {
             return false;
         }
-        HVEVisibleAsset hveVisibleAsset = (HVEVisibleAsset) asset;
-        editor.seekTimeLine(timeLine.getCurrentTime());
-        return hveVisibleAsset.removeEnterAnimationEffect();
+        HVEVisibleAsset visibleAsset = (HVEVisibleAsset) hveAsset;
+        huaweiVideoEditor.seekTimeLine(hveTimeLine.getCurrentTime());
+        return visibleAsset.removeEnterAnimationEffect();
     }
 
-    public static boolean removeLeaveAnimation(HVEAsset asset) {
-        if (!(asset instanceof HVEVisibleAsset)) {
+    public static boolean removeLeaveAnimation(HVEAsset hveAsset) {
+        if (!(hveAsset instanceof HVEVisibleAsset)) {
             return false;
         }
-        HuaweiVideoEditor editor = EditorManager.getInstance().getEditor();
-        HVETimeLine timeLine = EditorManager.getInstance().getTimeLine();
-        if (editor == null || timeLine == null) {
+        HuaweiVideoEditor huaweiVideoEditor = EditorManager.getInstance().getEditor();
+        HVETimeLine hveTimeLine = EditorManager.getInstance().getTimeLine();
+        if (huaweiVideoEditor == null || hveTimeLine == null) {
             return false;
         }
-        HVEVisibleAsset hveVisibleAsset = (HVEVisibleAsset) asset;
-        editor.seekTimeLine(timeLine.getCurrentTime());
+        HVEVisibleAsset hveVisibleAsset = (HVEVisibleAsset) hveAsset;
+        huaweiVideoEditor.seekTimeLine(hveTimeLine.getCurrentTime());
         return hveVisibleAsset.removeLeaveAnimationEffect();
     }
 
@@ -80,13 +80,13 @@ public class TextAnimationRepository {
         if (!(asset instanceof HVEVisibleAsset)) {
             return false;
         }
-        HuaweiVideoEditor editor = EditorManager.getInstance().getEditor();
+        HuaweiVideoEditor huaweiVideoEditor = EditorManager.getInstance().getEditor();
         HVETimeLine timeLine = EditorManager.getInstance().getTimeLine();
-        if (editor == null || timeLine == null) {
+        if (huaweiVideoEditor == null || timeLine == null) {
             return false;
         }
         HVEVisibleAsset hveVisibleAsset = (HVEVisibleAsset) asset;
-        editor.seekTimeLine(timeLine.getCurrentTime());
+        huaweiVideoEditor.seekTimeLine(timeLine.getCurrentTime());
         return hveVisibleAsset.removeCycleAnimationEffect();
     }
 
@@ -94,47 +94,47 @@ public class TextAnimationRepository {
         if (!(asset instanceof HVEVisibleAsset)) {
             return false;
         }
-        HVEVisibleAsset hveVisibleAsset = (HVEVisibleAsset) asset;
-        return hveVisibleAsset.setEnterAnimationDuration(duration);
+        HVEVisibleAsset visibleAsset = (HVEVisibleAsset) asset;
+        return visibleAsset.setEnterAnimationDuration(duration);
     }
 
     public static boolean setLeaveAnimationDuration(HVEAsset asset, long duration) {
         if (!(asset instanceof HVEVisibleAsset)) {
             return false;
         }
-        HVEVisibleAsset hveVisibleAsset = (HVEVisibleAsset) asset;
-        return hveVisibleAsset.setLeaveAnimationDuration(duration);
+        HVEVisibleAsset visibleAsset = (HVEVisibleAsset) asset;
+        return visibleAsset.setLeaveAnimationDuration(duration);
     }
 
     public static boolean setCycleAnimationDuration(HVEAsset asset, long duration) {
         if (!(asset instanceof HVEVisibleAsset)) {
             return false;
         }
-        HVEVisibleAsset hveVisibleAsset = (HVEVisibleAsset) asset;
-        return hveVisibleAsset.setCycleAnimationDuration(duration);
+        HVEVisibleAsset visibleAsset = (HVEVisibleAsset) asset;
+        return visibleAsset.setCycleAnimationDuration(duration);
     }
 
     public static HVEEffect getEnterAnimation(HVEAsset asset) {
         if (!(asset instanceof HVEVisibleAsset)) {
             return null;
         }
-        HVEVisibleAsset hveVisibleAsset = (HVEVisibleAsset) asset;
-        return hveVisibleAsset.getEnterAnimation();
+        HVEVisibleAsset visibleAsset = (HVEVisibleAsset) asset;
+        return visibleAsset.getEnterAnimation();
     }
 
     public static HVEEffect getLeaveAnimation(HVEAsset asset) {
         if (!(asset instanceof HVEVisibleAsset)) {
             return null;
         }
-        HVEVisibleAsset hveVisibleAsset = (HVEVisibleAsset) asset;
-        return hveVisibleAsset.getLeaveAnimation();
+        HVEVisibleAsset visibleAsset = (HVEVisibleAsset) asset;
+        return visibleAsset.getLeaveAnimation();
     }
 
     public static HVEEffect getCycleAnimation(HVEAsset asset) {
         if (!(asset instanceof HVEVisibleAsset)) {
             return null;
         }
-        HVEVisibleAsset hveVisibleAsset = (HVEVisibleAsset) asset;
-        return hveVisibleAsset.getCycleAnimation();
+        HVEVisibleAsset visibleAsset = (HVEVisibleAsset) asset;
+        return visibleAsset.getCycleAnimation();
     }
 }

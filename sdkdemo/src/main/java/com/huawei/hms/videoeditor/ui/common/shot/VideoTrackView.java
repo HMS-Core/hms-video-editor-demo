@@ -26,7 +26,9 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import com.huawei.hms.videoeditor.sdk.asset.HVEThumbnailCallback;
 import com.huawei.hms.videoeditor.sdk.asset.HVEVideoAsset;
+import com.huawei.hms.videoeditor.sdk.engine.video.thumbnail.HmcThumbnailCallback;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.utils.BigDecimalUtil;
 import com.huawei.hms.videoeditor.ui.common.utils.BigDecimalUtils;
@@ -81,6 +83,7 @@ public class VideoTrackView extends View {
                     if (width <= 0) {
                         break;
                     }
+
                     canvas.drawBitmap(getCutEndBitmap(bitmaps.get(i), width), lastDrawX, 0, paint);
                     break;
                 } else {
@@ -113,26 +116,31 @@ public class VideoTrackView extends View {
 
     public void getThumbNail() {
         bitmaps.clear();
-        Utils.getThumbnails(asset.getPath(),
-            (long) Math.floor(BigDecimalUtil.div(asset.getOriginLength(), getImageCount())), imageWidth, imageWidth,
-            new Utils.ThumbnailCallback() {
 
-                @Override
-                public void onBitmap(Bitmap bitmap) {
-                    bitmaps.add(bitmap);
-                    postInvalidate();
-                }
+        long interval = (long) Math.floor(BigDecimalUtil.div(asset.getOriginLength(), getImageCount()));
+        asset.getThumbNail(imageWidth, imageWidth, 0, (int) interval, 0, asset.getOriginLength(),
+                false, new HVEThumbnailCallback() {
+            @Override
+            public void onImageAvailable(Bitmap bitmap, long timeStamp) {
+                bitmaps.add(bitmap);
+                postInvalidate();
+            }
 
-                @Override
-                public void onSuccess() {
+            @Override
+            public void onImagePathAvailable(String filePath, long timeStamp) {
 
-                }
+            }
 
-                @Override
-                public void onFail(String errorCode, String errMsg) {
+            @Override
+            public void onSuccess() {
 
-                }
-            });
+            }
+
+            @Override
+            public void onFail(String errorCode, Exception e) {
+
+            }
+        });
     }
 
     public void setVideoAsset(HVEVideoAsset asset) {

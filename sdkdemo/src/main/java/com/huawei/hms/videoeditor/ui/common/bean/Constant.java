@@ -16,8 +16,6 @@
 
 package com.huawei.hms.videoeditor.ui.common.bean;
 
-import com.huawei.hms.videoeditor.sdk.util.KeepOriginal;
-
 public class Constant {
     public static final String DEFAULT_VERSION = "1.0.0";
 
@@ -78,6 +76,8 @@ public class Constant {
     }
 
     public static final String LOCAL_VIDEO_SAVE_PATH = "VideoEditor";
+
+    public static final String LOCAL_VIDEO_SAVE_TIME = "yyyyMMdd_HHmmss";
 
     public static final int STAGGERED_COL_HEIGHT_DIFF_VALUE = 20;
 

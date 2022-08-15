@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/renameRecord"
+        android:icon="@drawable/hms_scr_drawable_rename"
+        android:title="Rename"
+
+        />
+
+    <item
+        android:id="@+id/deleteRecord"
+        android:icon="@drawable/hms_scr_drawable_delete"
+        android:title="Delete" />
+
+    <item
+        android:icon="@drawable/hms_scr_drawable_share"
+        android:title="Share" />
+
+
+</menu>

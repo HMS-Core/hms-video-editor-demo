@@ -29,13 +29,13 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.text.TextUtils;
 
-import com.huawei.hms.videoeditor.common.utils.CloseUtils;
-import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.utils.ArrayUtils;
+import com.huawei.hms.videoeditor.ui.common.utils.CloseUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.CpuUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.GsonUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.KeepOriginal;
 import com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState;
+import com.huawei.hms.videoeditor.utils.SmartLog;
 
 @KeepOriginal
 public class MenuConfig {
@@ -43,7 +43,12 @@ public class MenuConfig {
 
     private static final String MENU_JSON_NAME = "edit_menu_config.json";
 
+    private static final String MODEL_JSON_NAME = "model_config.json";
+
     private static MenuConfigBean menuConfigBean = null;
+
+    private volatile static DeviceModelConfigBean deviceModelConfigBean = null;
+
 
     private volatile static MenuConfig menuConfig = null;
 
@@ -65,6 +70,14 @@ public class MenuConfig {
         }
     }
 
+    public String getDeviceModels(String deviceType) {
+        if (deviceModelConfigBean != null) {
+            return deviceModelConfigBean.getDeviceModels(deviceType);
+        } else {
+            SmartLog.e(TAG, "deviceModelConfigBean is null");
+            return null;
+        }
+    }
     public List<EditMenuBean> getEditMenus() {
         if (menuConfigBean != null) {
             String deviceType;
@@ -178,5 +191,17 @@ public class MenuConfig {
             CloseUtils.close(bf);
         }
         return builder.toString();
+    }
+
+
+    public synchronized void initDeviceModelConfig(Context context) {
+        if (deviceModelConfigBean == null) {
+            String deviceModelJson = getStringJson(context, MODEL_JSON_NAME);
+            setDeviceModelConfigBean(GsonUtils.fromJson(deviceModelJson, DeviceModelConfigBean.class));
+        }
+    }
+
+    public synchronized static void setDeviceModelConfigBean(DeviceModelConfigBean deviceModelConfigBean) {
+        MenuConfig.deviceModelConfigBean = deviceModelConfigBean;
     }
 }

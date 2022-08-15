@@ -19,14 +19,17 @@ package com.huawei.hms.videoeditor.ui.mediaeditor.split;
 import static com.huawei.hms.videoeditor.ui.common.bean.Constant.LTR_UI;
 import static com.huawei.hms.videoeditor.ui.common.bean.Constant.RTL_UI;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.huawei.hms.videoeditor.sdk.asset.HVEAsset;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
@@ -43,18 +46,15 @@ import com.huawei.hms.videoeditor.ui.mediaeditor.menu.VideoClipsPlayViewModel;
 import com.huawei.hms.videoeditor.ui.mediaeditor.trackview.viewmodel.EditPreviewViewModel;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AssetSplitFragment extends BaseFragment {
     public static final String TAG = "AssetSplitFragment";
 
-    private RecyclerView mRecyclerView;
+    private RecyclerView recyclerView;
 
-    private CoverAdapter mCoverAdapter;
+    private CoverAdapter coverAdapter;
 
     private List<HVEAsset> mAssetList;
 
@@ -76,9 +76,9 @@ public class AssetSplitFragment extends BaseFragment {
 
     private int mItemWidth;
 
-    private long mVideoCoverTime;
+    private long videoCoverTime;
 
-    private long mDurationTime;
+    private long durationTime;
 
     public static AssetSplitFragment newInstance(int operateId) {
         Bundle args = new Bundle();
@@ -95,7 +95,7 @@ public class AssetSplitFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
-        mRecyclerView = view.findViewById(R.id.rv_split);
+        recyclerView = view.findViewById(R.id.rv_split);
         ivCertain = view.findViewById(R.id.iv_certain);
         tvTitle = view.findViewById(R.id.tv_title);
         tvTitle.setText(R.string.cut_second_menu_severing);
@@ -115,23 +115,23 @@ public class AssetSplitFragment extends BaseFragment {
     @Override
     protected void initData() {
         mAssetList = new ArrayList<>();
-        mCoverAdapter = new CoverAdapter(context, mAssetList, R.layout.adapter_cover_item2);
+        coverAdapter = new CoverAdapter(context, mAssetList, R.layout.adapter_cover_item2);
         if (ScreenUtil.isRTL()) {
-            mRecyclerView.setScaleX(RTL_UI);
+            recyclerView.setScaleX(RTL_UI);
         } else {
-            mRecyclerView.setScaleX(LTR_UI);
+            recyclerView.setScaleX(LTR_UI);
         }
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
-        mRecyclerView.setAdapter(mCoverAdapter);
-        mRecyclerView.setItemAnimator(null);
-        View headerView = new View(context);
-        View footView = new View(context);
-        headerView.setLayoutParams(
+        recyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
+        recyclerView.setAdapter(coverAdapter);
+        recyclerView.setItemAnimator(null);
+        View header = new View(context);
+        View foot = new View(context);
+        header.setLayoutParams(
             new ViewGroup.LayoutParams(SizeUtils.screenWidth(context) / 2, SizeUtils.dp2Px(context, 64)));
-        footView.setLayoutParams(
+        foot.setLayoutParams(
             new ViewGroup.LayoutParams(SizeUtils.screenWidth(context) / 2, SizeUtils.dp2Px(context, 64)));
-        mCoverAdapter.addHeaderView(headerView);
-        mCoverAdapter.addFooterView(footView);
+        coverAdapter.addHeaderView(header);
+        coverAdapter.addFooterView(foot);
 
         selectedAsset = mEditPreviewViewModel.getMainLaneAsset();
 
@@ -139,7 +139,7 @@ public class AssetSplitFragment extends BaseFragment {
             SmartLog.e(TAG, "SelectedAsset is null!");
             return;
         }
-        mDurationTime = selectedAsset.getDuration();
+        durationTime = selectedAsset.getDuration();
         getBitmapList(selectedAsset);
 
         mSdkPlayViewModel.getPlayState().observe(this, aBoolean -> {
@@ -149,22 +149,22 @@ public class AssetSplitFragment extends BaseFragment {
         });
     }
 
-    private void getBitmapList(HVEAsset selectedAsset) {
+    private void getBitmapList(HVEAsset asset) {
         if (mAssetList != null) {
             mAssetList.clear();
-            mAssetList.add(selectedAsset);
+            mAssetList.add(asset);
         }
-        if (mCoverAdapter != null) {
-            mCoverAdapter.notifyDataSetChanged();
+        if (coverAdapter != null) {
+            coverAdapter.notifyDataSetChanged();
         }
     }
 
     @Override
     protected void initEvent() {
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
+            public void onScrollStateChanged(@NonNull RecyclerView view, int newState) {
+                super.onScrollStateChanged(view, newState);
             }
 
             @Override
@@ -185,34 +185,39 @@ public class AssetSplitFragment extends BaseFragment {
         }));
     }
 
+    private void updateTimeLine() {
+        if (mActivity != null && selectedAsset != null) {
+            float totalWidth = durationTime / 1000f * mItemWidth;
+            float percent = mRvScrollX / totalWidth;
+            videoCoverTime = (long) (percent * durationTime);
+            if (videoCoverTime > durationTime) {
+                videoCoverTime = durationTime;
+            }
+            if (selectedAsset.getLaneIndex() == 0) {
+                viewModel.setCurrentTimeLine(selectedAsset.getStartTime() + videoCoverTime);
+            }
+            notifyCurrentTimeChange(selectedAsset.getStartTime() + videoCoverTime);
+        }
+    }
+
     @Override
     protected int setViewLayoutEvent() {
         return DYNAMIC_HEIGHT;
     }
 
-    private void updateTimeLine() {
-        if (mActivity != null && selectedAsset != null) {
-            float totalWidth = mDurationTime / 1000f * mItemWidth;
-            float percent = mRvScrollX / totalWidth;
-            mVideoCoverTime = (long) (percent * mDurationTime);
-            if (mVideoCoverTime > mDurationTime) {
-                mVideoCoverTime = mDurationTime;
-            }
-            if (selectedAsset.getLaneIndex() == 0) {
-                viewModel.setCurrentTimeLine(selectedAsset.getStartTime() + mVideoCoverTime);
-            }
-            notifyCurrentTimeChange(selectedAsset.getStartTime() + mVideoCoverTime);
-        }
-    }
-
     private void notifyCurrentTimeChange(long time) {
-        if (mRecyclerView != null) {
-            for (int j = 0; j < mRecyclerView.getChildCount(); j++) {
-                if (mRecyclerView.getChildAt(j) instanceof CoverTrackView) {
-                    ((CoverTrackView) mRecyclerView.getChildAt(j)).handleCurrentTimeChange(time);
+        if (recyclerView != null) {
+            for (int j = 0; j < recyclerView.getChildCount(); j++) {
+                if (recyclerView.getChildAt(j) instanceof CoverTrackView) {
+                    ((CoverTrackView) recyclerView.getChildAt(j)).handleCurrentTimeChange(time);
                 }
             }
         }
+    }
+
+    @Override
+    protected void initViewModelObserve() {
+
     }
 
     private void resetView() {
@@ -220,11 +225,6 @@ public class AssetSplitFragment extends BaseFragment {
             return;
         }
         mEditPreviewViewModel.updateTimeLine();
-    }
-
-    @Override
-    protected void initViewModelObserve() {
-
     }
 
     @Override

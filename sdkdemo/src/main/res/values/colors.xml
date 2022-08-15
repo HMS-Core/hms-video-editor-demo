@@ -43,6 +43,7 @@
     <color name="export_bg">#202020</color>
 
     <color name="local_music_normal_color">#66FFFFFF</color>
+    <color name="color_24">#FF242424</color>
     <color name="color_26">#FF262626</color>
     <color name="color_20">#FF2D2D2D</color>
     <color name="color_20_70">#B3202020</color>
@@ -65,6 +66,7 @@
     <color name="clip_color_0D000000">#0D000000</color>
     <color name="clip_color_99000000">#99000000</color>
     <color name="clip_color_FFFF7500">#FFFF7500</color>
+    <color name="clip_color_A8A8A8">#A8A8A8</color>
 
     <color name="emui_color_bg_translucent">#00FFFFFF</color>
     <color name="emui_clickeffic_default_color">#19000000</color>
@@ -174,7 +176,7 @@
 
     <color name="color_ff0a59f7">#FF0A59F7</color>
     <color name="color_e2e2e2">#E2E2E2</color>
-    
+
     <color name="guide_tip_bubble_color">#4D4D4D</color>
     <color name="guide_tip_mask_color">#99000000</color>
 

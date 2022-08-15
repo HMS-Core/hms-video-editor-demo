@@ -26,16 +26,19 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
-import androidx.annotation.NonNull;
-
 public class HumanTrackingConfirmDialog extends Dialog {
-
     private TextView mDeleteConfirmTv;
 
     private TextView mDeleteCancelTv;
+
+    private OnPositiveClickListener mDeletePositiveClickListener;
+
+    private OnCancelClickListener mDeleteCancelClickListener;
 
     public HumanTrackingConfirmDialog(@NonNull Context context) {
         super(context, R.style.DialogTheme);
@@ -52,29 +55,20 @@ public class HumanTrackingConfirmDialog extends Dialog {
     @Override
     public void show() {
         super.show();
-        WindowManager.LayoutParams deleteParams = getWindow().getAttributes();
-        deleteParams.gravity = Gravity.BOTTOM;
-        deleteParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
-        deleteParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
+        layoutParams.gravity = Gravity.BOTTOM;
+        layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         getWindow().getDecorView().setPaddingRelative(0, 0, 0, 0);
-        getWindow().setAttributes(deleteParams);
+        getWindow().setAttributes(layoutParams);
     }
 
     private void initView() {
-        mDeleteConfirmTv = findViewById(R.id.home_clip_delete_dialog_ok);
         mDeleteCancelTv = findViewById(R.id.home_clip_delete_dialog_cancel);
+        mDeleteConfirmTv = findViewById(R.id.home_clip_delete_dialog_ok);
     }
 
     private void initEvent() {
-        mDeleteCancelTv.setOnClickListener(new OnClickRepeatedListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mDeleteCancelClickListener != null) {
-                    mDeleteCancelClickListener.onCancelClick();
-                }
-                dismiss();
-            }
-        }));
         mDeleteConfirmTv.setOnClickListener(new OnClickRepeatedListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,9 +78,20 @@ public class HumanTrackingConfirmDialog extends Dialog {
                 dismiss();
             }
         }));
+        mDeleteCancelTv.setOnClickListener(new OnClickRepeatedListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mDeleteCancelClickListener != null) {
+                    mDeleteCancelClickListener.onCancelClick();
+                }
+                dismiss();
+            }
+        }));
     }
 
-    private OnPositiveClickListener mDeletePositiveClickListener;
+    public void setOnCancelClickListener(OnCancelClickListener cancelClickListener) {
+        this.mDeleteCancelClickListener = cancelClickListener;
+    }
 
     public void setOnPositiveClickListener(OnPositiveClickListener positiveClickListener) {
         this.mDeletePositiveClickListener = positiveClickListener;
@@ -94,12 +99,6 @@ public class HumanTrackingConfirmDialog extends Dialog {
 
     public interface OnPositiveClickListener {
         void onPositiveClick();
-    }
-
-    private OnCancelClickListener mDeleteCancelClickListener;
-
-    public void setOnCancelClickListener(OnCancelClickListener cancelClickListener) {
-        this.mDeleteCancelClickListener = cancelClickListener;
     }
 
     public interface OnCancelClickListener {

@@ -52,25 +52,25 @@ import java.util.List;
 public class SegmentationFragment extends BaseFragment {
     public static final String TAG = "SegmentationFragment";
 
-    private RecyclerView mRecyclerView;
+    private RecyclerView mSegmentationRecyclerView;
 
-    private CoverAdapter mCoverAdapter;
+    private CoverAdapter mSegmentationCoverAdapter;
 
-    private List<HVEAsset> mAssetList;
+    private List<HVEAsset> mSegmentationAssetList;
 
-    private EditPreviewViewModel mEditPreviewViewModel;
+    private EditPreviewViewModel previewViewModel;
 
-    private SegmentationViewModel mSegmentationViewModel;
+    private SegmentationViewModel segmentationViewModel;
 
-    private MaterialEditViewModel mMaterialEditViewModel;
+    private MaterialEditViewModel materialEditViewModel;
 
-    private VideoClipsPlayViewModel mSdkPlayViewModel;
+    private VideoClipsPlayViewModel videoClipsPlayViewModel;
 
     private HVEAsset selectedAsset;
 
-    private TextView tvTitle;
+    private TextView tvSegmentationTitle;
 
-    private ImageView ivCertain;
+    private ImageView ivSegmentationCertain;
 
     private int mRvScrollX = 0;
 
@@ -99,11 +99,11 @@ public class SegmentationFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
-        mRecyclerView = view.findViewById(R.id.rv_person);
-        ivCertain = view.findViewById(R.id.iv_certain);
-        tvTitle = view.findViewById(R.id.tv_title);
-        tvTitle.setText(R.string.cut_second_menu_segmentation);
-        tvTitle.setTextColor(ContextCompat.getColor(mActivity, R.color.clip_color_E6FFFFFF));
+        mSegmentationRecyclerView = view.findViewById(R.id.rv_person);
+        ivSegmentationCertain = view.findViewById(R.id.iv_certain);
+        tvSegmentationTitle = view.findViewById(R.id.tv_title);
+        tvSegmentationTitle.setText(R.string.cut_second_menu_segmentation);
+        tvSegmentationTitle.setTextColor(ContextCompat.getColor(mActivity, R.color.clip_color_E6FFFFFF));
     }
 
     @Override
@@ -111,36 +111,36 @@ public class SegmentationFragment extends BaseFragment {
         SafeBundle safeBundle = new SafeBundle(getArguments());
         mOperateId = safeBundle.getInt("operateId", 0);
         mItemWidth = SizeUtils.dp2Px(mActivity, 64);
-        mSegmentationViewModel = new ViewModelProvider(mActivity, mFactory).get(SegmentationViewModel.class);
-        mEditPreviewViewModel = new ViewModelProvider(mActivity, mFactory).get(EditPreviewViewModel.class);
-        mMaterialEditViewModel = new ViewModelProvider(mActivity, mFactory).get(MaterialEditViewModel.class);
-        mSdkPlayViewModel = new ViewModelProvider(mActivity, mFactory).get(VideoClipsPlayViewModel.class);
-        mEditPreviewViewModel.setSegmentationStatus(true);
-        mSegmentationViewModel.setIsInit(true);
+        segmentationViewModel = new ViewModelProvider(mActivity, mFactory).get(SegmentationViewModel.class);
+        previewViewModel = new ViewModelProvider(mActivity, mFactory).get(EditPreviewViewModel.class);
+        materialEditViewModel = new ViewModelProvider(mActivity, mFactory).get(MaterialEditViewModel.class);
+        videoClipsPlayViewModel = new ViewModelProvider(mActivity, mFactory).get(VideoClipsPlayViewModel.class);
+        previewViewModel.setSegmentationStatus(true);
+        segmentationViewModel.setIsInit(true);
         resetView();
     }
 
     @Override
     protected void initData() {
-        mAssetList = new ArrayList<>();
-        mCoverAdapter = new CoverAdapter(context, mAssetList, R.layout.adapter_cover_item2);
+        mSegmentationAssetList = new ArrayList<>();
+        mSegmentationCoverAdapter = new CoverAdapter(context, mSegmentationAssetList, R.layout.adapter_cover_item2);
         if (ScreenUtil.isRTL()) {
-            mRecyclerView.setScaleX(RTL_UI);
+            mSegmentationRecyclerView.setScaleX(RTL_UI);
         } else {
-            mRecyclerView.setScaleX(LTR_UI);
+            mSegmentationRecyclerView.setScaleX(LTR_UI);
         }
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
-        mRecyclerView.setAdapter(mCoverAdapter);
-        mRecyclerView.setItemAnimator(null);
+        mSegmentationRecyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
+        mSegmentationRecyclerView.setAdapter(mSegmentationCoverAdapter);
+        mSegmentationRecyclerView.setItemAnimator(null);
         View headerView = new View(context);
         View footView = new View(context);
         headerView.setLayoutParams(
             new ViewGroup.LayoutParams(SizeUtils.screenWidth(context) / 2, SizeUtils.dp2Px(context, 64)));
         footView.setLayoutParams(
             new ViewGroup.LayoutParams(SizeUtils.screenWidth(context) / 2, SizeUtils.dp2Px(context, 64)));
-        mCoverAdapter.addHeaderView(headerView);
-        mCoverAdapter.addFooterView(footView);
-        selectedAsset = mSegmentationViewModel.getSelectedAsset();
+        mSegmentationCoverAdapter.addHeaderView(headerView);
+        mSegmentationCoverAdapter.addFooterView(footView);
+        selectedAsset = segmentationViewModel.getSelectedAsset();
         if (selectedAsset == null) {
             SmartLog.e(TAG, "SelectedAsset is null!");
             return;
@@ -149,31 +149,21 @@ public class SegmentationFragment extends BaseFragment {
 
         getBitmapList(selectedAsset);
 
-        mSegmentationViewModel.getIsReady().observe(mActivity, aBoolean -> {
+        segmentationViewModel.getIsReady().observe(mActivity, aBoolean -> {
             isReady = aBoolean;
         });
 
-        mSdkPlayViewModel.getPlayState().observe(this, aBoolean -> {
+        videoClipsPlayViewModel.getPlayState().observe(this, aBoolean -> {
             if (aBoolean) {
                 isReady = false;
-                mMaterialEditViewModel.clearMaterialEditData();
+                materialEditViewModel.clearMaterialEditData();
             }
         });
     }
 
-    private void getBitmapList(HVEAsset selectedAsset) {
-        if (mAssetList != null) {
-            mAssetList.clear();
-            mAssetList.add(selectedAsset);
-        }
-        if (mCoverAdapter != null) {
-            mCoverAdapter.notifyDataSetChanged();
-        }
-    }
-
     @Override
     protected void initEvent() {
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        mSegmentationRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -187,9 +177,9 @@ public class SegmentationFragment extends BaseFragment {
             }
         });
 
-        ivCertain.setOnClickListener(new OnClickRepeatedListener(v -> {
+        ivSegmentationCertain.setOnClickListener(new OnClickRepeatedListener(v -> {
             if (isReady) {
-                mSegmentationViewModel.setIsStart(mOperateId);
+                segmentationViewModel.setIsStart(mOperateId);
             }
             onBackPressed();
             MenuClickManager.getInstance().popView();
@@ -215,21 +205,34 @@ public class SegmentationFragment extends BaseFragment {
         }
     }
 
+    private void getBitmapList(HVEAsset selectedAsset) {
+        if (mSegmentationAssetList != null) {
+            mSegmentationAssetList.clear();
+            mSegmentationAssetList.add(selectedAsset);
+        }
+        if (mSegmentationCoverAdapter != null) {
+            mSegmentationCoverAdapter.notifyDataSetChanged();
+        }
+    }
+
     private void notifyCurrentTimeChange(long time) {
-        if (mRecyclerView != null) {
-            for (int j = 0; j < mRecyclerView.getChildCount(); j++) {
-                if (mRecyclerView.getChildAt(j) instanceof CoverTrackView) {
-                    ((CoverTrackView) mRecyclerView.getChildAt(j)).handleCurrentTimeChange(time);
+        if (mSegmentationRecyclerView != null) {
+            for (int j = 0; j < mSegmentationRecyclerView.getChildCount(); j++) {
+                if (mSegmentationRecyclerView.getChildAt(j) instanceof CoverTrackView) {
+                    ((CoverTrackView) mSegmentationRecyclerView.getChildAt(j)).handleCurrentTimeChange(time);
                 }
             }
         }
     }
 
-    private void resetView() {
-        if (mEditPreviewViewModel == null) {
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (previewViewModel == null) {
             return;
         }
-        mEditPreviewViewModel.updateTimeLine();
+        materialEditViewModel.clearMaterialEditData();
+        previewViewModel.setSegmentationStatus(false);
     }
 
     @Override
@@ -237,13 +240,10 @@ public class SegmentationFragment extends BaseFragment {
 
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        if (mEditPreviewViewModel == null) {
+    private void resetView() {
+        if (previewViewModel == null) {
             return;
         }
-        mMaterialEditViewModel.clearMaterialEditData();
-        mEditPreviewViewModel.setSegmentationStatus(false);
+        previewViewModel.updateTimeLine();
     }
 }

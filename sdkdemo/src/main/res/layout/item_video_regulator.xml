@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/dp_72"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/text_title_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/dp_28"
+        android:layout_marginStart="@dimen/dp_24"
+        android:layout_marginEnd="@dimen/dp_24"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/text_title"
+            android:layout_weight="1"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/dp_0"
+            android:paddingEnd="@dimen/dp_4"
+            android:fontFamily="HarmonyHeiTi"
+            android:layout_gravity="center_vertical"
+            android:gravity="start|center_vertical"
+            android:text="@string/export_resolution"
+            android:textColor="@color/color_fff_90"
+            android:textSize="@dimen/sp_14"
+            android:breakStrategy="simple"
+            android:hyphenationFrequency="full"
+            tools:ignore="SpUsage,UnusedAttribute" />
+
+        <TextView
+            android:id="@+id/text_description"
+            android:layout_weight="1"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/dp_4"
+            android:paddingEnd="@dimen/dp_0"
+            android:fontFamily="HarmonyHeiTi"
+            android:layout_gravity="center_vertical"
+            android:gravity="end|center_vertical"
+            android:text="@string/px_prompt"
+            android:textColor="@color/color_fff_60"
+            android:textSize="@dimen/sp_10"
+            android:breakStrategy="simple"
+            android:hyphenationFrequency="full"
+            tools:ignore="SpUsage,UnusedAttribute" />
+
+    </LinearLayout>
+
+    <SeekBar
+        android:id="@+id/seek_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_8"
+        android:layout_marginTop="@dimen/dp_4"
+        android:layout_marginEnd="@dimen/dp_8"
+        android:max="4"
+        android:maxHeight="4dp"
+        android:minHeight="4dp"
+        android:progressDrawable="@drawable/seekbar_progress_drawable"
+        android:progressTint="@color/color_text_focus"
+        android:thumb="@drawable/seek_bar_white_thumb" />
+
+    <!-- 最大值为 4K or 60FPS 视图 -->
+    <LinearLayout
+        android:id="@+id/max5_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_4"
+        android:layout_marginEnd="@dimen/dp_24"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/max5_progress1"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="HarmonyHeiTi"
+            android:gravity="start|center_vertical"
+            android:textColor="@color/color_fff_60"
+            android:textDirection="locale"
+            android:textSize="@dimen/sp_10"
+            tools:ignore="SpUsage" />
+
+        <TextView
+            android:id="@+id/max5_progress2"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:fontFamily="HarmonyHeiTi"
+            android:gravity="center"
+            android:textColor="@color/color_fff_60"
+            android:textDirection="locale"
+            android:textSize="@dimen/sp_10"
+            tools:ignore="SpUsage" />
+
+        <TextView
+            android:id="@+id/max5_progress3"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:fontFamily="HarmonyHeiTi"
+            android:gravity="center"
+            android:textColor="@color/color_text_focus"
+            android:textSize="@dimen/sp_10"
+            tools:ignore="SpUsage" />
+
+        <TextView
+            android:id="@+id/max5_progress4"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:fontFamily="HarmonyHeiTi"
+            android:gravity="center"
+            android:textColor="@color/color_fff_60"
+            android:textSize="@dimen/sp_10"
+            tools:ignore="SpUsage" />
+
+        <TextView
+            android:id="@+id/max5_progress5"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="HarmonyHeiTi"
+            android:gravity="end|center_vertical"
+            android:textColor="@color/color_fff_60"
+            android:textDirection="locale"
+            android:textSize="@dimen/sp_10"
+            tools:ignore="SpUsage" />
+
+    </LinearLayout>
+
+    <!-- 最大值为 2K or 50FPS 视图 -->
+    <LinearLayout
+        android:id="@+id/max4_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_4"
+        android:layout_marginEnd="@dimen/dp_24"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/max4_progress1"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="HarmonyHeiTi"
+            android:gravity="start|center_vertical"
+            android:textColor="@color/color_fff_60"
+            android:textDirection="locale"
+            android:textSize="@dimen/sp_10"
+            tools:ignore="SpUsage" />
+
+        <TextView
+            android:id="@+id/max4_progress2"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:fontFamily="HarmonyHeiTi"
+            android:gravity="center"
+            android:textColor="@color/color_fff_60"
+            android:textDirection="locale"
+            android:textSize="@dimen/sp_10"
+            tools:ignore="SpUsage" />
+
+        <TextView
+            android:id="@+id/max4_progress3"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:fontFamily="HarmonyHeiTi"
+            android:gravity="center"
+            android:textColor="@color/color_text_focus"
+            android:textDirection="locale"
+            android:textSize="@dimen/sp_10"
+            tools:ignore="SpUsage" />
+
+        <TextView
+            android:id="@+id/max4_progress4"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="HarmonyHeiTi"
+            android:gravity="end|center_vertical"
+            android:textColor="@color/color_fff_60"
+            android:textDirection="locale"
+            android:textSize="@dimen/sp_10"
+            tools:ignore="SpUsage" />
+
+    </LinearLayout>
+
+    <!-- 最大值为 1080P or 30FPS 视图 -->
+    <LinearLayout
+        android:id="@+id/max3_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_4"
+        android:layout_marginEnd="@dimen/dp_24"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/max3_progress1"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="HarmonyHeiTi"
+            android:gravity="start|center_vertical"
+            android:textColor="@color/color_fff_60"
+            android:textDirection="locale"
+            android:textSize="@dimen/sp_10"
+            tools:ignore="SpUsage" />
+
+        <TextView
+            android:id="@+id/max3_progress2"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:fontFamily="HarmonyHeiTi"
+            android:gravity="center"
+            android:textColor="@color/color_fff_60"
+            android:textDirection="locale"
+            android:textSize="@dimen/sp_10"
+            tools:ignore="SpUsage" />
+
+        <TextView
+            android:id="@+id/max3_progress3"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="HarmonyHeiTi"
+            android:gravity="end|center_vertical"
+            android:textColor="@color/color_text_focus"
+            android:textDirection="locale"
+            android:textSize="@dimen/sp_10"
+            tools:ignore="SpUsage" />
+
+    </LinearLayout>
+
+    <!-- 最大值为 720P or 25FPS 视图 -->
+    <LinearLayout
+        android:id="@+id/max2_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_4"
+        android:layout_marginEnd="@dimen/dp_24"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/max2_progress1"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="HarmonyHeiTi"
+            android:gravity="start|center_vertical"
+            android:textColor="@color/color_fff_60"
+            android:textDirection="locale"
+            android:textSize="@dimen/sp_10"
+            tools:ignore="SpUsage" />
+
+        <TextView
+            android:id="@+id/max2_progress2"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="HarmonyHeiTi"
+            android:gravity="end|center_vertical"
+            android:textColor="@color/color_text_focus"
+            android:textDirection="locale"
+            android:textSize="@dimen/sp_10"
+            tools:ignore="SpUsage" />
+
+    </LinearLayout>
+
+</LinearLayout>

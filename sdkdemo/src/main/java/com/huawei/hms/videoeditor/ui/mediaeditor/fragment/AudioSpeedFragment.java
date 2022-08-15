@@ -60,7 +60,7 @@ public class AudioSpeedFragment extends BaseFragment {
 
     private SpeedBar speedBar;
 
-    private float speed = 1;
+    private float speed = 1f;
 
     private HVEAsset currentSelectedAsset;
 

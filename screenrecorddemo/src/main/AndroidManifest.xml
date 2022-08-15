@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.hwa.demo.screenrecorddemo">
+
+    <uses-permission android:name="android.permission.RECORD_AUDIO" /> <!-- 写存储权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 读存储权限 -->
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/hms_scr_drawable_launcher"
+        android:label="@string/hms_scr_str_app_name"
+        android:requestLegacyExternalStorage="true"
+        android:roundIcon="@mipmap/hms_scr_drawable_launcher_round"
+        android:theme="@style/AppTheme">
+
+        <activity
+            android:name=".activity.MainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.VideoPreviewActivity"
+            android:configChanges="orientation|screenSize"
+
+            android:exported="false" />
+
+        <activity
+            android:name=".activity.SettingsActivity"
+            android:exported="false" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.hwa.demo.screenrecorddemo.provider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
+    </application>
+
+</manifest>

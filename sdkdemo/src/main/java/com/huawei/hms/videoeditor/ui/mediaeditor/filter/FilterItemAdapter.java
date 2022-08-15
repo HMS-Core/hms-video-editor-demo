@@ -17,10 +17,6 @@
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.filter;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.View;
@@ -28,6 +24,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.utils.widget.ImageFilterView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -46,8 +45,9 @@ import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.utils.widget.ImageFilterView;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class FilterItemAdapter extends RCommandAdapter<CloudMaterialBean> {
     private volatile int mSelectPosition = -1;
@@ -56,30 +56,29 @@ public class FilterItemAdapter extends RCommandAdapter<CloudMaterialBean> {
 
     private OnItemClickListener mOnItemClickListener;
 
-    public FilterItemAdapter(Context context, List<CloudMaterialBean> list, int layoutId) {
-        super(context, list, layoutId);
-    }
-
     public void setOnItemClickListener(OnItemClickListener listener) {
         mOnItemClickListener = listener;
     }
 
+    public FilterItemAdapter(Context context, List<CloudMaterialBean> list, int layoutId) {
+        super(context, list, layoutId);
+    }
+
     @Override
-    protected void convert(RViewHolder holder, CloudMaterialBean item, int dataPosition, int position) {
-        View mSelectView = holder.getView(R.id.item_select_view);
-        ImageFilterView mItemIv = holder.getView(R.id.item_image_view);
-        TextView mNameTv = holder.getView(R.id.item_name);
-        ImageView mDownloadIv = holder.getView(R.id.item_download_view);
-        ProgressBar mDownloadPb = holder.getView(R.id.item_progress);
-        ImageView mclearicom = holder.getView(R.id.clearicom);
+    protected void convert(RViewHolder rViewHolder, CloudMaterialBean materialBean, int dataPosition, int position) {
+        View selectView = rViewHolder.getView(R.id.item_select_view);
+        ImageFilterView itemIv = rViewHolder.getView(R.id.item_image_view);
+        ImageView clearicom = rViewHolder.getView(R.id.clearicom);
+        TextView mameTv = rViewHolder.getView(R.id.item_name);
+        ImageView downloadIv = rViewHolder.getView(R.id.item_download_view);
+        ProgressBar downloadPb = rViewHolder.getView(R.id.item_progress);
+        RelativeLayout rlEditName = rViewHolder.getView(R.id.fl_item_edit_view);
 
-        RelativeLayout rlEditName = holder.getView(R.id.fl_item_edit_view);
-
-        mclearicom.setVisibility(View.GONE);
+        clearicom.setVisibility(View.GONE);
         rlEditName.setVisibility(View.GONE);
 
         Glide.with(mContext)
-            .load(item.getPreviewUrl())
+            .load(materialBean.getPreviewUrl())
             .placeholder(R.drawable.filter_normal_bg)
             .apply(new RequestOptions().transform(
                 new MultiTransformation<>(new CenterCrop(), new RoundedCorners(SizeUtils.dp2Px(mContext, 4)))))
@@ -96,48 +95,48 @@ public class FilterItemAdapter extends RCommandAdapter<CloudMaterialBean> {
                     return false;
                 }
             })
-            .into(mItemIv);
+            .into(itemIv);
 
-        mNameTv.setText(item.getName());
-        mSelectView.setVisibility(mSelectPosition == position ? View.VISIBLE : View.INVISIBLE);
-        if (!StringUtil.isEmpty(item.getLocalPath()) || position == 0) {
-            mDownloadIv.setVisibility(View.GONE);
-            mDownloadPb.setVisibility(View.GONE);
+        mameTv.setText(materialBean.getName());
+        selectView.setVisibility(mSelectPosition == position ? View.VISIBLE : View.INVISIBLE);
+        if (!StringUtil.isEmpty(materialBean.getLocalPath()) || position == 0) {
+            downloadIv.setVisibility(View.GONE);
+            downloadPb.setVisibility(View.GONE);
         } else {
-            mDownloadIv.setVisibility(mSelectPosition == position ? View.INVISIBLE : View.VISIBLE);
-            mDownloadPb.setVisibility(mSelectPosition == position ? View.VISIBLE : View.INVISIBLE);
+            downloadIv.setVisibility(mSelectPosition == position ? View.INVISIBLE : View.VISIBLE);
+            downloadPb.setVisibility(mSelectPosition == position ? View.VISIBLE : View.INVISIBLE);
         }
 
-        if (mDownloadingMap.containsKey(item.getId())) {
-            mDownloadIv.setVisibility(View.GONE);
-            mDownloadPb.setVisibility(View.VISIBLE);
+        if (mDownloadingMap.containsKey(materialBean.getId())) {
+            downloadIv.setVisibility(View.GONE);
+            downloadPb.setVisibility(View.VISIBLE);
         }
 
-        holder.itemView.setOnClickListener(new OnClickRepeatedListener((v) -> {
-            mDownloadIv.setVisibility(View.INVISIBLE);
+        rViewHolder.itemView.setOnClickListener(new OnClickRepeatedListener((v) -> {
+            downloadIv.setVisibility(View.INVISIBLE);
             if (mOnItemClickListener != null) {
-                if (!StringUtil.isEmpty(item.getLocalPath())) {
+                if (!StringUtil.isEmpty(materialBean.getLocalPath())) {
                     mOnItemClickListener.onItemClick(position, dataPosition);
                 } else {
-                    if (!mDownloadingMap.containsKey(item.getId())) {
+                    if (!mDownloadingMap.containsKey(materialBean.getId())) {
                         mOnItemClickListener.onDownloadClick(position, dataPosition);
-                        mDownloadPb.setVisibility(View.VISIBLE);
+                        downloadPb.setVisibility(View.VISIBLE);
                     }
                 }
             }
         }));
 
-        mDownloadIv.setOnClickListener(new OnClickRepeatedListener(v -> {
-            mDownloadIv.setVisibility(View.INVISIBLE);
-            mDownloadPb.setVisibility(View.VISIBLE);
-            if (mOnItemClickListener != null && !mDownloadingMap.containsKey(item.getId())) {
+        downloadIv.setOnClickListener(new OnClickRepeatedListener(v -> {
+            downloadIv.setVisibility(View.INVISIBLE);
+            downloadPb.setVisibility(View.VISIBLE);
+            if (mOnItemClickListener != null && !mDownloadingMap.containsKey(materialBean.getId())) {
                 mOnItemClickListener.onDownloadClick(position, dataPosition);
             }
         }));
     }
 
-    public int getSelectPosition() {
-        return mSelectPosition;
+    public void removeDownloadMaterial(String contentId) {
+        mDownloadingMap.remove(contentId);
     }
 
     public void setSelectPosition(int selectPosition) {
@@ -148,8 +147,8 @@ public class FilterItemAdapter extends RCommandAdapter<CloudMaterialBean> {
         mDownloadingMap.put(item.getId(), item);
     }
 
-    public void removeDownloadMaterial(String contentId) {
-        mDownloadingMap.remove(contentId);
+    public int getSelectPosition() {
+        return mSelectPosition;
     }
 
     public interface OnItemClickListener {
@@ -157,4 +156,5 @@ public class FilterItemAdapter extends RCommandAdapter<CloudMaterialBean> {
 
         void onDownloadClick(int position, int dataPosition);
     }
+
 }

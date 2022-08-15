@@ -16,8 +16,6 @@
 
 package com.huawei.hms.videoeditor.ui.mediapick.adapter;
 
-import java.util.List;
-
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +23,12 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.utils.widget.ImageFilterView;
+import androidx.paging.PagedListAdapter;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -38,11 +42,7 @@ import com.huawei.hms.videoeditor.ui.mediapick.activity.MediaPickActivity;
 import com.huawei.hms.videoeditor.ui.mediapick.manager.MediaPickManager;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
-import androidx.annotation.NonNull;
-import androidx.constraintlayout.utils.widget.ImageFilterView;
-import androidx.paging.PagedListAdapter;
-import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.RecyclerView;
+import java.util.List;
 
 public class MediaPickAdapter extends PagedListAdapter<MediaData, MediaPickAdapter.ViewHolder> {
 
@@ -59,6 +59,8 @@ public class MediaPickAdapter extends PagedListAdapter<MediaData, MediaPickAdapt
     private long mReplaceValidDuration = -1;
 
     private boolean showChoiceView = true;
+
+    private int mShowMediaType = 2; // 0 video 1 photo 2 both
 
     public MediaPickAdapter(Activity context, int actionType) {
         super(new DiffUtil.ItemCallback<MediaData>() {
@@ -91,6 +93,10 @@ public class MediaPickAdapter extends PagedListAdapter<MediaData, MediaPickAdapt
 
     public void setReplaceValidDuration(long replaceValidDuration) {
         this.mReplaceValidDuration = replaceValidDuration;
+    }
+
+    public void setShowMediaType(int mShowMediaType) {
+        this.mShowMediaType = mShowMediaType;
     }
 
     @NonNull
@@ -195,11 +201,28 @@ public class MediaPickAdapter extends PagedListAdapter<MediaData, MediaPickAdapt
         }
         if (item.getIndex() == 0) {
             holder.mMediaIv.setContentDescription(mContext.getString(R.string.checked));
-            if (!manager.addSelectItemAndSetIndex(item)) {
-                Toast.makeText(mContext,
-                        mContext.getResources().getQuantityString(R.plurals.media_max_send_images_or_videos_format,
-                        manager.getMaxSelectCount(), manager.getMaxSelectCount()),
-                    Toast.LENGTH_SHORT).show();
+            int result = manager.addSelectItemAndSetIndex(item);
+            String toastStr = "";
+            if (result == -1) {
+                toastStr = mContext.getResources().getString(R.string.error_file_tips_single_video);
+                Toast.makeText(mContext, toastStr, Toast.LENGTH_SHORT).show();
+            } else if (result == 0) {
+                switch (mShowMediaType) {
+                    case 0:
+                        toastStr = mContext.getResources()
+                            .getQuantityString(R.plurals.media_max_send_videos_format, manager.getMaxSelectCount(),
+                                manager.getMaxSelectCount());
+                        break;
+                    case 1:
+                        toastStr = mContext.getResources()
+                            .getQuantityString(R.plurals.media_max_send_images_format, manager.getMaxSelectCount(),
+                                manager.getMaxSelectCount());
+                        break;
+                    default:
+                        toastStr = mContext.getResources().getString(R.string.error_file_tips_single_video);
+                        break;
+                }
+                Toast.makeText(mContext, toastStr, Toast.LENGTH_SHORT).show();
             }
         } else {
             holder.mMediaIv.setContentDescription(mContext.getString(R.string.check_out));

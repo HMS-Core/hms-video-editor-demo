@@ -142,12 +142,10 @@ public class CropView extends View {
             return;
         }
         Resources rsc = context.getResources();
-        // cropIndicators:
-        // TOP_LEFT,TOP_RIGHT,BOTTON_LEFT_BOTTON_RIGHT,MOVE_LEFT_RIGHTL,MOVE_TOP_BOTTOM
         mCropIndicators = new Drawable[] {rsc.getDrawable(R.drawable.video_crop_top_left),
             rsc.getDrawable(R.drawable.video_crop_top_right), rsc.getDrawable(R.drawable.video_crop_bottom_left),
             rsc.getDrawable(R.drawable.video_crop_bottom_right), rsc.getDrawable(R.drawable.video_crop_move_left_right),
-            rsc.getDrawable(R.drawable.video_crop_move_top_bottom),};
+            rsc.getDrawable(R.drawable.video_crop_move_top_bottom)};
 
         mIndicatorSize = (int) rsc.getDimension(R.dimen.crop_indicator_size);
         margin = (int) rsc.getDimension(R.dimen.preview_margin);

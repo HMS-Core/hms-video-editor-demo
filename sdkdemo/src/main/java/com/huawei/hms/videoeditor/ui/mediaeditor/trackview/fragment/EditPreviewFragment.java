@@ -61,9 +61,9 @@ public class EditPreviewFragment extends BaseFragment implements View.OnTouchLis
 
     private boolean isPlaying;
 
-    private long startTime = 0;
+    private long startTime = 0L;
 
-    private long endTime = 0;
+    private long endTime = 0L;
 
     private Point touchDown = new Point();
 

@@ -178,6 +178,8 @@ public class ObjectFragment extends BaseFragment {
             HVEEffectLane effectLane = mTimeLine.getEffectLane(selectedEffect.getLaneIndex());
             isSuccess = effectLane.setAffectLane(selectedEffect.getIndex(), index);
         }
+
+        mEditor.seekTimeLine(mTimeLine.getCurrentTime());
         return isSuccess;
     }
 

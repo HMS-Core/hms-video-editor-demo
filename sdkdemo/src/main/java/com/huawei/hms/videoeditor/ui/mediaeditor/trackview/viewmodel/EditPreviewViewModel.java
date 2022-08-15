@@ -18,8 +18,6 @@ package com.huawei.hms.videoeditor.ui.mediaeditor.trackview.viewmodel;
 
 import static android.content.Context.ALARM_SERVICE;
 import static com.huawei.hms.videoeditor.sdk.asset.HVEAsset.HVEAssetType.AUDIO;
-import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_FILTER_STATE;
-import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_SPECIAL_STATE;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.TRANSITION_PANEL;
 
 import android.app.AlarmManager;
@@ -62,7 +60,6 @@ import com.huawei.hms.videoeditor.ui.mediaeditor.trackview.fragment.EditPreviewF
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -589,14 +586,40 @@ public class EditPreviewViewModel extends AndroidViewModel {
     }
 
     public HVEAsset getMainLaneAsset() {
-        HVETimeLine timeLine = EditorManager.getInstance().getTimeLine();
+        HVETimeLine timeLine = getTimeLine();
         if (timeLine == null) {
             return null;
         }
+        long time = seekTime;
+        HVEVideoLane lane = getVideoLane();
+        if (lane != null && time == lane.getEndTime()) {
+            return lane.getAssetByIndex(lane.getAssets().size() - 1);
+        }
+        for (int i = 0; i < getItems().size(); i++) {
+            HVEAsset asset = getItems().get(i);
+            if (time >= getAssetStartTimeContainTransition(asset) && time < getAssetSEndTimeContainTransition(asset)) {
+                return asset;
+            }
+        }
+        return null;
+    }
 
-        long time = timeLine.getCurrentTime();
+    private long getAssetStartTimeContainTransition(HVEAsset asset) {
+        long startTransition = 0;
+        HVEEffect effect = getEffectedTransition(asset.getIndex() - 1);
+        if (effect != null) {
+            startTransition = effect.getEndTime() - effect.getStartTime();
+        }
+        return asset.getStartTime() + startTransition / 2;
+    }
 
-        return getMainLaneAsset(time);
+    private long getAssetSEndTimeContainTransition(HVEAsset asset) {
+        long endTransition = 0;
+        HVEEffect effect = getEffectedTransition(asset.getIndex());
+        if (effect != null) {
+            endTransition = effect.getEndTime() - effect.getStartTime();
+        }
+        return asset.getEndTime() - endTransition / 2;
     }
 
     public void transitionReloadUI() {
@@ -612,6 +635,20 @@ public class EditPreviewViewModel extends AndroidViewModel {
         for (int i = 0; i < hveVideoLane.getTransitionEffects().size(); i++) {
             if (hveVideoLane.getTransitionEffects().get(i).getIntVal("from") == mTransIndex
                 || hveVideoLane.getTransitionEffects().get(i).getIntVal("to") == mTransIndex + 1) {
+                return hveVideoLane.getTransitionEffects().get(i);
+            }
+        }
+        return null;
+    }
+
+    public HVEEffect getEffectedTransition(int index) {
+        HVEVideoLane hveVideoLane = getVideoLane();
+        if (hveVideoLane == null) {
+            return null;
+        }
+        for (int i = 0; i < hveVideoLane.getTransitionEffects().size(); i++) {
+            if (hveVideoLane.getTransitionEffects().get(i).getIntVal("from") == index
+                || hveVideoLane.getTransitionEffects().get(i).getIntVal("to") == index + 1) {
                 return hveVideoLane.getTransitionEffects().get(i);
             }
         }
@@ -637,14 +674,13 @@ public class EditPreviewViewModel extends AndroidViewModel {
         return Math.min(4000, Math.min(firstAsset.getDuration(), secondAsset.getDuration()) / 2);
     }
 
-    public boolean addAudio(CloudMaterialBean content, int type) {
+    public boolean addAudio(CloudMaterialBean content) {
         HVETimeLine hveTimeLine = getTimeLine();
         if (hveTimeLine == null) {
             SmartLog.e(TAG, "timeline is null when add audio");
             return false;
         }
-        HVEAudioAsset audioAsset =
-            addAudio(content.getName(), content.getLocalPath(), hveTimeLine.getCurrentTime(), type);
+        HVEAudioAsset audioAsset = addAudio(content.getName(), content.getLocalPath(), hveTimeLine.getCurrentTime());
         if (audioAsset == null) {
             SmartLog.e(TAG, "audioAsset is null when add audio");
             return false;
@@ -652,17 +688,17 @@ public class EditPreviewViewModel extends AndroidViewModel {
         return true;
     }
 
-    public void addAudio(String name, String path, int type) {
+    public void addAudio(String name, String path) {
         HVETimeLine hveTimeLine = getTimeLine();
         if (hveTimeLine == null) {
             SmartLog.e(TAG, "timeline is null when add audio");
             return;
         }
 
-        addAudio(name, path, hveTimeLine.getCurrentTime(), type);
+        addAudio(name, path, hveTimeLine.getCurrentTime());
     }
 
-    public HVEAudioAsset addAudio(String name, String path, long startTime, int type) {
+    public HVEAudioAsset addAudio(String name, String path, long startTime) {
         HuaweiVideoEditor editor = EditorManager.getInstance().getEditor();
         if (editor == null) {
             return null;

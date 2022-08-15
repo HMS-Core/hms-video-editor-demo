@@ -16,10 +16,20 @@
 
 package com.huawei.hms.videoeditor.ui.mediapick.fragment;
 
-import java.util.List;
+import static com.huawei.hms.videoeditor.ui.mediapick.activity.MediaPickActivity.SHOW_MEDIA_TYPE;
 
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.paging.DataSource;
+import androidx.paging.PagedList;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.huawei.hms.videoeditor.ui.common.LazyFragment;
 import com.huawei.hms.videoeditor.ui.common.bean.Constant;
@@ -31,18 +41,10 @@ import com.huawei.hms.videoeditor.ui.mediapick.adapter.MediaPickAdapter;
 import com.huawei.hms.videoeditor.ui.mediapick.manager.MediaPickManager;
 import com.huawei.hms.videoeditor.ui.mediapick.viewmodel.MediaFolderViewModel;
 import com.huawei.hms.videoeditor.ui.mediapick.viewmodel.PickPictureViewModel;
-import com.huawei.secure.android.common.intent.SafeBundle;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
+import com.huawei.secure.android.common.intent.SafeBundle;
 
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.paging.DataSource;
-import androidx.paging.PagedList;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import java.util.List;
 
 public class PickPictureFragment extends LazyFragment implements MediaPickManager.OnSelectItemChangeListener {
 
@@ -55,6 +57,8 @@ public class PickPictureFragment extends LazyFragment implements MediaPickManage
     private MediaFolderViewModel mMediaFolderViewModel;
 
     private String mFolderPath = "";
+
+    private int mShowMediaType = 2; // 0 video 1 photo 2 both
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,12 +92,14 @@ public class PickPictureFragment extends LazyFragment implements MediaPickManage
         mPictureRecyclerView.setItemAnimator(defaultItemAnimator);
 
         SafeBundle safeBundle = new SafeBundle(getArguments());
+        mShowMediaType = safeBundle.getInt(SHOW_MEDIA_TYPE, mShowMediaType);
         List<MediaData> mInitMediaList = safeBundle.getParcelableArrayList(Constant.EXTRA_SELECT_RESULT);
         int actionType = safeBundle.getInt(MediaPickActivity.ACTION_TYPE);
         mMediaAdapter = new MediaPickAdapter(mActivity, actionType);
         if (mInitMediaList != null) {
             mMediaAdapter.setInitMediaList(mInitMediaList);
         }
+        mMediaAdapter.setShowMediaType(mShowMediaType);
         mPictureRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 3));
         if (mPictureRecyclerView.getItemDecorationCount() == 0) {
             mPictureRecyclerView.addItemDecoration(new GridItemDividerDecoration(SizeUtils.dp2Px(mActivity, 8),

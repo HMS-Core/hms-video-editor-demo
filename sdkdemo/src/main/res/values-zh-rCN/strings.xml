@@ -521,7 +521,7 @@
     <string name="ai_button_cancel" priority="translator">取消</string>
     <string name="ai_cropping" priority="translator">裁剪</string>
     <string name="ai_cropping_text" priority="translator">拖动或双指缩放选择图片区域</string>
-    
+
     <string name="ai_face_smile_no_face">无法识别人脸</string>
     <string name="ai_face_smile_select_frontal_face">请选择正脸照</string>
     <string name="ai_face_smile_network_timeout">网络超时</string>
@@ -587,6 +587,10 @@
     <string name="motion_photo_cancel" priority="translator">取消动态照片</string>
     <string name="face_smile_cancel">取消一键微笑</string>
     <string name="ai_limit" priority="translator">仅支持同时使用一种AI功能，请先移除已使用的AI功能再重试。</string>
+    <string name="ai_network_timeout">网络超时</string>
+    <string name="ai_generate_excess">当月使用量超额，请联系运营运维人员，申请更多的配额</string>
+    <string name="ai_exceed_concurrent_number">同时使用数量超额，请联系运营运维人员，申请更多的配额</string>
+    <string name="algorithm_is_not_enabled">未开通该AI算法，请联系运营运维人员，申请开通</string>
 
     <string-array name="rotation_menu">
         <item priority="translator">"全部"</item>
@@ -668,4 +672,47 @@
     <string name="cut_second_menu_video_selection" priority="translator">精彩片段</string>
 
     <string name="auto_mark_description" priority="translator">"本服务提供最新奇有趣的 AI 玩法。需下载 AI 算法包。"</string>
+
+    <!--翅膀特效-->
+    <string name="cut_second_menu_wings" priority="translator">翅膀特效</string>
+    <string name="wings_cancel" priority="translator">"取消翅膀特效"</string>
+    <string name="ai_wings_processing" priority="translator">"翅膀特效处理中…"</string>
+    <string name="ai_wings_success" priority="translator">"翅膀特效添加完成"</string>
+    <string name="ai_wings_fail" priority="translator">"啊哦~翅膀特效添加异常"</string>
+
+    <!--人像&头部分割-->
+    <string name="cut_second_menu_body_seg" priority="translator">"人像分割"</string>
+    <string name="cut_second_menu_head_seg" priority="translator">"头部分割"</string>
+    <string name="ai_body_seg" priority="translator">"人像分割处理中…"</string>
+    <string name="ai_head_seg" priority="translator">"头部分割处理中…"</string>
+    <string name="body_seg_cancel" priority="translator">"取消分割"</string>
+    <string name="ai_body_seg_success" priority="translator">"人像分割完成"</string>
+    <string name="ai_head_seg_success" priority="translator">"头部分割完成"</string>
+    <string name="ai_body_seg_fail" priority="translator">"啊哦~人像分割异常"</string>
+    <string name="ai_head_seg_fail" priority="translator">"啊哦~头部分割异常"</string>
+
+    <!--2022.07.04新版UI-->
+    <string name="video_editor_service">视频编辑服务</string>
+    <string name="video_editor">视频编辑</string>
+    <string name="video_editor_tip">快速制作短视频</string>
+    <string name="experience_now">立即体验 >></string>
+    <string name="motion_photo_subtitle">人像复活</string>
+    <string name="face_smile_subtitle">让人物笑容更自然</string>
+    <string name="ai_color_subtitle">一键修复黑白影像</string>
+    <string name="time_lapse_subtitle">手机里的动态大自然</string>
+    <string name="video_selection_subtitle">智能识别高能片段</string>
+    <string name="view_file">查看文件</string>
+    <string name="save_to_gallery_success">已保存到系统图库</string>
+    <string name="highlights_start_point" priority="translator">精彩起点：%s ms</string>
+    <string name="object_segmentation_subtitle">万物皆可分割</string>
+    <string name="object_segmentation_tip">请在图片上画线选择需要分割的物体</string>
+    <plurals name="media_max_send_images_format">
+        <item priority="translator" quantity="other">最多可选 %1$d 个图片</item>
+    </plurals>
+    <plurals name="media_max_send_videos_format">
+        <item priority="translator" quantity="other">最多可选 %1$d 个视频</item>
+    </plurals>
+
+    <!--导出失败错误信息-->
+    <string name="insufficient_disk_space" priority="translator">"请清理手机内存后，再重试"</string>
 </resources>

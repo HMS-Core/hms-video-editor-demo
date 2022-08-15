@@ -29,28 +29,20 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 
-import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
-import com.huawei.hms.videoeditorkit.sdkdemo.R;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 
+import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
+import com.huawei.hms.videoeditorkit.sdkdemo.R;
+
 public class RoundImage extends AppCompatImageView {
+    private Matrix mMatrix;
+
     private int mBorderRadius = 0;
 
     private Paint paint;
 
-    private Matrix mMatrix;
-
     private BitmapShader mBitmapShader;
-
-    public RoundImage(Context context) {
-        this(context, null);
-    }
-
-    public RoundImage(Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
 
     public RoundImage(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -63,9 +55,12 @@ public class RoundImage extends AppCompatImageView {
 
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    public RoundImage(Context context) {
+        this(context, null);
+    }
+
+    public RoundImage(Context context, @Nullable AttributeSet attrs) {
+        this(context, attrs, 0);
     }
 
     @Override
@@ -86,22 +81,28 @@ public class RoundImage extends AppCompatImageView {
             getHeight() - getPaddingBottom()), mBorderRadius, mBorderRadius, paint);
     }
 
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
+
+    private Bitmap drawableToBitamp(Drawable theDrawable) {
+        if (theDrawable instanceof BitmapDrawable) {
+            BitmapDrawable bd = (BitmapDrawable) theDrawable;
+            return bd.getBitmap();
+        }
+        int w = theDrawable.getIntrinsicWidth() <= 0 ? getWidth() : theDrawable.getIntrinsicWidth();
+        int height = theDrawable.getIntrinsicHeight() <= 0 ? getHeight() : theDrawable.getIntrinsicHeight();
+        Bitmap bitmap = Bitmap.createBitmap(w, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        theDrawable.setBounds(getPaddingStart(), getPaddingTop(), w + getPaddingStart(), height + getPaddingTop());
+        theDrawable.draw(canvas);
+        return bitmap;
+    }
+
     public void setBorderRadius(int borderRadius) {
         this.mBorderRadius = borderRadius;
         invalidate();
     }
 
-    private Bitmap drawableToBitamp(Drawable drawable) {
-        if (drawable instanceof BitmapDrawable) {
-            BitmapDrawable bd = (BitmapDrawable) drawable;
-            return bd.getBitmap();
-        }
-        int w = drawable.getIntrinsicWidth() <= 0 ? getWidth() : drawable.getIntrinsicWidth();
-        int height = drawable.getIntrinsicHeight() <= 0 ? getHeight() : drawable.getIntrinsicHeight();
-        Bitmap bitmap = Bitmap.createBitmap(w, height, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(getPaddingStart(), getPaddingTop(), w + getPaddingStart(), height + getPaddingTop());
-        drawable.draw(canvas);
-        return bitmap;
-    }
 }

@@ -1,0 +1,29 @@
+<resources>
+    <string name="hms_scr_str_app_name">VideoEditScreenRecordDemo</string>
+    <string name="hms_scr_str_videos_look_better_in_hd">Videos look better in HD</string>
+    <string name="hms_scr_str_microphone">Microphone</string>
+    <string name="hms_scr_str_configurations">Configurations</string>
+    <string name="hms_scr_str_custom_notification">Custom Notification</string>
+    <string name="hms_scr_str_rename">Rename</string>
+    <string name="hms_scr_str_ok">Ok</string>
+    <string name="hms_scr_str_cancel">Cancel</string>
+    <string name="hms_scr_str_delete">Delete</string>
+    <string name="hms_scr_str_rename_error">Rename Error</string>
+    <string name="hms_scr_str_delete_error">Delete Error</string>
+    <string name="hms_scr_str_permission_denied">"Permissions Denied. To grant the required permissions, go to Settings. "</string>
+    <string name="hms_scr_str_choose">Choose:</string>
+    <string name="hms_scr_str_debug_log">Debug Log</string>
+    <string name="hms_scr_str_change_record_folder">Change record folder</string>
+    <string name="hms_scr_str_change_record_orientation">Change record orientation</string>
+    <string name="hms_scr_str_open_debug_log">Open Debug Log</string>
+    <string name="hms_scr_str_enable_microphone">Enable Microphone</string>
+    <string name="hms_scr_str_default_internal">Default Internal</string>
+    <string name="hms_scr_str_custom_internal">Custom Internal</string>
+    <string name="hms_scr_str_camera_in_dcim">Camera In DCIM</string>
+    <string name="hms_scr_str_custom_in_dcim">Custom In DCIM</string>
+    <string name="hms_scr_str_string_title_main">Video Edit Screen Record</string>
+    <string name="hms_scr_str_string_start_recording">Start Recording</string>
+    <string name="hms_scr_str_string_stop_recording">Stop Recording</string>
+    <string name="hms_scr_str_string_current_storage_path">Current Save Path :</string>
+
+</resources>

@@ -95,7 +95,6 @@ public class VideoModuleDetailActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         if (mModuleEditViewModel.getEditor() != null) {
-            mModuleEditViewModel.getEditor().stopRenderer();
             mModuleEditViewModel.getEditor().stopEditor();
             mModuleEditViewModel.setEditor(null);
         }

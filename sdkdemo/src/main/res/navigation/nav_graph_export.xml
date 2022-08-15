@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:startDestination="@id/exportFragment">
+
+    <fixfragment
+        android:id="@+id/exportFragment"
+        android:name="com.huawei.hms.videoeditor.ui.mediaexport.fragment.ExportFragment"
+        android:label="ExportFragment">
+        <action android:id="@+id/export_success"
+            app:destination="@id/exportSuccessFragment"/>
+    </fixfragment>
+
+
+    <fixfragment
+        android:id="@+id/exportSuccessFragment"
+        android:name="com.huawei.hms.videoeditor.ui.mediaexport.fragment.ExportSuccessFragment"
+        android:label="ExportSuccessFragment">
+    </fixfragment>
+
+</navigation>

@@ -16,8 +16,6 @@
 
 package com.huawei.hms.videoeditor.ui.common.utils;
 
-import java.util.Locale;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -29,10 +27,19 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
 
+import java.util.Locale;
+
 public class ScreenUtil {
     private static final float HALF = 0.5f;
 
     private ScreenUtil() {
+    }
+
+    public static int getNavigationBarHeightIfRoom(Context context) {
+        if (navigationGestureEnabled(context)) {
+            return 0;
+        }
+        return getCurrentNavigationBarHeight((Activity) context);
     }
 
     public static int getStatusBarHeight(Context context) {
@@ -40,16 +47,7 @@ public class ScreenUtil {
         int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
         return resources.getDimensionPixelSize(resourceId);
     }
-    public static int getNavigationBarHeightIfRoom(Context context) {
-        if (navigationGestureEnabled(context)) {
-            return 0;
-        }
-        return getCurrentNavigationBarHeight((Activity) context);
-    }
-    private static boolean navigationGestureEnabled(Context context) {
-        int val = Settings.Global.getInt(context.getContentResolver(), getDeviceInfo(), 0);
-        return val != 0;
-    }
+
     private static String getDeviceInfo() {
         String brand = Build.BRAND;
         if (TextUtils.isEmpty(brand)) {
@@ -67,9 +65,12 @@ public class ScreenUtil {
             return "navigationbar_is_min";
         }
     }
-    private static int getCurrentNavigationBarHeight(Activity activity) {
-        return getNavigationBarHeight(activity);
+
+    private static boolean navigationGestureEnabled(Context context) {
+        int val = Settings.Global.getInt(context.getContentResolver(), getDeviceInfo(), 0);
+        return val != 0;
     }
+
     private static int getNavigationBarHeight(Context context) {
         int result = 0;
         int resourceId = context.getResources().getIdentifier("navigation_bar_height", "dimen", "android");
@@ -78,11 +79,9 @@ public class ScreenUtil {
         }
         return result;
     }
-    public static int getScreenWidth(Context context) {
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        DisplayMetrics outMetrics = new DisplayMetrics();
-        wm.getDefaultDisplay().getMetrics(outMetrics);
-        return outMetrics.widthPixels;
+
+    private static int getCurrentNavigationBarHeight(Activity activity) {
+        return getNavigationBarHeight(activity);
     }
 
     public static int getScreenWidth(Activity activity) {
@@ -95,14 +94,21 @@ public class ScreenUtil {
         return (int) (HALF + dpValue * Resources.getSystem().getDisplayMetrics().density);
     }
 
-    public static boolean isRTL() {
-        boolean isRtl = TextUtils.getLayoutDirectionFromLocale(Locale.getDefault()) == View.LAYOUT_DIRECTION_RTL;
-        return isRtl;
+    public static int getScreenWidth(Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(outMetrics);
+        return outMetrics.widthPixels;
     }
 
     public static boolean isPortrait(Context context) {
         Configuration mConfiguration = context.getResources().getConfiguration();
         int ori = mConfiguration.orientation;
         return ori == mConfiguration.ORIENTATION_PORTRAIT;
+    }
+
+    public static boolean isRTL() {
+        boolean isRtl = TextUtils.getLayoutDirectionFromLocale(Locale.getDefault()) == View.LAYOUT_DIRECTION_RTL;
+        return isRtl;
     }
 }

@@ -25,6 +25,12 @@ import android.media.MediaPlayer;
 import android.os.Build;
 import android.view.View;
 
+import androidx.lifecycle.ViewModelProvider;
+import androidx.paging.PagedList;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.LazyFragment;
 import com.huawei.hms.videoeditor.ui.common.bean.AudioData;
@@ -34,13 +40,8 @@ import com.huawei.hms.videoeditor.ui.mediaeditor.audio.adapter.LocalMusicAdapter
 import com.huawei.hms.videoeditor.ui.mediaeditor.audio.viewmodel.LocalAudioViewModel;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 public class LocalLocalMusicFragment extends LazyFragment
-    implements MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener {
+        implements MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener {
     private static final String TAG = "LocalMusicFragment";
 
     private RecyclerView mRecyclerView;
@@ -142,9 +143,10 @@ public class LocalLocalMusicFragment extends LazyFragment
     private void startOrStopAudio(int position, AudioData item) {
         if (mCurrentPosition != position) {
             resetMediaPlayer(item.getPath());
-            if (mCurrentPosition != -1 && mCurrentPosition >= 0 && mLocalMusicAdapter.getCurrentList() != null
-                && mCurrentPosition < mLocalMusicAdapter.getCurrentList().size()) {
-                AudioData audioData = mLocalMusicAdapter.getCurrentList().get(mCurrentPosition);
+            PagedList<AudioData> pagedList = mLocalMusicAdapter.getCurrentList();
+            if (mCurrentPosition != -1 && mCurrentPosition >= 0 && pagedList != null
+                    && mCurrentPosition < pagedList.size()) {
+                AudioData audioData = pagedList.get(mCurrentPosition);
                 if (audioData != null) {
                     audioData.setPlaying(false);
                     mLocalMusicAdapter.notifyItemChanged(mCurrentPosition, audioData);
@@ -185,9 +187,10 @@ public class LocalLocalMusicFragment extends LazyFragment
 
     @Override
     public void onCompletion(MediaPlayer mp) {
-        if (mCurrentPosition != -1 && mCurrentPosition >= 0 && mLocalMusicAdapter.getCurrentList() != null
-            && mCurrentPosition < mLocalMusicAdapter.getCurrentList().size()) {
-            AudioData audioData = mLocalMusicAdapter.getCurrentList().get(mCurrentPosition);
+        PagedList<AudioData> pagedList = mLocalMusicAdapter.getCurrentList();
+        if (mCurrentPosition != -1 && mCurrentPosition >= 0 && pagedList != null
+                && mCurrentPosition < pagedList.size()) {
+            AudioData audioData = pagedList.get(mCurrentPosition);
             if (audioData != null) {
                 audioData.setPlaying(false);
                 mLocalMusicAdapter.notifyItemChanged(mCurrentPosition, audioData);
@@ -206,14 +209,14 @@ public class LocalLocalMusicFragment extends LazyFragment
     private void initAudioManager(Context context) {
         mAudioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         AudioAttributes playbackAttributes = new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_GAME)
-            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-            .build();
+                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                .build();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             mFocusRequest =
-                new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN).setAudioAttributes(playbackAttributes)
-                    .setAcceptsDelayedFocusGain(true)
-                    .setOnAudioFocusChangeListener(ON_AUDIO_FOCUS_CHANGE_LISTENER)
-                    .build();
+                    new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN).setAudioAttributes(playbackAttributes)
+                            .setAcceptsDelayedFocusGain(true)
+                            .setOnAudioFocusChangeListener(ON_AUDIO_FOCUS_CHANGE_LISTENER)
+                            .build();
         }
     }
 
@@ -228,7 +231,7 @@ public class LocalLocalMusicFragment extends LazyFragment
                 return AudioManager.AUDIOFOCUS_REQUEST_GRANTED == mAudioManager.requestAudioFocus(mFocusRequest);
             } else {
                 return AudioManager.AUDIOFOCUS_REQUEST_GRANTED == mAudioManager.requestAudioFocus(
-                    ON_AUDIO_FOCUS_CHANGE_LISTENER, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
+                        ON_AUDIO_FOCUS_CHANGE_LISTENER, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
             }
         }
         return false;
@@ -245,26 +248,26 @@ public class LocalLocalMusicFragment extends LazyFragment
                 return AudioManager.AUDIOFOCUS_REQUEST_GRANTED == mAudioManager.abandonAudioFocusRequest(mFocusRequest);
             } else {
                 return AudioManager.AUDIOFOCUS_REQUEST_GRANTED == mAudioManager
-                    .abandonAudioFocus(ON_AUDIO_FOCUS_CHANGE_LISTENER);
+                        .abandonAudioFocus(ON_AUDIO_FOCUS_CHANGE_LISTENER);
             }
         }
         return false;
     }
 
     private static final AudioManager.OnAudioFocusChangeListener ON_AUDIO_FOCUS_CHANGE_LISTENER =
-        new AudioManager.OnAudioFocusChangeListener() {
-            @Override
-            public void onAudioFocusChange(int focusChange) {
-                switch (focusChange) {
-                    case AudioManager.AUDIOFOCUS_LOSS:
-                    case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
-                    case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
-                    case AudioManager.AUDIOFOCUS_GAIN:
-                        SmartLog.w(TAG, "focusChange value is : " + focusChange);
-                        break;
-                    default:
-                        throw new IllegalStateException("Unexpected value: " + focusChange);
+            new AudioManager.OnAudioFocusChangeListener() {
+                @Override
+                public void onAudioFocusChange(int focusChange) {
+                    switch (focusChange) {
+                        case AudioManager.AUDIOFOCUS_LOSS:
+                        case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+                        case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
+                        case AudioManager.AUDIOFOCUS_GAIN:
+                            SmartLog.w(TAG, "focusChange value is : " + focusChange);
+                            break;
+                        default:
+                            throw new IllegalStateException("Unexpected value: " + focusChange);
+                    }
                 }
-            }
-        };
+            };
 }

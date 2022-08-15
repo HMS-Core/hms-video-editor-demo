@@ -140,48 +140,48 @@ public class StickerAnimationViewModel extends AndroidViewModel {
     }
 
     public HVEEffect appendAnimation(HVEAsset asset, CloudMaterialBean content, long duration, String type) {
-        HVEEffect animationEffect = null;
+        HVEEffect hveEffect = null;
         if (asset == null) {
-            return animationEffect;
+            return hveEffect;
         }
 
         if (content == null) {
-            return animationEffect;
+            return hveEffect;
         }
         switch (type) {
             case HVEEffect.ENTER_ANIMATION:
-                animationEffect = StickerAnimationRepository.appendEnterAnimation(asset,
+                hveEffect = StickerAnimationRepository.appendEnterAnimation(asset,
                     new HVEEffect.Options(content.getName(), content.getId(), content.getLocalPath()), duration);
                 break;
             case HVEEffect.LEAVE_ANIMATION:
-                animationEffect = StickerAnimationRepository.appendLeaveAnimation(asset,
+                hveEffect = StickerAnimationRepository.appendLeaveAnimation(asset,
                     new HVEEffect.Options(content.getName(), content.getId(), content.getLocalPath()), duration);
                 break;
             case HVEEffect.CYCLE_ANIMATION:
-                animationEffect = StickerAnimationRepository.appendCycleAnimation(asset,
+                hveEffect = StickerAnimationRepository.appendCycleAnimation(asset,
                     new HVEEffect.Options(content.getName(), content.getId(), content.getLocalPath()), duration);
                 break;
             default:
-                animationEffect = null;
+                hveEffect = null;
                 break;
         }
-        return animationEffect;
+        return hveEffect;
     }
 
-    public boolean removeAnimation(HVEAsset asset, String type) {
+    public boolean removeAnimation(HVEAsset hveAsset, String type) {
         boolean isRemove = false;
-        if (asset == null) {
+        if (hveAsset == null) {
             return isRemove;
         }
         switch (type) {
             case HVEEffect.ENTER_ANIMATION:
-                isRemove = StickerAnimationRepository.removeEnterAnimation(asset);
+                isRemove = StickerAnimationRepository.removeEnterAnimation(hveAsset);
                 break;
             case HVEEffect.LEAVE_ANIMATION:
-                isRemove = StickerAnimationRepository.removeLeaveAnimation(asset);
+                isRemove = StickerAnimationRepository.removeLeaveAnimation(hveAsset);
                 break;
             case HVEEffect.CYCLE_ANIMATION:
-                isRemove = StickerAnimationRepository.removeCycleAnimation(asset);
+                isRemove = StickerAnimationRepository.removeCycleAnimation(hveAsset);
                 break;
             default:
                 isRemove = false;
@@ -190,20 +190,20 @@ public class StickerAnimationViewModel extends AndroidViewModel {
         return isRemove;
     }
 
-    public boolean setAnimationDuration(HVEAsset asset, long duration, String type) {
+    public boolean setAnimationDuration(HVEAsset currentAsset, long duration, String type) {
         boolean isSetDuration = false;
-        if (asset == null) {
+        if (currentAsset == null) {
             return isSetDuration;
         }
         switch (type) {
             case HVEEffect.ENTER_ANIMATION:
-                isSetDuration = StickerAnimationRepository.setEnterAnimationDuration(asset, duration);
+                isSetDuration = StickerAnimationRepository.setEnterAnimationDuration(currentAsset, duration);
                 break;
             case HVEEffect.LEAVE_ANIMATION:
-                isSetDuration = StickerAnimationRepository.setLeaveAnimationDuration(asset, duration);
+                isSetDuration = StickerAnimationRepository.setLeaveAnimationDuration(currentAsset, duration);
                 break;
             case HVEEffect.CYCLE_ANIMATION:
-                isSetDuration = StickerAnimationRepository.setCycleAnimationDuration(asset, duration);
+                isSetDuration = StickerAnimationRepository.setCycleAnimationDuration(currentAsset, duration);
                 break;
             default:
                 isSetDuration = false;
@@ -212,30 +212,30 @@ public class StickerAnimationViewModel extends AndroidViewModel {
         return isSetDuration;
     }
 
-    public int getSelectedPosition(HVEAsset hveAsset, List<CloudMaterialBean> animList, String type) {
+    public int getSelectedPosition(HVEAsset currentAsset, List<CloudMaterialBean> anims, String type) {
         int selectedPosition = 0;
-        HVEEffect enterEffect = getEnterAnimation(hveAsset);
-        HVEEffect leaveEffect = getLeaveAnimation(hveAsset);
-        HVEEffect cycleEffect = getCycleAnimation(hveAsset);
+        HVEEffect enterEffect = getEnterAnimation(currentAsset);
+        HVEEffect leaveEffect = getLeaveAnimation(currentAsset);
+        HVEEffect cycleEffect = getCycleAnimation(currentAsset);
 
         if (enterEffect != null && type.equals(HVEEffect.ENTER_ANIMATION)) {
-            selectedPosition = getPosition(enterEffect, animList);
+            selectedPosition = getPosition(enterEffect, anims);
         }
 
         if (leaveEffect != null && type.equals(HVEEffect.LEAVE_ANIMATION)) {
-            selectedPosition = getPosition(leaveEffect, animList);
+            selectedPosition = getPosition(leaveEffect, anims);
         }
 
         if (cycleEffect != null && type.equals(HVEEffect.CYCLE_ANIMATION)) {
-            selectedPosition = getPosition(cycleEffect, animList);
+            selectedPosition = getPosition(cycleEffect, anims);
         }
         return selectedPosition;
     }
 
-    private int getPosition(HVEEffect animEffect, List<CloudMaterialBean> animList) {
+    private int getPosition(HVEEffect currentEffect, List<CloudMaterialBean> animList) {
         int selectedPosition = 0;
         for (int i = 0; i < animList.size(); i++) {
-            if (animEffect.getOptions().getEffectId().equals(animList.get(i).getId())) {
+            if (currentEffect.getOptions().getEffectId().equals(animList.get(i).getId())) {
                 selectedPosition = i;
                 break;
             }
@@ -246,16 +246,16 @@ public class StickerAnimationViewModel extends AndroidViewModel {
     @Override
     protected void onCleared() {
         super.onCleared();
-        columnsRespository = null;
-        materialsRespository = null;
         columnsListener = null;
         materialsListener = null;
+        columnsRespository = null;
+        materialsRespository = null;
     }
 
     private ColumnsListener columnsListener = new ColumnsListener() {
         @Override
-        public void columsData(List<HVEColumnInfo> materialsCutContentList) {
-            columns.postValue(materialsCutContentList);
+        public void columsData(List<HVEColumnInfo> hveColumnInfos) {
+            columns.postValue(hveColumnInfos);
         }
 
         @Override
@@ -266,8 +266,8 @@ public class StickerAnimationViewModel extends AndroidViewModel {
 
     private MaterialsListener materialsListener = new MaterialsListener() {
         @Override
-        public void pageData(List<CloudMaterialBean> materialsCutContentList) {
-            pageData.postValue(materialsCutContentList);
+        public void pageData(List<CloudMaterialBean> cloudMaterialBeans) {
+            pageData.postValue(cloudMaterialBeans);
         }
 
         @Override
@@ -281,23 +281,23 @@ public class StickerAnimationViewModel extends AndroidViewModel {
         }
 
         @Override
-        public void downloadInfo(MaterialsDownloadInfo materialsDownloadInfo) {
-            downloadInfo.postValue(materialsDownloadInfo);
+        public void downloadInfo(MaterialsDownloadInfo materialsInfo) {
+            downloadInfo.postValue(materialsInfo);
         }
 
         @Override
-        public void loadUrlEvent(LoadUrlEvent mLoadUrlEvent) {
-            loadUrlEvent.postValue(mLoadUrlEvent);
+        public void loadUrlEvent(LoadUrlEvent mLoadEvent) {
+            loadUrlEvent.postValue(mLoadEvent);
         }
     };
 
     public List<CloudMaterialBean> loadLocalData(String name) {
-        CloudMaterialBean animationNothing = new CloudMaterialBean();
-        animationNothing.setName(name);
-        animationNothing.setLocalDrawableId(R.drawable.icon_no);
-        animationNothing.setId("-1");
+        CloudMaterialBean animNothing = new CloudMaterialBean();
+        animNothing.setName(name);
+        animNothing.setLocalDrawableId(R.drawable.icon_no);
+        animNothing.setId("-1");
         List<CloudMaterialBean> list = new ArrayList<>();
-        list.add(animationNothing);
+        list.add(animNothing);
         return list;
     }
 }

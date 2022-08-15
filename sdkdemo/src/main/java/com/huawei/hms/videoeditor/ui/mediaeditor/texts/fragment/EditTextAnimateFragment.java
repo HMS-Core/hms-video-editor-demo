@@ -20,9 +20,6 @@ package com.huawei.hms.videoeditor.ui.mediaeditor.texts.fragment;
 import static com.huawei.hms.videoeditor.ui.common.bean.Constant.LTR_UI;
 import static com.huawei.hms.videoeditor.ui.common.bean.Constant.RTL_UI;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
@@ -31,13 +28,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.huawei.hms.videoeditor.materials.HVEColumnInfo;
 import com.huawei.hms.videoeditor.materials.HVEMaterialConstant;
 import com.huawei.hms.videoeditor.sdk.asset.HVEAsset;
 import com.huawei.hms.videoeditor.sdk.effect.HVEEffect;
-import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.BaseFragment;
+import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.bean.Constant;
 import com.huawei.hms.videoeditor.ui.common.bean.MaterialsDownloadInfo;
 import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
@@ -56,12 +60,8 @@ import com.huawei.hms.videoeditor.ui.mediaeditor.texts.viewmodel.TextPanelViewMo
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 import com.huawei.secure.android.common.intent.SafeBundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EditTextAnimateFragment extends BaseFragment implements AnimationBar.OnProgressChangedListener {
     private static final String TAG = "EditTextAnimateFragment";
@@ -163,8 +163,7 @@ public class EditTextAnimateFragment extends BaseFragment implements AnimationBa
 
     public List<CloudMaterialBean> loadLocalData() {
         CloudMaterialBean transitionNothing = new CloudMaterialBean();
-        transitionNothing.setName(
-                this.getResources().getString(R.string.none));
+        transitionNothing.setName(this.getResources().getString(R.string.none));
         transitionNothing.setLocalDrawableId(R.drawable.icon_no);
         transitionNothing.setId("-1");
         List<CloudMaterialBean> list = new ArrayList<>();
@@ -442,9 +441,10 @@ public class EditTextAnimateFragment extends BaseFragment implements AnimationBa
 
             HVEEffect enterEffect = textAnimationViewModel.getEnterAnimation(hveAsset);
             HVEEffect leaveEffect = textAnimationViewModel.getLeaveAnimation(hveAsset);
-            long startTime = 0;
-            long endTime = 0;
-            long duration = 500;
+            HVEEffect cycleEffect = textAnimationViewModel.getCycleAnimation(hveAsset);
+            long startTime = 0L;
+            long endTime = 0L;
+            long duration = 500L;
             if (animType.equals(HVEEffect.ENTER_ANIMATION)) {
                 if (enterEffect != null) {
                     duration = enterEffect.getDuration();
@@ -469,7 +469,16 @@ public class EditTextAnimateFragment extends BaseFragment implements AnimationBa
                 }
                 startTime = hveAsset.getEndTime() - duration;
                 endTime = hveAsset.getEndTime();
+            } else if (animType.equals(HVEEffect.CYCLE_ANIMATION)) {
+                if (cycleEffect != null) {
+                    duration = cycleEffect.getDuration();
+                } else {
+                    duration = Math.min(hveAsset.getDuration(), duration);
+                }
+                startTime = hveAsset.getStartTime();
+                endTime = startTime + duration;
             }
+
             HVEEffect effect = textAnimationViewModel.appendAnimation(hveAsset, cutContent, duration, animType);
             setAnimationBarDuration(hveAsset);
             if (effect == null) {

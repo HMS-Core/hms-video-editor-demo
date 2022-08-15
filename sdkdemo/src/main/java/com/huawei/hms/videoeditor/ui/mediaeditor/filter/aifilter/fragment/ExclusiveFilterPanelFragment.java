@@ -229,6 +229,7 @@ public class ExclusiveFilterPanelFragment extends BaseFragment {
                 cloudMaterialBean.setId(materialInfo.getMaterialId());
                 cloudMaterialBean.setLocalPath(materialInfo.getMaterialPath());
                 cloudMaterialBean.setName(materialInfo.getMaterialName());
+                cloudMaterialBean.setCategoryName(materialInfo.getCategoryName());
                 mCutContentList.add(cloudMaterialBean);
             }
         }

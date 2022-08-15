@@ -21,6 +21,7 @@ import static android.content.Context.ACTIVITY_SERVICE;
 import android.app.ActivityManager;
 import android.content.Context;
 
+import com.huawei.hms.videoeditor.VideoEditorApplication;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 
 public class MemoryInfoUtil {
@@ -31,6 +32,10 @@ public class MemoryInfoUtil {
     public static final int MEMORY_THRESHOLD_6G = 6 * 1024;
 
     private MemoryInfoUtil() {
+    }
+
+    public static boolean isLowMemoryDevice() {
+        return isLowMemoryDevice(MEMORY_THRESHOLD_4G, VideoEditorApplication.getInstance().getContext());
     }
 
     public static boolean isLowMemoryDevice(Context context) {
@@ -49,6 +54,18 @@ public class MemoryInfoUtil {
 
     public static long getMemorySizeM(Context context) {
         final ActivityManager activityManager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
+        ActivityManager.MemoryInfo info = new ActivityManager.MemoryInfo();
+        activityManager.getMemoryInfo(info);
+        return info.totalMem >> 20;
+    }
+
+    public static long getMemorySizeM() {
+        Context context = VideoEditorApplication.getInstance().getContext();
+        if (context == null) {
+            return 0;
+        }
+        final ActivityManager activityManager =
+            (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
         ActivityManager.MemoryInfo info = new ActivityManager.MemoryInfo();
         activityManager.getMemoryInfo(info);
         return info.totalMem >> 20;

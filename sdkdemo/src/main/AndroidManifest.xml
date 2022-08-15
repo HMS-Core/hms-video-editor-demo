@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="false"
@@ -19,7 +20,8 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/AppTheme">
 
-        <activity android:name="com.huawei.hms.videoeditor.MainActivity"
+        <activity android:name="com.huawei.hms.videoeditor.HomeActivity"
+        android:screenOrientation="portrait"
 		android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,8 +29,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
+        <activity
+            android:name="com.huawei.hms.videoeditor.MainActivity"
+            android:configChanges="uiMode"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.huawei.hms.videoeditor.ui.mediapick.activity.MediaPickActivity"
             android:configChanges="uiMode"
@@ -73,17 +78,25 @@
 
         <activity
             android:name="com.huawei.hms.videoeditor.ui.template.module.activity.TemplateDetailActivity"
-            android:configChanges="orientation|uiMode|screenSize"
-            android:screenOrientation="nosensor" />
+            android:configChanges="uiMode"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="com.huawei.hms.videoeditor.ui.template.module.activity.TemplateEditActivity"
-            android:configChanges="orientation|uiMode|screenSize|screenLayout|smallestScreenSize"
-            android:screenOrientation="nosensor" />
+            android:configChanges="uiMode"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.huawei.hms.videoeditor.ui.template.module.activity.VideoModuleDetailActivity"
-            android:configChanges="orientation|uiMode|screenSize|screenLayout|smallestScreenSize"
-            android:screenOrientation="nosensor" />
+            android:configChanges="uiMode"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.huawei.hms.videoeditor.ui.mediaeditor.ai.ViewFileActivity"
+            android:configChanges="uiMode"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.huawei.hms.videoeditor.ui.mediaeditor.ai.ObjectSegActivity"
+            android:configChanges="uiMode"
+            android:screenOrientation="portrait"/>
 
     </application>
 </manifest>

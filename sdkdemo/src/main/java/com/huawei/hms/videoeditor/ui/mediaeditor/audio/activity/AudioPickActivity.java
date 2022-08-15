@@ -16,9 +16,6 @@
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.audio.activity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -29,6 +26,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.tabs.TabLayout;
 import com.huawei.hms.videoeditor.ui.common.BaseActivity;
 import com.huawei.hms.videoeditor.ui.common.bean.AudioData;
@@ -38,11 +41,8 @@ import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
 import com.huawei.hms.videoeditor.ui.mediaeditor.audio.fragment.MusicLocalFragment;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
-import androidx.activity.OnBackPressedCallback;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.RecyclerView;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AudioPickActivity extends BaseActivity {
 
@@ -70,7 +70,7 @@ public class AudioPickActivity extends BaseActivity {
 
     private List<Fragment> fragments;
 
-    private int[] mTabs = new int[] {/* R.string.music_library, */R.string.music_local/* , R.string.music_favorites */};
+    private int[] mTabs = new int[] {R.string.music_local};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

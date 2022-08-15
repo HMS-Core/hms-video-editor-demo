@@ -17,6 +17,7 @@
 package com.huawei.hms.videoeditor.ui.mediapick.fragment;
 
 import static com.huawei.hms.videoeditor.ui.mediapick.activity.MediaPickActivity.DURATION;
+import static com.huawei.hms.videoeditor.ui.mediapick.activity.MediaPickActivity.SHOW_MEDIA_TYPE;
 
 import java.util.List;
 
@@ -58,6 +59,8 @@ public class PickVideoFragment extends LazyFragment implements MediaPickManager.
 
     private String mFolderPath = "";
 
+    private int mShowMediaType = 2; // 0 video 1 photo 2 both
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         navigationBarColor = R.color.home_color_FF181818;
@@ -85,12 +88,14 @@ public class PickVideoFragment extends LazyFragment implements MediaPickManager.
         SafeBundle safeBundle = new SafeBundle(getArguments());
         long mCheckDuration = safeBundle.getLong(DURATION, 0);
         int actionType = safeBundle.getInt(MediaPickActivity.ACTION_TYPE);
+        mShowMediaType = safeBundle.getInt(SHOW_MEDIA_TYPE, mShowMediaType);
         mMediaAdapter = new MediaPickAdapter(mActivity, actionType);
         mMediaAdapter.setReplaceValidDuration(mCheckDuration);
         List<MediaData> mInitMediaList = safeBundle.getParcelableArrayList(Constant.EXTRA_SELECT_RESULT);
         if (mInitMediaList != null) {
             mMediaAdapter.setInitMediaList(mInitMediaList);
         }
+        mMediaAdapter.setShowMediaType(mShowMediaType);
         mRecyclerView.setLayoutManager(new GridLayoutManager(mActivity, 3));
         if (mRecyclerView.getItemDecorationCount() == 0) {
             mRecyclerView.addItemDecoration(new GridItemDividerDecoration(SizeUtils.dp2Px(mActivity, 8f),

@@ -17,29 +17,26 @@
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.menu;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
-import android.graphics.Paint;
-import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.utils.LocalResourceUtil;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
-import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
 import com.huawei.hms.videoeditor.ui.common.view.decoration.HorizontalDividerDecoration;
 import com.huawei.hms.videoeditor.ui.common.view.tab.bottom.TabBottomInfo;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EditMenuContentLayout extends LinearLayout {
 
@@ -211,7 +208,6 @@ public class EditMenuContentLayout extends LinearLayout {
 
     }
 
-
     public void initFirstMenuData(List<EditMenuBean> menuBeans, List<Integer> unVisibleIds) {
         mMenuFirstLayout.setVisibility(VISIBLE);
         mMenuSecondRecyclerView.setVisibility(GONE);
@@ -332,7 +328,6 @@ public class EditMenuContentLayout extends LinearLayout {
         }
         return menuBeans;
     }
-
 
     public boolean isOperateShow() {
         return isOperateShow;

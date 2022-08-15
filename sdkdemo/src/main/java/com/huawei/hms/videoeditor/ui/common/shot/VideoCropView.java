@@ -60,17 +60,17 @@ public class VideoCropView extends View {
 
     private double endMovedOffset;
 
-    private double maxDuration = 0;
+    private double maxDuration = 0d;
 
-    private long duration = 0;
+    private long duration = 0L;
 
-    private long trimIn = 0;
+    private long trimIn = 0L;
 
-    private long trimOut = 0;
+    private long trimOut = 0L;
 
     private int isCanMove = -1;
 
-    private float lengthOld = 0;
+    private float lengthOld = 0f;
 
     private final int colorRect = Color.WHITE;
 

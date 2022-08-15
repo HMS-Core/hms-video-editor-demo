@@ -68,7 +68,7 @@ public class FolderListViewModel extends AndroidViewModel {
         int mImageTotalCount = 0;
         long firstMediaTime = 0;
         String firstMediaPath = null;
-        final String[] imageProjection = {MediaStore.Images.Media.DATA, MediaStore.Images.Media.DATE_ADDED,};
+        final String[] imageProjection = {MediaStore.Images.Media.DATA, MediaStore.Images.Media.DATE_ADDED};
 
         try {
             Cursor cursor = getApplication().getContentResolver()

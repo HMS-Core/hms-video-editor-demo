@@ -22,10 +22,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Application;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 
@@ -144,11 +146,24 @@ public class CoverPickPictureViewModel extends AndroidViewModel {
         String[] mImageSelectionArgs = new String[] {dirName};
         Cursor cursor = null;
         try {
-            cursor = context.getContentResolver()
-                .query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, imageProjection,
-                    StringUtil.isEmpty(dirName) ? null : mImageSelection,
-                    StringUtil.isEmpty(dirName) ? null : mImageSelectionArgs,
-                    imageProjection[5] + " DESC LIMIT " + page * pageSize + " , " + pageSize);
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
+                Bundle bundle = new Bundle();
+                bundle.putString(ContentResolver.QUERY_ARG_SQL_SELECTION,
+                        StringUtil.isEmpty(dirName) ? null : mImageSelection);
+                bundle.putStringArray(ContentResolver.QUERY_ARG_SQL_SELECTION_ARGS,
+                        StringUtil.isEmpty(dirName) ? null : mImageSelectionArgs);
+                bundle.putString(ContentResolver.QUERY_ARG_SQL_SORT_ORDER, imageProjection[5] + " DESC");
+                bundle.putInt(ContentResolver.QUERY_ARG_LIMIT, pageSize);
+                bundle.putInt(ContentResolver.QUERY_ARG_OFFSET, page * pageSize);
+                cursor = context.getContentResolver()
+                        .query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, imageProjection, bundle, null);
+            } else {
+                cursor = context.getContentResolver()
+                        .query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, imageProjection,
+                                StringUtil.isEmpty(dirName) ? null : mImageSelection,
+                                StringUtil.isEmpty(dirName) ? null : mImageSelectionArgs,
+                                imageProjection[5] + " DESC LIMIT " + page * pageSize + " , " + pageSize);
+            }
         } catch (SecurityException e) {
             SmartLog.e(TAG, e.getMessage());
         }

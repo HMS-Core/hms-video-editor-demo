@@ -18,6 +18,8 @@ Huawei Video Editor Kit (Video Editor Kit) provided by Huawei to quickly build v
 
 - Video editor atomic capability SDK, which provides hundreds of underlying capability interfaces, including multiple AI algorithm capability interfaces, which can be flexibly selected based on service scenarios.
 
+- Screen recorder demo provide basic usage of screen recording. There are functions demonstrating usage of start/stop recording and setting configuration.
+
 Both modes provide one-stop video editing capabilities, such as import, editing, rendering, export, and media resource management. These two modes provide high-performance, easy-to-use, and highly compatible interfaces, helping you easily build applications.
 
 ## Project directory structure
@@ -26,13 +28,14 @@ Both modes provide one-stop video editing capabilities, such as import, editing,
 |-- com.huawei.videoeditorkit.videoeditdemo
 	|--sdkdemo  atomic capability SDK demo
 	|--uidemo   UI SDk demo
+	|--screenrecorddemo  Screen Recorder SDK Demo 
 ```
 
 ## Running Procedure
 - Clone the code base to the local host.
 
-- If you haven't already registered as a developer, register and create an app on [AppGalleryConnect](https://developer.huawei.com/consumer/en/service/josp/agc/index.html?ha_source=hms1).
-- Obtain the agconnect-services.json file from [HUAWEI Developers](https://developer.huawei.com/consumer/en/doc/development/Media-Guides/config-agc-0000001101108580?ha_source=hms1).
+- If you haven't already registered as a developer, register and create an app on [AppGalleryConnect](https://developer.huawei.com/consumer/en/service/josp/agc/index.html).
+- Obtain the agconnect-services.json file from [HUAWEI Developers]([https://developer.huawei.com/consumer/en/doc/development/Media-Guides/config-agc-0000001101108580](javascript:;)).
 - Place the agconnect-services.json file in the root directory of the demo.
 - If you need to use cloud-side service capabilities, you need to use the api_key value in agconnect-services.json to call MediaApplication.getInstance().setApiKey(String apiKey) during application initialization.
 - Compile and run on an Android device or emulator.
@@ -50,7 +53,7 @@ If you want to evaluate more about HMS Core,
 [r/HMSCore on Reddit](https://www.reddit.com/r/HuaweiDevelopers/) is for you to keep up with latest news about HMS Core, and to exchange insights with other developers.
 
 If you have questions about how to use HMS samples, try the following options:
-- [Stack Overflow](https://stackoverflow.com/questions/tagged/huawei-mobile-services?tab=Votes) is the best place for any programming questions. Be sure to tag your question with 
+- [Stack Overflow](https://stackoverflow.com/questions/tagged/huawei-mobile-services) is the best place for any programming questions. Be sure to tag your question with 
   `huawei-mobile-services`.
 - [Huawei Developer Forum](https://forums.developer.huawei.com/forumPortal/en/home?fid=0101187876626530001) HMS Core Module is great for general questions, or seeking recommendations and opinions.
 

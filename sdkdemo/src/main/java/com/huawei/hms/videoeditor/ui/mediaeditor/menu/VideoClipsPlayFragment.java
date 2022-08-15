@@ -27,6 +27,13 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.huawei.hms.videoeditor.sdk.HVETimeLine;
 import com.huawei.hms.videoeditor.sdk.HuaweiVideoEditor;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
@@ -40,13 +47,6 @@ import com.huawei.hms.videoeditor.ui.mediaeditor.materialedit.MaterialEditViewMo
 import com.huawei.hms.videoeditor.ui.mediaeditor.persontrack.PersonTrackingViewModel;
 import com.huawei.hms.videoeditor.ui.mediaeditor.trackview.viewmodel.EditPreviewViewModel;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 public class VideoClipsPlayFragment extends BaseFragment implements HuaweiVideoEditor.PlayCallback {
     private static final String TAG = "VideoClipsPlayFragment";
@@ -264,7 +264,8 @@ public class VideoClipsPlayFragment extends BaseFragment implements HuaweiVideoE
                         mCurrentTime = 0;
                     }
                     if (mEditPreviewVieModel.isPersonTrackingStatus()) {
-                        editor.seekTimeLine(mCurrentTime, () -> editor.playTimeLine(mCurrentTime, mPersonTrackingViewModel.getVideoEndTime()));
+                        editor.seekTimeLine(mCurrentTime,
+                            () -> editor.playTimeLine(mCurrentTime, mPersonTrackingViewModel.getVideoEndTime()));
                     } else {
                         editor.seekTimeLine(mCurrentTime, () -> editor.playTimeLine(mCurrentTime, mVideoDuration));
                     }
@@ -348,7 +349,7 @@ public class VideoClipsPlayFragment extends BaseFragment implements HuaweiVideoE
                 if (timeLine.getDuration() - mCurrentTime < TIMER_PLAY_PERIOD) {
                     mCurrentTime = 0;
                 }
-                editor.playTimeLine(mCurrentTime, timeLine.getDuration());
+                editor.seekTimeLine(mCurrentTime, () -> editor.playTimeLine(mCurrentTime, timeLine.getDuration()));
             }
         }
     }

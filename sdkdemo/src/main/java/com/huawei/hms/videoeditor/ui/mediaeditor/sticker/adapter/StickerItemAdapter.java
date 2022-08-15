@@ -49,9 +49,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 public class StickerItemAdapter extends RCommandAdapter<CloudMaterialBean> {
     private static final String TAG = "StickerItemAdapter";
 
-    private final Map<String, CloudMaterialBean> mDownloadingMap = new LinkedHashMap<>();
+    private final Map<String, CloudMaterialBean> theDownloadingMap = new LinkedHashMap<>();
 
-    private final Map<String, CloudMaterialBean> mFirstScreenMap = new LinkedHashMap<>();
+    private final Map<String, CloudMaterialBean> theFirstScreenMap = new LinkedHashMap<>();
 
     private final int mImageViewWidth;
 
@@ -80,49 +80,43 @@ public class StickerItemAdapter extends RCommandAdapter<CloudMaterialBean> {
     }
 
     public void addDownloadMaterial(CloudMaterialBean item) {
-        if (!mDownloadingMap.containsKey(item.getId())) {
-            mDownloadingMap.put(item.getId(), item);
-        }
-    }
-
-    public void removeDownloadMaterial(String contentId) {
-        mDownloadingMap.remove(contentId);
-    }
-
-    public void addFirstScreenMaterial(CloudMaterialBean item) {
-        if (!mFirstScreenMap.containsKey(item.getId())) {
-            mFirstScreenMap.put(item.getId(), item);
+        if (!theDownloadingMap.containsKey(item.getId())) {
+            theDownloadingMap.put(item.getId(), item);
         }
     }
 
     public void removeFirstScreenMaterial(CloudMaterialBean materialsCutContent) {
-        if (materialsCutContent == null || mFirstScreenMap.size() == 0) {
+        if (materialsCutContent == null || theFirstScreenMap.size() == 0) {
             SmartLog.e(TAG, "input materials is null");
             return;
         }
-        mFirstScreenMap.remove(materialsCutContent.getId());
-        if (mFirstScreenMap.size() == 0) {
+        theFirstScreenMap.remove(materialsCutContent.getId());
+        if (theFirstScreenMap.size() == 0) {
             SmartLog.w(TAG, "HianalyticsEvent10007 postEvent");
         }
     }
-
+    public void addFirstScreenMaterial(CloudMaterialBean item) {
+        if (!theFirstScreenMap.containsKey(item.getId())) {
+            theFirstScreenMap.put(item.getId(), item);
+        }
+    }
     @Override
-    protected void convert(RViewHolder holder, CloudMaterialBean item, int dataPosition, int position) {
-        ConstraintLayout mContentView = holder.getView(R.id.item_content);
-        mContentView.setTag(position);
-        View mSelectView = holder.getView(R.id.item_select_view);
-        ImageView mItemIv = holder.getView(R.id.item_image_view);
-        ImageView mDownloadIv = holder.getView(R.id.item_download_view);
-        View mDownloadPb = holder.getView(R.id.item_progress);
-        TextView mNameTv = holder.getView(R.id.item_name);
+    protected void convert(RViewHolder viewHolder, CloudMaterialBean bean, int dataPosition, int position) {
+        ConstraintLayout constraintLayout = viewHolder.getView(R.id.item_content);
+        constraintLayout.setTag(position);
+        ImageView downloadiv = viewHolder.getView(R.id.item_download_view);
+        View downloadpb = viewHolder.getView(R.id.item_progress);
+        TextView name = viewHolder.getView(R.id.item_name);
+        View mSelectView = viewHolder.getView(R.id.item_select_view);
+        ImageView itemImageView = viewHolder.getView(R.id.item_image_view);
 
-        holder.itemView.setLayoutParams(new ConstraintLayout.LayoutParams(mImageViewWidth, mImageViewHeight));
-        mContentView.setLayoutParams(new ConstraintLayout.LayoutParams(mImageViewWidth, mImageViewHeight));
         mSelectView.setLayoutParams(new ConstraintLayout.LayoutParams(mImageViewWidth, mImageViewWidth));
-        mItemIv.setLayoutParams(new ConstraintLayout.LayoutParams(mImageViewWidth, mImageViewWidth));
+        itemImageView.setLayoutParams(new ConstraintLayout.LayoutParams(mImageViewWidth, mImageViewWidth));
+        viewHolder.itemView.setLayoutParams(new ConstraintLayout.LayoutParams(mImageViewWidth, mImageViewHeight));
+        constraintLayout.setLayoutParams(new ConstraintLayout.LayoutParams(mImageViewWidth, mImageViewHeight));
 
         Glide.with(mContext)
-            .load(item.getPreviewUrl())
+            .load(bean.getPreviewUrl())
             .apply(new RequestOptions()
                 .transform(new MultiTransformation<>(new RoundedCorners(SizeUtils.dp2Px(mContext, 4)))))
             .addListener(new RequestListener<Drawable>() {
@@ -135,40 +129,43 @@ public class StickerItemAdapter extends RCommandAdapter<CloudMaterialBean> {
                 @Override
                 public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target,
                     DataSource dataSource, boolean isFirstResource) {
-                    removeFirstScreenMaterial(item);
+                    removeFirstScreenMaterial(bean);
                     return false;
                 }
             })
-            .into(mItemIv);
+            .into(itemImageView);
         mSelectView.setVisibility(mSelectPosition == position ? View.VISIBLE : View.INVISIBLE);
-        mItemIv.setVisibility(View.VISIBLE);
-        mNameTv.setText(item.getName());
-        mNameTv.setVisibility(View.GONE);
+        itemImageView.setVisibility(View.VISIBLE);
+        name.setText(bean.getName());
+        name.setVisibility(View.GONE);
 
-        if (!StringUtil.isEmpty(item.getLocalPath()) || item.getId().equals("-1")) {
-            mDownloadIv.setVisibility(View.GONE);
-            mDownloadPb.setVisibility(View.GONE);
+        if (!StringUtil.isEmpty(bean.getLocalPath()) || bean.getId().equals("-1")) {
+            downloadiv.setVisibility(View.GONE);
+            downloadpb.setVisibility(View.GONE);
         } else {
-            mDownloadIv.setVisibility(mSelectPosition == position ? View.INVISIBLE : View.VISIBLE);
-            mDownloadPb.setVisibility(mSelectPosition == position ? View.VISIBLE : View.INVISIBLE);
+            downloadiv.setVisibility(mSelectPosition == position ? View.INVISIBLE : View.VISIBLE);
+            downloadpb.setVisibility(mSelectPosition == position ? View.VISIBLE : View.INVISIBLE);
         }
-        if (mDownloadingMap.containsKey(item.getId())) {
-            mDownloadIv.setVisibility(View.GONE);
-            mDownloadPb.setVisibility(View.VISIBLE);
+        if (theDownloadingMap.containsKey(bean.getId())) {
+            downloadiv.setVisibility(View.GONE);
+            downloadpb.setVisibility(View.VISIBLE);
         }
 
-        holder.itemView.setOnClickListener(new OnClickRepeatedListener((v) -> {
+        viewHolder.itemView.setOnClickListener(new OnClickRepeatedListener((v) -> {
             if (mOnItemClickListener == null) {
                 return;
             }
-            if (!StringUtil.isEmpty(item.getLocalPath()) || item.getId().equals("-1")) {
+            if (!StringUtil.isEmpty(bean.getLocalPath()) || bean.getId().equals("-1")) {
                 mOnItemClickListener.onItemClick(position);
             } else {
-                if (!mDownloadingMap.containsKey(item.getId())) {
+                if (!theDownloadingMap.containsKey(bean.getId())) {
                     mOnItemClickListener.onDownloadClick(position);
                 }
             }
         }));
+    }
+    public void removeDownloadMaterial(String contentId) {
+        theDownloadingMap.remove(contentId);
     }
 
     public interface OnItemClickListener {
@@ -176,5 +173,4 @@ public class StickerItemAdapter extends RCommandAdapter<CloudMaterialBean> {
 
         void onDownloadClick(int position);
     }
-
 }

@@ -16,6 +16,9 @@
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.menu;
 
+import static com.huawei.hms.videoeditor.sdk.asset.HVEAsset.HVEAssetType.STICKER;
+import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.viewmodel.EditPreviewViewModel.MUSIC_URI_INFO;
+
 import android.app.Application;
 import android.os.Handler;
 import android.widget.Toast;
@@ -50,7 +53,6 @@ import com.huawei.hms.videoeditor.ui.common.utils.LaneSizeCheckUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.SPManager;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.ToastWrapper;
-import com.huawei.hms.videoeditor.ui.common.view.dialog.LoadingDialog;
 import com.huawei.hms.videoeditor.ui.mediaeditor.materialedit.MaterialEditViewModel;
 import com.huawei.hms.videoeditor.ui.mediaeditor.trackview.viewmodel.EditPreviewViewModel;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
@@ -58,9 +60,6 @@ import com.huawei.hms.videoeditorkit.sdkdemo.R;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import static com.huawei.hms.videoeditor.sdk.asset.HVEAsset.HVEAssetType.STICKER;
-import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.viewmodel.EditPreviewViewModel.MUSIC_URI_INFO;
 
 public class MenuViewModel extends AndroidViewModel {
     private static final String TAG = "MenuViewModel";
@@ -1007,8 +1006,8 @@ public class MenuViewModel extends AndroidViewModel {
         if (isAsset) {
             return true;
         } else {
-            long endTime = 0;
-            long currentTime = 0;
+            long endTime = 0L;
+            long currentTime = 0L;
             HVEVideoLane videoLane = EditorManager.getInstance().getMainLane();
             if (videoLane == null) {
                 return false;

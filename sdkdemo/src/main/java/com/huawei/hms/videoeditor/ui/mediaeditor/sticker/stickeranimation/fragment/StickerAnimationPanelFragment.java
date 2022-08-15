@@ -67,69 +67,68 @@ import androidx.recyclerview.widget.RecyclerView;
 public class StickerAnimationPanelFragment extends BaseFragment implements AnimationBar.OnProgressChangedListener {
     private static final String TAG = "StickerAnimationPanelFragment";
 
+    private HVEAsset hveAsset;
+
+
     private List<HVEColumnInfo> columnList = new ArrayList<>();
 
     private List<CloudMaterialBean> initAnim = new ArrayList<>(1);
 
     private List<CloudMaterialBean> animList = new ArrayList<>();
 
-    private HVEAsset hveAsset;
+    private TextView errorTv;
+
 
     private TabTopLayout tabTopLayout;
 
     private RelativeLayout errorLayout;
-
-    private TextView errorTv;
-
-    private LoadingIndicatorView loadingIndicatorView;
-
-    private ImageView certain;
-
     private RecyclerView recyclerView;
 
     private RelativeLayout seek_container;
+    private LoadingIndicatorView loadingIndicatorView;
 
+    private ImageView certainView;
     private AnimationBar animationBar;
 
-    private StickerAnimationItemAdapter stickerAnimationItemAdapter;
-
-    private StickerAnimationViewModel stickerAnimationViewModel;
 
     private MaterialEditViewModel materialEditViewModel;
 
     private boolean isFirst;
+    private StickerAnimationItemAdapter stickerAnimationItemAdapter;
+
+    private StickerAnimationViewModel stickerAnimationViewModel;
 
     private Boolean mHasNextPage = false;
-
-    private HVEColumnInfo content;
-
     private int currentIndex = 0;
 
     private int currentPage = 0;
 
+    private HVEColumnInfo content;
+
+
     private String animType = HVEEffect.ENTER_ANIMATION;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        navigationBarColor = R.color.color_20;
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     protected int getContentViewId() {
         return R.layout.fragment_panel_sticker_animation;
     }
-
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        navigationBarColor = R.color.color_20;
+        super.onCreate(savedInstanceState);
+    }
     @Override
     protected void initView(View view) {
         tabTopLayout = view.findViewById(R.id.tab_top_layout);
         errorLayout = view.findViewById(R.id.error_layout);
-        errorTv = view.findViewById(R.id.error_text);
-        loadingIndicatorView = view.findViewById(R.id.indicator);
-        certain = view.findViewById(R.id.iv_certain);
+        certainView = view.findViewById(R.id.iv_certain);
         recyclerView = view.findViewById(R.id.rl_pic);
         seek_container = view.findViewById(R.id.seek_container);
         animationBar = view.findViewById(R.id.sb_items);
+
+        errorTv = view.findViewById(R.id.error_text);
+        loadingIndicatorView = view.findViewById(R.id.indicator);
 
         EditorTextView animationText = view.findViewById(R.id.animtext);
         TextView title = view.findViewById(R.id.tv_title);
@@ -157,19 +156,19 @@ public class StickerAnimationPanelFragment extends BaseFragment implements Anima
             animationText.setScaleX(LTR_UI);
         }
 
-        RelativeLayout.LayoutParams transParams;
+        RelativeLayout.LayoutParams layoutParams;
         if (LanguageUtils.isZh()) {
-            transParams = new RelativeLayout.LayoutParams(SizeUtils.dp2Px(context, 48.0f),
+            layoutParams = new RelativeLayout.LayoutParams(SizeUtils.dp2Px(context, 48.0f),
                 ConstraintLayout.LayoutParams.WRAP_CONTENT);
 
         } else {
-            transParams = new RelativeLayout.LayoutParams(SizeUtils.dp2Px(context, 64.0f),
+            layoutParams = new RelativeLayout.LayoutParams(SizeUtils.dp2Px(context, 64.0f),
                 ConstraintLayout.LayoutParams.WRAP_CONTENT);
         }
-        transParams.setMargins(SizeUtils.dp2Px(context, 24.0f), 0, 0, 0);
-        transParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        transParams.addRule(RelativeLayout.ALIGN_PARENT_START);
-        animationText.setLayoutParams(transParams);
+        layoutParams.setMargins(SizeUtils.dp2Px(context, 24.0f), 0, 0, 0);
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_START);
+        animationText.setLayoutParams(layoutParams);
     }
 
     @Override
@@ -188,16 +187,14 @@ public class StickerAnimationPanelFragment extends BaseFragment implements Anima
         }
 
         initAnim.addAll(stickerAnimationViewModel.loadLocalData(getString(R.string.none)));
-
         materialEditViewModel.setIsStickerEditState(true);
-
         stickerAnimationViewModel.initColumns(HVEMaterialConstant.STICKER_ANIMATION_COLUMN);
     }
 
     @Override
     protected void initEvent() {
         animationBar.setOnProgressChangedListener(this);
-        certain.setOnClickListener(view -> mActivity.onBackPressed());
+        certainView.setOnClickListener(view -> mActivity.onBackPressed());
 
         tabTopLayout.addTabSelectedChangeListener((index, prevInfo, nextInfo) -> {
             if (columnList == null) {
@@ -446,9 +443,9 @@ public class StickerAnimationPanelFragment extends BaseFragment implements Anima
 
             HVEEffect enterEffect = stickerAnimationViewModel.getEnterAnimation(hveAsset);
             HVEEffect leaveEffect = stickerAnimationViewModel.getLeaveAnimation(hveAsset);
-            long startTime = 0;
-            long endTime = 0;
-            long duration = 500;
+            long startTime = 0L;
+            long endTime = 0L;
+            long duration = 500L;
             if (animType.equals(HVEEffect.ENTER_ANIMATION)) {
                 if (enterEffect != null) {
                     duration = enterEffect.getDuration();

@@ -19,6 +19,19 @@ package com.huawei.hms.videoeditor.ui.template.module;
 import android.content.res.Configuration;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
+import androidx.navigation.Navigation;
+import androidx.paging.DataSource;
+import androidx.paging.PagedList;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.huawei.hms.videoeditor.ui.common.bean.MediaData;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.ToastWrapper;
@@ -33,21 +46,8 @@ import com.huawei.hms.videoeditor.ui.template.viewmodel.ModuleEditViewModel;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 import com.huawei.secure.android.common.intent.SafeBundle;
 
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
-import androidx.navigation.Navigation;
-import androidx.paging.DataSource;
-import androidx.paging.PagedList;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 public class ModulePictureFragment extends LazyFragment implements ModulePickAdapter.OnItemClickListener,
-    ModuleSelectManager.OnSelectItemChangeListener, ModuleSelectManager.OnSelectItemDeleteListener {
+        ModuleSelectManager.OnSelectItemChangeListener, ModuleSelectManager.OnSelectItemDeleteListener {
 
     private RecyclerView recyclerView;
 
@@ -113,7 +113,7 @@ public class ModulePictureFragment extends LazyFragment implements ModulePickAda
         recyclerView.setLayoutManager(new GridLayoutManager(mActivity, mSpanCount));
         if (recyclerView.getItemDecorationCount() == 0) {
             recyclerView.addItemDecoration(new GridItemDividerDecoration(SizeUtils.dp2Px(mActivity, 8f),
-                SizeUtils.dp2Px(mActivity, 8f), ContextCompat.getColor(mActivity, R.color.black)));
+                    SizeUtils.dp2Px(mActivity, 8f), ContextCompat.getColor(mActivity, R.color.black)));
         }
         adapter.setImageViewWidth(mItemWidth);
         recyclerView.setAdapter(adapter);
@@ -134,7 +134,7 @@ public class ModulePictureFragment extends LazyFragment implements ModulePickAda
             MutableLiveData<Boolean> mutableLiveData = mMediaFolderViewModel.getGalleryVideoSelect();
             Boolean mutableLiveDataValue = mutableLiveData.getValue();
             if (mutableLiveDataValue != null && mPickPictureViewModel.getDataSource() != null
-                && !mutableLiveDataValue) {
+                    && !mutableLiveDataValue) {
                 mPickPictureViewModel.setDirPathName(mFolderPath);
                 mPickPictureViewModel.getDataSource().invalidate();
             }
@@ -185,7 +185,7 @@ public class ModulePictureFragment extends LazyFragment implements ModulePickAda
             data.setIndex(item.getIndex());
             mEditViewModel.setMaterialData(mReplacePosition, data);
             NavController mNavController =
-                Navigation.findNavController(mActivity, R.id.nav_host_fragment_module_detail);
+                    Navigation.findNavController(mActivity, R.id.nav_host_fragment_module_detail);
             NavDestination navDestination = mNavController.getCurrentDestination();
             if (navDestination != null && navDestination.getId() == R.id.videoModuleReplaceFragment) {
                 mNavController.popBackStack(R.id.videoModuleEditFragment, false);
@@ -196,7 +196,15 @@ public class ModulePictureFragment extends LazyFragment implements ModulePickAda
             mToastWrapper.makeTextWithShow(mActivity, getResources().getString(R.string.selected_upper_limit), 700);
             return;
         }
-        MediaData item = adapter.getCurrentList().get(position);
+        if (adapter == null) {
+            return;
+        }
+        PagedList<MediaData> pagedList1 = adapter.getCurrentList();
+        if (pagedList1 == null) {
+            return;
+        }
+
+        MediaData item = pagedList1.get(position);
         if (item == null) {
             return;
         }

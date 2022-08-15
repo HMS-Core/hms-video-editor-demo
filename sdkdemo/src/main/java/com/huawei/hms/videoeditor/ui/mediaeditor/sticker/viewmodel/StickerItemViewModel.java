@@ -17,9 +17,12 @@
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.sticker.viewmodel;
 
-import java.util.List;
-
 import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.huawei.hms.videoeditor.ui.common.bean.CloudMaterialBean;
 import com.huawei.hms.videoeditor.ui.common.bean.MaterialsDownloadInfo;
@@ -27,10 +30,7 @@ import com.huawei.hms.videoeditor.ui.mediaeditor.repository.LoadUrlEvent;
 import com.huawei.hms.videoeditor.ui.mediaeditor.repository.MaterialsListener;
 import com.huawei.hms.videoeditor.ui.mediaeditor.repository.MaterialsRespository;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+import java.util.List;
 
 public class StickerItemViewModel extends AndroidViewModel {
 
@@ -49,7 +49,7 @@ public class StickerItemViewModel extends AndroidViewModel {
     public StickerItemViewModel(@NonNull Application application) {
         super(application);
         materialsRespository = new MaterialsRespository(application);
-        materialsRespository.setMaterialsListener(materialsListener);
+        materialsRespository.setMaterialsListener(listener);
     }
 
     public MutableLiveData<List<CloudMaterialBean>> getPageData() {
@@ -64,19 +64,12 @@ public class StickerItemViewModel extends AndroidViewModel {
         return errorType;
     }
 
-    public MutableLiveData<MaterialsDownloadInfo> getDownloadInfo() {
-        return downloadInfo;
-    }
-
     public MutableLiveData<LoadUrlEvent> getLoadUrlEvent() {
         return loadUrlEvent;
     }
 
-    public void loadMaterials(String cutContent, Integer page) {
-        if (materialsRespository == null || cutContent == null) {
-            return;
-        }
-        materialsRespository.loadMaterials(cutContent, page);
+    public MutableLiveData<MaterialsDownloadInfo> getDownloadInfo() {
+        return downloadInfo;
     }
 
     public void downloadMaterials(int previousPosition, int position, CloudMaterialBean cutContent) {
@@ -86,17 +79,24 @@ public class StickerItemViewModel extends AndroidViewModel {
         materialsRespository.downloadMaterials(previousPosition, position, cutContent);
     }
 
+    public void loadMaterials(String cutContent, Integer page) {
+        if (materialsRespository == null || cutContent == null) {
+            return;
+        }
+        materialsRespository.loadMaterials(cutContent, page);
+    }
+
     @Override
     protected void onCleared() {
         super.onCleared();
-        materialsListener = null;
         materialsRespository = null;
+        listener = null;
     }
 
-    private MaterialsListener materialsListener = new MaterialsListener() {
+    private MaterialsListener listener = new MaterialsListener() {
         @Override
-        public void pageData(List<CloudMaterialBean> materialsCutContentList) {
-            pageData.postValue(materialsCutContentList);
+        public void pageData(List<CloudMaterialBean> cloudMaterialBeans) {
+            pageData.postValue(cloudMaterialBeans);
         }
 
         @Override
@@ -110,13 +110,13 @@ public class StickerItemViewModel extends AndroidViewModel {
         }
 
         @Override
-        public void downloadInfo(MaterialsDownloadInfo materialsDownloadInfo) {
-            downloadInfo.postValue(materialsDownloadInfo);
+        public void downloadInfo(MaterialsDownloadInfo downloadInfo1) {
+            downloadInfo.postValue(downloadInfo1);
         }
 
         @Override
-        public void loadUrlEvent(LoadUrlEvent mLoadUrlEvent) {
-            loadUrlEvent.postValue(mLoadUrlEvent);
+        public void loadUrlEvent(LoadUrlEvent event) {
+            loadUrlEvent.postValue(event);
         }
     };
 }

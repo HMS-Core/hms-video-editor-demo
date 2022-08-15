@@ -17,7 +17,6 @@
 package com.huawei.hms.videoeditor.ui.template.module;
 
 import static android.app.Activity.RESULT_OK;
-import static com.huawei.hms.videoeditor.ui.mediaexport.VideoExportActivity.SOURCE_HIMOVIE_LOCALVIDEO;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -60,10 +59,10 @@ import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.utils.GsonUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.ScreenUtil;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
-import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
 import com.huawei.hms.videoeditor.ui.common.view.decoration.HorizontalDividerDecoration;
 import com.huawei.hms.videoeditor.ui.common.view.dialog.CommonBottomDialog;
 import com.huawei.hms.videoeditor.ui.mediaexport.VideoExportActivity;
+import com.huawei.hms.videoeditor.ui.mediaexport.model.ExportConstants;
 import com.huawei.hms.videoeditor.ui.template.adapter.ModuleEditSelectAdapter;
 import com.huawei.hms.videoeditor.ui.template.bean.Constant;
 import com.huawei.hms.videoeditor.ui.template.bean.TemplateProjectBean;
@@ -475,14 +474,14 @@ public class VideoModuleEditFragment extends BaseFragment implements HuaweiVideo
         }
 
         Intent intent = new Intent(context, VideoExportActivity.class);
-        intent.putExtra(VideoExportActivity.EXPORT_TYPE_TAG, VideoExportActivity.TEMPLATE_EXPORT_TYPE);
+        intent.putExtra(ExportConstants.EXPORT_TYPE_TAG, ExportConstants.TEMPLATE_EXPORT_TYPE);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            intent.putExtra(VideoExportActivity.TEMPLATE_ID, bundle.getString(VideoExportActivity.TEMPLATE_ID));
-            intent.putExtra(VideoExportActivity.TEMPLATE_NAME, bundle.getString("name"));
+            intent.putExtra(ExportConstants.TEMPLATE_ID, bundle.getString(ExportConstants.TEMPLATE_ID));
+            intent.putExtra(ExportConstants.TEMPLATE_NAME, bundle.getString("name"));
             intent.putExtra(TemplateDetailActivity.TEMPLATE_TYPE,
                 bundle.getString(TemplateDetailActivity.TEMPLATE_TYPE));
-            intent.putExtra(VideoExportActivity.EDITOR_UUID, mEditor.getUuid());
+            intent.putExtra(ExportConstants.EDITOR_UUID, mEditor.getUuid());
             mSource = bundle.getString("source");
             intent.putExtra("source", mSource);
         }
@@ -494,7 +493,7 @@ public class VideoModuleEditFragment extends BaseFragment implements HuaweiVideo
 
         HVEAsset asset = timeLine.getCoverImage();
         if (asset != null) {
-            intent.putExtra(VideoExportActivity.COVER_URL, asset.getPath());
+            intent.putExtra(ExportConstants.COVER_URL, asset.getPath());
         }
 
         ModuleSelectManager.getInstance().destroy();
@@ -687,10 +686,10 @@ public class VideoModuleEditFragment extends BaseFragment implements HuaweiVideo
         isPauseTimeLine = false;
         SmartLog.d(TAG, " tEST" + " onResume");
         if (mEditor != null) {
-            // mCurrentTime = 0;
             if (mVideoLayout.getChildCount() == 0) {
                 mEditor.setDisplay(mVideoLayout);
             }
+            mEditor.seekTimeLine(mCurrentTime);
             mEditor.setPlayCallback(this);
         }
         if (seekBar != null) {
@@ -807,14 +806,9 @@ public class VideoModuleEditFragment extends BaseFragment implements HuaweiVideo
     }
 
     private void finish() {
-        if (SOURCE_HIMOVIE_LOCALVIDEO.equals(mSource)) {
-            mActivity.setResult(RESULT_OK);
-        } else {
-            mActivity.setResult(Constant.RESULT_CODE);
-        }
+        mActivity.setResult(Constant.RESULT_CODE);
         mActivity.finish();
         if (mEditor != null) {
-            mEditor.stopRenderer();
             mEditor.stopEditor();
             mEditor = null;
         }

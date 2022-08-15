@@ -78,7 +78,7 @@ public class TransitionItemAdapter extends RecyclerView.Adapter<TransitionItemAd
     @Override
     public TransitionItemAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view =
-                LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_add_animation_item, parent, false);
+            LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_add_animation_item, parent, false);
         return new TransitionItemAdapter.ViewHolder(view);
     }
 
@@ -87,23 +87,24 @@ public class TransitionItemAdapter extends RecyclerView.Adapter<TransitionItemAd
         CloudMaterialBean materialsCutContent = list.get(position);
 
         Glide.with(mContext)
-                .load(!StringUtil.isEmpty(materialsCutContent.getPreviewUrl()) ? materialsCutContent.getPreviewUrl() : materialsCutContent.getLocalDrawableId())
-                .apply(new RequestOptions()
-                        .transform(new MultiTransformation(new CenterCrop(), new RoundedCorners(SizeUtils.dp2Px(mContext, 4)))))
-                .addListener(new RequestListener<Drawable>() {
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target,
-                                                boolean isFirstResource) {
-                        return false;
-                    }
+            .load(!StringUtil.isEmpty(materialsCutContent.getPreviewUrl()) ? materialsCutContent.getPreviewUrl()
+                : materialsCutContent.getLocalDrawableId())
+            .apply(new RequestOptions()
+                .transform(new MultiTransformation(new CenterCrop(), new RoundedCorners(SizeUtils.dp2Px(mContext, 4)))))
+            .addListener(new RequestListener<Drawable>() {
+                @Override
+                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target,
+                    boolean isFirstResource) {
+                    return false;
+                }
 
-                    @Override
-                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target,
-                                                   DataSource dataSource, boolean isFirstResource) {
-                        return false;
-                    }
-                })
-                .into(holder.itemIv);
+                @Override
+                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target,
+                    DataSource dataSource, boolean isFirstResource) {
+                    return false;
+                }
+            })
+            .into(holder.itemIv);
         holder.selectView.setVisibility(selectPosition == position ? View.VISIBLE : View.INVISIBLE);
         holder.nameTv.setText(materialsCutContent.getName());
         holder.mDownloadPbCenterTv.setVisibility(View.GONE);

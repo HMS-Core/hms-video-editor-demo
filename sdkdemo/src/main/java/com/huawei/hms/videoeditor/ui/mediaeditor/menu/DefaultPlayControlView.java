@@ -39,6 +39,8 @@ import com.huawei.hms.videoeditorkit.sdkdemo.R;
 public class DefaultPlayControlView extends RelativeLayout {
     private static final String TAG = "DefaultPlayControlView";
 
+    private static boolean isSeekBarNeedSeek = true;
+
     private final Context mContext;
 
     private final SharedPreferencesUtils mSpUtils = SharedPreferencesUtils.getInstance();
@@ -71,6 +73,10 @@ public class DefaultPlayControlView extends RelativeLayout {
 
     public interface HideLockButton {
         void isShowLockButton(boolean isShow);
+    }
+
+    public static void setNeedSeek(boolean needSeek) {
+        isSeekBarNeedSeek = needSeek;
     }
 
     public void setSoundListener(OnSoundSwitchClickListener soundListener) {
@@ -182,7 +188,9 @@ public class DefaultPlayControlView extends RelativeLayout {
                     if (editor == null) {
                         return;
                     }
-                    editor.seekTimeLine(i);
+                    if (isSeekBarNeedSeek) {
+                        editor.seekTimeLine(i);
+                    }
                     seekListener.onSeek(i);
                 }
             }

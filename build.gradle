@@ -27,9 +27,12 @@ task clean(type: Delete) {
 }
 
 ext {
-    ve_sdk_versionCode = '10100303'
-    ve_sdk_versionName = '1.1.0.303'
+    ve_sdk_versionCode = '10100304'
+    ve_sdk_versionName = '1.1.0.304'
 
-    ve_apk_versionCode = '10100303'
-    ve_apk_versionName= '1.1.0.303'
+    ve_apk_versionCode = '10100304'
+    ve_apk_versionName= '1.1.0.304'
+
+    VersionName_video_editer_demo = '3.0.0.300'
+    VersionCode_video_editer_demo = '300001300'
 }

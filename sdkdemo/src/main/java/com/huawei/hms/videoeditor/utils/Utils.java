@@ -24,7 +24,7 @@ import android.graphics.Point;
 import android.media.MediaMetadataRetriever;
 import android.util.Log;
 
-import com.huawei.hms.videoeditor.sdk.util.SmartLog;
+import com.huawei.hms.videoeditor.ui.common.utils.FileUtil;
 
 public class Utils {
     private static final String TAG = "Utils";
@@ -62,7 +62,7 @@ public class Utils {
                         return;
                     }
                     long duration = Long.parseLong(durationStr);
-                    long time = 0;
+                    long time = 0L;
                     while (time < duration) {
                         Bitmap bitmap = media.getFrameAtTime(time * 1000, MediaMetadataRetriever.OPTION_CLOSEST_SYNC);
                         Bitmap result = scaleAndCutBitmap(bitmap, width, height, 0);
@@ -119,5 +119,9 @@ public class Utils {
         }
 
         return scale > 1 ? 1 : scale;
+    }
+
+    public static boolean isVideoByPath(String filePath) {
+        return FileUtil.isVideo(filePath);
     }
 }

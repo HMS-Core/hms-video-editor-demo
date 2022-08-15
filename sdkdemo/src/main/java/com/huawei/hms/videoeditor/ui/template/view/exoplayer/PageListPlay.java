@@ -129,6 +129,9 @@ public class PageListPlay {
     }
 
     public void showPlayOrPause(boolean isPlaying) {
+        if (imgPlay == null) {
+            return;
+        }
         imgPlay.setImageResource(isPlaying ? R.drawable.edit_pause : R.drawable.ic_play_video);
     }
 

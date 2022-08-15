@@ -38,16 +38,15 @@ import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewS
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_VIDEO_OPERATION;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_VIDEO_STATE;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_VIDEO_STATE_AI_SEGMENTATION;
+import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_VIDEO_STATE_BODY_SEG;
+import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_VIDEO_STATE_HEAD_SEG;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_VIDEO_STATE_HUMAN_TRACKING;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_VIDEO_STATE_INVERTED;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_VIDEO_STATE_MASK;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_VIDEO_STATE_MOVE;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_VIDEO_STATE_PROPORTION;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_VIDEO_STATE_SPEED;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_VIDEO_STATE_WINGS;
 
 import android.animation.LayoutTransition;
 import android.app.Activity;
@@ -59,6 +58,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.huawei.hms.videoeditor.sdk.HVETimeLine;
 import com.huawei.hms.videoeditor.sdk.HuaweiVideoEditor;
@@ -73,6 +79,7 @@ import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.BaseFragment;
 import com.huawei.hms.videoeditor.ui.common.EditorManager;
 import com.huawei.hms.videoeditor.ui.mediaeditor.VideoClipsActivity;
+import com.huawei.hms.videoeditor.ui.mediaeditor.aibodyseg.BodySegViewModel;
 import com.huawei.hms.videoeditor.ui.mediaeditor.aisegmantation.SegmentationViewModel;
 import com.huawei.hms.videoeditor.ui.mediaeditor.graffiti.GraffitiManager;
 import com.huawei.hms.videoeditor.ui.mediaeditor.graffiti.view.GraffitiView;
@@ -88,12 +95,9 @@ import com.huawei.hms.videoeditor.ui.mediaeditor.timelapse.TimeLapseViewModel;
 import com.huawei.hms.videoeditor.ui.mediaeditor.trackview.viewmodel.EditPreviewViewModel;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
 public class MenuFragment extends Fragment {
     private static final String TAG = "MenuFragment";
@@ -135,6 +139,8 @@ public class MenuFragment extends Fragment {
     private MenuViewModel mMenuViewModel;
 
     private TimeLapseViewModel mTimeLapseViewModel;
+
+    private BodySegViewModel mBodySegViewModel;
 
     private long mLastClickTime = 0;
 
@@ -206,6 +212,7 @@ public class MenuFragment extends Fragment {
         mPersonTrackingViewModel = new ViewModelProvider(mActivity, mFactory).get(PersonTrackingViewModel.class);
         mTimeLapseViewModel = new ViewModelProvider(mActivity, mFactory).get(TimeLapseViewModel.class);
         mSegmentationViewModel = new ViewModelProvider(mActivity, mFactory).get(SegmentationViewModel.class);
+        mBodySegViewModel = new ViewModelProvider(mActivity, mFactory).get(BodySegViewModel.class);
     }
 
     private void initView(View view) {
@@ -217,7 +224,8 @@ public class MenuFragment extends Fragment {
         mGraffitiView = view.findViewById(R.id.graffiti_view);
         MenuClickManager.getInstance()
             .init(mActivity, menuContentLayout, mMenuViewModel, mEditPreviewViewModel, mMaterialEditViewModel,
-                mPersonTrackingViewModel, mTimeLapseViewModel, mSegmentationViewModel);
+                mPersonTrackingViewModel, mTimeLapseViewModel, mSegmentationViewModel,
+                mBodySegViewModel);
     }
 
     private void initData() {
@@ -239,7 +247,7 @@ public class MenuFragment extends Fragment {
         }
         MenuClickManager.getInstance()
             .update(mActivity, menuContentLayout, mMenuViewModel, mEditPreviewViewModel, mMaterialEditViewModel,
-                mPersonTrackingViewModel, mSegmentationViewModel);
+                mPersonTrackingViewModel, mSegmentationViewModel, mBodySegViewModel);
     }
 
     private void initEvent(View view) {
@@ -439,13 +447,15 @@ public class MenuFragment extends Fragment {
                         boolean isVideoReverse = ((HVEVideoAsset) hveAsset).isVideoReverse();
                         if (isVideoReverse) {
                             ableIds.add(EDIT_VIDEO_STATE_HUMAN_TRACKING);
+                            ableIds.add(EDIT_VIDEO_STATE_BODY_SEG);
+                            ableIds.add(EDIT_VIDEO_STATE_HEAD_SEG);
+                            ableIds.add(EDIT_VIDEO_STATE_WINGS);
                         }
                         boolean isHumanTracking = isContainHumanTrackingEffect(hveAsset);
-                        if (isHumanTracking) {
-                            ableIds.add(EDIT_VIDEO_STATE_INVERTED);
-                        }
                         boolean isSegmentation = isSegmentationEnabled(hveAsset);
-                        if (isSegmentation) {
+                        boolean isBodySegmentation = isContainBodySegmentationEffect(hveAsset);
+                        boolean isWings = isContainWingsEffect(hveAsset);
+                        if (isHumanTracking || isSegmentation || isBodySegmentation || isWings) {
                             ableIds.add(EDIT_VIDEO_STATE_INVERTED);
                         }
                         menuContentLayout.updateUnAbleMenus(false, ableIds);
@@ -556,7 +566,9 @@ public class MenuFragment extends Fragment {
                             }
                             boolean isHumanTracking = isContainHumanTrackingEffect(selectedHveAsset);
                             boolean isSegmentation = isSegmentationEnabled(selectedHveAsset);
-                            if (isHumanTracking || isSegmentation) {
+                            boolean isBodySegmentation = isContainBodySegmentationEffect(selectedHveAsset);
+                            boolean isWings = isContainWingsEffect(selectedHveAsset);
+                            if (isHumanTracking || isSegmentation || isBodySegmentation || isWings) {
                                 unableIds.addAll(MenuClickManager.getInstance().getUnableOperateIds(9));
                             }
                         }
@@ -576,7 +588,9 @@ public class MenuFragment extends Fragment {
                             }
                             boolean isHumanTracking = isContainHumanTrackingEffect(selectedHveAsset);
                             boolean isSegmentation = isSegmentationEnabled(selectedHveAsset);
-                            if (isHumanTracking || isSegmentation) {
+                            boolean isBodySegmentation = isContainBodySegmentationEffect(selectedHveAsset);
+                            boolean isWings = isContainWingsEffect(selectedHveAsset);
+                            if (isHumanTracking || isSegmentation || isBodySegmentation || isWings) {
                                 unableIds.addAll(MenuClickManager.getInstance().getUnableOperateIds(9));
                             }
                         }
@@ -689,6 +703,16 @@ public class MenuFragment extends Fragment {
         return !effects.isEmpty();
     }
 
+    private boolean isContainBodySegmentationEffect(HVEAsset asset) {
+        List<HVEEffect> effects = asset.getEffectsWithType(HVEEffect.HVEEffectType.BODY_SEG);
+        return !effects.isEmpty();
+    }
+
+    private boolean isContainWingsEffect(HVEAsset asset) {
+        List<HVEEffect> effects = asset.getEffectsWithType(HVEEffect.HVEEffectType.WINGS);
+        return !effects.isEmpty();
+    }
+
     private boolean isContainHumanTrackingEffect(HVEAsset asset) {
         for (HVEEffect effect : asset.getEffects()) {
             if (effect.getEffectType() == HVEEffect.HVEEffectType.HUMAN_TRACKING) {
@@ -737,7 +761,10 @@ public class MenuFragment extends Fragment {
                                     startTime = valueLong;
                                 }
                             }
-                            wordAsset = mMenuViewModel.addText(getResources().getString(R.string.inputtext), startTime);
+                            if (isAdded()) {
+                                wordAsset =
+                                    mMenuViewModel.addText(getResources().getString(R.string.inputtext), startTime);
+                            }
                         }
                         if (wordAsset == null) {
                             SmartLog.e(TAG, "wordAsset is null");

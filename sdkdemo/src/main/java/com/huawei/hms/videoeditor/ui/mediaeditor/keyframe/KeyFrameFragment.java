@@ -16,6 +16,9 @@
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.keyframe;
 
+import static com.huawei.hms.videoeditor.ui.common.bean.Constant.LTR_UI;
+import static com.huawei.hms.videoeditor.ui.common.bean.Constant.RTL_UI;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -48,9 +51,6 @@ import com.huawei.hms.videoeditorkit.sdkdemo.R;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.huawei.hms.videoeditor.ui.common.bean.Constant.LTR_UI;
-import static com.huawei.hms.videoeditor.ui.common.bean.Constant.RTL_UI;
 
 public class KeyFrameFragment extends BaseFragment {
     public static final String TAG = "KeyFrameFragment";
@@ -255,7 +255,7 @@ public class KeyFrameFragment extends BaseFragment {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (selectedAsset == null) {
+                if (selectedAsset == null || !(selectedAsset instanceof HVEKeyFrameAbility)) {
                     return;
                 }
 

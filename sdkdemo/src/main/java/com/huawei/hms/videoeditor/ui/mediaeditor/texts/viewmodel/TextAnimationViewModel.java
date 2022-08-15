@@ -16,9 +16,12 @@
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.texts.viewmodel;
 
-import java.util.List;
-
 import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.huawei.hms.videoeditor.materials.HVEColumnInfo;
 import com.huawei.hms.videoeditor.sdk.asset.HVEAsset;
@@ -32,10 +35,7 @@ import com.huawei.hms.videoeditor.ui.mediaeditor.repository.MaterialsListener;
 import com.huawei.hms.videoeditor.ui.mediaeditor.repository.MaterialsRespository;
 import com.huawei.hms.videoeditor.ui.mediaeditor.texts.repository.TextAnimationRepository;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+import java.util.List;
 
 public class TextAnimationViewModel extends AndroidViewModel {
     private static final String TAG = "TextAnimationViewModel";
@@ -48,15 +48,15 @@ public class TextAnimationViewModel extends AndroidViewModel {
 
     private MutableLiveData<Integer> errorType = new MutableLiveData<>();
 
-    private final MutableLiveData<List<CloudMaterialBean>> pageData = new MutableLiveData<>();
-
-    private final MutableLiveData<Boolean> boundaryPageData = new MutableLiveData<>();
-
     private final MutableLiveData<MaterialsDownloadInfo> downloadInfo = new MutableLiveData<>();
 
     private final MutableLiveData<LoadUrlEvent> loadUrlEvent = new MutableLiveData<>();
 
     private MutableLiveData<CloudMaterialBean> selectData = new MutableLiveData<>();
+
+    private final MutableLiveData<List<CloudMaterialBean>> pageData = new MutableLiveData<>();
+
+    private final MutableLiveData<Boolean> boundaryPageData = new MutableLiveData<>();
 
     public TextAnimationViewModel(@NonNull Application application) {
         super(application);
@@ -64,18 +64,6 @@ public class TextAnimationViewModel extends AndroidViewModel {
         materialsRespository = new MaterialsRespository(application);
         columnsRespository.seatColumnsListener(columnsListener);
         materialsRespository.setMaterialsListener(materialsListener);
-    }
-
-    public MutableLiveData<List<HVEColumnInfo>> getColumns() {
-        return columns;
-    }
-
-    public MutableLiveData<Integer> getErrorType() {
-        return errorType;
-    }
-
-    public MutableLiveData<List<CloudMaterialBean>> getPageData() {
-        return pageData;
     }
 
     public LiveData<Boolean> getBoundaryPageData() {
@@ -90,8 +78,27 @@ public class TextAnimationViewModel extends AndroidViewModel {
         return loadUrlEvent;
     }
 
+    public MutableLiveData<List<HVEColumnInfo>> getColumns() {
+        return columns;
+    }
+
+    public MutableLiveData<Integer> getErrorType() {
+        return errorType;
+    }
+
+    public MutableLiveData<List<CloudMaterialBean>> getPageData() {
+        return pageData;
+    }
+
     public MutableLiveData<CloudMaterialBean> getSelectData() {
         return selectData;
+    }
+
+    public void loadMaterials(HVEColumnInfo cutContent, Integer page) {
+        if (materialsRespository == null || cutContent == null) {
+            return;
+        }
+        materialsRespository.loadMaterials(cutContent.getColumnId(), page);
     }
 
     public void setSelectCutContent(CloudMaterialBean mCutContent) {
@@ -102,25 +109,11 @@ public class TextAnimationViewModel extends AndroidViewModel {
         columnsRespository.initColumns(type);
     }
 
-    public void loadMaterials(HVEColumnInfo cutContent, Integer page) {
-        if (materialsRespository == null || cutContent == null) {
-            return;
-        }
-        materialsRespository.loadMaterials(cutContent.getColumnId(), page);
-    }
-
     public void downloadMaterials(int previousPosition, int position, CloudMaterialBean cutContent) {
         if (materialsRespository == null || cutContent == null) {
             return;
         }
         materialsRespository.downloadMaterials(previousPosition, position, cutContent);
-    }
-
-    public HVEEffect getEnterAnimation(HVEAsset asset) {
-        if (asset == null) {
-            return null;
-        }
-        return TextAnimationRepository.getEnterAnimation(asset);
     }
 
     public HVEEffect getLeaveAnimation(HVEAsset asset) {
@@ -130,6 +123,13 @@ public class TextAnimationViewModel extends AndroidViewModel {
         return TextAnimationRepository.getLeaveAnimation(asset);
     }
 
+    public HVEEffect getEnterAnimation(HVEAsset asset) {
+        if (asset == null) {
+            return null;
+        }
+        return TextAnimationRepository.getEnterAnimation(asset);
+    }
+
     public HVEEffect getCycleAnimation(HVEAsset asset) {
         if (asset == null) {
             return null;
@@ -137,27 +137,34 @@ public class TextAnimationViewModel extends AndroidViewModel {
         return TextAnimationRepository.getCycleAnimation(asset);
     }
 
-    public HVEEffect appendAnimation(HVEAsset asset, CloudMaterialBean content, long duration, String type) {
+    public HVEEffect appendAnimation(HVEAsset hveAsset, CloudMaterialBean cloudMaterialBean, long duration,
+        String type) {
         HVEEffect animationEffect = null;
-        if (asset == null) {
+        if (hveAsset == null) {
             return animationEffect;
         }
 
-        if (content == null) {
+        if (cloudMaterialBean == null) {
             return animationEffect;
         }
         switch (type) {
             case HVEEffect.ENTER_ANIMATION:
-                animationEffect = TextAnimationRepository.appendEnterAnimation(asset,
-                    new HVEEffect.Options(content.getName(), content.getId(), content.getLocalPath()), duration);
+                animationEffect = TextAnimationRepository.appendEnterAnimation(hveAsset,
+                    new HVEEffect.Options(cloudMaterialBean.getName(), cloudMaterialBean.getId(),
+                        cloudMaterialBean.getLocalPath()),
+                    duration);
                 break;
             case HVEEffect.LEAVE_ANIMATION:
-                animationEffect = TextAnimationRepository.appendLeaveAnimation(asset,
-                    new HVEEffect.Options(content.getName(), content.getId(), content.getLocalPath()), duration);
+                animationEffect = TextAnimationRepository.appendLeaveAnimation(hveAsset,
+                    new HVEEffect.Options(cloudMaterialBean.getName(), cloudMaterialBean.getId(),
+                        cloudMaterialBean.getLocalPath()),
+                    duration);
                 break;
             case HVEEffect.CYCLE_ANIMATION:
-                animationEffect = TextAnimationRepository.appendCycleAnimation(asset,
-                    new HVEEffect.Options(content.getName(), content.getId(), content.getLocalPath()), duration);
+                animationEffect = TextAnimationRepository.appendCycleAnimation(hveAsset,
+                    new HVEEffect.Options(cloudMaterialBean.getName(), cloudMaterialBean.getId(),
+                        cloudMaterialBean.getLocalPath()),
+                    duration);
                 break;
             default:
                 animationEffect = null;
@@ -166,20 +173,20 @@ public class TextAnimationViewModel extends AndroidViewModel {
         return animationEffect;
     }
 
-    public boolean removeAnimation(HVEAsset asset, String type) {
+    public boolean removeAnimation(HVEAsset hveAsset, String type) {
         boolean isRemove = false;
-        if (asset == null) {
+        if (hveAsset == null) {
             return isRemove;
         }
         switch (type) {
             case HVEEffect.ENTER_ANIMATION:
-                isRemove = TextAnimationRepository.removeEnterAnimation(asset);
+                isRemove = TextAnimationRepository.removeEnterAnimation(hveAsset);
                 break;
             case HVEEffect.LEAVE_ANIMATION:
-                isRemove = TextAnimationRepository.removeLeaveAnimation(asset);
+                isRemove = TextAnimationRepository.removeLeaveAnimation(hveAsset);
                 break;
             case HVEEffect.CYCLE_ANIMATION:
-                isRemove = TextAnimationRepository.removeCycleAnimation(asset);
+                isRemove = TextAnimationRepository.removeCycleAnimation(hveAsset);
                 break;
             default:
                 isRemove = false;
@@ -188,20 +195,20 @@ public class TextAnimationViewModel extends AndroidViewModel {
         return isRemove;
     }
 
-    public boolean setAnimationDuration(HVEAsset asset, long duration, String type) {
+    public boolean setAnimationDuration(HVEAsset hveAsset, long duration, String type) {
         boolean isSetDuration = false;
-        if (asset == null) {
+        if (hveAsset == null) {
             return isSetDuration;
         }
         switch (type) {
             case HVEEffect.ENTER_ANIMATION:
-                isSetDuration = TextAnimationRepository.setEnterAnimationDuration(asset, duration);
+                isSetDuration = TextAnimationRepository.setEnterAnimationDuration(hveAsset, duration);
                 break;
             case HVEEffect.LEAVE_ANIMATION:
-                isSetDuration = TextAnimationRepository.setLeaveAnimationDuration(asset, duration);
+                isSetDuration = TextAnimationRepository.setLeaveAnimationDuration(hveAsset, duration);
                 break;
             case HVEEffect.CYCLE_ANIMATION:
-                isSetDuration = TextAnimationRepository.setCycleAnimationDuration(asset, duration);
+                isSetDuration = TextAnimationRepository.setCycleAnimationDuration(hveAsset, duration);
                 break;
             default:
                 isSetDuration = false;
@@ -210,11 +217,11 @@ public class TextAnimationViewModel extends AndroidViewModel {
         return isSetDuration;
     }
 
-    public int getSelectedPosition(HVEAsset hveAsset, List<CloudMaterialBean> animList, String type) {
+    public int getSelectedPosition(HVEAsset asset, List<CloudMaterialBean> animList, String type) {
         int selectedPosition = 0;
-        HVEEffect enterEffect = getEnterAnimation(hveAsset);
-        HVEEffect leaveEffect = getLeaveAnimation(hveAsset);
-        HVEEffect cycleEffect = getCycleAnimation(hveAsset);
+        HVEEffect enterEffect = getEnterAnimation(asset);
+        HVEEffect leaveEffect = getLeaveAnimation(asset);
+        HVEEffect cycleEffect = getCycleAnimation(asset);
 
         if (enterEffect != null && type.equals(HVEEffect.ENTER_ANIMATION)) {
             selectedPosition = getPosition(enterEffect, animList);
@@ -230,10 +237,10 @@ public class TextAnimationViewModel extends AndroidViewModel {
         return selectedPosition;
     }
 
-    private int getPosition(HVEEffect animEffect, List<CloudMaterialBean> animList) {
+    private int getPosition(HVEEffect effect, List<CloudMaterialBean> animList) {
         int selectedPosition = 0;
         for (int i = 0; i < animList.size(); i++) {
-            if (animEffect.getOptions().getEffectId().equals(animList.get(i).getId())) {
+            if (effect.getOptions().getEffectId().equals(animList.get(i).getId())) {
                 selectedPosition = i;
                 break;
             }
@@ -250,18 +257,6 @@ public class TextAnimationViewModel extends AndroidViewModel {
         materialsListener = null;
 
     }
-
-    private ColumnsListener columnsListener = new ColumnsListener() {
-        @Override
-        public void columsData(List<HVEColumnInfo> materialsCutContentList) {
-            columns.postValue(materialsCutContentList);
-        }
-
-        @Override
-        public void errorType(int type) {
-            errorType.postValue(type);
-        }
-    };
 
     private MaterialsListener materialsListener = new MaterialsListener() {
         @Override
@@ -287,6 +282,18 @@ public class TextAnimationViewModel extends AndroidViewModel {
         @Override
         public void loadUrlEvent(LoadUrlEvent mLoadUrlEvent) {
             loadUrlEvent.postValue(mLoadUrlEvent);
+        }
+    };
+
+    private ColumnsListener columnsListener = new ColumnsListener() {
+        @Override
+        public void columsData(List<HVEColumnInfo> materialsCutContentList) {
+            columns.postValue(materialsCutContentList);
+        }
+
+        @Override
+        public void errorType(int type) {
+            errorType.postValue(type);
         }
     };
 }

@@ -20,9 +20,6 @@ package com.huawei.hms.videoeditor.ui.mediaeditor.texts.fragment;
 import static com.huawei.hms.videoeditor.ui.common.bean.Constant.LTR_UI;
 import static com.huawei.hms.videoeditor.ui.common.bean.Constant.RTL_UI;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -38,6 +35,16 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
+import androidx.navigation.NavigatorProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.huawei.hms.videoeditor.sdk.HVETimeLine;
 import com.huawei.hms.videoeditor.sdk.HuaweiVideoEditor;
@@ -59,18 +66,11 @@ import com.huawei.hms.videoeditor.ui.mediaeditor.animation.AnimationPanelViewMod
 import com.huawei.hms.videoeditor.ui.mediaeditor.materialedit.MaterialEditViewModel;
 import com.huawei.hms.videoeditor.ui.mediaeditor.texts.viewmodel.TextPanelViewModel;
 import com.huawei.hms.videoeditor.ui.mediaeditor.trackview.viewmodel.EditPreviewViewModel;
-import com.huawei.secure.android.common.intent.SafeBundle;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
+import com.huawei.secure.android.common.intent.SafeBundle;
 
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
-import androidx.navigation.NavigatorProvider;
-import androidx.navigation.fragment.NavHostFragment;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EditPanelFragment extends BaseFragment {
 
@@ -103,7 +103,7 @@ public class EditPanelFragment extends BaseFragment {
     private List<TabTopInfo<?>> mInfoList;
 
     private final int[] aTabs = {R.string.keybaord, R.string.edit_item2_1_2, R.string.cut_second_menu_animation,
-         R.string.edit_item2_1_12, R.string.edit_item2_1_13 };
+                R.string.edit_item2_1_12, R.string.edit_item2_1_13};
 
     private final int[] aTabsForCover =
         {R.string.keybaord, R.string.edit_item2_1_2, R.string.edit_item2_1_12, R.string.edit_item2_1_13};
@@ -475,12 +475,11 @@ public class EditPanelFragment extends BaseFragment {
             }
         });
 
-        viewModel.getTimeout()
-            .observe(this, isTimeout -> {
-                if (isTimeout && !isBackground) {
-                    mActivity.onBackPressed();
-                }
-            });
+        viewModel.getTimeout().observe(this, isTimeout -> {
+            if (isTimeout && !isBackground) {
+                mActivity.onBackPressed();
+            }
+        });
     }
 
     @Override
@@ -524,7 +523,7 @@ public class EditPanelFragment extends BaseFragment {
         mEditPreviewViewModel.setAddCoverTextStatus(false);
         if (StringUtil.isEmpty(mEditText.getText().toString())) {
             HVEAsset selectedAsset = mEditPreviewViewModel.getSelectedAsset();
-            if (selectedAsset != null) {
+            if (selectedAsset instanceof HVEWordAsset) {
                 int index = selectedAsset.getIndex();
                 int lineIndex = selectedAsset.getLaneIndex();
                 deleteTextNew(index, lineIndex);

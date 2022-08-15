@@ -140,6 +140,26 @@
           "children": []
         },
         {
+          "id": 101229,
+          "name": "cut_second_menu_body_seg",
+          "cnName": "人像分割",
+          "drawableName": "edit_menu_body_seg",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        },
+        {
+          "id": 101230,
+          "name": "cut_second_menu_head_seg",
+          "cnName": "头部分割",
+          "drawableName": "edit_menu_body_seg",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        },
+        {
           "id": 101206,
           "name": "cut_second_menu_delete",
           "cnName": "删除",
@@ -618,6 +638,26 @@
           "children": []
         },
         {
+          "id": 201129,
+          "name": "cut_second_menu_body_seg",
+          "cnName": "人像分割",
+          "drawableName": "edit_menu_body_seg",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 201130,
+          "name": "cut_second_menu_head_seg",
+          "cnName": "头部分割",
+          "drawableName": "edit_menu_body_seg",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 0,
+          "children": []
+        },
+        {
           "id": 201123,
           "name": "cut_second_menu_fun",
           "cnName": "AI趣玩",
@@ -1087,6 +1127,26 @@
           "parentId": 101,
           "enable": 1,
           "isAdvanced": 0,
+          "children": []
+        },
+        {
+          "id": 207129,
+          "name": "cut_second_menu_body_seg",
+          "cnName": "人像分割",
+          "drawableName": "edit_menu_body_seg",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 2,
+          "children": []
+        },
+        {
+          "id": 207130,
+          "name": "cut_second_menu_head_seg",
+          "cnName": "头部分割",
+          "drawableName": "edit_menu_body_seg",
+          "parentId": 101,
+          "enable": 1,
+          "isAdvanced": 2,
           "children": []
         },
         {

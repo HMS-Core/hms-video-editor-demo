@@ -123,9 +123,9 @@ public class FilterAdjustPanelView extends BaseFragment
 
     private String contentId;
 
-    private long startTime = 0;
+    private long startTime = 0L;
 
-    private long endTime = 0;
+    private long endTime = 0L;
 
     private HVEVisibleAsset visibleAsset;
 

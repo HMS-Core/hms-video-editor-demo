@@ -27,6 +27,7 @@ import android.os.Message;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -111,12 +112,20 @@ public class ToastWrapper {
 
         @Override
         public void dispatchMessage(Message msg) {
-            super.dispatchMessage(msg);
+            try {
+                super.dispatchMessage(msg);
+            } catch (WindowManager.BadTokenException | IllegalStateException e) {
+                SmartLog.e(TAG, e.getMessage());
+            }
         }
 
         @Override
         public void handleMessage(Message msg) {
-            impl.handleMessage(msg);
+            try {
+                impl.handleMessage(msg);
+            } catch (WindowManager.BadTokenException | IllegalStateException e) {
+                SmartLog.e(TAG, e.getMessage());
+            }
         }
     }
 
@@ -148,7 +157,7 @@ public class ToastWrapper {
             textView.setGravity(Gravity.CENTER);
             textView.setTextColor(context.getResources().getColor(R.color.clip_color_E6FFFFFF));
             textView.setPadding(SizeUtils.dp2Px(context, 16), SizeUtils.dp2Px(context, 8), SizeUtils.dp2Px(context, 16),
-                    SizeUtils.dp2Px(context, 8));
+                SizeUtils.dp2Px(context, 8));
         }
         mToast.setGravity(Gravity.CENTER, 0, -SizeUtils.dp2Px(context, 30));
         return new ToastWrapper(mToast);
@@ -201,9 +210,8 @@ public class ToastWrapper {
             return;
         }
         textView.setPadding(SizeUtils.dp2Px(context, 16), SizeUtils.dp2Px(context, 8), SizeUtils.dp2Px(context, 16),
-                SizeUtils.dp2Px(context, 8));
+            SizeUtils.dp2Px(context, 8));
         toast.setGravity(Gravity.CENTER, 0, -SizeUtils.dp2Px(context, 30));
-        // hook(toast);
         final Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override

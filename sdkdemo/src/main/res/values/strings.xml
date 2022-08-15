@@ -169,7 +169,7 @@
     <string name="auto_template_back_po" priority="translator">Yes</string>
     <string name="auto_template_back_na" priority="translator">No</string>
     <string name="auto_template_galley" priority="translator">Gallery</string>
-    <string name="auto_template_highlight" priority="translator">Highlights</string>
+    <string name="auto_template_highlight" priority="translator">Highlight</string>
     <string name="export_toast_tips" priority="translator">Saved to Video Editor album.</string>
     <string name="export_loading" priority="translator">Exporting…</string>
     <string name="export_fail_simple" priority="translator">Unable to export</string>
@@ -478,11 +478,11 @@
     <string name="redo_failed" priority="LT">Unable to redo.</string>
     <string name="undo_failed" priority="translator">Unable to undo.</string>
 
-    <string name="cut_second_menu_segmentation" priority="translator">Cut out</string>
+    <string name="cut_second_menu_segmentation" priority="translator">Object segmentation</string>
     <string name="segmentation_select" priority="translator">select one object.</string>
     <string name="segmentation_cancel" priority="translator">Cancelled cutting out.</string>
     <string name="ai_segmentation" priority="translator">Processing…</string>
-    <string name="ai_segmentation_title" priority="translator">Cut out</string>
+    <string name="ai_segmentation_title" priority="translator">Object segmentation</string>
     <string name="ai_segmentation_success" priority="translator">cut out.</string>
     <string name="ai_segmentation_fail" priority="translator">Error cutting out.</string>
 
@@ -586,7 +586,7 @@
     <string name="exclusive_filter_untitled" priority="translator">"Untitled"</string>
     <string name="save_toast" priority="translator">Saved to projects.</string>
 
-    <string name="cut_second_menu_block_face" priority="translator">Mask faces</string>
+    <string name="cut_second_menu_block_face" priority="translator">Face mask</string>
     <string name="identify_interrupts" priority="translator">Face detection canceled.</string>
     <string name="identify_failed" priority="translator">No faces found.</string>
     <string name="clean_stickers" priority="translator">Clear stickers</string>
@@ -642,7 +642,7 @@
     <string name="cut_second_menu_ai_hair" priority="translator">Color hair</string>
     <string name="ai_hair_fail" priority="translator">Hair coloring failed.</string>
 
-    <string name="cut_second_menu_ai_selection" priority="translator">highlight</string>
+    <string name="cut_second_menu_ai_selection" priority="translator">Highlight</string>
 
     <string name="action_add_mask_undo" priority="translator">Undo: Add mask.</string>
     <string name="action_add_mask_redo" priority="translator">Redo: Add mask.</string>
@@ -659,18 +659,18 @@
     <string name="block_description" priority="translator">Selected content will be uploaded to the cloud for processing. This content will not be saved on the cloud.</string>
 
     <string name="motion_photo_fail" priority="translator">Unable to generate moving picture.</string>
-    <string name="face_smile_fail">Failed to generate one-click smile.</string>
+    <string name="face_smile_fail">Failed to generate auto-smile.</string>
     <string name="ai_color_fail" priority="translator">Unable to generate ai color.</string>
     <string name="fun_description" priority="translator">Experiment and have fun with a range of AI features. Selected content will be uploaded to the cloud for processing. This content will not be saved on the cloud.</string>
     <string name="motion_photo_success" priority="translator">Moving picture generated.</string>
-    <string name="face_smile_success">One-click smile generated successfully.</string>
+    <string name="face_smile_success">Auto-smile generated successfully.</string>
     <string name="ai_color_success" priority="translator">The AI color is generated successfully.</string>
     <string name="motion_photo" priority="translator">Moving picture</string>
-    <string name="face_smile">One-click smile</string>
+    <string name="face_smile">Auto-smile</string>
     <string name="ai_color" priority="translator">AI color</string>
     <string name="motion_photo_generated" priority="translator">Generating moving picture…</string>
     <string name="ai_color_generated" priority="translator">Generating ai color…</string>
-    <string name="ai_face_smile_generated">One-click smile generation…</string>
+    <string name="ai_face_smile_generated">Auto-smile generation…</string>
     <string name="ai_hair_generated" priority="translator">Generating hari dying…</string>
 
     <string-array name="rotation_menu">
@@ -714,7 +714,7 @@
     <string name="ai_color_cancel" priority="translator">Cancel ai color</string>
     <string name="ai_hair_cancel" priority="translator">Cancel ai hair</string>
     <string name="motion_photo_cancel" priority="translator">Cancel motion photo</string>
-    <string name="face_smile_cancel">Cancel One-Click Smile</string>
+    <string name="face_smile_cancel">Cancel auto-smile</string>
     <string name="ai_limit" priority="translator">Only one AI function can be used at the same time. Remove the used AI function and try again.</string>
     <string name="license_invalid" priority="translator">License verification failed.</string>
     <string name="ai_color_limit" priority="translator">AI color supports only videos less than 100M.</string>
@@ -722,6 +722,10 @@
     <string name="reenact_limit" priority="translator">This function supports only images.</string>
     <string name="crop_limit" priority="translator">Please select a video to trim.</string>
     <string name="keyframe" priority="translator">Keyframe</string>
+    <string name="ai_network_timeout">Network timeout</string>
+    <string name="ai_generate_excess">The usage of the function in the current month exceeds the limit. Contact Operation and maintenance personnel to apply for more quotas.</string>
+    <string name="ai_exceed_concurrent_number">The number of concurrent use of the function exceeds the maximum. Contact Operation and maintenance personnel to apply for more quotas.</string>
+    <string name="algorithm_is_not_enabled">The AI algorithm has not been enabled. Contact Operation and maintenance personnel to enable it.</string>
 
     <string name="main_template_template_text" priority="translator">Templates</string>
     <string name="use_module" priority="LT">Start</string>
@@ -753,7 +757,71 @@
     <string name="time_lapse_reset_result" priority="translator">Clicking this button will cancel the current effect. Please confirm.</string>
     <string name="time_lapse_resource_not_support">The current resource is not supported</string>
 
-    <string name="cut_second_menu_video_selection" priority="translator">highlight</string>
+    <string name="cut_second_menu_video_selection" priority="translator">Highlight</string>
 
     <string name="auto_mark_description" priority="translator">An effects package needs to be downloaded to use this feature. Continue?</string>
+
+    <!--翅膀特效-->
+    <string name="cut_second_menu_wings" priority="translator">Wings effect</string>
+    <string name="wings_cancel" priority="translator">"cancel wings effect"</string>
+    <string name="ai_wings_processing" priority="translator">"wings effect processing…"</string>
+    <string name="ai_wings_success" priority="translator">Wings effect added complete</string>
+    <string name="ai_wings_fail" priority="translator">Wings effect add exception</string>
+
+    <!--人像&头部分割-->
+    <string name="cut_second_menu_body_seg" priority="translator">Body segmentation</string>
+    <string name="cut_second_menu_head_seg" priority="translator">Head segmentation</string>
+    <string name="ai_body_seg" priority="translator">"Processing…"</string>
+    <string name="ai_head_seg" priority="translator">"Processing…"</string>
+    <string name="body_seg_cancel" priority="translator">Cancelled segmentation.</string>
+    <string name="ai_body_seg_success" priority="translator">"Body segmentation complete"</string>
+    <string name="ai_head_seg_success" priority="translator">"Head segmentation complete"</string>
+    <string name="ai_body_seg_fail" priority="translator">"Body segmentation exception"</string>
+    <string name="ai_head_seg_fail" priority="translator">"Head segmentation exception"</string>
+
+    <!--2022.07.04新版UI-->
+    <string name="video_editor_service">Video Editor Service</string>
+    <string name="video_editor">Video Editor</string>
+    <string name="video_editor_tip">Quickly create short videos</string>
+    <string name="experience_now">Experience Now >></string>
+    <string name="motion_photo_subtitle">Portrait Resurrection</string>
+    <string name="face_smile_subtitle">Make the characters smile more natural</string>
+    <string name="ai_color_subtitle">One-click restoration of black-and-white images</string>
+    <string name="time_lapse_subtitle">Dynamic Nature in Mobile Phones</string>
+    <string name="video_selection_subtitle">Intelligent identification of high-energy segments</string>
+    <string name="view_file">View Files</string>
+    <string name="save_to_gallery_success">Saved to System Gallery</string>
+    <string name="highlights_start_point" priority="translator">Highlight Start Point:%s ms</string>
+    <string name="object_segmentation_subtitle">All things can be divided.</string>
+    <string name="object_segmentation_tip">Please draw a line on the image to select the object to be segmented.</string>
+    <plurals name="media_max_send_images_format">
+        <item priority="translator" quantity="one">You can only select up to %1$d media file.</item>
+        <item priority="translator" quantity="other">You can only select up to %1$d media files.</item>
+    </plurals>
+    <plurals name="media_max_send_videos_format">
+        <item priority="translator" quantity="one">You can only select up to %1$d media file.</item>
+        <item priority="translator" quantity="other">You can only select up to %1$d media files.</item>
+    </plurals>
+
+    <!--导出失败错误信息-->
+    <string name="insufficient_disk_space" priority="translator">Free up some storage space on your phone and try again.</string>
+
+    <plurals name="resolution_level">
+        <item priority="translator" quantity="one">%dp</item>
+        <item quantity="zero">%dp</item>
+        <item quantity="two">%dp</item>
+        <item quantity="few">%dp</item>
+        <item quantity="many">%dp</item>
+        <item priority="translator" quantity="other">%dp</item>
+    </plurals>
+    <plurals name="fps_level">
+        <item priority="translator" quantity="one">%d fps</item>
+        <item quantity="zero">%dfps</item>
+        <item quantity="two">%dfps</item>
+        <item quantity="few">%dfps</item>
+        <item quantity="many">%dfps</item>
+        <item priority="translator" quantity="other">%d fps</item>
+    </plurals>
+    <string name="quarter_high_definition" priority="LT">2K</string>
+    <string name="ultra_high_definition" priority="LT">4K</string>
 </resources>

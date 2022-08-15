@@ -17,10 +17,6 @@
 
 package com.huawei.hms.videoeditor.ui.mediapick.viewmodel;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Application;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -31,13 +27,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 
-import com.huawei.hms.videoeditor.sdk.bean.HVEVisibleFormatBean;
-import com.huawei.hms.videoeditor.sdk.util.HVEUtil;
-import com.huawei.hms.videoeditor.sdk.util.SmartLog;
-import com.huawei.hms.videoeditor.ui.common.bean.MediaData;
-import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
-import com.huawei.hms.videoeditor.ui.mediapick.manager.MediaPickManager;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -46,6 +35,16 @@ import androidx.paging.DataSource;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PageKeyedDataSource;
 import androidx.paging.PagedList;
+
+import com.huawei.hms.videoeditor.ui.common.bean.MediaData;
+import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
+import com.huawei.hms.videoeditor.ui.mediapick.manager.MediaPickManager;
+import com.huawei.hms.videoeditor.utils.SmartLog;
+import com.huawei.hms.videoeditor.utils.Utils;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PickVideoViewModel extends AndroidViewModel {
     private static final String TAG = "PickVideoViewModel";
@@ -188,16 +187,9 @@ public class PickVideoViewModel extends AndroidViewModel {
 
                 Uri uri = Uri.withAppendedPath(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, String.valueOf(id));
 
-                HVEVisibleFormatBean bean = HVEUtil.getVideoProperty(videoPath);
-                if (bean == null) {
+                if (!Utils.isVideoByPath(videoPath)) {
                     loadContinue = true;
                     continue;
-                }
-
-                if (videoDuration == 0 || videoWidth == 0 || videoHeight == 0) {
-                    videoDuration = bean.getDuration();
-                    videoWidth = bean.getWidth();
-                    videoHeight = bean.getHeight();
                 }
 
                 if (videoDuration < 500) {

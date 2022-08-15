@@ -19,10 +19,6 @@ package com.huawei.hms.videoeditor.ui.mediapick.fragment;
 
 import static com.huawei.hms.videoeditor.ui.mediapick.activity.MediaPickActivity.DURATION;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -31,6 +27,12 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.huawei.hms.videoeditor.ui.common.BaseFragment;
 import com.huawei.hms.videoeditor.ui.common.bean.Constant;
 import com.huawei.hms.videoeditor.ui.common.bean.MediaData;
@@ -38,16 +40,17 @@ import com.huawei.hms.videoeditor.ui.common.listener.OnClickRepeatedListener;
 import com.huawei.hms.videoeditor.ui.common.view.RotationPopupWiew;
 import com.huawei.hms.videoeditor.ui.mediapick.activity.MediaPickActivity;
 import com.huawei.hms.videoeditor.ui.mediapick.viewmodel.MediaFolderViewModel;
-import com.huawei.secure.android.common.intent.SafeIntent;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
+import com.huawei.secure.android.common.intent.SafeBundle;
+import com.huawei.secure.android.common.intent.SafeIntent;
 
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class GalleryFragment extends BaseFragment {
+    public static final String SHOW_MEDIA_TYPE = "showMediaType";
+
     private LinearLayout mRotationSelectView;
 
     private TextView mVideoTv;
@@ -67,6 +70,14 @@ public class GalleryFragment extends BaseFragment {
     private int currentFragmentIndex = 0;
 
     private MediaFolderViewModel folderViewModel;
+
+    private int mShowMediaType = 2; // 0 video 1 photo 2 both
+
+    public static GalleryFragment newInstance(SafeBundle bound) {
+        GalleryFragment fragment = new GalleryFragment();
+        fragment.setArguments(bound.getBundle());
+        return fragment;
+    }
 
     @Override
     protected void initViewModelObserve() {
@@ -98,6 +109,7 @@ public class GalleryFragment extends BaseFragment {
     protected void initObject() {
         initSpinner();
         SafeIntent intent = new SafeIntent(mActivity.getIntent());
+        mShowMediaType = intent.getIntExtra(SHOW_MEDIA_TYPE, mShowMediaType);
         List<MediaData> mImportedList = intent.getParcelableArrayListExtra(Constant.EXTRA_SELECT_RESULT);
         long mCheckDuration = intent.getLongExtra(DURATION, 0);
         int actionType = intent.getIntExtra(MediaPickActivity.ACTION_TYPE, 0);
@@ -109,6 +121,7 @@ public class GalleryFragment extends BaseFragment {
         Bundle bundle = new Bundle();
         bundle.putLong(DURATION, mCheckDuration);
         bundle.putInt(MediaPickActivity.ACTION_TYPE, actionType);
+        bundle.putInt(SHOW_MEDIA_TYPE,mShowMediaType);
         if (mImportedList != null && mImportedList.size() > 0) {
             bundle.putParcelableArrayList(Constant.EXTRA_SELECT_RESULT,
                 (ArrayList<? extends Parcelable>) mImportedList);
@@ -116,8 +129,14 @@ public class GalleryFragment extends BaseFragment {
         mVideoFragment.setArguments(bundle);
         mPictureFragment.setArguments(bundle);
 
-        fragmentList.add(mVideoFragment);
-        fragmentList.add(mPictureFragment);
+        if (mShowMediaType == 0) {
+            fragmentList.add(mVideoFragment);
+        } else if (mShowMediaType == 1) {
+            fragmentList.add(mPictureFragment);
+        } else {
+            fragmentList.add(mVideoFragment);
+            fragmentList.add(mPictureFragment);
+        }
 
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.add(R.id.fragment_content, fragmentList.get(0));
@@ -127,7 +146,7 @@ public class GalleryFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-
+        resetVideoOrPicture();
     }
 
     @Override
@@ -141,7 +160,11 @@ public class GalleryFragment extends BaseFragment {
 
         mPictureTv.setOnClickListener(new OnClickRepeatedListener(v -> {
             if (currentFragmentIndex != 1) {
-                selectChanged(1);
+                if (mShowMediaType == 1) {
+                    selectChanged(0);
+                } else {
+                    selectChanged(1);
+                }
                 resetVideoOrPicture();
             }
         }));
@@ -201,19 +224,32 @@ public class GalleryFragment extends BaseFragment {
 
     private void resetVideoOrPicture() {
         folderViewModel.setGalleryVideoSelect(currentFragmentIndex == 0);
-        mVideoTv.setTextColor(currentFragmentIndex == 0 ? ContextCompat.getColor(context, R.color.tab_text_tint_color)
-            : ContextCompat.getColor(context, R.color.translucent_white_90));
-        mPictureTv
-            .setTextColor(currentFragmentIndex == 0 ? ContextCompat.getColor(context, R.color.translucent_white_90)
-                : ContextCompat.getColor(context, R.color.tab_text_tint_color));
-        mVideoIndicator.setVisibility(currentFragmentIndex == 0 ? View.VISIBLE : View.INVISIBLE);
-        mPictureIndicator.setVisibility(currentFragmentIndex == 1 ? View.VISIBLE : View.INVISIBLE);
-        if (currentFragmentIndex == 0) {
+        if (mShowMediaType == 0) {
+            mVideoTv.setTextColor(ContextCompat.getColor(context, R.color.translucent_white_90));
+            mVideoIndicator.setVisibility(View.INVISIBLE);
             mVideoTv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
-            mPictureTv.setTypeface(Typeface.SANS_SERIF, Typeface.NORMAL);
-        } else {
-            mVideoTv.setTypeface(Typeface.SANS_SERIF, Typeface.NORMAL);
+
+            mPictureTv.setVisibility(View.GONE);
+            mPictureIndicator.setVisibility(View.GONE);
+        } else if (mShowMediaType == 1) {
+            mPictureTv.setTextColor(ContextCompat.getColor(context, R.color.translucent_white_90));
+            mPictureIndicator.setVisibility(View.INVISIBLE);
             mPictureTv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+
+            mVideoTv.setVisibility(View.GONE);
+            mVideoIndicator.setVisibility(View.GONE);
+        } else {
+            mVideoTv.setTextColor(currentFragmentIndex == 0 ? ContextCompat.getColor(context, R.color.tab_text_tint_color) : ContextCompat.getColor(context, R.color.translucent_white_90));
+            mPictureTv.setTextColor(currentFragmentIndex == 0 ? ContextCompat.getColor(context, R.color.translucent_white_90) : ContextCompat.getColor(context, R.color.tab_text_tint_color));
+            mVideoIndicator.setVisibility(currentFragmentIndex == 0 ? View.VISIBLE : View.INVISIBLE);
+            mPictureIndicator.setVisibility(currentFragmentIndex == 1 ? View.VISIBLE : View.INVISIBLE);
+            if (currentFragmentIndex == 0) {
+                mVideoTv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+                mPictureTv.setTypeface(Typeface.SANS_SERIF, Typeface.NORMAL);
+            } else {
+                mVideoTv.setTypeface(Typeface.SANS_SERIF, Typeface.NORMAL);
+                mPictureTv.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+            }
         }
     }
 

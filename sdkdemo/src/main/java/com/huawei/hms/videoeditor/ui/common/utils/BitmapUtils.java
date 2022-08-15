@@ -17,15 +17,7 @@
 package com.huawei.hms.videoeditor.ui.common.utils;
 
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Matrix;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.graphics.RectF;
-
-import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 
 public class BitmapUtils {
     public static Bitmap compressBitmap(Bitmap bitmap, double newWidth, double newHeight) {

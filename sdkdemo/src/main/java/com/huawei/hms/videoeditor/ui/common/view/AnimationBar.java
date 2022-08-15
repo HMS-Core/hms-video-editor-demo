@@ -98,7 +98,7 @@ public class AnimationBar extends View {
 
     private int leaveProgress = 0;
 
-    private long duration = 0;
+    private long duration = 0L;
 
     private boolean isEnterShow = true;
 

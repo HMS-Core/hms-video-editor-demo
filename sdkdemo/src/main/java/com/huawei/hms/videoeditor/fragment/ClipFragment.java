@@ -19,9 +19,7 @@ package com.huawei.hms.videoeditor.fragment;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.VideoClipsActivity.CLIPS_VIEW_TYPE;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.VideoClipsActivity.VIEW_HISTORY;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.util.TypedValue;
@@ -31,6 +29,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.huawei.hms.videoeditor.HomeRecordAdapter;
 import com.huawei.hms.videoeditor.sdk.HVEProject;
@@ -52,13 +58,8 @@ import com.huawei.hms.videoeditor.viewmodel.MainViewModel;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 import com.huawei.secure.android.common.intent.SafeIntent;
 
-import androidx.annotation.RequiresApi;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClipFragment extends BaseFragment {
     private TextView homeSelectNum;
@@ -87,6 +88,10 @@ public class ClipFragment extends BaseFragment {
 
     private TextEditViewModel mTextEditViewModel;
 
+    private ImageView back;
+
+    private boolean isFromHome = false;
+
     @Override
     protected void initViewModelObserve() {
 
@@ -108,6 +113,12 @@ public class ClipFragment extends BaseFragment {
         homeSelectAll = view.findViewById(R.id.home_select_all);
         homeDraftNoText = view.findViewById(R.id.home_draft_no_text);
         homeSelectNum.setText(getResources().getQuantityString(R.plurals.home_select_num3, 0, 0));
+        back = view.findViewById(R.id.iv_back);
+        Activity activity = getActivity();
+        if (activity != null) {
+            isFromHome = activity.getIntent().getBooleanExtra("fromHome", false);
+            back.setVisibility(isFromHome ? View.VISIBLE : View.GONE);
+        }
         mTextEditViewModel = new ViewModelProvider(mActivity, mFactory).get(TextEditViewModel.class);
     }
 
@@ -158,6 +169,15 @@ public class ClipFragment extends BaseFragment {
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void initEvent() {
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Activity activity = getActivity();
+                if (activity != null) {
+                    activity.onBackPressed();
+                }
+            }
+        });
         mDraftClip.setOnClickListener(new OnClickRepeatedListener(v -> {
             mDraftClip.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
             mDraftClip.setTextColor(context.getColor(R.color.white));
@@ -402,6 +422,7 @@ public class ClipFragment extends BaseFragment {
             new ArrayList<>().size()));
         homeSelectNum.setVisibility(View.INVISIBLE);
         homeSelectLayout.setVisibility(View.INVISIBLE);
+        back.setVisibility(isFromHome ? View.VISIBLE : View.GONE);
         mHomeRecordAdapter.setIsEditStatus(false);
     }
 
@@ -411,6 +432,7 @@ public class ClipFragment extends BaseFragment {
         homeSelectDelete.setSelected(false);
         homeSelectNum.setVisibility(View.VISIBLE);
         homeSelectLayout.setVisibility(View.VISIBLE);
+        back.setVisibility(View.GONE);
         mHomeRecordAdapter.setIsEditStatus(true);
     }
 

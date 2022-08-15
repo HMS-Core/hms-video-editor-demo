@@ -63,7 +63,12 @@ public class GridItemDividerDecoration extends RecyclerView.ItemDecoration {
         super.getItemOffsets(outRect, view, parent, state);
         int itemPosition = ((RecyclerView.LayoutParams) view.getLayoutParams()).getViewLayoutPosition();
         int spanCount = getSpanCount(parent);
-        int childCount = parent.getAdapter().getItemCount();
+
+        RecyclerView.Adapter adapter = parent.getAdapter();
+        if (adapter == null){
+            return;
+        }
+        int childCount = adapter.getItemCount();
 
         boolean isLastRow = isLastRow(parent, itemPosition, spanCount, childCount);
 

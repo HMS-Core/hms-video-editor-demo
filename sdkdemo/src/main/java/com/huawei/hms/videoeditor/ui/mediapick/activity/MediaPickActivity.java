@@ -24,13 +24,8 @@ import static com.huawei.hms.videoeditor.ui.common.bean.Constant.MAX_PICK_NUM;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.VideoClipsActivity.CLIPS_VIEW_TYPE;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.VideoClipsActivity.VIEW_NORMAL;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
-
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -48,6 +43,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.huawei.hms.videoeditor.sdk.HVEDownSamplingManager;
 import com.huawei.hms.videoeditor.sdk.bean.HVEVisibleFormatBean;
@@ -80,20 +87,15 @@ import com.huawei.hms.videoeditor.ui.mediapick.fragment.GalleryFragment;
 import com.huawei.hms.videoeditor.ui.mediapick.manager.MediaPickManager;
 import com.huawei.hms.videoeditor.ui.mediapick.manager.MediaSelectDragCallback;
 import com.huawei.hms.videoeditor.ui.mediapick.viewmodel.MediaFolderViewModel;
-import com.huawei.secure.android.common.intent.SafeIntent;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
+import com.huawei.secure.android.common.intent.SafeBundle;
+import com.huawei.secure.android.common.intent.SafeIntent;
 
-import androidx.activity.OnBackPressedCallback;
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
 
 public class MediaPickActivity extends BaseActivity {
     private static final String TAG = "MediaPickActivity";
@@ -102,6 +104,7 @@ public class MediaPickActivity extends BaseActivity {
 
     public static final String DURATION = "duration";
 
+    public static final String SHOW_MEDIA_TYPE = "showMediaType";
 
     public static final int ACTION_ADD_MEDIA_TYPE = 1001;
 
@@ -114,6 +117,8 @@ public class MediaPickActivity extends BaseActivity {
     public static final int ACTION_AUTO_SYNTHESIS_TYPE = 1005;
 
     public static final int ACTION_AUTO_VIDEO_SELECTION_TYPE = 1006;
+
+    public static final int ACTION_AI_TYPE = 1007;
 
     public static final int REQ_PREVIEW_CODE = 1000;
 
@@ -161,6 +166,8 @@ public class MediaPickActivity extends BaseActivity {
 
     public long mCheckDuration;
 
+    private int mShowMediaType = 2; // 0 video 1 photo 2 both
+
     private boolean isQualitySelect = false;
 
     private boolean isFolderShow = false;
@@ -202,6 +209,13 @@ public class MediaPickActivity extends BaseActivity {
     private OnClickRepeatedListener galleryListener;
 
     private TextView mSelectSrc;
+
+    public static void startActivityForResult(Activity activity, int mediaType, int requestCode) {
+        Intent intent = new Intent(activity, MediaPickActivity.class);
+        intent.putExtra(SHOW_MEDIA_TYPE, mediaType);
+        intent.putExtra(ACTION_TYPE, ACTION_AI_TYPE);
+        activity.startActivityForResult(intent, requestCode);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -268,6 +282,7 @@ public class MediaPickActivity extends BaseActivity {
         SafeIntent safeIntent = new SafeIntent(getIntent());
         mActionType = safeIntent.getIntExtra(ACTION_TYPE, ACTION_ADD_MEDIA_TYPE);
         mCheckDuration = safeIntent.getLongExtra(DURATION, 0);
+        mShowMediaType = safeIntent.getIntExtra(SHOW_MEDIA_TYPE, 2);
         mMediaFolderViewModel = new ViewModelProvider(this, factory).get(MediaFolderViewModel.class);
         mMediaPickManager = MediaPickManager.getInstance();
         mMediaPickManager.clear();
@@ -291,6 +306,9 @@ public class MediaPickActivity extends BaseActivity {
             case ACTION_AUTO_VIDEO_SELECTION_TYPE:
                 mAddCardView.setText(R.string.auto_template);
                 MediaPickManager.getInstance().setMaxSelectCount(MAX_AUTO_TEMPLATE);
+                break;
+            case ACTION_AI_TYPE:
+                MediaPickManager.getInstance().setMaxSelectCount(1);
                 break;
             default:
                 break;
@@ -320,7 +338,9 @@ public class MediaPickActivity extends BaseActivity {
     }
 
     private void initFragment() {
-        GalleryFragment galleryFragment = new GalleryFragment();
+        SafeBundle safeBundle = new SafeBundle();
+        safeBundle.putInt(SHOW_MEDIA_TYPE, mShowMediaType);
+        GalleryFragment galleryFragment = GalleryFragment.newInstance(safeBundle);
         fragments = new ArrayList<>(2);
         fragments.add(galleryFragment);
 
@@ -454,6 +474,9 @@ public class MediaPickActivity extends BaseActivity {
                     setResult(Constant.RESULT_CODE, intent);
                     finish();
                     break;
+                case ACTION_AI_TYPE:
+                    setResult(RESULT_OK, intent);
+                    finish();
                 default:
                     break;
             }
@@ -647,7 +670,7 @@ public class MediaPickActivity extends BaseActivity {
     private void refreshTotalStatus() {
         int videoSize = 0;
         int photoSize = 0;
-        long duration = 0;
+        long duration = 0L;
         if (mSelectList != null) {
             int len = mSelectList.size();
             for (MediaData item : mSelectList) {

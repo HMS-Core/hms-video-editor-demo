@@ -20,16 +20,11 @@ package com.huawei.hms.videoeditor.ui.mediaeditor.menu;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.VideoClipsActivity.ACTION_ADD_PICTURE_IN_REQUEST_CODE;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.VideoClipsActivity.ACTION_PIP_VIDEO_ASSET;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.VideoClipsActivity.ACTION_REPLACE_VIDEO_ASSET;
-import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.*;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Stack;
 
 import android.content.Intent;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.huawei.hms.videoeditor.sdk.ai.HVEAIInitialCallback;
 import com.huawei.hms.videoeditor.sdk.asset.HVEAsset;
@@ -45,11 +40,12 @@ import com.huawei.hms.videoeditor.ui.common.EditorManager;
 import com.huawei.hms.videoeditor.ui.common.utils.CpuUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.LaneSizeCheckUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.SPManager;
+import com.huawei.hms.videoeditor.ui.common.utils.SharedPreferencesUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.ToastUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.ToastWrapper;
-import com.huawei.hms.videoeditor.ui.common.view.dialog.CommonProgressDialog;
 import com.huawei.hms.videoeditor.ui.common.view.loading.LoadingDialogUtils;
 import com.huawei.hms.videoeditor.ui.mediaeditor.VideoClipsActivity;
+import com.huawei.hms.videoeditor.ui.mediaeditor.aibodyseg.BodySegViewModel;
 import com.huawei.hms.videoeditor.ui.mediaeditor.aifun.AIBlockingHintDialog;
 import com.huawei.hms.videoeditor.ui.mediaeditor.aifun.fragment.AiFunFragment;
 import com.huawei.hms.videoeditor.ui.mediaeditor.aihair.fragment.AiHairFragment;
@@ -78,11 +74,16 @@ import com.huawei.hms.videoeditor.ui.mediaeditor.sticker.fragment.StickerPanelFr
 import com.huawei.hms.videoeditor.ui.mediaeditor.sticker.stickeranimation.fragment.StickerAnimationPanelFragment;
 import com.huawei.hms.videoeditor.ui.mediaeditor.texts.fragment.EditPanelFragment;
 import com.huawei.hms.videoeditor.ui.mediaeditor.timelapse.TimeLapseViewModel;
+import com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState;
 import com.huawei.hms.videoeditor.ui.mediaeditor.trackview.viewmodel.EditPreviewViewModel;
 import com.huawei.hms.videoeditor.ui.mediapick.activity.MediaPickActivity;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
-import androidx.fragment.app.Fragment;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Stack;
 
 public class MenuClickManager {
     public final static String AI_FUN = "AI_FUN";
@@ -100,6 +101,22 @@ public class MenuClickManager {
     public final static String VIDEO_SELECTION = "VIDEO_SELECTION";
 
     public final static String VIDEO_SELECTION_KEY = "VIDEO_SELECTION_KEY";
+
+    public final static String AI_WINGS = "AI_WINGS";
+
+    public final static String AI_WINGS_KEY = "AI_WINGS_KEY";
+
+    public static final String AI_BODY_SEG = "AI_BODY_SEG";
+
+    public static final String AI_BODY_SEG_KEY = "AI_BODY_SEG_KEY";
+
+    public static final String AI_HEAD_SEG = "AI_HEAD_SEG";
+
+    public static final String AI_HEAD_SEG_KEY = "AI_HEAD_SEG_KEY";
+
+    public static final String AI_SEGMENTATION = "AI_SEGMENTATION";
+
+    public static final String AI_SEGMENTATION_KEY = "AI_SEGMENTATION_KEY";
 
     private VideoClipsActivity mActivity;
 
@@ -119,6 +136,8 @@ public class MenuClickManager {
 
     private SegmentationViewModel mSegmentationViewModel;
 
+    private BodySegViewModel mBodySegViewModel;
+
     private OnAssetDeleteListener mOnAssetDeleteListener;
 
     private List<Integer> cloudMaterialsIdList;
@@ -134,7 +153,7 @@ public class MenuClickManager {
     public void init(VideoClipsActivity activity, EditMenuContentLayout menuContentLayout, MenuViewModel menuViewModel,
         EditPreviewViewModel editPreviewViewModel, MaterialEditViewModel materialEditViewModel,
         PersonTrackingViewModel personTrackingViewModel, TimeLapseViewModel timeLapseViewModel,
-        SegmentationViewModel mSegmentationViewModel) {
+        SegmentationViewModel mSegmentationViewModel, BodySegViewModel bodySegViewModel) {
         this.mActivity = activity;
         this.mMenuViewModel = menuViewModel;
         this.editPreviewViewModel = editPreviewViewModel;
@@ -142,6 +161,7 @@ public class MenuClickManager {
         this.mPersonTrackingViewModel = personTrackingViewModel;
         this.mTimeLapseViewModel = timeLapseViewModel;
         this.mSegmentationViewModel = mSegmentationViewModel;
+        this.mBodySegViewModel = bodySegViewModel;
         this.menuContentLayout = menuContentLayout;
         mMenuControlViewRouter =
             new MenuControlViewRouter(mActivity, R.id.fragment_container, menuContentLayout, mMenuViewModel);
@@ -151,13 +171,14 @@ public class MenuClickManager {
     public void update(VideoClipsActivity activity, EditMenuContentLayout menuContentLayout,
         MenuViewModel menuViewModel, EditPreviewViewModel editPreviewViewModel,
         MaterialEditViewModel materialEditViewModel, PersonTrackingViewModel personTrackingViewModel,
-        SegmentationViewModel mSegmentationViewModel) {
+        SegmentationViewModel mSegmentationViewModel, BodySegViewModel bodySegViewModel) {
         this.mActivity = activity;
         this.mMenuViewModel = menuViewModel;
         this.editPreviewViewModel = editPreviewViewModel;
         this.mMaterialEditViewModel = materialEditViewModel;
         this.mPersonTrackingViewModel = personTrackingViewModel;
         this.mSegmentationViewModel = mSegmentationViewModel;
+        this.mBodySegViewModel = bodySegViewModel;
         this.menuContentLayout = menuContentLayout;
         if (mMenuControlViewRouter != null) {
             mMenuControlViewRouter.updateMenuViewModel(mMenuViewModel);
@@ -192,7 +213,7 @@ public class MenuClickManager {
 
     public void handlerClickEvent(int id) {
         switch (id) {
-            case EDIT_PIP_STATE_ADD:
+            case MainViewState.EDIT_PIP_STATE_ADD:
                 if (!LaneSizeCheckUtils.isCanAddPip(EditorManager.getInstance().getEditor(), mActivity)) {
                     ToastWrapper
                         .makeText(mActivity, mActivity.getString(R.string.pip_lane_out_of_size), Toast.LENGTH_SHORT)
@@ -205,17 +226,17 @@ public class MenuClickManager {
                 mActivity.startActivityForResult(startIntent, ACTION_ADD_PICTURE_IN_REQUEST_CODE);
                 break;
 
-            case EDIT_VIDEO_STATE_SPLIT:
+            case MainViewState.EDIT_VIDEO_STATE_SPLIT:
                 mActivity.showAssetSplitFragment(id);
                 break;
 
-            case EDIT_VIDEO_STATE_KEYFRAME:
-            case EDIT_VIDEO_OPERATION_KEYFRAME:
+            case MainViewState.EDIT_VIDEO_STATE_KEYFRAME:
+            case MainViewState.EDIT_VIDEO_OPERATION_KEYFRAME:
                 mActivity.showKeyFrameFragment(id);
                 break;
 
-            case EDIT_VIDEO_STATE_TRIM:
-            case EDIT_VIDEO_OPERATION_TRIM:
+            case MainViewState.EDIT_VIDEO_STATE_TRIM:
+            case MainViewState.EDIT_VIDEO_OPERATION_TRIM:
                 HVEAsset assetTrim = editPreviewViewModel.getMainLaneAsset();
                 if (assetTrim == null || !(assetTrim instanceof HVEVideoAsset)) {
                     ToastWrapper.makeText(mActivity, mActivity.getString(R.string.crop_limit), Toast.LENGTH_SHORT)
@@ -224,11 +245,11 @@ public class MenuClickManager {
                 }
                 mActivity.showAssetCropFragment(id);
                 break;
-            case EDIT_BACKGROUND_STATE:
+            case MainViewState.EDIT_BACKGROUND_STATE:
                 showPanelViewPrepare(id, new CanvasBackgroundFragment());
                 break;
 
-            case EDIT_VIDEO_STATE_REPLACE:
+            case MainViewState.EDIT_VIDEO_STATE_REPLACE:
                 Intent intent = new Intent(mActivity, MediaPickActivity.class);
                 HVEAsset asset = editPreviewViewModel.getMainLaneAsset();
                 if (asset == null) {
@@ -240,12 +261,12 @@ public class MenuClickManager {
                 mActivity.startActivityForResult(intent, ACTION_REPLACE_VIDEO_ASSET);
                 break;
 
-            case EDIT_VIDEO_STATE_COPY:
+            case MainViewState.EDIT_VIDEO_STATE_COPY:
                 mMenuViewModel.copyMainLaneAsset();
                 break;
 
-            case EDIT_VIDEO_STATE_DELETE:
-            case EDIT_VIDEO_OPERATION_DELETE:
+            case MainViewState.EDIT_VIDEO_STATE_DELETE:
+            case MainViewState.EDIT_VIDEO_OPERATION_DELETE:
                 HVEAsset assetDelete = editPreviewViewModel.getMainLaneAsset();
                 if (assetDelete == null) {
                     return;
@@ -274,7 +295,7 @@ public class MenuClickManager {
                 }
                 break;
 
-            case EDIT_VIDEO_STATE_ROTATION:
+            case MainViewState.EDIT_VIDEO_STATE_ROTATION:
                 HVEAsset hveAsset = editPreviewViewModel.getMainLaneAsset();
                 if (hveAsset == null) {
                     return;
@@ -295,9 +316,9 @@ public class MenuClickManager {
                 }
                 break;
 
-            case EDIT_VIDEO_STATE_MIRROR:
-            case EDIT_VIDEO_OPERATION_MIRROR:
-            case EDIT_PIP_OPERATION_MIRROR:
+            case MainViewState.EDIT_VIDEO_STATE_MIRROR:
+            case MainViewState.EDIT_VIDEO_OPERATION_MIRROR:
+            case MainViewState.EDIT_PIP_OPERATION_MIRROR:
                 HVEAsset mirrorAsset = editPreviewViewModel.getSelectedAsset();
                 if (mirrorAsset == null) {
                     mirrorAsset = editPreviewViewModel.getMainLaneAsset();
@@ -329,31 +350,31 @@ public class MenuClickManager {
                     editPreviewViewModel.getEditor().seekTimeLine(editPreviewViewModel.getTimeLine().getCurrentTime());
                 }
                 break;
-            case EDIT_VIDEO_STATE_INVERTED:
+            case MainViewState.EDIT_VIDEO_STATE_INVERTED:
                 editPreviewViewModel.videoRevert();
                 break;
-            case EDIT_PIP_OPERATION_ADD:
+            case MainViewState.EDIT_PIP_OPERATION_ADD:
                 Intent startIntent2 = new Intent(mActivity, MediaPickActivity.class);
                 startIntent2.putExtra(MediaPickActivity.ACTION_TYPE, MediaPickActivity.ACTION_ADD_PIP_MEDIA_TYPE);
                 mActivity.startActivityForResult(startIntent2, ACTION_ADD_PICTURE_IN_REQUEST_CODE);
                 break;
-            case EDIT_VIDEO_OPERATION_SPLIT:
+            case MainViewState.EDIT_VIDEO_OPERATION_SPLIT:
                 mActivity.showAssetSplitFragment(id);
                 break;
-            case EDIT_VIDEO_OPERATION_COPY:
+            case MainViewState.EDIT_VIDEO_OPERATION_COPY:
                 mMenuViewModel.copyMainLaneAsset();
                 break;
-            case EDIT_VIDEO_STATE_VOLUME:
-            case EDIT_VIDEO_OPERATION_VOLUME:
-            case EDIT_PIP_OPERATION_VOLUME:
-            case EDIT_AUDIO_STATE_VOLUME:
+            case MainViewState.EDIT_VIDEO_STATE_VOLUME:
+            case MainViewState.EDIT_VIDEO_OPERATION_VOLUME:
+            case MainViewState.EDIT_PIP_OPERATION_VOLUME:
+            case MainViewState.EDIT_AUDIO_STATE_VOLUME:
                 showPanelViewPrepare(id, VolumePanelFragment.newInstance(id));
                 break;
 
-            case EDIT_VIDEO_STATE_SPEED:
-            case EDIT_VIDEO_OPERATION_SPEED:
-            case EDIT_PIP_OPERATION_SPEED:
-            case EDIT_AUDIO_STATE_SPEED:
+            case MainViewState.EDIT_VIDEO_STATE_SPEED:
+            case MainViewState.EDIT_VIDEO_OPERATION_SPEED:
+            case MainViewState.EDIT_PIP_OPERATION_SPEED:
+            case MainViewState.EDIT_AUDIO_STATE_SPEED:
                 HVEAsset speedAsset = editPreviewViewModel.getSelectedAsset();
                 if (speedAsset == null) {
                     speedAsset = editPreviewViewModel.getMainLaneAsset();
@@ -367,8 +388,8 @@ public class MenuClickManager {
                 }
                 break;
 
-            case EDIT_VIDEO_OPERATION_ROTATION:
-            case EDIT_PIP_OPERATION_ROTATION:
+            case MainViewState.EDIT_VIDEO_OPERATION_ROTATION:
+            case MainViewState.EDIT_PIP_OPERATION_ROTATION:
                 HVEAsset assets = editPreviewViewModel.getSelectedAsset();
                 if (assets == null) {
                     return;
@@ -391,28 +412,28 @@ public class MenuClickManager {
                 }
 
                 break;
-            case EDIT_VIDEO_OPERATION_TAILORING:
-            case EDIT_PIP_OPERATION_CROP:
-            case EDIT_VIDEO_STATE_TAILORING:
+            case MainViewState.EDIT_VIDEO_OPERATION_TAILORING:
+            case MainViewState.EDIT_PIP_OPERATION_CROP:
+            case MainViewState.EDIT_VIDEO_STATE_TAILORING:
                 mActivity.gotoCropVideoActivity();
                 break;
 
-            case EDIT_PIP_OPERATION_ANIMATION:
-            case EDIT_VIDEO_STATE_ANIMATION:
-            case EDIT_VIDEO_OPERATION_ANIMATION:
+            case MainViewState.EDIT_PIP_OPERATION_ANIMATION:
+            case MainViewState.EDIT_VIDEO_STATE_ANIMATION:
+            case MainViewState.EDIT_VIDEO_OPERATION_ANIMATION:
                 showPanelViewPrepare(id, AnimationPanelFragment.newInstance(id));
                 break;
 
-            case EDIT_VIDEO_OPERATION_INVERTED:
+            case MainViewState.EDIT_VIDEO_OPERATION_INVERTED:
                 editPreviewViewModel.videoRevert();
                 break;
 
-            case EDIT_VIDEO_STATE_MASK:
-            case EDIT_VIDEO_OPERATION_MASK:
+            case MainViewState.EDIT_VIDEO_STATE_MASK:
+            case MainViewState.EDIT_VIDEO_OPERATION_MASK:
                 showPanelViewPrepare(id, MaskEffectFragment.newInstance(true));
                 break;
 
-            case EDIT_VIDEO_OPERATION_REPLACE:
+            case MainViewState.EDIT_VIDEO_OPERATION_REPLACE:
                 Intent pipIntent = new Intent(mActivity, MediaPickActivity.class);
                 HVEAsset mainAsset = editPreviewViewModel.getMainLaneAsset();
                 if (mainAsset == null) {
@@ -424,12 +445,12 @@ public class MenuClickManager {
                 mActivity.startActivityForResult(pipIntent, ACTION_REPLACE_VIDEO_ASSET);
                 break;
 
-            case EDIT_VIDEO_OPERATION_FILTER_ADD:
-            case EDIT_FILTER_STATE_ADD:
-            case EDIT_VIDEO_STATE_FILTER:
-            case EDIT_PIP_OPERATION_FILTER:
+            case MainViewState.EDIT_VIDEO_OPERATION_FILTER_ADD:
+            case MainViewState.EDIT_FILTER_STATE_ADD:
+            case MainViewState.EDIT_VIDEO_STATE_FILTER:
+            case MainViewState.EDIT_PIP_OPERATION_FILTER:
                 boolean isFromAsset = true;
-                if (id == EDIT_FILTER_STATE_ADD) {
+                if (id == MainViewState.EDIT_FILTER_STATE_ADD) {
                     isFromAsset = false;
                 }
                 if (mActivity != null && !mMenuViewModel.isCanAddEffect(isFromAsset)) {
@@ -440,7 +461,7 @@ public class MenuClickManager {
                 }
                 showPanelViewPrepare(id, FilterPanelFragment.newInstance(isFromAsset));
                 break;
-            case EDIT_FILTER_STATE_EXCLUSIVE:
+            case MainViewState.EDIT_FILTER_STATE_EXCLUSIVE:
                 if (mActivity == null || mActivity.isFinishing() || mActivity.isDestroyed()) {
                     return;
                 }
@@ -460,13 +481,13 @@ public class MenuClickManager {
 
                 showPanelViewPrepare(id, ExclusiveFilterPanelFragment.newInstance());
                 break;
-            case EDIT_VIDEO_OPERATION_ADJUST:
-            case EDIT_FILTER_STATE_ADJUST:
-            case EDIT_VIDEO_STATE_ADJUST:
-            case EDIT_PIP_OPERATION_ADJUST:
-            case EDIT_ADJUST_OPERATION_ADJUST:
+            case MainViewState.EDIT_VIDEO_OPERATION_ADJUST:
+            case MainViewState.EDIT_FILTER_STATE_ADJUST:
+            case MainViewState.EDIT_VIDEO_STATE_ADJUST:
+            case MainViewState.EDIT_PIP_OPERATION_ADJUST:
+            case MainViewState.EDIT_ADJUST_OPERATION_ADJUST:
                 boolean isAsset = true;
-                if (id == EDIT_FILTER_STATE_ADJUST || id == EDIT_ADJUST_OPERATION_ADJUST) {
+                if (id == MainViewState.EDIT_FILTER_STATE_ADJUST || id == MainViewState.EDIT_ADJUST_OPERATION_ADJUST) {
                     isAsset = false;
                 }
                 if (mActivity != null && !mMenuViewModel.isCanAddEffect(isAsset)) {
@@ -478,88 +499,89 @@ public class MenuClickManager {
                 }
                 showPanelViewPrepare(id, FilterAdjustPanelView.newInstance(isAsset));
                 break;
-            case EDIT_STICKER_STATE_ADD_TUYA:
-            case EDIT_TEXT_STATE_ADD_ADDTUYA:
+            case MainViewState.EDIT_STICKER_STATE_ADD_TUYA:
+            case MainViewState.EDIT_TEXT_STATE_ADD_ADDTUYA:
                 showPanelViewPrepare(id, GraffitiFragment.newInstance(false));
                 break;
 
-            case EDIT_STICKER_STATE_ADD_STICKER:
-            case EDIT_TEXT_STATE_STICKER:
-            case EDIT_STICKER_OPERATION_ADD:
+            case MainViewState.EDIT_STICKER_STATE_ADD_STICKER:
+            case MainViewState.EDIT_TEXT_STATE_STICKER:
+            case MainViewState.EDIT_STICKER_OPERATION_ADD:
                 showPanelViewPrepare(id, StickerPanelFragment.newInstance(false));
                 break;
 
-            case EDIT_STICKER_OPERATION_COPY:
+            case MainViewState.EDIT_STICKER_OPERATION_COPY:
                 mMenuViewModel.copySticker();
                 break;
 
-            case EDIT_STICKER_OPERATION_SPLIT:
+            case MainViewState.EDIT_STICKER_OPERATION_SPLIT:
                 mMenuViewModel.splitSticker();
                 break;
 
-            case EDIT_STICKER_OPERATION_REPLACE:
+            case MainViewState.EDIT_STICKER_OPERATION_REPLACE:
                 showPanelViewPrepare(id, StickerPanelFragment.newInstance(true));
                 break;
 
-            case EDIT_STICKER_OPERATION_ANIMATION:
+            case MainViewState.EDIT_STICKER_OPERATION_ANIMATION:
                 showPanelViewPrepare(id, new StickerAnimationPanelFragment());
                 break;
 
-            case EDIT_STICKER_OPERATION_DELETE:
-            case EDIT_GRAFFIT_OPERATION_DELETE:
+            case MainViewState.EDIT_STICKER_OPERATION_DELETE:
+            case MainViewState.EDIT_GRAFFIT_OPERATION_DELETE:
                 mMaterialEditViewModel.clearMaterialEditData();
                 mMenuViewModel.deleteAsset();
                 popView();
                 break;
 
-            case EDIT_VIDEO_STATE_TRANSPARENCY:
-            case EDIT_VIDEO_OPERATION_TRANSPARENCY:
-            case EDIT_PIP_OPERATION_TRANSPARENCY:
+            case MainViewState.EDIT_VIDEO_STATE_TRANSPARENCY:
+            case MainViewState.EDIT_VIDEO_OPERATION_TRANSPARENCY:
+            case MainViewState.EDIT_PIP_OPERATION_TRANSPARENCY:
                 showPanelViewPrepare(id, new TransparencyPanelFragment());
                 break;
 
-            case EDIT_AI_OPERATION_DELETE:
+            case MainViewState.EDIT_AI_OPERATION_DELETE:
                 mMenuViewModel.deleteAI();
                 popView();
                 break;
 
-            case EDIT_TEXT_OPERATION_ADD:
+            case MainViewState.EDIT_TEXT_OPERATION_ADD:
                 showPanelViewPrepare(id, EditPanelFragment.newInstance(false, false, true));
                 break;
 
-            case EDIT_TEXT_OPERATION_SPLIT:
-            case EDIT_TEXT_MODULE_OPERATION_SPLIT:
+            case MainViewState.EDIT_TEXT_OPERATION_SPLIT:
+            case MainViewState.EDIT_TEXT_MODULE_OPERATION_SPLIT:
                 mMenuViewModel.splitText();
                 break;
 
-            case EDIT_TEXT_STATE_ADD:
+            case MainViewState.EDIT_TEXT_STATE_ADD:
                 showPanelViewPrepare(id, EditPanelFragment.newInstance(false, false, false));
                 break;
 
-            case EDIT_TEXT_OPERATION_EDIT:
+            case MainViewState.EDIT_TEXT_OPERATION_EDIT:
                 mMaterialEditViewModel.setEditModel(true);
-                showPanelViewPrepare(EDIT_TEXT_STATE_ADD, EditPanelFragment.newInstance(false, false, false));
+                showPanelViewPrepare(MainViewState.EDIT_TEXT_STATE_ADD,
+                    EditPanelFragment.newInstance(false, false, false));
                 break;
 
-            case EDIT_TEXT_OPERATION_COPY:
-            case EDIT_TEXT_MODULE_OPERATION_COPY:
+            case MainViewState.EDIT_TEXT_OPERATION_COPY:
+            case MainViewState.EDIT_TEXT_MODULE_OPERATION_COPY:
                 mMenuViewModel.copyText();
                 break;
 
-            case EDIT_TEXT_OPERATION_ANIMATION:
+            case MainViewState.EDIT_TEXT_OPERATION_ANIMATION:
                 showPanelViewPrepare(id, EditPanelFragment.newInstance(false, true, false));
                 break;
 
-            case EDIT_TEXT_OPERATION_DELETE:
-            case EDIT_TEXT_MODULE_OPERATION_DELETE:
+            case MainViewState.EDIT_TEXT_OPERATION_DELETE:
+            case MainViewState.EDIT_TEXT_MODULE_OPERATION_DELETE:
                 mMaterialEditViewModel.clearMaterialEditData();
                 mMaterialEditViewModel.setEditModel(false);
                 mMenuViewModel.deleteText();
                 popView();
                 break;
 
-            case EDIT_SPECIAL_STATE_ADD:
-            case EDIT_SPECIAL_OPERATION_ADD:
+            case MainViewState.EDIT_SPECIAL_STATE_ADD:
+            case MainViewState.EDIT_SPECIAL_OPERATION_ADD:
                 if (mActivity != null && !mMenuViewModel.isCanAddEffect(false)) {
                     ToastWrapper
                         .makeText(mActivity, mActivity.getApplication().getResources().getString(R.string.noeffect),
@@ -570,22 +592,22 @@ public class MenuClickManager {
                 showPanelViewPrepare(id, EffectPanelFragment.newInstance(false));
                 break;
 
-            case EDIT_SPECIAL_OPERATION_REPLACE:
+            case MainViewState.EDIT_SPECIAL_OPERATION_REPLACE:
                 showPanelViewPrepare(id, EffectPanelFragment.newInstance(true));
                 break;
 
-            case EDIT_SPECIAL_OPERATION_OBJECT:
-            case EDIT_FILTER_OPERATION_OBJECT:
-            case EDIT_ADJUST_OPERATION_OBJECT:
+            case MainViewState.EDIT_SPECIAL_OPERATION_OBJECT:
+            case MainViewState.EDIT_FILTER_OPERATION_OBJECT:
+            case MainViewState.EDIT_ADJUST_OPERATION_OBJECT:
                 showPanelViewPrepare(id, new ObjectFragment());
                 break;
 
-            case EDIT_SPECIAL_OPERATION_DELETE:
+            case MainViewState.EDIT_SPECIAL_OPERATION_DELETE:
                 mMenuViewModel.deleteSpecial();
                 popView();
                 break;
 
-            case EDIT_FILTER_OPERATION_REPLACE:
+            case MainViewState.EDIT_FILTER_OPERATION_REPLACE:
                 HVEEffect effect = editPreviewViewModel.getSelectedEffect();
                 if (effect == null) {
                     return;
@@ -598,31 +620,31 @@ public class MenuClickManager {
 
                 break;
 
-            case EDIT_ADJUST_OPERATION_REPLACE:
+            case MainViewState.EDIT_ADJUST_OPERATION_REPLACE:
                 showPanelViewPrepare(id, FilterAdjustPanelView.newInstance(false));
                 break;
 
-            case EDIT_FILTER_OPERATION_DELETE:
-            case EDIT_ADJUST_OPERATION_DELETE:
+            case MainViewState.EDIT_FILTER_OPERATION_DELETE:
+            case MainViewState.EDIT_ADJUST_OPERATION_DELETE:
                 mMenuViewModel.deleteFilter(id);
                 popView();
                 break;
 
-            case EDIT_PIP_OPERATION_DELETE:
+            case MainViewState.EDIT_PIP_OPERATION_DELETE:
                 mMenuViewModel.deletePip();
                 mMaterialEditViewModel.clearMaterialEditData();
                 popView();
                 break;
 
-            case EDIT_PIP_OPERATION_MIX:
+            case MainViewState.EDIT_PIP_OPERATION_MIX:
                 showPanelViewPrepare(id, new PicInPicMixFragment());
                 break;
 
-            case EDIT_PIP_OPERATION_MASK:
+            case MainViewState.EDIT_PIP_OPERATION_MASK:
                 showPanelViewPrepare(id, MaskEffectFragment.newInstance(false));
                 break;
 
-            case EDIT_PIP_OPERATION_REPLACE:
+            case MainViewState.EDIT_PIP_OPERATION_REPLACE:
                 Intent intent2 = new Intent(mActivity, MediaPickActivity.class);
                 HVEAsset asset2 = editPreviewViewModel.getSelectedAsset();
                 if (asset2 == null) {
@@ -634,16 +656,16 @@ public class MenuClickManager {
                 mActivity.startActivityForResult(intent2, ACTION_PIP_VIDEO_ASSET);
                 break;
 
-            case EDIT_PIP_OPERATION_COPY:
+            case MainViewState.EDIT_PIP_OPERATION_COPY:
                 mMenuViewModel.copyOtherLaneAsset();
                 break;
 
-            case EDIT_PIP_OPERATION_INVERTED:
+            case MainViewState.EDIT_PIP_OPERATION_INVERTED:
                 editPreviewViewModel.videoRevert();
                 break;
-            case EDIT_AUDIO_STATE_HWMUSIC:
-            case EDIT_AUDIO_STATE_ADD:
-                if (id == EDIT_AUDIO_STATE_ADD) {
+            case MainViewState.EDIT_AUDIO_STATE_HWMUSIC:
+            case MainViewState.EDIT_AUDIO_STATE_ADD:
+                if (id == MainViewState.EDIT_AUDIO_STATE_ADD) {
                     HVEAsset audioAssets = editPreviewViewModel.getSelectedAsset();
                     if (!(audioAssets instanceof HVEAudioAsset)) {
                         return;
@@ -666,7 +688,7 @@ public class MenuClickManager {
                 }
                 break;
 
-            case EDIT_AUDIO_STATE_SPLIT:
+            case MainViewState.EDIT_AUDIO_STATE_SPLIT:
                 HVEAsset cutAudioAsset = editPreviewViewModel.getSelectedAsset();
                 long seekTime = editPreviewViewModel.getSeekTime();
                 if (cutAudioAsset == null) {
@@ -679,16 +701,16 @@ public class MenuClickManager {
                 }
                 mMenuViewModel.splitAudio();
                 break;
-            case EDIT_AUDIO_STATE_DELETE:
+            case MainViewState.EDIT_AUDIO_STATE_DELETE:
                 mMenuViewModel.deleteAudio();
                 popView();
                 break;
 
-            case EDIT_AUDIO_STATE_COPY:
+            case MainViewState.EDIT_AUDIO_STATE_COPY:
                 mMenuViewModel.copyAudio();
                 break;
 
-            case EDIT_AUDIO_STATE_ACOUSTICS:
+            case MainViewState.EDIT_AUDIO_STATE_ACOUSTICS:
                 if (!LaneSizeCheckUtils.isCanAddAudio(editPreviewViewModel.getEditor(), mActivity)) {
                     ToastUtils.getInstance()
                         .showToast(mActivity, mActivity.getString(R.string.audio_lane_out_of_size), Toast.LENGTH_SHORT);
@@ -706,19 +728,19 @@ public class MenuClickManager {
                 }
                 break;
 
-            case TRANSITION_PANEL:
+            case MainViewState.TRANSITION_PANEL:
                 if (mMenuControlViewRouter != null) {
                     mMenuControlViewRouter.removeStackTopFragment();
                     showPanelViewPrepare(id, new TransitionPanelFragment());
                 }
                 break;
 
-            case EDIT_RATIO_STATE:
-            case EDIT_VIDEO_STATE_PROPORTION:
-            case EDIT_VIDEO_OPERATION_PROPORTION:
+            case MainViewState.EDIT_RATIO_STATE:
+            case MainViewState.EDIT_VIDEO_STATE_PROPORTION:
+            case MainViewState.EDIT_VIDEO_OPERATION_PROPORTION:
                 showPanelViewPrepare(id, new VideoProportionFragment());
                 break;
-            case EDIT_VIDEO_STATE_BLOCK_FACE:
+            case MainViewState.EDIT_VIDEO_STATE_BLOCK_FACE:
                 HVEAsset aiFaceAsset = editPreviewViewModel.getSelectedAsset();
                 if (aiFaceAsset == null) {
                     aiFaceAsset = editPreviewViewModel.getMainLaneAsset();
@@ -741,9 +763,9 @@ public class MenuClickManager {
                 }
                 editPreviewViewModel.setFaceBlockingEnter(id);
                 break;
-            case EDIT_VIDEO_STATE_HUMAN_TRACKING:
-            case EDIT_VIDEO_OPERATION_HUMAN_TRACKING:
-            case EDIT_PIP_OPERATION_HUMAN_TRACKING:
+            case MainViewState.EDIT_VIDEO_STATE_HUMAN_TRACKING:
+            case MainViewState.EDIT_VIDEO_OPERATION_HUMAN_TRACKING:
+            case MainViewState.EDIT_PIP_OPERATION_HUMAN_TRACKING:
                 if (mActivity == null || mActivity.isFinishing() || mActivity.isDestroyed()) {
                     return;
                 }
@@ -770,9 +792,9 @@ public class MenuClickManager {
                 mPersonTrackingViewModel.setHumanTrackingEnter(id);
                 mPersonTrackingViewModel.setHumanTrackingEntrance(id);
                 break;
-            case EDIT_VIDEO_STATE_AI_HAIR:
-            case EDIT_VIDEO_OPERATION_AI_HAIR:
-            case EDIT_PIP_OPERATION_AI_HAIR:
+            case MainViewState.EDIT_VIDEO_STATE_AI_HAIR:
+            case MainViewState.EDIT_VIDEO_OPERATION_AI_HAIR:
+            case MainViewState.EDIT_PIP_OPERATION_AI_HAIR:
                 if (mActivity == null || mActivity.isFinishing() || mActivity.isDestroyed()) {
                     return;
                 }
@@ -817,7 +839,7 @@ public class MenuClickManager {
                             LoadingDialogUtils.getInstance().dismiss();
                             AiHairFragment aiHairFragment = AiHairFragment.newInstance();
                             MenuClickManager.getInstance()
-                                .showPanelViewPrepare(EDIT_VIDEO_STATE_AI_HAIR, aiHairFragment);
+                                .showPanelViewPrepare(MainViewState.EDIT_VIDEO_STATE_AI_HAIR, aiHairFragment);
                         });
                     }
 
@@ -837,17 +859,17 @@ public class MenuClickManager {
                 });
                 break;
 
-            case EDIT_PIP_OPERATION_AI_SELECTION:
-            case EDIT_VIDEO_STATE_AI_SELECTION:
-            case EDIT_VIDEO_OPERATION_AI_SELECTION:
+            case MainViewState.EDIT_PIP_OPERATION_AI_SELECTION:
+            case MainViewState.EDIT_VIDEO_STATE_AI_SELECTION:
+            case MainViewState.EDIT_VIDEO_OPERATION_AI_SELECTION:
                 if (mMenuViewModel != null) {
                     mMenuViewModel.setVideoSelectionEnter(id);
                 }
                 break;
 
-            case EDIT_VIDEO_STATE_TIME_LAPSE:
-            case EDIT_VIDEO_OPERATION_TIME_LAPSE:
-            case EDIT_PIP_OPERATION_TIME_LAPSE:
+            case MainViewState.EDIT_VIDEO_STATE_TIME_LAPSE:
+            case MainViewState.EDIT_VIDEO_OPERATION_TIME_LAPSE:
+            case MainViewState.EDIT_PIP_OPERATION_TIME_LAPSE:
                 HVEAsset selectedAsset = editPreviewViewModel.getSelectedAsset();
                 if (selectedAsset == null) {
                     selectedAsset = editPreviewViewModel.getMainLaneAsset();
@@ -860,9 +882,9 @@ public class MenuClickManager {
                     mTimeLapseViewModel.setTimeLapseEnter(id);
                 }
                 break;
-            case EDIT_VIDEO_STATE_AI_FUN:
-            case EDIT_VIDEO_OPERATION_AI_FUN:
-            case EDIT_PIP_OPERATION_AI_FUN:
+            case MainViewState.EDIT_VIDEO_STATE_AI_FUN:
+            case MainViewState.EDIT_VIDEO_OPERATION_AI_FUN:
+            case MainViewState.EDIT_PIP_OPERATION_AI_FUN:
                 if (mActivity == null || mActivity.isDestroyed() || mActivity.isFinishing()) {
                     break;
                 }
@@ -882,7 +904,8 @@ public class MenuClickManager {
                 }
 
                 if (!isAiCanBeUsed((HVEVisibleAsset) aiFunAsset, HVEEffect.HVEEffectType.AI_COLOR)
-                    && !isAiCanBeUsed((HVEVisibleAsset) aiFunAsset, HVEEffect.HVEEffectType.FACE_REENACT)) {
+                    && !isAiCanBeUsed((HVEVisibleAsset) aiFunAsset, HVEEffect.HVEEffectType.FACE_REENACT)
+                    && !isAiCanBeUsed((HVEVisibleAsset) aiFunAsset, HVEEffect.HVEEffectType.FACE_SMILE)) {
                     ToastWrapper.makeText(mActivity, mActivity.getResources().getString(R.string.ai_limit)).show();
                     return;
                 }
@@ -901,14 +924,68 @@ public class MenuClickManager {
                     MenuClickManager.getInstance().showPanelViewPrepare(id, AiFunFragment.newInstance(id));
                 }
                 break;
-            case EDIT_VIDEO_STATE_AI_SEGMENTATION:
-            case EDIT_VIDEO_OPERATION_AI_SEGMENTATION:
-            case EDIT_PIP_OPERATION_AI_SEGMENTATION:
+            case MainViewState.EDIT_VIDEO_STATE_AI_SEGMENTATION:
+            case MainViewState.EDIT_VIDEO_OPERATION_AI_SEGMENTATION:
+            case MainViewState.EDIT_PIP_OPERATION_AI_SEGMENTATION:
+                HVEAsset selectSegmentAsset = editPreviewViewModel.getSelectedAsset();
+                if (selectSegmentAsset == null) {
+                    selectSegmentAsset = editPreviewViewModel.getMainLaneAsset();
+                }
+                if (!(selectSegmentAsset instanceof HVEVisibleAsset)) {
+                    return;
+                }
+                if (!isAiCanBeUsed((HVEVisibleAsset) selectSegmentAsset, HVEEffect.HVEEffectType.SEGMENTATION)) {
+                    ToastWrapper.makeText(mActivity, mActivity.getResources().getString(R.string.ai_limit)).show();
+                    return;
+                }
                 mSegmentationViewModel.setSegmentationEnter(id);
+                break;
+            case MainViewState.EDIT_VIDEO_STATE_BODY_SEG:
+            case MainViewState.EDIT_VIDEO_OPERATION_BODY_SEG:
+            case MainViewState.EDIT_PIP_OPERATION_BODY_SEG:
+                HVEAsset selectSegAsset = editPreviewViewModel.getSelectedAsset();
+                if (selectSegAsset == null) {
+                    selectSegAsset = editPreviewViewModel.getMainLaneAsset();
+                }
+                if (!(selectSegAsset instanceof HVEVisibleAsset)) {
+                    return;
+                }
+                int segPart = SharedPreferencesUtils.getInstance().getIntValue(mActivity, selectSegAsset.getUuid());
+                if (!isAiCanBeUsed((HVEVisibleAsset) selectSegAsset, HVEEffect.HVEEffectType.BODY_SEG)
+                    || (hasBodySeg((HVEVisibleAsset) selectSegAsset) && segPart == 1)) {
+                    ToastWrapper.makeText(mActivity, mActivity.getResources().getString(R.string.ai_limit)).show();
+                    return;
+                }
+                mBodySegViewModel.setBodySegEnter(id);
+                SharedPreferencesUtils.getInstance().putIntValue(mActivity, selectSegAsset.getUuid(), 2);
+                break;
+            case MainViewState.EDIT_VIDEO_STATE_HEAD_SEG:
+            case MainViewState.EDIT_VIDEO_OPERATION_HEAD_SEG:
+            case MainViewState.EDIT_PIP_OPERATION_HEAD_SEG:
+                HVEAsset selectHeadAsset = editPreviewViewModel.getSelectedAsset();
+                if (selectHeadAsset == null) {
+                    selectHeadAsset = editPreviewViewModel.getMainLaneAsset();
+                }
+                if (!(selectHeadAsset instanceof HVEVisibleAsset)) {
+                    return;
+                }
+                int headPart = SharedPreferencesUtils.getInstance().getIntValue(mActivity, selectHeadAsset.getUuid());
+                if (!isAiCanBeUsed((HVEVisibleAsset) selectHeadAsset, HVEEffect.HVEEffectType.BODY_SEG)
+                    || (hasBodySeg((HVEVisibleAsset) selectHeadAsset) && headPart == 2)) {
+                    ToastWrapper.makeText(mActivity, mActivity.getResources().getString(R.string.ai_limit)).show();
+                    return;
+                }
+                mBodySegViewModel.setBodySegEnter(id);
+                SharedPreferencesUtils.getInstance().putIntValue(mActivity, selectHeadAsset.getUuid(), 1);
                 break;
             default:
                 break;
         }
+    }
+
+    private boolean hasBodySeg(HVEVisibleAsset asset) {
+        HVEEffect.HVEEffectType assetType = asset.getAIEffectType();
+        return assetType != null && assetType.equals(HVEEffect.HVEEffectType.BODY_SEG);
     }
 
     public void showPanelViewPrepare(int id, Fragment fragment) {
@@ -935,37 +1012,37 @@ public class MenuClickManager {
 
     private List<Integer> getCloudMaterialsIdList() {
         cloudMaterialsIdList = new ArrayList<>();
-        cloudMaterialsIdList.add(EDIT_FILTER_STATE_ADD);
-        cloudMaterialsIdList.add(EDIT_FILTER_STATE_EXCLUSIVE);
-        cloudMaterialsIdList.add(EDIT_VIDEO_STATE_FILTER);
-        cloudMaterialsIdList.add(EDIT_PIP_OPERATION_FILTER);
-        cloudMaterialsIdList.add(EDIT_STICKER_STATE_ADD_STICKER);
-        cloudMaterialsIdList.add(EDIT_TEXT_STATE_STICKER);
-        cloudMaterialsIdList.add(EDIT_STICKER_OPERATION_REPLACE);
-        cloudMaterialsIdList.add(EDIT_SPECIAL_STATE_ADD);
-        cloudMaterialsIdList.add(EDIT_AUDIO_STATE_ACOUSTICS);
-        cloudMaterialsIdList.add(EDIT_AUDIO_STATE_HWMUSIC);
-        cloudMaterialsIdList.add(EDIT_TEXT_MODULE_OPERATION_REPLACE);
-        cloudMaterialsIdList.add(TRANSITION_PANEL);
-        cloudMaterialsIdList.add(EDIT_RATIO_STATE);
-        cloudMaterialsIdList.add(EDIT_BACKGROUND_STATE);
-        cloudMaterialsIdList.add(EDIT_PIP_OPERATION_ANIMATION);
-        cloudMaterialsIdList.add(EDIT_VIDEO_STATE_ANIMATION);
-        cloudMaterialsIdList.add(EDIT_VIDEO_OPERATION_ANIMATION);
-        cloudMaterialsIdList.add(EDIT_TEXT_OPERATION_ANIMATION);
-        cloudMaterialsIdList.add(EDIT_STICKER_OPERATION_ANIMATION);
-        cloudMaterialsIdList.add(EDIT_SPECIAL_OPERATION_REPLACE);
-        cloudMaterialsIdList.add(EDIT_FILTER_OPERATION_REPLACE);
-        cloudMaterialsIdList.add(EDIT_TEXT_STATE_ADD_WATER_MARK);
-        cloudMaterialsIdList.add(EDIT_VIDEO_STATE_SPEED);
-        cloudMaterialsIdList.add(EDIT_PIP_OPERATION_SPEED);
-        cloudMaterialsIdList.add(EDIT_VIDEO_OPERATION_SPEED);
-        cloudMaterialsIdList.add(EDIT_VIDEO_OPERATION_MASK);
-        cloudMaterialsIdList.add(EDIT_VIDEO_STATE_MASK);
-        cloudMaterialsIdList.add(EDIT_PIP_OPERATION_MASK);
-        cloudMaterialsIdList.add(EDIT_VIDEO_STATE_AI_HAIR);
-        cloudMaterialsIdList.add(EDIT_VIDEO_OPERATION_AI_HAIR);
-        cloudMaterialsIdList.add(EDIT_PIP_OPERATION_AI_HAIR);
+        cloudMaterialsIdList.add(MainViewState.EDIT_FILTER_STATE_ADD);
+        cloudMaterialsIdList.add(MainViewState.EDIT_FILTER_STATE_EXCLUSIVE);
+        cloudMaterialsIdList.add(MainViewState.EDIT_VIDEO_STATE_FILTER);
+        cloudMaterialsIdList.add(MainViewState.EDIT_PIP_OPERATION_FILTER);
+        cloudMaterialsIdList.add(MainViewState.EDIT_STICKER_STATE_ADD_STICKER);
+        cloudMaterialsIdList.add(MainViewState.EDIT_TEXT_STATE_STICKER);
+        cloudMaterialsIdList.add(MainViewState.EDIT_STICKER_OPERATION_REPLACE);
+        cloudMaterialsIdList.add(MainViewState.EDIT_SPECIAL_STATE_ADD);
+        cloudMaterialsIdList.add(MainViewState.EDIT_AUDIO_STATE_ACOUSTICS);
+        cloudMaterialsIdList.add(MainViewState.EDIT_AUDIO_STATE_HWMUSIC);
+        cloudMaterialsIdList.add(MainViewState.EDIT_TEXT_MODULE_OPERATION_REPLACE);
+        cloudMaterialsIdList.add(MainViewState.TRANSITION_PANEL);
+        cloudMaterialsIdList.add(MainViewState.EDIT_RATIO_STATE);
+        cloudMaterialsIdList.add(MainViewState.EDIT_BACKGROUND_STATE);
+        cloudMaterialsIdList.add(MainViewState.EDIT_PIP_OPERATION_ANIMATION);
+        cloudMaterialsIdList.add(MainViewState.EDIT_VIDEO_STATE_ANIMATION);
+        cloudMaterialsIdList.add(MainViewState.EDIT_VIDEO_OPERATION_ANIMATION);
+        cloudMaterialsIdList.add(MainViewState.EDIT_TEXT_OPERATION_ANIMATION);
+        cloudMaterialsIdList.add(MainViewState.EDIT_STICKER_OPERATION_ANIMATION);
+        cloudMaterialsIdList.add(MainViewState.EDIT_SPECIAL_OPERATION_REPLACE);
+        cloudMaterialsIdList.add(MainViewState.EDIT_FILTER_OPERATION_REPLACE);
+        cloudMaterialsIdList.add(MainViewState.EDIT_TEXT_STATE_ADD_WATER_MARK);
+        cloudMaterialsIdList.add(MainViewState.EDIT_VIDEO_STATE_SPEED);
+        cloudMaterialsIdList.add(MainViewState.EDIT_PIP_OPERATION_SPEED);
+        cloudMaterialsIdList.add(MainViewState.EDIT_VIDEO_OPERATION_SPEED);
+        cloudMaterialsIdList.add(MainViewState.EDIT_VIDEO_OPERATION_MASK);
+        cloudMaterialsIdList.add(MainViewState.EDIT_VIDEO_STATE_MASK);
+        cloudMaterialsIdList.add(MainViewState.EDIT_PIP_OPERATION_MASK);
+        cloudMaterialsIdList.add(MainViewState.EDIT_VIDEO_STATE_AI_HAIR);
+        cloudMaterialsIdList.add(MainViewState.EDIT_VIDEO_OPERATION_AI_HAIR);
+        cloudMaterialsIdList.add(MainViewState.EDIT_PIP_OPERATION_AI_HAIR);
         return cloudMaterialsIdList;
     }
 
@@ -973,53 +1050,62 @@ public class MenuClickManager {
         List<Integer> unableMenuId = new ArrayList<>();
         switch (type) {
             case 2:
-                unableMenuId.add(EDIT_VIDEO_OPERATION_SPEED);
-                unableMenuId.add(EDIT_VIDEO_OPERATION_VOLUME);
-                unableMenuId.add(EDIT_VIDEO_OPERATION_INVERTED);
-                unableMenuId.add(EDIT_VIDEO_OPERATION_HUMAN_TRACKING);
-                unableMenuId.add(EDIT_VIDEO_OPERATION_AI_SEGMENTATION);
+                unableMenuId.add(MainViewState.EDIT_VIDEO_OPERATION_SPEED);
+                unableMenuId.add(MainViewState.EDIT_VIDEO_OPERATION_VOLUME);
+                unableMenuId.add(MainViewState.EDIT_VIDEO_OPERATION_INVERTED);
+                unableMenuId.add(MainViewState.EDIT_VIDEO_OPERATION_HUMAN_TRACKING);
+                unableMenuId.add(MainViewState.EDIT_VIDEO_OPERATION_AI_SEGMENTATION);
                 break;
             case 3:
-                unableMenuId.add(EDIT_VIDEO_OPERATION_SPLIT);
-                unableMenuId.add(EDIT_VIDEO_OPERATION_SPEED);
-                unableMenuId.add(EDIT_VIDEO_OPERATION_VOLUME);
-                unableMenuId.add(EDIT_VIDEO_OPERATION_ANIMATION);
-                unableMenuId.add(EDIT_VIDEO_OPERATION_FILTER_ADD);
-                unableMenuId.add(EDIT_VIDEO_OPERATION_TAILORING);
-                unableMenuId.add(EDIT_VIDEO_OPERATION_ADJUST);
-                unableMenuId.add(EDIT_VIDEO_OPERATION_COPY);
-                unableMenuId.add(EDIT_VIDEO_OPERATION_REPLACE);
-                unableMenuId.add(EDIT_VIDEO_OPERATION_MASK);
-                unableMenuId.add(EDIT_VIDEO_OPERATION_MIRROR);
-                unableMenuId.add(EDIT_VIDEO_OPERATION_TRANSPARENCY);
-                unableMenuId.add(EDIT_VIDEO_OPERATION_INVERTED);
-                unableMenuId.add(EDIT_VIDEO_OPERATION_AI_HAIR);
+                unableMenuId.add(MainViewState.EDIT_VIDEO_OPERATION_SPLIT);
+                unableMenuId.add(MainViewState.EDIT_VIDEO_OPERATION_SPEED);
+                unableMenuId.add(MainViewState.EDIT_VIDEO_OPERATION_VOLUME);
+                unableMenuId.add(MainViewState.EDIT_VIDEO_OPERATION_ANIMATION);
+                unableMenuId.add(MainViewState.EDIT_VIDEO_OPERATION_FILTER_ADD);
+                unableMenuId.add(MainViewState.EDIT_VIDEO_OPERATION_TAILORING);
+                unableMenuId.add(MainViewState.EDIT_VIDEO_OPERATION_ADJUST);
+                unableMenuId.add(MainViewState.EDIT_VIDEO_OPERATION_COPY);
+                unableMenuId.add(MainViewState.EDIT_VIDEO_OPERATION_REPLACE);
+                unableMenuId.add(MainViewState.EDIT_VIDEO_OPERATION_MASK);
+                unableMenuId.add(MainViewState.EDIT_VIDEO_OPERATION_MIRROR);
+                unableMenuId.add(MainViewState.EDIT_VIDEO_OPERATION_TRANSPARENCY);
+                unableMenuId.add(MainViewState.EDIT_VIDEO_OPERATION_INVERTED);
+                unableMenuId.add(MainViewState.EDIT_VIDEO_OPERATION_AI_HAIR);
                 break;
             case 4:
-                unableMenuId.add(EDIT_PIP_OPERATION_SPLIT);
-                unableMenuId.add(EDIT_PIP_OPERATION_SPEED);
-                unableMenuId.add(EDIT_PIP_OPERATION_VOLUME);
-                unableMenuId.add(EDIT_PIP_OPERATION_INVERTED);
-                unableMenuId.add(EDIT_PIP_OPERATION_HUMAN_TRACKING);
+                unableMenuId.add(MainViewState.EDIT_PIP_OPERATION_SPLIT);
+                unableMenuId.add(MainViewState.EDIT_PIP_OPERATION_SPEED);
+                unableMenuId.add(MainViewState.EDIT_PIP_OPERATION_VOLUME);
+                unableMenuId.add(MainViewState.EDIT_PIP_OPERATION_INVERTED);
+                unableMenuId.add(MainViewState.EDIT_PIP_OPERATION_HUMAN_TRACKING);
                 break;
             case 5:
-                unableMenuId.add(EDIT_PIP_OPERATION_SPLIT);
+                unableMenuId.add(MainViewState.EDIT_PIP_OPERATION_SPLIT);
                 break;
             case 6:
-                unableMenuId.add(EDIT_TEXT_OPERATION_EDIT);
+                unableMenuId.add(MainViewState.EDIT_TEXT_OPERATION_EDIT);
                 break;
             case 7:
-                unableMenuId.add(EDIT_VIDEO_OPERATION_AI_HAIR);
+                unableMenuId.add(MainViewState.EDIT_VIDEO_OPERATION_AI_HAIR);
                 break;
             case 8:
-                unableMenuId.add(EDIT_VIDEO_STATE_HUMAN_TRACKING);
-                unableMenuId.add(EDIT_VIDEO_OPERATION_HUMAN_TRACKING);
-                unableMenuId.add(EDIT_PIP_OPERATION_HUMAN_TRACKING);
+                unableMenuId.add(MainViewState.EDIT_VIDEO_STATE_HUMAN_TRACKING);
+                unableMenuId.add(MainViewState.EDIT_VIDEO_OPERATION_HUMAN_TRACKING);
+                unableMenuId.add(MainViewState.EDIT_PIP_OPERATION_HUMAN_TRACKING);
+                unableMenuId.add(MainViewState.EDIT_VIDEO_STATE_BODY_SEG);
+                unableMenuId.add(MainViewState.EDIT_VIDEO_OPERATION_BODY_SEG);
+                unableMenuId.add(MainViewState.EDIT_PIP_OPERATION_BODY_SEG);
+                unableMenuId.add(MainViewState.EDIT_VIDEO_STATE_HEAD_SEG);
+                unableMenuId.add(MainViewState.EDIT_VIDEO_OPERATION_HEAD_SEG);
+                unableMenuId.add(MainViewState.EDIT_PIP_OPERATION_HEAD_SEG);
+                unableMenuId.add(MainViewState.EDIT_VIDEO_STATE_WINGS);
+                unableMenuId.add(MainViewState.EDIT_VIDEO_OPERATION_WINGS);
+                unableMenuId.add(MainViewState.EDIT_PIP_OPERATION_WINGS);
                 break;
             case 9:
-                unableMenuId.add(EDIT_VIDEO_STATE_INVERTED);
-                unableMenuId.add(EDIT_VIDEO_OPERATION_INVERTED);
-                unableMenuId.add(EDIT_PIP_OPERATION_INVERTED);
+                unableMenuId.add(MainViewState.EDIT_VIDEO_STATE_INVERTED);
+                unableMenuId.add(MainViewState.EDIT_VIDEO_OPERATION_INVERTED);
+                unableMenuId.add(MainViewState.EDIT_PIP_OPERATION_INVERTED);
                 break;
             default:
                 break;
@@ -1030,25 +1116,25 @@ public class MenuClickManager {
     public void translation(int index) {
         int position = 0;
         switch (index) {
-            case EDIT_VIDEO_STATE:
+            case MainViewState.EDIT_VIDEO_STATE:
                 position = 0;
                 break;
-            case EDIT_AUDIO_STATE:
+            case MainViewState.EDIT_AUDIO_STATE:
                 position = 1;
                 break;
-            case EDIT_STICKER_STATE:
+            case MainViewState.EDIT_STICKER_STATE:
                 position = 2;
                 break;
-            case EDIT_TEXT_STATE:
+            case MainViewState.EDIT_TEXT_STATE:
                 position = 3;
                 break;
-            case EDIT_PIP_STATE:
+            case MainViewState.EDIT_PIP_STATE:
                 position = 4;
                 break;
-            case EDIT_SPECIAL_STATE:
+            case MainViewState.EDIT_SPECIAL_STATE:
                 position = 5;
                 break;
-            case EDIT_FILTER_STATE:
+            case MainViewState.EDIT_FILTER_STATE:
                 position = 6;
                 break;
             default:
@@ -1059,7 +1145,7 @@ public class MenuClickManager {
 
     public HVELane.HVELaneType getLaneType(int id) {
         HVELane.HVELaneType laneType;
-        if (id == EDIT_PIP_STATE) {
+        if (id == MainViewState.EDIT_PIP_STATE) {
             laneType = HVELane.HVELaneType.VIDEO;
         } else {
             laneType = HVELane.HVELaneType.STICKER;

@@ -182,7 +182,7 @@ public class CanvasBackgroundFragment extends BaseFragment {
 
     private RelativeLayout.LayoutParams mSeekbarParams = null;
 
-    private float xEvent = 0;
+    private float xEvent = 0f;
 
     private boolean isSelectFromAlbum;
 

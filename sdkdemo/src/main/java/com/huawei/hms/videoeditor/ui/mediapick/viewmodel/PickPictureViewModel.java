@@ -25,6 +25,7 @@ import android.app.Application;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,10 +33,11 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 
 import com.huawei.hms.videoeditor.sdk.util.HVEUtil;
-import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.bean.MediaData;
+import com.huawei.hms.videoeditor.ui.common.utils.BitmapDecodeUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
 import com.huawei.hms.videoeditor.ui.mediapick.manager.MediaPickManager;
+import com.huawei.hms.videoeditor.utils.SmartLog;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -215,6 +217,15 @@ public class PickPictureViewModel extends AndroidViewModel {
                     }
                 }
 
+                if (imageWidth == 0 || imageHeight == 0) {
+                    BitmapFactory.Options options = BitmapDecodeUtils.getBitmapOptions(imagePath);
+                    imageWidth = options.outWidth;
+                    imageHeight = options.outHeight;
+                }
+                if (imageWidth == 0 || imageHeight == 0) {
+                    isLoadContinue = true;
+                    continue;
+                }
                 MediaData mediaData = MediaPickManager.getInstance().updateSelectMediaData(imagePath);
                 if (mediaData != null) {
                     mediaData.setDirName(dirPathName);

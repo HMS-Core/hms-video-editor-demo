@@ -47,7 +47,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.template.HVETemplateElement;
 import com.huawei.hms.videoeditor.template.HVETemplateInfo;
 import com.huawei.hms.videoeditor.template.HVETemplateManager;
@@ -79,6 +78,7 @@ import com.huawei.hms.videoeditor.ui.template.utils.CropDataHelper;
 import com.huawei.hms.videoeditor.ui.template.utils.ModuleSelectManager;
 import com.huawei.hms.videoeditor.ui.template.view.dialog.ModuleComposeDialog;
 import com.huawei.hms.videoeditor.ui.template.viewmodel.ModuleEditViewModel;
+import com.huawei.hms.videoeditor.utils.SmartLog;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 import com.huawei.secure.android.common.intent.SafeBundle;
 import com.huawei.secure.android.common.intent.SafeIntent;

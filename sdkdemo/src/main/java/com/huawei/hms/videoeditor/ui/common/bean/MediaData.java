@@ -26,6 +26,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
+import com.huawei.hms.videoeditor.sdk.bean.HVECut;
+
 public class MediaData implements Parcelable {
     public static final int MEDIA_IMAGE = 0;
 
@@ -53,7 +55,7 @@ public class MediaData implements Parcelable {
 
     private int index;
 
-    private long duration = 0;
+    private long duration = 0L;
 
     private int width;
 
@@ -378,6 +380,15 @@ public class MediaData implements Parcelable {
 
     public void setHVEHeight(float HVEHeight) {
         this.hVEHeight = HVEHeight;
+    }
+
+    public HVECut getCut() {
+        if (Float.compare(this.glLeftBottomX, 0.0f) == 0 && Float.compare(this.glLeftBottomY, 0.0f) == 0
+                && Float.compare(this.glRightTopX, 0.0f) == 0 && Float.compare(this.glRightTopY, 0.0f) == 0) {
+            return null;
+        } else {
+            return new HVECut(glLeftBottomX, glLeftBottomY, glRightTopX, glRightTopY);
+        }
     }
 
     @Override

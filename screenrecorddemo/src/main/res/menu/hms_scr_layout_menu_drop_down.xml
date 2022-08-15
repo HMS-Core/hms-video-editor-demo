@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/defaultInternal"
+        android:title="@string/hms_scr_str_default_internal" />
+
+    <item
+        android:id="@+id/customInternal"
+        android:title="@string/hms_scr_str_custom_internal" />
+
+    <item
+        android:id="@+id/cameraInDcim"
+        android:title="@string/hms_scr_str_camera_in_dcim" />
+
+    <item
+        android:id="@+id/customInDcim"
+        android:title="@string/hms_scr_str_custom_in_dcim" />
+
+
+</menu>

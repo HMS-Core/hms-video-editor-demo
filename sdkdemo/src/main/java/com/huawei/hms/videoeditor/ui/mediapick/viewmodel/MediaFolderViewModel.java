@@ -17,29 +17,29 @@
 
 package com.huawei.hms.videoeditor.ui.mediapick.viewmodel;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-
 import android.app.Application;
 import android.database.Cursor;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 
-import com.huawei.hms.videoeditor.sdk.bean.HVEVisibleFormatBean;
-import com.huawei.hms.videoeditor.sdk.util.HVEUtil;
-import com.huawei.hms.videoeditor.sdk.util.SmartLog;
-import com.huawei.hms.videoeditor.ui.mediapick.bean.MediaFolder;
-import com.huawei.hms.videoeditorkit.sdkdemo.R;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
+import com.huawei.hms.videoeditor.sdk.bean.HVEVisibleFormatBean;
+import com.huawei.hms.videoeditor.sdk.util.HVEUtil;
+import com.huawei.hms.videoeditor.ui.mediapick.bean.MediaFolder;
+import com.huawei.hms.videoeditor.utils.SmartLog;
+import com.huawei.hms.videoeditor.utils.Utils;
+import com.huawei.hms.videoeditorkit.sdkdemo.R;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 public class MediaFolderViewModel extends AndroidViewModel {
     private static final String TAG = "MediaFolderViewModel";
@@ -91,13 +91,6 @@ public class MediaFolderViewModel extends AndroidViewModel {
                     String videoPath = cursor.getString(cursor.getColumnIndexOrThrow(videoProjection[0]));
                     long videoDuration = cursor.getInt(cursor.getColumnIndexOrThrow(videoProjection[1]));
                     long videoAddTime = cursor.getLong(cursor.getColumnIndexOrThrow(videoProjection[2]));
-                    if (videoDuration == 0) {
-                        HVEVisibleFormatBean bean = HVEUtil.getVideoProperty(videoPath);
-                        if (bean == null) {
-                            continue;
-                        }
-                        videoDuration = bean.getDuration();
-                    }
 
                     if (videoDuration < 500) {
                         continue;
@@ -136,8 +129,8 @@ public class MediaFolderViewModel extends AndroidViewModel {
                             firstMediaTime = Math.min(videoAddTime, firstMediaTime);
                         }
                     }
-                    String[] picSize = parentFile
-                        .list((dir, filename) -> HVEUtil.getVideoProperty(dir + File.separator + filename) != null);
+                    String[] picSize =
+                        parentFile.list((dir, filename) -> Utils.isVideoByPath(dir + File.separator + filename));
                     if (picSize == null) {
                         continue;
                     }

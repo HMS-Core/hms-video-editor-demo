@@ -16,15 +16,6 @@
 
 package com.huawei.hms.videoeditor.ui.common.utils;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.charset.StandardCharsets;
-import java.text.DecimalFormat;
-
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -33,13 +24,27 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteException;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.huawei.hms.videoeditor.sdk.bean.HVEVisibleFormatBean;
-import com.huawei.hms.videoeditor.sdk.util.HVEUtil;
-import com.huawei.hms.videoeditor.sdk.util.SmartLog;
-import com.huawei.hms.videoeditor.ui.common.tools.EditorRuntimeException;
+import com.huawei.hms.videoeditor.utils.SmartLog;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
+import java.text.DecimalFormat;
+import java.util.Locale;
 
 public class FileUtil {
     private static final String TAG = "FileUtil";
@@ -60,13 +65,48 @@ public class FileUtil {
 
     public static long getFileSize(String filePath, int sizeType) {
         File file = new File(filePath);
-        long blockSize = 0;
+        long blockSize = 0L;
         if (file.isDirectory()) {
             SmartLog.e(TAG, "please input file,not directory");
         } else {
             blockSize = getFileSize(file);
         }
         return (long) formetFileSize(blockSize, sizeType);
+    }
+
+    public static String readAssetsFile(Context context, String fileName) {
+        InputStreamReader inputReader = null;
+        BufferedReader bufReader = null;
+        try {
+            inputReader =
+                    new InputStreamReader(context.getResources().getAssets().open(fileName), StandardCharsets.UTF_8);
+            bufReader = new BufferedReader(inputReader);
+            String line;
+            StringBuilder builder = new StringBuilder();
+            while ((line = bufReader.readLine()) != null) {
+                builder.append(line);
+            }
+            return builder.toString();
+        } catch (IOException error) {
+            SmartLog.e(TAG, "readAssetsFile failed");
+            return "";
+        } finally {
+            try {
+                if (inputReader != null) {
+                    inputReader.close();
+                }
+            } catch (IOException error) {
+                SmartLog.e(TAG, "readAssetsFile failed");
+            }
+
+            try {
+                if (bufReader != null) {
+                    bufReader.close();
+                }
+            } catch (IOException error) {
+                SmartLog.e(TAG, "readAssetsFile failed");
+            }
+        }
     }
 
     public static String readJsonFile(String path) {
@@ -97,7 +137,7 @@ public class FileUtil {
     }
 
     private static long getFileSize(File file) {
-        long size = 0;
+        long size = 0L;
         if (file.exists()) {
             FileInputStream fis = null;
             try {
@@ -184,18 +224,27 @@ public class FileUtil {
         }
     }
 
-    public static boolean isVideo(String path) throws EditorRuntimeException {
-        HVEVisibleFormatBean bean = HVEUtil.getVideoProperty(path);
-        if (bean == null) {
+    public static boolean isVideo(String path) {
+        return isVideoByPath(path);
+    }
+
+    public static boolean isVideoByPath(String filePath) {
+        if (StringUtil.isEmpty(filePath)) {
             return false;
         }
-        return true;
+        String localFilePath = filePath.trim();
+        return localFilePath.toLowerCase(Locale.ENGLISH).endsWith(".mp4")
+                || localFilePath.toLowerCase(Locale.ENGLISH).endsWith(".3gp")
+                || localFilePath.toLowerCase(Locale.ENGLISH).endsWith(".3g2")
+                || localFilePath.toLowerCase(Locale.ENGLISH).endsWith(".mkv")
+                || localFilePath.toLowerCase(Locale.ENGLISH).endsWith(".mov")
+                || localFilePath.toLowerCase(Locale.ENGLISH).endsWith(".m4v");
     }
 
     /**
      * bitmap 2 File
      *
-     * @param bitmap bitmap
+     * @param bitmap  bitmap
      * @param bitName bitName
      * @throws IOException
      */
@@ -226,7 +275,6 @@ public class FileUtil {
         }
         return sdPath + File.separator + bitName;
     }
-
 
     /**
      * bitmap 2 File
@@ -272,6 +320,55 @@ public class FileUtil {
         return sdPath + File.separator + bitName;
     }
 
+    public static boolean saveBitmap(Bitmap bitmap, int quality, File file) {
+        FileOutputStream out = null;
+        try {
+            out = openOutputStream(file, false);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, out);
+            out.flush();
+        } catch (Exception error) {
+            SmartLog.e(TAG, error.getMessage());
+            return false;
+        } finally {
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    SmartLog.e(TAG, e.getMessage());
+                }
+            }
+        }
+        return true;
+    }
+
+    public static FileOutputStream openOutputStream(final File outFile, final boolean append) throws IOException {
+        String filePath = outFile.getCanonicalPath();
+        if (isIllegalPath(filePath)) {
+            throw new IOException("outFile path illegal");
+        }
+        if (outFile.exists()) {
+            if (outFile.isDirectory()) {
+                throw new IOException("outFile '" + outFile + "' exists but is a directory");
+            }
+            if (!outFile.canWrite()) {
+                throw new IOException("outFile '" + outFile + "' cannot be written to");
+            }
+        } else {
+            final File parent = outFile.getParentFile();
+            if (parent != null) {
+                if (!parent.mkdirs() && !parent.isDirectory()) {
+                    throw new IOException("Directory '" + parent + "' could not be created");
+                }
+            }
+        }
+        return new FileOutputStream(filePath, append);
+    }
+
+    public static boolean isIllegalPath(String url) {
+        return null == url || url.contains("../") || url.contains("./") || url.contains("%00")
+                || url.contains(".\\.\\");
+    }
+
     public static boolean isPathExist(String path) {
         if (TextUtils.isEmpty(path)) {
             return false;
@@ -279,5 +376,158 @@ public class FileUtil {
 
         File file = new File(path);
         return file.exists();
+    }
+
+    private static boolean copyFile(String sourcePath, String targetPath) {
+        if (TextUtils.isEmpty(sourcePath) || TextUtils.isEmpty(targetPath)) {
+            return false;
+        }
+        File sourceFile = new File(sourcePath);
+        File targetFile = new File(targetPath);
+        if (sourcePath.equals(targetPath) && targetFile.exists()) {
+            return false;
+        }
+        if (!targetFile.exists()) {
+            String path = targetPath.substring(0, targetPath.lastIndexOf("/"));
+            File file = new File(path);
+            file.mkdirs();
+        }
+        InputStream inputStream = null;
+        OutputStream outputStream = null;
+        try {
+            inputStream = new BufferedInputStream(new FileInputStream(sourceFile));
+            outputStream = new BufferedOutputStream(new FileOutputStream(targetFile));
+            byte[] bytes = new byte[8192];
+            int i;
+            while ((i = inputStream.read(bytes)) != -1) {
+                outputStream.write(bytes, 0, i);
+            }
+        } catch (Exception e) {
+            SmartLog.e(TAG, e.getMessage());
+        } finally {
+            try {
+                if (outputStream != null) {
+                    outputStream.close();
+                }
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+            } catch (IOException e) {
+                SmartLog.e(TAG, "IOException: " + e.getMessage());
+            }
+        }
+        return true;
+    }
+
+    private static boolean copyFile(String oldPath, OutputStream outputStream) {
+        try {
+            int byteSum = 0;
+            int byteRead = 0;
+            File oldFile = new File(oldPath);
+            if (oldFile.exists()) {
+                InputStream inStream = new FileInputStream(oldPath);
+                byte[] buffer = new byte[2048];
+                while ((byteRead = inStream.read(buffer)) != -1) {
+                    byteSum += byteRead;
+                    System.out.println(byteSum);
+                    outputStream.write(buffer, 0, byteRead);
+                }
+                inStream.close();
+                outputStream.close();
+                return true;
+            } else {
+                SmartLog.e(TAG, "The file does not exist.");
+            }
+        } catch (Exception e) {
+            SmartLog.e(TAG, "Failed to copy a single file.");
+        }
+        return false;
+    }
+
+    /**
+     * Save to Album
+     */
+    public static boolean saveToLocalSystem(Context context, boolean isVideo, String filePath, String videoOutputPath,
+                                            String photoOutputPath) {
+        boolean isSuccess = false;
+        File file = new File(filePath);
+        if (file.exists()) {
+            if (isVideo) {
+                copyFile(file.getAbsolutePath(), videoOutputPath);
+                isSuccess = saveVideoToSystemAlbum(context, videoOutputPath);
+            } else {
+                copyFile(file.getAbsolutePath(), photoOutputPath);
+                isSuccess = saveImageToSystemAlbum(context, photoOutputPath);
+            }
+        }
+        return isSuccess;
+    }
+
+    public static boolean saveImageToSystemAlbum(Context context, String imageFile) {
+        try {
+            ContentResolver contentResolver = context.getContentResolver();
+            ContentValues contentValues = getImageContentValues(imageFile, System.currentTimeMillis());
+            contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+            Intent intent = new Intent("android.intent.action.MEDIA_SCANNER_SCAN_FILE");
+            final Uri localUri = Uri.fromFile(new File(imageFile));
+            intent.setData(localUri);
+            context.sendBroadcast(intent);
+            return true;
+        } catch (Exception e) {
+            SmartLog.e(TAG, e.getMessage());
+            return false;
+        }
+    }
+
+    private static boolean saveVideoToSystemAlbum(Context context, String videoFile) {
+        try {
+            ContentResolver contentResolver = context.getContentResolver();
+            ContentValues contentValues = getVideoContentValues(new File(videoFile), System.currentTimeMillis());
+            Uri localUri = contentResolver.insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, contentValues);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
+                    && context.getApplicationInfo().targetSdkVersion >= Build.VERSION_CODES.Q) {
+                try {
+                    OutputStream out = context.getContentResolver().openOutputStream(localUri);
+                    copyFile(videoFile, out);
+                } catch (IOException e) {
+                    SmartLog.e(TAG, "IOException: " + e.getMessage());
+                }
+            }
+            context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, localUri));
+            return true;
+        } catch (Exception e) {
+            SmartLog.e(TAG, e.getMessage());
+            return false;
+        }
+    }
+
+    private static ContentValues getImageContentValues(String imagePath, long paramLong) {
+        File imageFile = new File(imagePath);
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("title", imageFile.getName());
+        contentValues.put("_display_name", imageFile.getName());
+        contentValues.put("mime_type", "image/jpeg");
+        contentValues.put("datetaken", paramLong);
+        contentValues.put("date_modified", paramLong);
+        contentValues.put("date_added", paramLong);
+        contentValues.put("orientation", 0);
+        contentValues.put("_data", imageFile.getAbsolutePath());
+        contentValues.put("_size", imageFile.length());
+        contentValues.put("width", ImageUtil.getImageWidthAndHeight(imagePath)[0]);
+        contentValues.put("height", ImageUtil.getImageWidthAndHeight(imagePath)[1]);
+        return contentValues;
+    }
+
+    private static ContentValues getVideoContentValues(File videoFile, long paramLong) {
+        ContentValues localContentValues = new ContentValues();
+        localContentValues.put("title", videoFile.getName());
+        localContentValues.put("_display_name", videoFile.getName());
+        localContentValues.put("mime_type", "video/mp4");
+        localContentValues.put("datetaken", paramLong);
+        localContentValues.put("date_modified", paramLong);
+        localContentValues.put("date_added", paramLong);
+        localContentValues.put("_data", videoFile.getAbsolutePath());
+        localContentValues.put("_size", videoFile.length());
+        return localContentValues;
     }
 }

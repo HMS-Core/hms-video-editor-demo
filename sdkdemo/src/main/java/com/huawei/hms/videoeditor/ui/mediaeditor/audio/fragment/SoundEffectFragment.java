@@ -236,7 +236,7 @@ public class SoundEffectFragment extends BaseFragment {
 
     private void addSoundEffect(CloudMaterialBean cutContent) {
         if (cutContent != null) {
-            mEditPreviewViewModel.addAudio(cutContent, AUDIO_TYPE_SOUND_EFFECT);
+            mEditPreviewViewModel.addAudio(cutContent);
         }
     }
 

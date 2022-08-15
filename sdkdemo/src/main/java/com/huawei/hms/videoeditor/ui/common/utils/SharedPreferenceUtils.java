@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.huawei.hms.videoeditor.VideoEditorApplication;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.sdk.util.StringUtil;
 
@@ -43,6 +44,20 @@ public class SharedPreferenceUtils {
             sharedPreferences = context.getSharedPreferences(name, Context.MODE_PRIVATE);
         }
         editor = sharedPreferences.edit();
+    }
+
+    public static SharedPreferenceUtils get(String name) {
+        if (instanceMap.get(name) == null) {
+            synchronized (SharedPreferenceUtils.class) {
+                if (instanceMap.get(name) == null) {
+                    Context context = VideoEditorApplication.getInstance().getContext();
+                    if (context != null) {
+                        instanceMap.put(name, new SharedPreferenceUtils(context, name));
+                    }
+                }
+            }
+        }
+        return instanceMap.get(name);
     }
 
     public static SharedPreferenceUtils get(Context context, String name) {
