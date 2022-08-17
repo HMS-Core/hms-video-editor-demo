@@ -16,9 +16,6 @@
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.materialedit;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -35,6 +32,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import androidx.annotation.Nullable;
+
 import com.huawei.hms.videoeditor.sdk.bean.HVEPosition2D;
 import com.huawei.hms.videoeditor.sdk.bean.HVESize;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
@@ -42,7 +41,8 @@ import com.huawei.hms.videoeditor.ui.common.utils.BigDecimalUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
-import androidx.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TransformView extends View {
 
@@ -149,6 +149,8 @@ public class TransformView extends View {
     protected int assetWidth;
 
     protected int assetHeight;
+
+    protected boolean isPointUp;
 
     public TransformView(Context context) {
         this(context, null);
@@ -293,6 +295,7 @@ public class TransformView extends View {
                 }
                 mOldX = event.getX();
                 mOldY = event.getY();
+                isPointUp = false;
                 if (isDrawScale && mScaleRect.contains(event.getX(), event.getY())) {
                     if (mHVEPosition2DList.get(0) == null || mHVEPosition2DList.get(1) == null
                         || mHVEPosition2DList.get(2) == null || mHVEPosition2DList.get(3) == null) {
@@ -339,17 +342,20 @@ public class TransformView extends View {
                         return true;
                     }
                 }
-                float dx = event.getX() - mOldX;
-                float dy = event.getY() - mOldY;
 
                 if (mCurrentMode == Mode.ZOOM) {
                     getMoveEventByZoom(event);
                 } else if (mCurrentMode == Mode.IMG_ZOOM) {
-                    if (Math.abs(dx) <= minDistance && Math.abs(dy) <= minDistance) {
+                    float dx = event.getX() - mOldX;
+                    float dy = event.getY() - mOldY;
+                    if (Math.abs(dx) <= minDistance || Math.abs(dy) <= minDistance) {
                         break;
                     }
                     getMoveEventByImgZoom(event);
                 } else {
+                    float dx = event.getX() - mOldX;
+                    float dy = event.getY() - mOldY;
+
                     if (Math.abs(dx) > minDistance || Math.abs(dy) > minDistance) {
                         mCurrentMode = Mode.DRAG;
                         getMoveEventByDrag(event);
@@ -394,6 +400,9 @@ public class TransformView extends View {
                         onEditListener.onFingerUp();
                     }
                     mCurrentMode = Mode.NONE;
+                }
+                if (event.getPointerCount() <= 2 && mCurrentMode == Mode.ZOOM) {
+                    isPointUp = true;
                 }
                 break;
 
@@ -454,6 +463,9 @@ public class TransformView extends View {
     }
 
     private void getMoveEventByZoom(MotionEvent event) {
+        if (isPointUp) {
+            return;
+        }
         isDrawRotate = true;
         float ro = getRotation(event);
         float rotation = ro - mOldRotation;
@@ -562,7 +574,6 @@ public class TransformView extends View {
             }
         }
     }
-
 
     private void vibrate() {
         onEditListener.onVibrate();
