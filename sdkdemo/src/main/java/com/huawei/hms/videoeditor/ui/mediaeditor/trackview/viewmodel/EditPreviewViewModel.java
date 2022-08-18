@@ -738,7 +738,9 @@ public class EditPreviewViewModel extends AndroidViewModel {
             return;
         }
         editor.pauseTimeLine();
-        editor.playTimeLine(startTime, endTime);
+        editor.seekTimeLine(startTime, () -> {
+            editor.playTimeLine(startTime, endTime);
+        });
     }
 
     public void refreshFilterFloatVal(HVEEffect effect, float strenth) {
