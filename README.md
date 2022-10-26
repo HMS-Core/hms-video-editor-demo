@@ -20,6 +20,8 @@ Huawei Video Editor Kit (Video Editor Kit) provided by Huawei to quickly build v
 
 - Screen recorder demo provide basic usage of screen recording. There are functions demonstrating usage of start/stop recording and setting configuration.
 
+- Template creation SDK, which provides the capability of creating and uploading templates.
+
 Both modes provide one-stop video editing capabilities, such as import, editing, rendering, export, and media resource management. These two modes provide high-performance, easy-to-use, and highly compatible interfaces, helping you easily build applications.
 
 ## Project directory structure
@@ -28,7 +30,8 @@ Both modes provide one-stop video editing capabilities, such as import, editing,
 |-- com.huawei.videoeditorkit.videoeditdemo
 	|--sdkdemo  atomic capability SDK demo
 	|--uidemo   UI SDk demo
-	|--screenrecorddemo  Screen Recorder SDK Demo 
+	|--screenrecorddemo  Screen Recorder SDK Demo
+	|--templatetooldemo  Template Creation SDK Demo
 ```
 
 ## Running Procedure

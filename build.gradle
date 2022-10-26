@@ -33,6 +33,6 @@ ext {
     ve_apk_versionCode = '10100304'
     ve_apk_versionName= '1.1.0.304'
 
-    VersionName_video_editer_demo = '3.0.0.300'
-    VersionCode_video_editer_demo = '300001300'
+    VersionName_video_editer_demo = '3.1.0.300'
+    VersionCode_video_editer_demo = '301001300'
 }
