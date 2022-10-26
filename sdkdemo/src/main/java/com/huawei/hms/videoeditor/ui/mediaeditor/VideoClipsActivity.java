@@ -330,7 +330,7 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
 
     private CommonProgressDialog mCommonProgressDialog;
 
-    private long segTime = 0;
+    private long segTime = 0L;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

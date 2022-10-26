@@ -605,7 +605,7 @@ public class EditPreviewViewModel extends AndroidViewModel {
     }
 
     private long getAssetStartTimeContainTransition(HVEAsset asset) {
-        long startTransition = 0;
+        long startTransition = 0L;
         HVEEffect effect = getEffectedTransition(asset.getIndex() - 1);
         if (effect != null) {
             startTransition = effect.getEndTime() - effect.getStartTime();
@@ -614,7 +614,7 @@ public class EditPreviewViewModel extends AndroidViewModel {
     }
 
     private long getAssetSEndTimeContainTransition(HVEAsset asset) {
-        long endTransition = 0;
+        long endTransition = 0L;
         HVEEffect effect = getEffectedTransition(asset.getIndex());
         if (effect != null) {
             endTransition = effect.getEndTime() - effect.getStartTime();

@@ -18,19 +18,14 @@
 package com.huawei.hms.videoeditor.ui.mediapick.manager;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.text.TextUtils;
-import android.widget.Toast;
 
-import com.huawei.hms.videoeditor.VideoEditorApplication;
 import com.huawei.hms.videoeditor.sdk.bean.HVEVisibleFormatBean;
 import com.huawei.hms.videoeditor.sdk.util.HVEUtil;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.bean.Constant;
 import com.huawei.hms.videoeditor.ui.common.bean.MediaData;
 import com.huawei.hms.videoeditor.ui.common.utils.StringUtil;
-import com.huawei.hms.videoeditor.ui.common.utils.ToastUtils;
-import com.huawei.hms.videoeditorkit.sdkdemo.R;
 
 import java.io.File;
 import java.util.ArrayList;

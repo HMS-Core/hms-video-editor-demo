@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.widget.NestedScrollView;
 
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
@@ -63,6 +62,7 @@ public class SettingView extends NestedScrollView {
 
     public interface SettingViewChangeListener {
         void onResolutionChanged(int width, int height);
+
         void onFrameChanged(int frame);
     }
 

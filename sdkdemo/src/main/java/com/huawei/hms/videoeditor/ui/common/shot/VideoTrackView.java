@@ -28,12 +28,10 @@ import androidx.annotation.Nullable;
 
 import com.huawei.hms.videoeditor.sdk.asset.HVEThumbnailCallback;
 import com.huawei.hms.videoeditor.sdk.asset.HVEVideoAsset;
-import com.huawei.hms.videoeditor.sdk.engine.video.thumbnail.HmcThumbnailCallback;
 import com.huawei.hms.videoeditor.sdk.util.SmartLog;
 import com.huawei.hms.videoeditor.ui.common.utils.BigDecimalUtil;
 import com.huawei.hms.videoeditor.ui.common.utils.BigDecimalUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.ScreenUtil;
-import com.huawei.hms.videoeditor.utils.Utils;
 
 import java.util.List;
 import java.util.Vector;
@@ -118,29 +116,29 @@ public class VideoTrackView extends View {
         bitmaps.clear();
 
         long interval = (long) Math.floor(BigDecimalUtil.div(asset.getOriginLength(), getImageCount()));
-        asset.getThumbNail(imageWidth, imageWidth, 0, (int) interval, 0, asset.getOriginLength(),
-                false, new HVEThumbnailCallback() {
-            @Override
-            public void onImageAvailable(Bitmap bitmap, long timeStamp) {
-                bitmaps.add(bitmap);
-                postInvalidate();
-            }
+        asset.getThumbNail(imageWidth, imageWidth, 0, (int) interval, 0, asset.getOriginLength(), false,
+            new HVEThumbnailCallback() {
+                @Override
+                public void onImageAvailable(Bitmap bitmap, long timeStamp) {
+                    bitmaps.add(bitmap);
+                    postInvalidate();
+                }
 
-            @Override
-            public void onImagePathAvailable(String filePath, long timeStamp) {
+                @Override
+                public void onImagePathAvailable(String filePath, long timeStamp) {
 
-            }
+                }
 
-            @Override
-            public void onSuccess() {
+                @Override
+                public void onSuccess() {
 
-            }
+                }
 
-            @Override
-            public void onFail(String errorCode, Exception e) {
+                @Override
+                public void onFail(String errorCode, Exception e) {
 
-            }
-        });
+                }
+            });
     }
 
     public void setVideoAsset(HVEVideoAsset asset) {

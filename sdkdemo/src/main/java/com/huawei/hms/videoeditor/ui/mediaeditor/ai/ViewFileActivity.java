@@ -54,17 +54,17 @@ public class ViewFileActivity extends BaseActivity {
 
     private boolean mIsVideo = false;
 
-    private long mStartTime = 0;
+    private long mStartTime = 0L;
 
-    private long mDuration = 0;
+    private long mDuration = 0L;
 
     private String mVideoOutputPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-            + File.separator + Constant.LOCAL_VIDEO_SAVE_PATH + File.separator
-            + TimeUtils.formatTimeByUS(System.currentTimeMillis(), Constant.LOCAL_VIDEO_SAVE_TIME) + ".mp4";
+        + File.separator + Constant.LOCAL_VIDEO_SAVE_PATH + File.separator
+        + TimeUtils.formatTimeByUS(System.currentTimeMillis(), Constant.LOCAL_VIDEO_SAVE_TIME) + ".mp4";
 
     private String mPhotoOutputPath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator
-            + "DCIM" + File.separator + "Camera" + File.separator + Constant.LOCAL_VIDEO_SAVE_PATH + File.separator
-            + TimeUtils.formatTimeByUS(System.currentTimeMillis(), Constant.LOCAL_VIDEO_SAVE_TIME) + ".jpg";
+        + "DCIM" + File.separator + "Camera" + File.separator + Constant.LOCAL_VIDEO_SAVE_PATH + File.separator
+        + TimeUtils.formatTimeByUS(System.currentTimeMillis(), Constant.LOCAL_VIDEO_SAVE_TIME) + ".jpg";
 
     public static void startActivity(Activity activity, String videoPath, boolean isVideo) {
         Intent intent = new Intent(activity, ViewFileActivity.class);
@@ -122,11 +122,11 @@ public class ViewFileActivity extends BaseActivity {
                 public void onClick(View v) {
                     if (!TextUtils.isEmpty(mFilePath)) {
                         boolean isSuccess = FileUtil.saveToLocalSystem(ViewFileActivity.this, mIsVideo, mFilePath,
-                                mVideoOutputPath, mPhotoOutputPath);
+                            mVideoOutputPath, mPhotoOutputPath);
                         if (isSuccess) {
                             ToastUtils.getInstance()
-                                    .showToast(ViewFileActivity.this, getString(R.string.save_to_gallery_success),
-                                            Toast.LENGTH_SHORT);
+                                .showToast(ViewFileActivity.this, getString(R.string.save_to_gallery_success),
+                                    Toast.LENGTH_SHORT);
                         }
                     }
                     onBackPressed();
@@ -139,7 +139,6 @@ public class ViewFileActivity extends BaseActivity {
                 videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                     @Override
                     public void onPrepared(MediaPlayer mp) {
-                        // 循环播放视频
                         mp.setLooping(true);
                     }
                 });

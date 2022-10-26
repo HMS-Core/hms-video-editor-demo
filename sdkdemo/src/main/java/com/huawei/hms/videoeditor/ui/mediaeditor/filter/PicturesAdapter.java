@@ -138,6 +138,7 @@ public class PicturesAdapter extends PagedListAdapter<MediaData, PicturesAdapter
             mMediaIv = itemView.findViewById(R.id.iv_media);
             mMaskView = itemView.findViewById(R.id.mask_view);
             fullImageFilter = itemView.findViewById(R.id.if_full);
+            fullImageFilter.setVisibility(View.GONE);
             mTvHasImport = itemView.findViewById(R.id.tv_has_import);
             mDurationTv = itemView.findViewById(R.id.tv_duration);
             mIndexTv = itemView.findViewById(R.id.tv_index);

@@ -478,6 +478,19 @@
     <string name="redo_failed" priority="LT">Unable to redo.</string>
     <string name="undo_failed" priority="translator">Unable to undo.</string>
 
+    <!-- 美颜 -->
+    <string-array name="preview_beauty">
+        <item>Soften</item>
+        <item>Tone</item>
+        <item>Contour</item>
+        <item>Size</item>
+        <item>Brightness</item>
+    </string-array>
+
+
+    <string name="beauty">beauty</string>
+    <string name="tab_preview_switch">switch</string>
+    <string name="request_camera_permission">need camera permission</string>
     <string name="cut_second_menu_segmentation" priority="translator">Object segmentation</string>
     <string name="segmentation_select" priority="translator">select one object.</string>
     <string name="segmentation_cancel" priority="translator">Cancelled cutting out.</string>
@@ -612,7 +625,7 @@
 
     <string name="ai_face_smile_no_face">Faces cannot be recognized.</string>
     <string name="ai_face_smile_select_frontal_face">Please select a face photo.</string>
-    <string name="ai_face_smile_network_timeout">Network timeout</string>
+    <string name="ai_face_smile_generate_fail">Failed to generate one-click smile.</string>
 
     <string name="mix_mode1" priority="translator">Normal</string>
     <string name="mix_mode2" priority="translator">Darken</string>
@@ -762,11 +775,11 @@
     <string name="auto_mark_description" priority="translator">An effects package needs to be downloaded to use this feature. Continue?</string>
 
     <!--翅膀特效-->
-    <string name="cut_second_menu_wings" priority="translator">Wings effect</string>
-    <string name="wings_cancel" priority="translator">"cancel wings effect"</string>
+    <string name="cut_second_menu_wings" priority="translator">Wings effects</string>
+    <string name="wings_cancel" priority="translator">"cancel wings effects"</string>
     <string name="ai_wings_processing" priority="translator">"wings effect processing…"</string>
-    <string name="ai_wings_success" priority="translator">Wings effect added complete</string>
-    <string name="ai_wings_fail" priority="translator">Wings effect add exception</string>
+    <string name="ai_wings_success" priority="translator">Wings effects added complete</string>
+    <string name="ai_wings_fail" priority="translator">Wings effects add exception</string>
 
     <!--人像&头部分割-->
     <string name="cut_second_menu_body_seg" priority="translator">Body segmentation</string>
@@ -802,6 +815,10 @@
         <item priority="translator" quantity="one">You can only select up to %1$d media file.</item>
         <item priority="translator" quantity="other">You can only select up to %1$d media files.</item>
     </plurals>
+    <plurals name="media_max_send_material_format">
+        <item priority="translator" quantity="one">You can only select up to %1$d media file.</item>
+        <item priority="translator" quantity="other">You can only select up to %1$d media files.</item>
+    </plurals>
 
     <!--导出失败错误信息-->
     <string name="insufficient_disk_space" priority="translator">Free up some storage space on your phone and try again.</string>
@@ -824,4 +841,12 @@
     </plurals>
     <string name="quarter_high_definition" priority="LT">2K</string>
     <string name="ultra_high_definition" priority="LT">4K</string>
+
+    <!--美化-->
+    <string name="cut_second_menu_beautify" priority="LT">Beauty</string>
+    <string name="prettify_rind" priority="LT">Soften</string>
+    <string name="prettify_skinnyFace" priority="LT">Contour</string>
+    <string name="prettify_whitening" priority="LT">Tone</string>
+    <string name="prettify_bigEye" priority="LT">Size</string>
+    <string name="prettify_brightEye" priority="LT">Brightness</string>
 </resources>

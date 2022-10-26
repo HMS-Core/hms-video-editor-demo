@@ -34,6 +34,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.google.android.material.tabs.TabLayout;
+import com.huawei.agconnect.AGConnectInstance;
 import com.huawei.hms.videoeditor.fragment.ClipFragment;
 import com.huawei.hms.videoeditor.sdk.MediaApplication;
 import com.huawei.hms.videoeditor.ui.common.BaseActivity;
@@ -51,7 +52,7 @@ import java.util.UUID;
 
 public class MainActivity extends BaseActivity {
     private final String[] mPermissions = new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.INTERNET, Manifest.permission.READ_PHONE_STATE};
+        Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.INTERNET, Manifest.permission.READ_PHONE_STATE};
 
     private NoScrollViewPager viewPager;
 
@@ -88,7 +89,9 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initData() {
-        MediaApplication.getInstance().setApiKey("please set your apikey");
+        String apiKey = AGConnectInstance.getInstance().getOptions().getString("client/api_key");
+        MediaApplication.getInstance().setApiKey(apiKey);
+
         UUID uuid = UUID.randomUUID();
         MediaApplication.getInstance().setLicenseId(uuid.toString());
 
@@ -104,36 +107,36 @@ public class MainActivity extends BaseActivity {
         mFragments.add(new ClipFragment());
         mFragments.add(templateFragment);
         FragmentPagerAdapter mAdapter =
-                new FragmentPagerAdapter(mFragmentManager, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-                    @NonNull
-                    @Override
-                    public Fragment getItem(int position) {
-                        return mFragments.get(position);
-                    }
+            new FragmentPagerAdapter(mFragmentManager, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+                @NonNull
+                @Override
+                public Fragment getItem(int position) {
+                    return mFragments.get(position);
+                }
 
-                    @Override
-                    public int getCount() {
-                        return mFragments.size();
-                    }
+                @Override
+                public int getCount() {
+                    return mFragments.size();
+                }
 
-                    @NonNull
-                    @Override
-                    public Object instantiateItem(@NonNull ViewGroup container, int position) {
-                        Fragment fragment = (Fragment) super.instantiateItem(container, position);
-                        if (!mFragmentManager.isDestroyed()) {
-                            mFragmentManager.beginTransaction().show(fragment).commitAllowingStateLoss();
-                        }
-                        return fragment;
+                @NonNull
+                @Override
+                public Object instantiateItem(@NonNull ViewGroup container, int position) {
+                    Fragment fragment = (Fragment) super.instantiateItem(container, position);
+                    if (!mFragmentManager.isDestroyed()) {
+                        mFragmentManager.beginTransaction().show(fragment).commitAllowingStateLoss();
                     }
+                    return fragment;
+                }
 
-                    @Override
-                    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-                        Fragment fragment = mFragments.get(position);
-                        if (!mFragmentManager.isDestroyed()) {
-                            mFragmentManager.beginTransaction().hide(fragment).commitAllowingStateLoss();
-                        }
+                @Override
+                public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+                    Fragment fragment = mFragments.get(position);
+                    if (!mFragmentManager.isDestroyed()) {
+                        mFragmentManager.beginTransaction().hide(fragment).commitAllowingStateLoss();
                     }
-                };
+                }
+            };
 
         viewPager.setAdapter(mAdapter);
         viewPager.setOffscreenPageLimit(4);
@@ -183,8 +186,7 @@ public class MainActivity extends BaseActivity {
         try {
             for (int i = 0; i < mPermissions.length; i++) {
                 String permisson = mPermissions[i];
-                int permissionRead =
-                        ActivityCompat.checkSelfPermission(activity, permisson);
+                int permissionRead = ActivityCompat.checkSelfPermission(activity, permisson);
                 if (permissionRead != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(activity, mPermissions, requestCode);
                 }

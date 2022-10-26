@@ -218,6 +218,11 @@ public class MediaPickAdapter extends PagedListAdapter<MediaData, MediaPickAdapt
                             .getQuantityString(R.plurals.media_max_send_images_format, manager.getMaxSelectCount(),
                                 manager.getMaxSelectCount());
                         break;
+                    case 2:
+                        toastStr = mContext.getResources()
+                            .getQuantityString(R.plurals.media_max_send_material_format, manager.getMaxSelectCount(),
+                                manager.getMaxSelectCount());
+                        break;
                     default:
                         toastStr = mContext.getResources().getString(R.string.error_file_tips_single_video);
                         break;
@@ -290,6 +295,7 @@ public class MediaPickAdapter extends PagedListAdapter<MediaData, MediaPickAdapt
             mMediaIv = itemView.findViewById(R.id.iv_media);
             mMaskView = itemView.findViewById(R.id.mask_view);
             fullImageFilter = itemView.findViewById(R.id.if_full);
+            fullImageFilter.setVisibility(View.GONE);
             mTvHasImport = itemView.findViewById(R.id.tv_has_import);
             mDurationTv = itemView.findViewById(R.id.tv_duration);
             mIndexTv = itemView.findViewById(R.id.tv_index);

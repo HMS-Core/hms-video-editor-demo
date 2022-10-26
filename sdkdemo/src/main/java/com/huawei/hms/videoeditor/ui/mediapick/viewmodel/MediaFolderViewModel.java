@@ -28,7 +28,6 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.huawei.hms.videoeditor.sdk.bean.HVEVisibleFormatBean;
 import com.huawei.hms.videoeditor.sdk.util.HVEUtil;
 import com.huawei.hms.videoeditor.ui.mediapick.bean.MediaFolder;
 import com.huawei.hms.videoeditor.utils.SmartLog;

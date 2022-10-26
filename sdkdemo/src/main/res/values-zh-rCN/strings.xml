@@ -390,6 +390,19 @@
     <plurals name="preview_select">
         <item priority="translator" quantity="other">"选取 %ss"</item>
     </plurals>
+
+    <!-- 美颜 -->
+    <string-array name="preview_beauty">
+        <item>磨皮</item>
+        <item>美白</item>
+        <item>瘦脸</item>
+        <item>大眼</item>
+        <item>亮眼</item>
+    </string-array>
+
+    <string name="beauty">美颜</string>
+    <string name="tab_preview_switch">翻转</string>
+    <string name="request_camera_permission">需要相机权限</string>
     <!--人像分割-->
     <string name="cut_second_menu_segmentation" priority="translator">目标分割</string>
     <string name="segmentation_select" priority="translator">请画线选择一个目标</string>
@@ -524,7 +537,7 @@
 
     <string name="ai_face_smile_no_face">无法识别人脸</string>
     <string name="ai_face_smile_select_frontal_face">请选择正脸照</string>
-    <string name="ai_face_smile_network_timeout">网络超时</string>
+    <string name="ai_face_smile_generate_fail">一键微笑生成失败</string>
 
     <string name="mix_mode1" priority="translator">正常</string>
     <string name="mix_mode2" priority="translator">变暗</string>
@@ -712,7 +725,18 @@
     <plurals name="media_max_send_videos_format">
         <item priority="translator" quantity="other">最多可选 %1$d 个视频</item>
     </plurals>
+    <plurals name="media_max_send_material_format">
+        <item priority="translator" quantity="other">最多可选 %1$d 个素材</item>
+    </plurals>
 
     <!--导出失败错误信息-->
     <string name="insufficient_disk_space" priority="translator">"请清理手机内存后，再重试"</string>
+
+    <!--美化-->
+    <string name="cut_second_menu_beautify" priority="translator">美化</string>
+    <string name="prettify_rind" priority="translator">"磨皮"</string>
+    <string name="prettify_skinnyFace" priority="translator">"瘦脸"</string>
+    <string name="prettify_whitening" priority="translator">"美白"</string>
+    <string name="prettify_bigEye" priority="translator">"大眼"</string>
+    <string name="prettify_brightEye" priority="translator">"亮眼"</string>
 </resources>

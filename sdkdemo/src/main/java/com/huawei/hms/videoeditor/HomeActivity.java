@@ -16,6 +16,15 @@
 
 package com.huawei.hms.videoeditor;
 
+import static com.huawei.hms.videoeditor.sdk.ai.HVEAIError.AI_ERROR_EXCEED_CONCURRENT_NUMBER;
+import static com.huawei.hms.videoeditor.sdk.ai.HVEAIError.AI_ERROR_FACE_REENACT_NO_FACE;
+import static com.huawei.hms.videoeditor.sdk.ai.HVEAIError.AI_ERROR_FACE_SMILE_NO_FACE;
+import static com.huawei.hms.videoeditor.sdk.ai.HVEAIError.AI_ERROR_FACE_SMILE_POSTURE;
+import static com.huawei.hms.videoeditor.sdk.ai.HVEAIError.AI_ERROR_NETWORK;
+import static com.huawei.hms.videoeditor.sdk.ai.HVEAIError.AI_ERROR_NO_NETWORK;
+import static com.huawei.hms.videoeditor.sdk.ai.HVEAIError.AI_ERROR_NO_PERMISSION_IS_GRANTED;
+import static com.huawei.hms.videoeditor.sdk.ai.HVEAIError.AI_ERROR_TIMEOUT;
+import static com.huawei.hms.videoeditor.sdk.ai.HVEAIError.AI_ERROR_USAGE_EXCESS;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.ai.timelapse.AITimeLapseViewModel.STATE_EDIT;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.ai.timelapse.AITimeLapseViewModel.STATE_ERROR;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.ai.timelapse.AITimeLapseViewModel.STATE_NO_SKY_WATER;
@@ -37,6 +46,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.huawei.agconnect.AGConnectInstance;
 import com.huawei.hms.videoeditor.ai.HVEAIApplication;
 import com.huawei.hms.videoeditor.ai.HVEAIColor;
 import com.huawei.hms.videoeditor.ai.HVEAIFaceReenact;
@@ -59,6 +69,7 @@ import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.ToastWrapper;
 import com.huawei.hms.videoeditor.ui.common.view.decoration.GridItemDividerDecoration;
 import com.huawei.hms.videoeditor.ui.common.view.dialog.CommonProgressDialog;
+import com.huawei.hms.videoeditor.ui.mediaeditor.ai.CameraActivity;
 import com.huawei.hms.videoeditor.ui.mediaeditor.ai.ObjectSegActivity;
 import com.huawei.hms.videoeditor.ui.mediaeditor.ai.ViewFileActivity;
 import com.huawei.hms.videoeditor.ui.mediaeditor.ai.timelapse.AITimeLapseFragment;
@@ -76,10 +87,11 @@ import java.util.Locale;
 import java.util.UUID;
 
 public class HomeActivity extends BaseActivity {
-    public static final String TAG = "HomeActivity";
+    public static final String TAG = "MainActivity";
 
     private final String[] mPermissions = new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.INTERNET, Manifest.permission.READ_PHONE_STATE};
+        Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.INTERNET,
+        Manifest.permission.READ_PHONE_STATE};
 
     private static final int MEDIA_TYPE_VIDEO = 0;
 
@@ -244,6 +256,8 @@ public class HomeActivity extends BaseActivity {
             getString(R.string.video_selection_subtitle), R.drawable.ic_video_selection));
         infoDataList.add(new AIInfoData(getString(R.string.cut_second_menu_segmentation),
             getString(R.string.object_segmentation_subtitle), R.drawable.edit_menu_segmentation));
+        infoDataList
+            .add(new AIInfoData(getString(R.string.beauty), getString(R.string.beauty), R.drawable.icon_beautify));
         AIListAdapter listAdapter = new AIListAdapter(infoDataList);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setItemAnimator(null);
@@ -278,13 +292,17 @@ public class HomeActivity extends BaseActivity {
                 } else if (title.equals(getString(R.string.cut_second_menu_segmentation))) {
                     MediaPickActivity.startActivityForResult(HomeActivity.this, MEDIA_TYPE_PHOTO,
                         REQUEST_CODE_OF_OBJECT_SEGMENTATION);
+                } else if (title.equals(getString(R.string.beauty))) {
+                    Intent intent = new Intent(HomeActivity.this, CameraActivity.class);
+                    startActivity(intent);
                 }
             }
         });
     }
 
     private void initData() {
-        HVEAIApplication.getInstance().setApiKey("please set your apikey");
+        String apiKey = AGConnectInstance.getInstance().getOptions().getString("client/api_key");
+        HVEAIApplication.getInstance().setApiKey(apiKey);
 
         UUID uuid = UUID.randomUUID();
         MediaApplication.getInstance().setLicenseId(uuid.toString());
@@ -617,7 +635,7 @@ public class HomeActivity extends BaseActivity {
                         mFaceReenactDialog.updateProgress(0);
                         mFaceReenactDialog.dismiss();
                     }
-                    ToastWrapper.makeText(HomeActivity.this, getString(R.string.ai_exception)).show();
+                    ToastWrapper.makeText(HomeActivity.this, getErrorMessage(errorCode)).show();
                 });
             }
         });
@@ -635,6 +653,38 @@ public class HomeActivity extends BaseActivity {
         mFaceReenactDialog.setCanceledOnTouchOutside(false);
         mFaceReenactDialog.setCancelable(false);
         mFaceReenactDialog.show();
+    }
+
+    private String getErrorMessage(int errorCode) {
+        String errorMessage = getString(R.string.ai_exception);
+        switch (errorCode) {
+            case AI_ERROR_NETWORK:
+            case AI_ERROR_NO_NETWORK:
+                errorMessage = getString(R.string.result_illegal);
+                break;
+            case AI_ERROR_TIMEOUT:
+                errorMessage = getString(R.string.ai_network_timeout);
+                break;
+            case AI_ERROR_FACE_SMILE_NO_FACE:
+            case AI_ERROR_FACE_REENACT_NO_FACE:
+                errorMessage = getString(R.string.ai_face_smile_no_face);
+                break;
+            case AI_ERROR_FACE_SMILE_POSTURE:
+                errorMessage = getString(R.string.ai_face_smile_select_frontal_face);
+                break;
+            case AI_ERROR_USAGE_EXCESS:
+                errorMessage = getString(R.string.ai_generate_excess);
+                break;
+            case AI_ERROR_EXCEED_CONCURRENT_NUMBER:
+                errorMessage = getString(R.string.ai_exceed_concurrent_number);
+                break;
+            case AI_ERROR_NO_PERMISSION_IS_GRANTED:
+                errorMessage = getString(R.string.algorithm_is_not_enabled);
+                break;
+            default:
+                break;
+        }
+        return errorMessage;
     }
 
     private void faceSmile(String imagePath) {
@@ -681,7 +731,7 @@ public class HomeActivity extends BaseActivity {
                         mFaceSmileDialog.updateProgress(0);
                         mFaceSmileDialog.dismiss();
                     }
-                    ToastWrapper.makeText(HomeActivity.this, getString(R.string.ai_exception)).show();
+                    ToastWrapper.makeText(HomeActivity.this, getErrorMessage(errorCode)).show();
                 });
             }
         });
@@ -746,7 +796,7 @@ public class HomeActivity extends BaseActivity {
                         mAIColorDialog.updateProgress(0);
                         mAIColorDialog.dismiss();
                     }
-                    ToastWrapper.makeText(HomeActivity.this, getString(R.string.ai_exception)).show();
+                    ToastWrapper.makeText(HomeActivity.this, getErrorMessage(errorCode)).show();
                 });
             }
         });
