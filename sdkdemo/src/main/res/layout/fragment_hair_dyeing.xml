@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_20"
+    tools:context="com.huawei.hms.videoeditor.ui.mediaeditor.aihair.fragment.HairDyeingFragment">
+
+    <include
+        android:id="@+id/include_ai_hair"
+        layout="@layout/custom_operate_title" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_ai_hair"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_74"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include_ai_hair" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
