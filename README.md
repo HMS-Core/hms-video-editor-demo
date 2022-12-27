@@ -9,7 +9,7 @@ English | [中文](README_ZH.md)
 * [Running Procedure](#running-procedure)
 * [Supported environment](#supported-environment)
 * [License](#license)
-* [Code indexes for key functions](#Code-indexes-for-keyfunctions)
+* [Code indexes for key functions](#code-indexes-for-key-functions)
 
 
 ## Introduction
