@@ -19,6 +19,7 @@ package com.huawei.hms.videoeditor.ui.mediapick.viewmodel;
 
 import android.app.Application;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteException;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -28,7 +29,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.huawei.hms.videoeditor.sdk.util.HVEUtil;
+import com.huawei.hms.videoeditor.ui.common.utils.FileUtil;
 import com.huawei.hms.videoeditor.ui.mediapick.bean.MediaFolder;
 import com.huawei.hms.videoeditor.utils.SmartLog;
 import com.huawei.hms.videoeditor.utils.Utils;
@@ -79,12 +80,12 @@ public class MediaFolderViewModel extends AndroidViewModel {
         long firstMediaTime = 0;
         String firstMediaPath = null;
         final String[] videoProjection =
-            {MediaStore.Video.Media.DATA, MediaStore.Video.Media.DURATION, MediaStore.Video.Media.DATE_MODIFIED};
+                {MediaStore.Video.Media.DATA, MediaStore.Video.Media.DURATION, MediaStore.Video.Media.DATE_MODIFIED};
 
         try {
             Cursor cursor = getApplication().getContentResolver()
-                .query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, videoProjection, null, null,
-                    MediaStore.Video.Media.DATE_MODIFIED + " DESC ");
+                    .query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, videoProjection, null, null,
+                            MediaStore.Video.Media.DATE_MODIFIED + " DESC ");
             while (cursor != null && cursor.moveToNext()) {
                 try {
                     String videoPath = cursor.getString(cursor.getColumnIndexOrThrow(videoProjection[0]));
@@ -129,7 +130,7 @@ public class MediaFolderViewModel extends AndroidViewModel {
                         }
                     }
                     String[] picSize =
-                        parentFile.list((dir, filename) -> Utils.isVideoByPath(dir + File.separator + filename));
+                            parentFile.list((dir, filename) -> Utils.isVideoByPath(dir + File.separator + filename));
                     if (picSize == null) {
                         continue;
                     }
@@ -164,30 +165,22 @@ public class MediaFolderViewModel extends AndroidViewModel {
         List<MediaFolder> imageFolders = new ArrayList<>();
         int mImageTotalCount = 0;
         int mImageSize = 0;
-        long firstMediaTime = 0;
+        long firstMediaTime = 0L;
         String firstMediaPath = null;
         final String[] imageProjection = {MediaStore.Images.Media.DATA, MediaStore.Images.Media.DATE_MODIFIED};
+        if (mImageDirPaths == null) {
+            mImageDirPaths = new HashSet<>();
+        }
 
         try {
             Cursor cursor = getApplication().getContentResolver()
-                .query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, imageProjection, null, null,
-                    MediaStore.Images.Media.DATE_MODIFIED + " DESC ");
+                    .query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, imageProjection, null, null,
+                            MediaStore.Images.Media.DATE_MODIFIED + " DESC ");
             while (cursor != null && cursor.moveToNext()) {
                 try {
                     String imagePath = cursor.getString(cursor.getColumnIndexOrThrow(imageProjection[0]));
                     long imageAddTime = cursor.getLong(cursor.getColumnIndexOrThrow(imageProjection[1]));
-                    if (!(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)) {
-                        if (TextUtils.isEmpty(imagePath)) {
-                            continue;
-                        }
-
-                        File file = new File(imagePath);
-                        if (!file.exists() || file.length() <= 0) {
-                            continue;
-                        }
-                    }
-
-                    if (!HVEUtil.isLegalImage(imagePath)) {
+                    if (TextUtils.isEmpty(imagePath)) {
                         continue;
                     }
                     File parentFile = new File(imagePath).getParentFile();
@@ -213,6 +206,19 @@ public class MediaFolderViewModel extends AndroidViewModel {
                             firstMediaTime = Math.min(imageAddTime, firstMediaTime);
                         }
                     }
+
+                    String[] picSize =
+                            FileUtil.getFileList(dirPath, ((dir, filename) -> FileUtil.isImageByPath(filename)));
+
+                    if (picSize == null) {
+                        continue;
+                    }
+                    mImageTotalCount += picSize.length;
+                    imageFolder.setMediaCount(picSize.length);
+                    imageFolders.add(imageFolder);
+                    if (picSize.length > mImageSize) {
+                        mImageSize = picSize.length;
+                    }
                 } catch (RuntimeException | IOException e) {
                     SmartLog.e(TAG, e.getMessage());
                 }
@@ -220,7 +226,7 @@ public class MediaFolderViewModel extends AndroidViewModel {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
             }
-        } catch (SecurityException e) {
+        } catch (SecurityException | SQLiteException e) {
             SmartLog.e(TAG, e.getMessage());
         }
         MediaFolder imageFolder = new MediaFolder();

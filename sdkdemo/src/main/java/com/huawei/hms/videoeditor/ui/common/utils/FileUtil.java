@@ -25,6 +25,7 @@ import android.database.sqlite.SQLiteException;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
+import android.os.RemoteException;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
@@ -37,14 +38,22 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class FileUtil {
     private static final String TAG = "FileUtil";
@@ -63,6 +72,52 @@ public class FileUtil {
 
     public static final int SIZETYPE_GB = 4;
 
+    public static String[] getFileList(String path, FilenameFilter filter) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            List<String> list = new ArrayList<>();
+            try {
+                Stream<Path> entrys = Files.walk(Paths.get(path), 1);
+                list = entrys.filter(Files::isRegularFile)
+                        .filter(p -> filter.accept(null, p.getFileName().toString()))
+                        .map(Path::toString)
+                        .collect(Collectors.toList());
+            } catch (IOException e) {
+                Log.e(TAG, "Failed to walk " + path + ", " + e.getMessage());
+            }
+            return list.toArray(new String[0]);
+        }
+
+        File file = new File(path);
+        return file.list(filter);
+    }
+
+    public static boolean isImageByPath(String imagePath) {
+        if (StringUtil.isEmpty(imagePath)) {
+            return false;
+        }
+        String localPath = imagePath.trim();
+        return localPath.toLowerCase(Locale.ENGLISH).endsWith(".jpg")
+            || localPath.toLowerCase(Locale.ENGLISH).endsWith(".jpe")
+            || localPath.toLowerCase(Locale.ENGLISH).endsWith(".png")
+            || localPath.toLowerCase(Locale.ENGLISH).endsWith(".gif")
+            || localPath.toLowerCase(Locale.ENGLISH).endsWith(".jpeg")
+            || localPath.toLowerCase(Locale.ENGLISH).endsWith(".bmp")
+            || localPath.toLowerCase(Locale.ENGLISH).endsWith(".wbmp")
+            || localPath.toLowerCase(Locale.ENGLISH).endsWith(".webp")
+            || localPath.toLowerCase(Locale.ENGLISH).endsWith(".heic")
+            || localPath.toLowerCase(Locale.ENGLISH).endsWith(".dng")
+            || localPath.toLowerCase(Locale.ENGLISH).endsWith(".arw")
+            || localPath.toLowerCase(Locale.ENGLISH).endsWith(".cr2")
+            || localPath.toLowerCase(Locale.ENGLISH).endsWith(".nef")
+            || localPath.toLowerCase(Locale.ENGLISH).endsWith(".nrw")
+            || localPath.toLowerCase(Locale.ENGLISH).endsWith(".rw2")
+            || localPath.toLowerCase(Locale.ENGLISH).endsWith(".orf")
+            || localPath.toLowerCase(Locale.ENGLISH).endsWith(".raf")
+            || localPath.toLowerCase(Locale.ENGLISH).endsWith(".pef")
+            || localPath.toLowerCase(Locale.ENGLISH).endsWith(".srw")
+            || localPath.toLowerCase(Locale.ENGLISH).endsWith(".heif");
+    }
+
     public static long getFileSize(String filePath, int sizeType) {
         File file = new File(filePath);
         long blockSize = 0L;
@@ -79,7 +134,7 @@ public class FileUtil {
         BufferedReader bufReader = null;
         try {
             inputReader =
-                    new InputStreamReader(context.getResources().getAssets().open(fileName), StandardCharsets.UTF_8);
+                new InputStreamReader(context.getResources().getAssets().open(fileName), StandardCharsets.UTF_8);
             bufReader = new BufferedReader(inputReader);
             String line;
             StringBuilder builder = new StringBuilder();
@@ -234,17 +289,17 @@ public class FileUtil {
         }
         String localFilePath = filePath.trim();
         return localFilePath.toLowerCase(Locale.ENGLISH).endsWith(".mp4")
-                || localFilePath.toLowerCase(Locale.ENGLISH).endsWith(".3gp")
-                || localFilePath.toLowerCase(Locale.ENGLISH).endsWith(".3g2")
-                || localFilePath.toLowerCase(Locale.ENGLISH).endsWith(".mkv")
-                || localFilePath.toLowerCase(Locale.ENGLISH).endsWith(".mov")
-                || localFilePath.toLowerCase(Locale.ENGLISH).endsWith(".m4v");
+            || localFilePath.toLowerCase(Locale.ENGLISH).endsWith(".3gp")
+            || localFilePath.toLowerCase(Locale.ENGLISH).endsWith(".3g2")
+            || localFilePath.toLowerCase(Locale.ENGLISH).endsWith(".mkv")
+            || localFilePath.toLowerCase(Locale.ENGLISH).endsWith(".mov")
+            || localFilePath.toLowerCase(Locale.ENGLISH).endsWith(".m4v");
     }
 
     /**
      * bitmap 2 File
      *
-     * @param bitmap  bitmap
+     * @param bitmap bitmap
      * @param bitName bitName
      * @throws IOException
      */
@@ -366,7 +421,7 @@ public class FileUtil {
 
     public static boolean isIllegalPath(String url) {
         return null == url || url.contains("../") || url.contains("./") || url.contains("%00")
-                || url.contains(".\\.\\");
+            || url.contains(".\\.\\");
     }
 
     public static boolean isPathExist(String path) {
@@ -448,7 +503,7 @@ public class FileUtil {
      * Save to Album
      */
     public static boolean saveToLocalSystem(Context context, boolean isVideo, String filePath, String videoOutputPath,
-                                            String photoOutputPath) {
+        String photoOutputPath) {
         boolean isSuccess = false;
         File file = new File(filePath);
         if (file.exists()) {
@@ -485,7 +540,7 @@ public class FileUtil {
             ContentValues contentValues = getVideoContentValues(new File(videoFile), System.currentTimeMillis());
             Uri localUri = contentResolver.insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, contentValues);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
-                    && context.getApplicationInfo().targetSdkVersion >= Build.VERSION_CODES.Q) {
+                && context.getApplicationInfo().targetSdkVersion >= Build.VERSION_CODES.Q) {
                 try {
                     OutputStream out = context.getContentResolver().openOutputStream(localUri);
                     copyFile(videoFile, out);
@@ -529,5 +584,66 @@ public class FileUtil {
         localContentValues.put("_data", videoFile.getAbsolutePath());
         localContentValues.put("_size", videoFile.length());
         return localContentValues;
+    }
+
+    /**
+     * Save the file to a local directory.
+     *
+     * @param pathName File path name
+     * @throws RemoteException Exception thrown
+     * @return File path
+     */
+    public static String copyFiles(Context context, String pathName) throws RemoteException {
+        String filePath = null;
+        InputStream in = null;
+        FileOutputStream out = null;
+        String path = context.getFilesDir().getAbsolutePath() + File.separator + pathName; // data/dataĿ¼
+        File file = new File(path);
+        if (file.exists()) {
+            SmartLog.d(TAG, "copyData file exists.");
+            try {
+                filePath = file.getCanonicalPath();
+            } catch (IOException e) {
+                SmartLog.e(TAG, e.getMessage());
+            }
+            return filePath;
+        }
+        try {
+            in = context.getAssets().open(pathName);
+            out = new FileOutputStream(file);
+            int length = -1;
+            byte[] buf = new byte[1024];
+            while ((length = in.read(buf)) != -1) {
+                out.write(buf, 0, length);
+            }
+            out.flush();
+        } catch (RuntimeException e) {
+            SmartLog.e(TAG, e.getMessage());
+            throw new RemoteException("initialize|initialize fail! Model copy failed.");
+        } catch (Exception e) {
+            SmartLog.e(TAG, e.getMessage());
+            throw new RemoteException("initialize|initialize fail! Model load failed.");
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e1) {
+                    SmartLog.e(TAG, e1.getMessage());
+                }
+            }
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e1) {
+                    SmartLog.e(TAG, e1.getMessage());
+                }
+            }
+        }
+        try {
+            filePath = file.getCanonicalPath();
+        } catch (IOException e) {
+            SmartLog.e(TAG, e.getMessage());
+        }
+        return filePath;
     }
 }

@@ -64,6 +64,8 @@ import static com.huawei.hms.videoeditor.sdk.ai.HVEAIError.AI_ERROR_EXCEED_CONCU
 import static com.huawei.hms.videoeditor.sdk.ai.HVEAIError.AI_ERROR_FACE_REENACT_NO_FACE;
 import static com.huawei.hms.videoeditor.sdk.ai.HVEAIError.AI_ERROR_FACE_SMILE_NO_FACE;
 import static com.huawei.hms.videoeditor.sdk.ai.HVEAIError.AI_ERROR_FACE_SMILE_POSTURE;
+import static com.huawei.hms.videoeditor.sdk.ai.HVEAIError.AI_ERROR_NETWORK;
+import static com.huawei.hms.videoeditor.sdk.ai.HVEAIError.AI_ERROR_NO_NETWORK;
 import static com.huawei.hms.videoeditor.sdk.ai.HVEAIError.AI_ERROR_NO_PERMISSION_IS_GRANTED;
 import static com.huawei.hms.videoeditor.sdk.ai.HVEAIError.AI_ERROR_TIMEOUT;
 import static com.huawei.hms.videoeditor.sdk.ai.HVEAIError.AI_ERROR_USAGE_EXCESS;
@@ -526,6 +528,10 @@ public class AiFunFragment extends BaseFragment {
     private String getErrorMessage(int errorCode) {
         String errorMessage;
         switch (errorCode) {
+            case AI_ERROR_NETWORK:
+            case AI_ERROR_NO_NETWORK:
+                errorMessage = getString(R.string.result_illegal);
+                break;
             case AI_ERROR_TIMEOUT:
                 errorMessage = getString(R.string.ai_network_timeout);
                 break;

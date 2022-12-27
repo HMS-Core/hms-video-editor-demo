@@ -56,6 +56,8 @@ public class HVETemplateCategoryModel extends AndroidViewModel {
                             public void onFail(int errorCode) {
                                 if (errorCode == HVETemplateManager.TEMPLATE_NETWORK_ERROR) {
                                     errorString.postValue(getApplication().getString(R.string.result_illegal));
+                                } if (errorCode == HVETemplateManager.TEMPLATE_GET_COLUMN_FAILED) {
+                                    errorString.postValue(getApplication().getString(R.string.resources_not_exist));
                                 } else {
                                     emptyString.postValue(getApplication().getString(R.string.result_empty));
                                 }

@@ -102,10 +102,6 @@ public class MenuClickManager {
 
     public final static String VIDEO_SELECTION_KEY = "VIDEO_SELECTION_KEY";
 
-    public final static String AI_WINGS = "AI_WINGS";
-
-    public final static String AI_WINGS_KEY = "AI_WINGS_KEY";
-
     public static final String AI_BODY_SEG = "AI_BODY_SEG";
 
     public static final String AI_BODY_SEG_KEY = "AI_BODY_SEG_KEY";
@@ -1098,9 +1094,6 @@ public class MenuClickManager {
                 unableMenuId.add(MainViewState.EDIT_VIDEO_STATE_HEAD_SEG);
                 unableMenuId.add(MainViewState.EDIT_VIDEO_OPERATION_HEAD_SEG);
                 unableMenuId.add(MainViewState.EDIT_PIP_OPERATION_HEAD_SEG);
-                unableMenuId.add(MainViewState.EDIT_VIDEO_STATE_WINGS);
-                unableMenuId.add(MainViewState.EDIT_VIDEO_OPERATION_WINGS);
-                unableMenuId.add(MainViewState.EDIT_PIP_OPERATION_WINGS);
                 break;
             case 9:
                 unableMenuId.add(MainViewState.EDIT_VIDEO_STATE_INVERTED);

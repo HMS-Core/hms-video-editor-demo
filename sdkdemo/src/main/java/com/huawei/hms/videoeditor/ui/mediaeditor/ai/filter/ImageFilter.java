@@ -127,7 +127,6 @@ public class ImageFilter {
         GLES30.glClear(GLES30.GL_COLOR_BUFFER_BIT);
 
         GLES30.glUseProgram(mProgramHandle);
-
         runPendingOnDrawTasks();
 
         onDrawTexture(textureId, vertexBuffer, textureBuffer);

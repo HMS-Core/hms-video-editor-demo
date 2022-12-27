@@ -55,11 +55,7 @@ public class ExportPreviewViewModel extends AndroidViewModel
 
     public void initPlayEditor(ViewGroup layout) {
         playEditor = HuaweiVideoEditor.create(application.getApplicationContext(), "");
-        try {
-            playEditor.initEnvironment();
-        } catch (LicenseException e) {
-            SmartLog.e(TAG, "initEnvironment error: " + e.getErrorMsg());
-        }
+        playEditor.initEnvironment();
         playEditor.setDisplay(layout);
         playEditor.setPlayCallback(this);
         playEditor.setSurfaceCallback(this);

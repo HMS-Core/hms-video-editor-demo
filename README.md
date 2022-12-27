@@ -9,6 +9,7 @@ English | [中文](README_ZH.md)
 * [Running Procedure](#running-procedure)
 * [Supported environment](#supported-environment)
 * [License](#license)
+* [Code indexes for key functions](#Code-indexes-for-keyfunctions)
 
 
 ## Introduction
@@ -65,3 +66,62 @@ If you run into a bug in our samples, please submit an [issue](https://github.co
 ## License
 
 This sample code has obtained [Apache 2.0 license](https://www.apache.org/licenses/LICENSE-2.0).
+
+## Code indexes for key functions
+
+```
+|-- HomeActivity: App home page, which can be redirected to the video creation page (MainActivity) and the open, independent AI capabilities.
+	|-- Entries to AI capabilities on the home screen:
+		|-- faceReenact(String imagePath): moving picture
+		|-- faceSmile(String imagePath): auto-smile
+		|-- aiColor(String filePath): AI color
+		|-- timeLapse(String imagePath): auto-timelapse
+		|-- videoSelection(String videoPath): highlight
+		|-- objectSeg(String photoPath): object segmentation
+		|-- headSeg(String photoPath): head segmentation
+		|-- Color hair. **HairDyeingFragment** is launched. After a hair color is selected and successfully downloaded, **hairDyeing(Bitmap colormapBitmap)** is called for processing.
+		|-- Beauty. **CameraActivity** and **CameraPreviewFragment** are launched.
+
+|-- MainActivity: video creation page, which can be switched to the editing screen (**ClipFragment**) and template home screen (**TemplateHomeFragment**).
+|-- MediaPickActivity: material selection screen. When there is a need to select materials from the album, this screen will be launched.
+|-- VideoClipsActivity: video editing screen, which can be entered via material import for creation or a draft. The upper part of the screen is the preview area, the middle part contains playback operations and the timeline, and the lower part is the two-level menu area.
+|-- MaterialEditFragment: preview area, where a material can be edited. It is the entry to the zooming in or out using two fingers, dragging, rotating, and other operations on the material selected on the preview area.
+|-- MenuClickManager: manager for menu clicks. The menu click event on the video editing screen is processed in the **handlerClickEvent** method. Each click event launches a corresponding fragment. All fragments inherit the **BaseFragment** abstract class, implementing the following methods: **initView**, **initObject**, **initData**, and **initEvent**. **initView** initializes the layout and component. The listener for the component is created in the **initEvent** method, to respond to the click event in each fragment and conduct relevant service logic processing.
+
+|-- Editing-related functions:
+	|-- AssetCropFragment: cropping
+	|-- AssetSplitFragment: splitting
+	|-- GeneralSpeedFragment: video playback speed adjustment
+	|-- AnimationPanelFragment: animation
+	|-- StickerPanelFragment: sticker
+	|-- EditPanelFragment: text
+	|-- EditTextStyleFragment: text style
+	|-- EditTextAnimateFragment: text animation
+	|-- EditTextBubblesFragment: text bubble
+	|-- EditTextFlowerFragment: artistic font
+	|-- FilterPanelFragment: filter
+	|-- EffectPanelFragment: special effect
+	|-- FilterAdjustPanelView: adjustment
+	|-- MaskEffectFragment: mask
+	|-- FaceBlockingFragment: face mask
+	|-- PersonTrackingFragment: track person
+	|-- TransparencyPanelFragment: transparency
+	|-- VideoProportionFragment: canvas ratio
+	|-- CanvasBackgroundFragment: canvas background
+	|-- AudioPickActivity and MusicLocalFragment: adding music
+	|-- SoundEffectFragment: adding a sound effect
+	|-- AudioSpeedFragment: audio playback speed adjustment
+	|-- VolumePanelFragment: volume
+	|-- KeyFrameFragment: key frame
+	|-- CropNewActivity: cropping
+|-- Template-related functions:
+	|-- TemplateHomeFragment: template home screen, which shows all template lists
+	|-- TemplateDetailActivity: template details screen, which shows the effect of a template after it is selected
+	|-- VideoModulePickFragment: template selection screen, which is launched after a template is selected and the button for using it is tapped
+	|-- VideoModuleEditFragment: template editing screen
+	|-- VideoModuleReplaceFragment: template replacement screen
+|-- Export-related functions:
+	|--VideoExportActivity: main screen for export
+	|--ExportFragment: parameter configuration before export, export progress, and export failure
+	|--ExportSuccessFragment: export success
+```

@@ -70,13 +70,13 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer-ui:2.12.2'
     implementation 'com.danikula:videocache:2.7.0'
 
-    implementation 'com.huawei.hms:video-editor-sdk:1.8.0.301'
-    implementation 'com.huawei.hms:video-editor-ai:1.8.0.300'
+    implementation 'com.huawei.hms:video-editor-sdk:1.9.0.300'
+    implementation 'com.huawei.hms:video-editor-ai:1.9.0.300'
 
     implementation 'com.huawei.hms:video-editor-ai-beauty:1.8.0.300'
     implementation 'com.huawei.hms:video-editor-ai-beauty-model:1.8.0.300'
 
-    implementation 'com.huawei.hms:video-editor-ai-common:1.8.0.300'
+    implementation 'com.huawei.hms:video-editor-ai-common:1.9.0.300'
     implementation 'com.huawei.hms:video-editor-ai-faceprivacy:1.3.0.300'
     implementation 'com.huawei.hms:video-editor-ai-faceprivacy-model:1.3.0.300'
 
@@ -86,14 +86,14 @@ dependencies {
     implementation 'com.huawei.hms:video-editor-ai-humantracking:1.7.0.300'
     implementation 'com.huawei.hms:video-editor-ai-humantracking-model:1.7.0.300'
 
-    implementation 'com.huawei.hms:video-editor-ai-hairdyeing:1.8.0.300'
-    implementation 'com.huawei.hms:video-editor-ai-hairdyeing-model:1.8.0.300'
+    implementation 'com.huawei.hms:video-editor-ai-hairdyeing:1.9.0.300'
+    implementation 'com.huawei.hms:video-editor-ai-hairdyeing-model:1.9.0.300'
 
-    implementation 'com.huawei.hms:video-editor-ai-imagetimelapse:1.7.0.300'
-    implementation 'com.huawei.hms:video-editor-ai-imagetimelapse-model:1.7.0.300'
+    implementation 'com.huawei.hms:video-editor-ai-imagetimelapse:1.9.0.300'
+    implementation 'com.huawei.hms:video-editor-ai-imagetimelapse-model:1.9.0.300'
 
-    implementation 'com.huawei.hms:video-editor-ai-videoselection:1.7.0.300'
-    implementation 'com.huawei.hms:video-editor-ai-videoselection-model:1.7.0.300'
+    implementation 'com.huawei.hms:video-editor-ai-videoselection:1.9.0.300'
+    implementation 'com.huawei.hms:video-editor-ai-videoselection-model:1.9.0.300'
 
     implementation 'com.huawei.hms:video-editor-ai-interactiveseg:1.7.0.300'
     implementation 'com.huawei.hms:video-editor-ai-interactiveseg-model:1.7.0.300'

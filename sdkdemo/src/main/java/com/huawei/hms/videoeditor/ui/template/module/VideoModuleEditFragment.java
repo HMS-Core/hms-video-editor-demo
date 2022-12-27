@@ -726,11 +726,7 @@ public class VideoModuleEditFragment extends BaseFragment implements HuaweiVideo
 
         if (mEditor == null && activity != null) {
             mEditor = HuaweiVideoEditor.create(mTemplateResource.getTemplateId(), editableElements);
-            try {
-                mEditor.initEnvironment();
-            } catch (LicenseException e) {
-                SmartLog.e(TAG, "mEditor initEnvironment ERROR.");
-            }
+            mEditor.initEnvironment();
             setIsEditorReady(true);
             SmartLog.e(TAG, "mEditor is null, create it.");
             mModuleEditViewModel.setEditor(mEditor);

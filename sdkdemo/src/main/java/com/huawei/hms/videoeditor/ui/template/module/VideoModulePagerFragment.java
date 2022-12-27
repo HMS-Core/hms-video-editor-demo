@@ -237,7 +237,7 @@ public class VideoModulePagerFragment extends LazyFragment {
             if (mIsRefresh || mModuleHVETemplateList.size() > 0) {
                 mIsRefresh = false;
                 mModuleErrorLayout.setVisibility(View.GONE);
-                ToastWrapper.makeText(mContext, getString(R.string.result_illegal), Toast.LENGTH_SHORT).show();
+                ToastWrapper.makeText(mContext, errorString, Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -173,6 +173,7 @@ public class MediaPickAdapter extends PagedListAdapter<MediaData, MediaPickAdapt
             holder.fullImageFilter.setVisibility(View.GONE);
             holder.mTvHasImport.setVisibility(View.GONE);
         }
+        holder.fullImageFilter.setVisibility(View.GONE);
 
         holder.itemView.setOnClickListener(new OnClickRepeatedListener((v) -> {
             SmartLog.d(TAG, "onHandleMediaChoose position:" + position);

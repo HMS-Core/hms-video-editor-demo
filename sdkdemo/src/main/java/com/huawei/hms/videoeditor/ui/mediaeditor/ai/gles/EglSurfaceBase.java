@@ -149,6 +149,11 @@ public class EglSurfaceBase {
         mEglCore.setPresentationTime(mEGLSurface, nsecs);
     }
 
+    /**
+     * 获取当前帧的缓冲
+     * 
+     * @return
+     */
     public ByteBuffer getCurrentFrame() {
         int width = getWidth();
         int height = getHeight();

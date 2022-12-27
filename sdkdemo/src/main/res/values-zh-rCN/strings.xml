@@ -189,6 +189,7 @@
 
     <string name="reset" priority="translator">重置</string>
     <string name="result_illegal" priority="translator">"网络异常，请重试"</string>
+    <string name="resources_not_exist" priority="translator">"资源不存在"</string>
     <string name="apply_to_all" priority="translator">应用到全部</string>
     <string name="applied_to_all" priority="translator">已应用到全部</string>
     <string name="device_not_support" priority="translator">设备不支持</string>
@@ -565,6 +566,7 @@
 
     <string name="cut_second_menu_ai_hair" priority="translator">一键染发</string>
     <string name="ai_hair_fail" priority="translator">染发失败</string>
+    <string name="ai_hair_get_color_card_fail">获取色卡失败</string>
 
     <string name="cut_second_menu_ai_selection" priority="translator">精彩片段</string>
 
@@ -686,13 +688,6 @@
 
     <string name="auto_mark_description" priority="translator">"本服务提供最新奇有趣的 AI 玩法。需下载 AI 算法包。"</string>
 
-    <!--翅膀特效-->
-    <string name="cut_second_menu_wings" priority="translator">翅膀特效</string>
-    <string name="wings_cancel" priority="translator">"取消翅膀特效"</string>
-    <string name="ai_wings_processing" priority="translator">"翅膀特效处理中…"</string>
-    <string name="ai_wings_success" priority="translator">"翅膀特效添加完成"</string>
-    <string name="ai_wings_fail" priority="translator">"啊哦~翅膀特效添加异常"</string>
-
     <!--人像&头部分割-->
     <string name="cut_second_menu_body_seg" priority="translator">"人像分割"</string>
     <string name="cut_second_menu_head_seg" priority="translator">"头部分割"</string>
@@ -719,6 +714,8 @@
     <string name="highlights_start_point" priority="translator">精彩起点：%s ms</string>
     <string name="object_segmentation_subtitle">万物皆可分割</string>
     <string name="object_segmentation_tip">请在图片上画线选择需要分割的物体</string>
+    <string name="head_segmentation_subtitle">人像头部分割</string>
+    <string name="hair_dyeing_subtitle">头发一键染色</string>
     <plurals name="media_max_send_images_format">
         <item priority="translator" quantity="other">最多可选 %1$d 个图片</item>
     </plurals>

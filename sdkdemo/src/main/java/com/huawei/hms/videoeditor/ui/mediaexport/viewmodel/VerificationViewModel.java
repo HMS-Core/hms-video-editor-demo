@@ -20,9 +20,9 @@ import com.huawei.hms.videoeditor.sdk.HVETimeLine;
 import com.huawei.hms.videoeditor.sdk.HuaweiVideoEditor;
 import com.huawei.hms.videoeditor.sdk.asset.HVEVisibleAsset;
 import com.huawei.hms.videoeditor.sdk.lane.HVEVideoLane;
+import com.huawei.hms.videoeditor.sdk.util.DeviceProfile;
 import com.huawei.hms.videoeditor.sdk.util.HVEUtil;
 import com.huawei.hms.videoeditor.ui.common.utils.MemoryInfoUtil;
-import com.huawei.hms.videoeditor.ui.mediaexport.config.DeviceProfile;
 import com.huawei.hms.videoeditor.ui.mediaexport.utils.InfoStateUtil;
 import com.huawei.hms.videoeditor.ui.mediaexport.utils.SystemUtils;
 import com.huawei.hms.videoeditor.utils.SmartLog;
@@ -101,6 +101,10 @@ public class VerificationViewModel extends AndroidViewModel {
         } else if (isNova9) {
             maxProgress = Math.min(maxProgress, NOVA_RESOLUTION_MAX_PROGRESS);
         }
+        if (!DeviceProfile.getInstance().isSupportUHD()) {
+            // 不支持4K的设备显示低内存进度值
+            maxProgress = Math.min(maxProgress, LOW_RESOLUTION_MAX_PROGRESS);
+        }
         return maxProgress;
     }
 
@@ -108,6 +112,10 @@ public class VerificationViewModel extends AndroidViewModel {
         if (isLowMemory) {
             return LOW_FRAME_RATE_MAX_PROGRESS;
         } else if (isNova9) {
+            return LOW_FRAME_RATE_MAX_PROGRESS;
+        }
+        if (!DeviceProfile.getInstance().isSupportUHD()) {
+            // 不支持4K的设备显示低内存进度值
             return LOW_FRAME_RATE_MAX_PROGRESS;
         }
         return FRAME_RATE_MAX_PROGRESS;

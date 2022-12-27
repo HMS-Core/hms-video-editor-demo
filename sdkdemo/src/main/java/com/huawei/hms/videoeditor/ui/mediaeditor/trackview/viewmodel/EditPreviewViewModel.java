@@ -733,7 +733,7 @@ public class EditPreviewViewModel extends AndroidViewModel {
     }
 
     public void playTimeLine(long startTime, long endTime) {
-        HuaweiVideoEditor editor = EditorManager.getInstance().getEditor();
+        HuaweiVideoEditor editor = getEditor();
         if (editor == null) {
             return;
         }

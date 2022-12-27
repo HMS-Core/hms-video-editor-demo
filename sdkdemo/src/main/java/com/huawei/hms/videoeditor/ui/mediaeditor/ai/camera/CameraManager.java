@@ -130,6 +130,7 @@ public class CameraManager implements ICameraManager, Camera.PreviewCallback {
     }
 
     private SurfaceTexture createDetachedSurfaceTexture() {
+        // 创建一个新的SurfaceTexture并从解绑GL上下文
         SurfaceTexture surfaceTexture = new SurfaceTexture(0);
         surfaceTexture.detachFromGLContext();
         if (Build.VERSION.SDK_INT >= 21) {

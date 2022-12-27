@@ -184,6 +184,11 @@ public final class EglCore {
         mEGLConfig = null;
     }
 
+    /**
+     * 获取EglContext(用于多线程共享上下文)
+     * 
+     * @return
+     */
     public EGLContext getEGLContext() {
         return mEGLContext;
     }

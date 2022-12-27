@@ -163,14 +163,7 @@ public class CropNewActivity extends BaseActivity
         }
         currentRotation = (int) mMediaData.getRotation();
         mEditor = HuaweiVideoEditor.create(this);
-        try {
-            mEditor.initEnvironment();
-        } catch (LicenseException e) {
-            SmartLog.e(TAG, "initEnvironment failed: " + e.getErrorMsg());
-            ToastWrapper.makeText(this, this.getResources().getString(R.string.license_invalid)).show();
-            finish();
-            return;
-        }
+        mEditor.initEnvironment();
         mEditor.setDisplay(mPreview);
         mEditor.setPlayCallback(this);
 

@@ -36,7 +36,6 @@ import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewS
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_PIP_OPERATION_HEAD_SEG;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_PIP_OPERATION_HUMAN_TRACKING;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_PIP_OPERATION_TIME_LAPSE;
-import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_PIP_OPERATION_WINGS;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_VIDEO_OPERATION_AI_SEGMENTATION;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_VIDEO_OPERATION_HEAD_SEG;
 import static com.huawei.hms.videoeditor.ui.mediaeditor.trackview.bean.MainViewState.EDIT_VIDEO_STATE_AI_SEGMENTATION;
@@ -443,14 +442,7 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
             mEditor = HuaweiVideoEditor.getInstance(editorUuid);
         } else {
             mEditor = HuaweiVideoEditor.create(getApplicationContext(), mProjectId);
-            try {
-                mEditor.initEnvironment();
-            } catch (LicenseException error) {
-                SmartLog.e(TAG, "initEnvironment failed: " + error.getErrorMsg());
-                ToastWrapper.makeText(mContext, mContext.getResources().getString(R.string.license_invalid)).show();
-                finish();
-                return;
-            }
+            mEditor.initEnvironment();
         }
 
         if (mEditor == null) {
@@ -1261,7 +1253,6 @@ public class VideoClipsActivity extends BaseActivity implements DefaultPlayContr
                 handleBodySeg(selectedAsset, integer, finalSegPart);
             }
         });
-
     }
 
     private void handleSegmentation(HVEAsset selectedAsset, int integer) {

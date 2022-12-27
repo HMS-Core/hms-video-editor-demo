@@ -9,6 +9,7 @@
  * [运行步骤](#运行步骤)
  * [环境要求](#环境要求)
  * [许可证](#许可证)
+ * [关键功能代码索引](#关键功能代码索引)
 
 
 ## 介绍
@@ -66,3 +67,62 @@
 ##  许可证
 
 此示例代码已获得[Apache 2.0 license](https://www.apache.org/licenses/LICENSE-2.0)。
+
+##  关键功能代码索引
+
+```
+|-- HomeActivity：应用首页，可跳转至创作主页(MainActivity)和使用各个独立开放的AI能力
+	|--首页各个AI能力对应的处理入口：
+    	|--动态照片：faceReenact(String imagePath)
+    	|--一键微笑：faceSmile(String imagePath)
+    	|--AI着色：aiColor(String filePath)
+    	|--一键动效：timeLapse(String imagePath)
+    	|--精彩片段：videoSelection(String videoPath)
+    	|--目标分割：objectSeg(String photoPath)
+    	|--头部分割：headSeg(String photoPath)
+    	|--一键染发：拉起HairDyeingFragment，选中某个发色下载成功后，调用hairDyeing(Bitmap colormapBitmap)处理
+    	|--美颜：拉起CameraActivity和CameraPreviewFragment
+
+|-- MainActivity：创作主页，可切换剪辑页(ClipFragment)和模板首页(TemplateHomeFragment)
+|-- MediaPickActivity：素材选择页，当需要从相册选取素材时会拉起该页面
+|-- VideoClipsActivity：视频剪辑页面，通过开始创作导入素材或者历史草稿进入；页面上半部分是预览显示区域，中间是播放和时间线，下方是两级菜单区域
+|-- MaterialEditFragment：预览区素材编辑，在预览区选中素材进行双指缩放、拖动、旋转等操作的处理入口
+|-- MenuClickManager：菜单点击管理，在handlerClickEvent方法中处理用户在剪辑页面的点击菜单事件，每个点击事件会拉起一个对应的Fragment，这些Fragment继承BaseFragment抽象类，实现了initView、initObject、initData和initEvent方法，其中initView用于布局和控件的初始化，在initEvent方法中创建对应控件的监听器，响应用户在各个Fragment内的点击事件，进行对应的业务逻辑处理
+
+|-- 剪辑功能相关：
+	|--修剪时长：AssetCropFragment
+	|--分割素材：AssetSplitFragment
+	|--视频变速：GeneralSpeedFragment
+	|--动画：AnimationPanelFragment
+	|--贴纸：StickerPanelFragment
+	|--文字：EditPanelFragment
+	|--文字样式：EditTextStyleFragment
+	|--文字动画：EditTextAnimateFragment
+	|--文字气泡：EditTextBubblesFragment
+	|--花字：EditTextFlowerFragment
+	|--滤镜：FilterPanelFragment
+	|--特效：EffectPanelFragment
+	|--调节：FilterAdjustPanelView
+	|--蒙版：MaskEffectFragment
+	|--人脸遮挡：FaceBlockingFragment
+	|--人物追踪：PersonTrackingFragment
+	|--不透明度：TransparencyPanelFragment
+	|--画布比例：VideoProportionFragment
+	|--画布背景：CanvasBackgroundFragment
+	|--音频-添加音乐：AudioPickActivity、MusicLocalFragment
+	|--音频-添加音效：SoundEffectFragment
+	|--音频变速：AudioSpeedFragment
+	|--音量：VolumePanelFragment
+	|--关键帧：KeyFrameFragment
+	|--裁剪：CropNewActivity
+|-- 模板功能相关：
+	|--模板首页：TemplateHomeFragment，展示所有模板列表
+	|--模板详情页：TemplateDetailActivity，选择某个模板后，展示具体的模板效果
+	|--模板素材选择页：VideoModulePickFragment，选择某个模板，点击开始使用后拉起
+	|--模板编辑页：VideoModuleEditFragment
+	|--模板素材替换页面：VideoModuleReplaceFragment
+|-- 导出相关：
+	|--VideoExportActivity：导出主页面
+	|--ExportFragment：导出前参数设置、导出过程中进度展示、导出失败处理
+	|--ExportSuccessFragment：导出成功页面展示
+```

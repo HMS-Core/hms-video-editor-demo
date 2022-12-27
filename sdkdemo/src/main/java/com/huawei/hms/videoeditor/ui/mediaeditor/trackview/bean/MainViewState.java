@@ -77,9 +77,10 @@ public class MainViewState {
     public final static int EDIT_VIDEO_STATE_AI_SELECTION = 101227;
     public final static int EDIT_VIDEO_STATE_AI_SEGMENTATION = 101225;
     public final static int EDIT_VIDEO_STATE_TIME_LAPSE = 101226;
-    public final static int EDIT_VIDEO_STATE_WINGS = 101228;
     public final static int EDIT_VIDEO_STATE_BODY_SEG = 101229;
     public final static int EDIT_VIDEO_STATE_HEAD_SEG = 101230;
+
+    public final static int EDIT_VIDEO_STATE_BEAUTIFY = 101231;
 
     public final static int EDIT_AUDIO_STATE_HWMUSIC = 102202;
 
@@ -157,11 +158,11 @@ public class MainViewState {
 
     public final static int EDIT_VIDEO_OPERATION_TIME_LAPSE = 201125;
 
-    public final static int EDIT_VIDEO_OPERATION_WINGS = 201128;
-
     public final static int EDIT_VIDEO_OPERATION_BODY_SEG = 201129;
 
     public final static int EDIT_VIDEO_OPERATION_HEAD_SEG = 201130;
+
+    public final static int EDIT_VIDEO_OPERATION_BEAUTIFY = 201131;
 
     public final static int EDIT_VIDEO_OPERATION_ROTATION = 1007;
 
@@ -266,8 +267,6 @@ public class MainViewState {
     public final static int EDIT_PIP_OPERATION_AI_SEGMENTATION = 207124;
 
     public final static int EDIT_PIP_OPERATION_TIME_LAPSE = 207125;
-
-    public final static int EDIT_PIP_OPERATION_WINGS = 207128;
 
     public final static int EDIT_PIP_OPERATION_BODY_SEG = 207129;
 

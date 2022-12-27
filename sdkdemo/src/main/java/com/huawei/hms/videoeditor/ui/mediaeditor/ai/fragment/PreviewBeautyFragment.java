@@ -202,7 +202,7 @@ public class PreviewBeautyFragment extends Fragment implements View.OnClickListe
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         if (fromUser) {
-            if (mEffectTabLayout.getSelectedTabPosition() == 0) {
+            if (mEffectTabLayout.getSelectedTabPosition() == 0) { // 美颜
                 processBeautyParam(mBeautyAdapter.getSelectedPosition(), progress);
             }
         }

@@ -152,8 +152,15 @@ public class AudioSpeedFragment extends BaseFragment {
         speedBar.setaTouchListener(isTouch -> {
             if (!isTouch) {
                 adjustVideoSpeed(speed);
-                viewModel.getEditor()
-                    .playTimeLine(currentSelectedAsset.getStartTime(), currentSelectedAsset.getEndTime());
+                if (viewModel == null) {
+                    return;
+                }
+
+                HuaweiVideoEditor editor = viewModel.getEditor();
+                if (editor != null && currentSelectedAsset != null) {
+                    editor.seekTimeLine(currentSelectedAsset.getStartTime(), () -> editor.
+                            playTimeLine(currentSelectedAsset.getStartTime(), currentSelectedAsset.getEndTime()));
+                }
             }
             mEditPreviewViewModel.setToastTime(isTouch ? speed + "" : "");
         });

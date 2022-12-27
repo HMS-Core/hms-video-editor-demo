@@ -17,16 +17,13 @@
 
 package com.huawei.hms.videoeditor.ui.mediaeditor.audio.viewmodel;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Application;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
+import android.os.Build;
+import android.os.Bundle;
 import android.provider.MediaStore;
-
-import com.huawei.hms.videoeditor.sdk.util.SmartLog;
-import com.huawei.hms.videoeditor.ui.common.bean.AudioData;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -36,6 +33,14 @@ import androidx.paging.DataSource;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PageKeyedDataSource;
 import androidx.paging.PagedList;
+
+import com.huawei.hms.videoeditor.sdk.HVEErrorCode;
+import com.huawei.hms.videoeditor.sdk.util.CodecUtil;
+import com.huawei.hms.videoeditor.sdk.util.SmartLog;
+import com.huawei.hms.videoeditor.ui.common.bean.AudioData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LocalAudioViewModel extends AndroidViewModel {
     private static final String TAG = "LocalAudioViewModel";
@@ -122,17 +127,35 @@ public class LocalAudioViewModel extends AndroidViewModel {
         final String[] videoProjection = {MediaStore.Audio.Media._ID, MediaStore.Audio.Media.DISPLAY_NAME,
             MediaStore.Audio.Media.DATA, MediaStore.Audio.Media.SIZE, MediaStore.Audio.Media.DATE_MODIFIED,
             MediaStore.Audio.Media.DURATION, MediaStore.Audio.Media.ARTIST};
-        final String mAudioSelection = MediaStore.Audio.Media.DATA + " like ?";
+        Cursor cursor = null;
         try {
-            Cursor cursor = context.getContentResolver()
-                .query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, videoProjection, null, null,
-                    videoProjection[4] + " DESC LIMIT " + page * pageSize + " , " + pageSize);
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
+                Bundle bundle = new Bundle();
+                bundle.putString(ContentResolver.QUERY_ARG_SQL_SORT_ORDER, videoProjection[4] + " DESC");
+                bundle.putInt(ContentResolver.QUERY_ARG_LIMIT, pageSize);
+                bundle.putInt(ContentResolver.QUERY_ARG_OFFSET, page * pageSize);
+                cursor = context.getContentResolver()
+                    .query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, videoProjection, bundle, null);
+            } else {
+                cursor = context.getContentResolver()
+                    .query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, videoProjection, null, null,
+                        videoProjection[4] + " DESC LIMIT " + page * pageSize + " , " + pageSize);
+            }
+        } catch (SecurityException e) {
+            SmartLog.e(TAG, e.getMessage());
+        }
+        try {
             while (cursor != null && cursor.moveToNext()) {
                 String name = cursor.getString(cursor.getColumnIndexOrThrow(videoProjection[1]));
                 String path = cursor.getString(cursor.getColumnIndexOrThrow(videoProjection[2]));
                 long size = cursor.getLong(cursor.getColumnIndexOrThrow(videoProjection[3]));
                 long addTime = cursor.getLong(cursor.getColumnIndexOrThrow(videoProjection[4]));
                 int duration = cursor.getInt(cursor.getColumnIndexOrThrow(videoProjection[5]));
+                int errorCode = CodecUtil.verificationAudioFormat(path);
+                if (errorCode != HVEErrorCode.SUCCESS) {
+                    SmartLog.w(TAG, "verificationAudio return " + errorCode);
+                    continue;
+                }
 
                 AudioData item = new AudioData();
                 item.setName(name);

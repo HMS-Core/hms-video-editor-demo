@@ -651,6 +651,7 @@
     <string name="confirm_you_tracking_click" priority="translator">This will cancel the previous tracking task. Continue?</string>
     <string name="ai_exception" priority="translator">Processing exception.</string>
     <string name="overwrite_original_tracking_result" priority="translator">This will overwrite previous tracking effects.</string>
+    <string name="ai_hair_get_color_card_fail">Failed to obtain the color chart.</string>
 
     <string name="cut_second_menu_ai_hair" priority="translator">Color hair</string>
     <string name="ai_hair_fail" priority="translator">Hair coloring failed.</string>
@@ -774,13 +775,6 @@
 
     <string name="auto_mark_description" priority="translator">An effects package needs to be downloaded to use this feature. Continue?</string>
 
-    <!--翅膀特效-->
-    <string name="cut_second_menu_wings" priority="translator">Wings effects</string>
-    <string name="wings_cancel" priority="translator">"cancel wings effects"</string>
-    <string name="ai_wings_processing" priority="translator">"wings effect processing…"</string>
-    <string name="ai_wings_success" priority="translator">Wings effects added complete</string>
-    <string name="ai_wings_fail" priority="translator">Wings effects add exception</string>
-
     <!--人像&头部分割-->
     <string name="cut_second_menu_body_seg" priority="translator">Body segmentation</string>
     <string name="cut_second_menu_head_seg" priority="translator">Head segmentation</string>
@@ -802,6 +796,8 @@
     <string name="ai_color_subtitle">One-click restoration of black-and-white images</string>
     <string name="time_lapse_subtitle">Dynamic Nature in Mobile Phones</string>
     <string name="video_selection_subtitle">Intelligent identification of high-energy segments</string>
+    <string name="head_segmentation_subtitle">Portrait Head Segmentation</string>
+    <string name="hair_dyeing_subtitle">One-Click Hair Dyeing</string>
     <string name="view_file">View Files</string>
     <string name="save_to_gallery_success">Saved to System Gallery</string>
     <string name="highlights_start_point" priority="translator">Highlight Start Point:%s ms</string>
@@ -849,4 +845,5 @@
     <string name="prettify_whitening" priority="LT">Tone</string>
     <string name="prettify_bigEye" priority="LT">Size</string>
     <string name="prettify_brightEye" priority="LT">Brightness</string>
+    <string name="resources_not_exist" priority="translator">Resources do not exist.</string>
 </resources>

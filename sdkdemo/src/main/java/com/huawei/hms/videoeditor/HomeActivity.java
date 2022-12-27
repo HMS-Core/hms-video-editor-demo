@@ -32,6 +32,8 @@ import static com.huawei.hms.videoeditor.ui.mediaeditor.ai.timelapse.AITimeLapse
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -48,6 +50,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.huawei.agconnect.AGConnectInstance;
 import com.huawei.hms.videoeditor.ai.HVEAIApplication;
+import com.huawei.hms.videoeditor.ai.HVEAIBodySeg;
 import com.huawei.hms.videoeditor.ai.HVEAIColor;
 import com.huawei.hms.videoeditor.ai.HVEAIFaceReenact;
 import com.huawei.hms.videoeditor.ai.HVEAIFaceSmile;
@@ -74,6 +77,7 @@ import com.huawei.hms.videoeditor.ui.mediaeditor.ai.ObjectSegActivity;
 import com.huawei.hms.videoeditor.ui.mediaeditor.ai.ViewFileActivity;
 import com.huawei.hms.videoeditor.ui.mediaeditor.ai.timelapse.AITimeLapseFragment;
 import com.huawei.hms.videoeditor.ui.mediaeditor.ai.timelapse.AITimeLapseViewModel;
+import com.huawei.hms.videoeditor.ui.mediaeditor.aihair.fragment.HairDyeingFragment;
 import com.huawei.hms.videoeditor.ui.mediaeditor.menu.MenuConfig;
 import com.huawei.hms.videoeditor.ui.mediaexport.utils.InfoStateUtil;
 import com.huawei.hms.videoeditor.ui.mediapick.activity.MediaPickActivity;
@@ -111,11 +115,17 @@ public class HomeActivity extends BaseActivity {
 
     private static final int REQUEST_CODE_OF_OBJECT_SEGMENTATION = 0x1006;
 
+    private static final int REQUEST_CODE_OF_HEAD_SEGMENTATION = 0x1007;
+
+    private static final int REQUEST_CODE_OF_HAIR_DYEING = 0x1008;
+
     private CommonProgressDialog mVideoSelectionDialog;
 
     private CommonProgressDialog mTimeLapseDialog;
 
     private CommonProgressDialog mObjectSegDialog;
+
+    private CommonProgressDialog mHeadSegDialog;
 
     private CommonProgressDialog mFaceReenactDialog;
 
@@ -132,6 +142,8 @@ public class HomeActivity extends BaseActivity {
     private HVEAIFaceSmile mFaceSmile;
 
     private HVEAIColor mAIColor;
+
+    private HVEAIBodySeg mAIBodySeg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -258,6 +270,10 @@ public class HomeActivity extends BaseActivity {
             getString(R.string.object_segmentation_subtitle), R.drawable.edit_menu_segmentation));
         infoDataList
             .add(new AIInfoData(getString(R.string.beauty), getString(R.string.beauty), R.drawable.icon_beautify));
+        infoDataList.add(new AIInfoData(getString(R.string.cut_second_menu_head_seg),
+            getString(R.string.head_segmentation_subtitle), R.drawable.edit_menu_segmentation));
+        infoDataList.add(new AIInfoData(getString(R.string.cut_second_menu_ai_hair),
+            getString(R.string.hair_dyeing_subtitle), R.drawable.edit_menu_ai_hair));
         AIListAdapter listAdapter = new AIListAdapter(infoDataList);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setItemAnimator(null);
@@ -295,6 +311,12 @@ public class HomeActivity extends BaseActivity {
                 } else if (title.equals(getString(R.string.beauty))) {
                     Intent intent = new Intent(HomeActivity.this, CameraActivity.class);
                     startActivity(intent);
+                } else if (title.equals(getString(R.string.cut_second_menu_head_seg))) {
+                    MediaPickActivity.startActivityForResult(HomeActivity.this, MEDIA_TYPE_PHOTO,
+                        REQUEST_CODE_OF_HEAD_SEGMENTATION);
+                } else if (title.equals(getString(R.string.cut_second_menu_ai_hair))) {
+                    MediaPickActivity.startActivityForResult(HomeActivity.this, MEDIA_TYPE_PHOTO,
+                        REQUEST_CODE_OF_HAIR_DYEING);
                 }
             }
         });
@@ -309,13 +331,13 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void verifyStoragePermissions(HomeActivity activity) {
-        final int requestCode = 1;
+        final int REQUEST_CODE = 1;
         try {
             for (int i = 0; i < mPermissions.length; i++) {
                 String permisson = mPermissions[i];
                 int permissionRead = ActivityCompat.checkSelfPermission(activity, permisson);
                 if (permissionRead != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(activity, mPermissions, requestCode);
+                    ActivityCompat.requestPermissions(activity, mPermissions, REQUEST_CODE);
                 }
             }
         } catch (Exception e) {
@@ -352,12 +374,25 @@ public class HomeActivity extends BaseActivity {
                 case REQUEST_CODE_OF_OBJECT_SEGMENTATION:
                     objectSeg(mFilePath);
                     break;
+                case REQUEST_CODE_OF_HEAD_SEGMENTATION:
+                    headSeg(mFilePath);
+                    break;
+                case REQUEST_CODE_OF_HAIR_DYEING:
+                    getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragment_container, HairDyeingFragment.newInstance(mFilePath))
+                        .commitAllowingStateLoss();
+                    break;
                 default:
                     break;
             }
         }
     }
 
+    /**
+     * 精彩片段detect
+     *
+     * @param videoPath 视频路径
+     */
     private void videoSelection(String videoPath) {
         initVideoSelectionProgressDialog();
         HVEAIVideoSelection videoSelection = new HVEAIVideoSelection();
@@ -448,6 +483,11 @@ public class HomeActivity extends BaseActivity {
         mVideoSelectionDialog.show();
     }
 
+    /**
+     * One-click dynamic detection
+     *
+     * @param imagePath Image path
+     */
     private void timeLapse(String imagePath) {
         initTimeLapseProgressDialog();
         if (mTimeLapseViewModel != null) {
@@ -530,6 +570,11 @@ public class HomeActivity extends BaseActivity {
         mTimeLapseDialog.show();
     }
 
+    /**
+     * Target segmentation detection
+     *
+     * @param photoPath Image path
+     */
     private void objectSeg(String photoPath) {
         initObjectSegmentationProgressDialog();
         HVEAIObjectSeg objectSeg = new HVEAIObjectSeg();
@@ -591,6 +636,11 @@ public class HomeActivity extends BaseActivity {
         mObjectSegDialog.show();
     }
 
+    /**
+     * Dynamic photo detection
+     *
+     * @param imagePath Image path
+     */
     private void faceReenact(String imagePath) {
         initFaceReenactProgressDialog();
         mFaceReenact = new HVEAIFaceReenact();
@@ -687,6 +737,11 @@ public class HomeActivity extends BaseActivity {
         return errorMessage;
     }
 
+    /**
+     * Magic smile detect
+     *
+     * @param imagePath Image path
+     */
     private void faceSmile(String imagePath) {
         initFaceSmileProgressDialog();
         mFaceSmile = new HVEAIFaceSmile();
@@ -751,6 +806,11 @@ public class HomeActivity extends BaseActivity {
         mFaceSmileDialog.show();
     }
 
+    /**
+     * AI coloring detect
+     *
+     * @param filePath File path
+     */
     private void aiColor(String filePath) {
         initAIColorProgressDialog();
         mAIColor = new HVEAIColor();
@@ -814,5 +874,105 @@ public class HomeActivity extends BaseActivity {
         mAIColorDialog.setCanceledOnTouchOutside(false);
         mAIColorDialog.setCancelable(false);
         mAIColorDialog.show();
+    }
+
+    /**
+     * Header segmentation detection
+     *
+     * @param photoPath Photo path
+     */
+    private void headSeg(String photoPath) {
+        runOnUiThread(this::initHeadSegmentationProgressDialog);
+        if (mAIBodySeg != null) {
+            mAIBodySeg.releaseEngine();
+            mAIBodySeg = null;
+        }
+        mAIBodySeg  = new HVEAIBodySeg();
+        mAIBodySeg.initEngine(new HVEAIInitialCallback() {
+            @Override
+            public void onProgress(int progress) {
+                if (!isValidActivity()) {
+                    return;
+                }
+                runOnUiThread(() -> {
+                    if (mHeadSegDialog != null) {
+                        if (!mHeadSegDialog.isShowing()) {
+                            mHeadSegDialog.show();
+                        }
+                        mHeadSegDialog.updateProgress(progress);
+                    }
+                });
+            }
+
+            @Override
+            public void onSuccess() {
+                if (!isValidActivity()) {
+                    return;
+                }
+                runOnUiThread(() -> {
+                    if (mHeadSegDialog != null) {
+                        mHeadSegDialog.updateProgress(0);
+                        mHeadSegDialog.dismiss();
+                    }
+                    if (mAIBodySeg == null) {
+                        return;
+                    }
+                    Bitmap bitmap = BitmapFactory.decodeFile(photoPath);
+                    mAIBodySeg.process(bitmap, new HVEAIProcessCallback<byte[]>() {
+                        @Override
+                        public void onProgress(int progress) {
+
+                        }
+
+                        @Override
+                        public void onSuccess(byte[] result) {
+                            if (result != null && result.length > 0) {
+                                ViewFileActivity.startActivity(HomeActivity.this, photoPath, result);
+                            }
+                        }
+
+                        @Override
+                        public void onError(int errorCode, String errorMessage) {
+
+                        }
+                    });
+                });
+            }
+
+            @Override
+            public void onError(int errorCode, String errorMessage) {
+                SmartLog.e(TAG, errorMessage);
+                if (!isValidActivity()) {
+                    return;
+                }
+                runOnUiThread(() -> {
+                    if (mObjectSegDialog != null) {
+                        mObjectSegDialog.updateProgress(0);
+                        mObjectSegDialog.dismiss();
+                    }
+                    ToastWrapper.makeText(HomeActivity.this, getString(R.string.ai_exception)).show();
+                });
+            }
+        });
+    }
+
+    private void initHeadSegmentationProgressDialog() {
+        mHeadSegDialog = new CommonProgressDialog(this, () -> {
+            mHeadSegDialog.dismiss();
+            mHeadSegDialog = null;
+        });
+        mHeadSegDialog.setTitleValue(getString(R.string.intelligent_processing));
+        mHeadSegDialog.setCanceledOnTouchOutside(false);
+        mHeadSegDialog.setCancelable(false);
+        mHeadSegDialog.show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mAIBodySeg != null) {
+            mAIBodySeg.releaseEngine();
+            mAIBodySeg = null;
+        }
     }
 }
