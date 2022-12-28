@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.huawei.hms.videoeditorkit.templatetooldemo"
-        minSdkVersion 21
+        minSdkVersion 24
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
