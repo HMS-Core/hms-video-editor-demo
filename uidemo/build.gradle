@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.huawei.videoeditorkit.videoeditdemo"
-        minSdkVersion 21
+        minSdkVersion 24
         targetSdkVersion 29
         versionCode Integer.parseInt(rootProject.ext.ve_sdk_versionCode)
         versionName rootProject.ext.ve_sdk_versionName
