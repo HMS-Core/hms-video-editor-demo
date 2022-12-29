@@ -51,7 +51,7 @@
 您只需将应用级build.gradle中的applicationId修改为与所申请的agconnect-services.json相同的package name，即可体验Video Editor Kit提供的服务。
 
 ## 环境要求
-推荐使用的AndroidSDK版本为21及以上，JDK版本为1.8及以上。
+推荐使用的AndroidSDK版本为24及以上，JDK版本为1.8及以上。
 
 ##  技术支持
 
