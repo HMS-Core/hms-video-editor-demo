@@ -50,7 +50,7 @@ The package name in this project cannot be used to apply for agconnect-services.
 You only need to change applicationId in application-level build.gradle to the same package name as the applied agconnect-services.json to experience Video Editor Kit services.
 
 ## Supported Environment
-Android SDK 21 or later and JDK 1.8 or later are recommended.
+Android SDK 24 or later and JDK 1.8 or later are recommended.
 
 ## Question or issues
 If you want to evaluate more about HMS Core,
