@@ -39,7 +39,6 @@ import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -68,7 +67,6 @@ import com.huawei.hms.videoeditor.ui.common.bean.AIInfoData;
 import com.huawei.hms.videoeditor.ui.common.bean.Constant;
 import com.huawei.hms.videoeditor.ui.common.bean.MediaData;
 import com.huawei.hms.videoeditor.ui.common.utils.ArrayUtils;
-import com.huawei.hms.videoeditor.ui.common.utils.LanguageUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.ScreenUtil;
 import com.huawei.hms.videoeditor.ui.common.utils.SizeUtils;
 import com.huawei.hms.videoeditor.ui.common.utils.ToastWrapper;
@@ -87,9 +85,7 @@ import com.huawei.hms.videoeditor.utils.SmartLog;
 import com.huawei.hms.videoeditorkit.sdkdemo.R;
 import com.huawei.secure.android.common.intent.SafeIntent;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
@@ -167,8 +163,6 @@ public class HomeActivity extends BaseActivity {
 
     private void initView() {
         ImageView ivBanner = findViewById(R.id.iv_banner);
-        TextView serviceDescriptionText = findViewById(R.id.service_description);
-        serviceDescriptionText.setLetterSpacing(LanguageUtils.isZh() ? ((float) 0.35) : 0);
         ViewGroup.LayoutParams layoutParams = ivBanner.getLayoutParams();
         int width = ScreenUtil.getScreenWidth(this) - ScreenUtil.dp2px(32);
         int height = width / 2;
@@ -269,7 +263,7 @@ public class HomeActivity extends BaseActivity {
         infoDataList.add(new AIInfoData(getString(R.string.cut_second_menu_segmentation),
             getString(R.string.object_segmentation_subtitle), R.drawable.edit_menu_segmentation));
         infoDataList
-            .add(new AIInfoData(getString(R.string.beauty), getString(R.string.beauty_subtitle), R.drawable.icon_beautify));
+            .add(new AIInfoData(getString(R.string.beauty), getString(R.string.beauty), R.drawable.icon_beautify));
         infoDataList.add(new AIInfoData(getString(R.string.cut_second_menu_head_seg),
             getString(R.string.head_segmentation_subtitle), R.drawable.edit_menu_segmentation));
         infoDataList.add(new AIInfoData(getString(R.string.cut_second_menu_ai_hair),
@@ -421,8 +415,8 @@ public class HomeActivity extends BaseActivity {
                                 mVideoSelectionDialog.updateProgress(0);
                                 mVideoSelectionDialog.dismiss();
                             }
-                            String startPoint = new SimpleDateFormat("mm:ss", Locale.getDefault())
-                                .format(new Date(result.longValue()));
+                            String startPoint = String.format(Locale.ROOT,
+                                getResources().getString(R.string.highlights_start_point), String.valueOf(result));
                             ToastWrapper.makeText(HomeActivity.this, startPoint, Toast.LENGTH_SHORT).show();
                             ViewFileActivity.startActivity(HomeActivity.this, videoPath, result, 3000);
                         });
@@ -878,7 +872,7 @@ public class HomeActivity extends BaseActivity {
             mAIBodySeg.releaseEngine();
             mAIBodySeg = null;
         }
-        mAIBodySeg  = new HVEAIBodySeg();
+        mAIBodySeg = new HVEAIBodySeg();
         mAIBodySeg.initEngine(new HVEAIInitialCallback() {
             @Override
             public void onProgress(int progress) {
