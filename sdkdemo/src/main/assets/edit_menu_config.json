@@ -228,16 +228,6 @@
           "enable": 1,
           "isAdvanced": 0,
           "children": []
-        },
-        {
-          "id": 101223,
-          "name": "cut_second_menu_fun",
-          "cnName": "AI趣玩",
-          "drawableName": "edit_menu_freeze_fun",
-          "parentId": 101,
-          "enable": 1,
-          "isAdvanced": 0,
-          "children": []
         }
       ]
     },
