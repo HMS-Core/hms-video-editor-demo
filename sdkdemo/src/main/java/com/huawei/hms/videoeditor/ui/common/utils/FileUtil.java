@@ -522,7 +522,8 @@ public class FileUtil {
         try {
             ContentResolver contentResolver = context.getContentResolver();
             ContentValues contentValues = getImageContentValues(imageFile, System.currentTimeMillis());
-            contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+            Uri uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+            contentResolver.update(uri, contentValues, null, null);
             Intent intent = new Intent("android.intent.action.MEDIA_SCANNER_SCAN_FILE");
             final Uri localUri = Uri.fromFile(new File(imageFile));
             intent.setData(localUri);
@@ -539,6 +540,7 @@ public class FileUtil {
             ContentResolver contentResolver = context.getContentResolver();
             ContentValues contentValues = getVideoContentValues(new File(videoFile), System.currentTimeMillis());
             Uri localUri = contentResolver.insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, contentValues);
+            contentResolver.update(localUri, contentValues, null, null);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
                 && context.getApplicationInfo().targetSdkVersion >= Build.VERSION_CODES.Q) {
                 try {
@@ -555,7 +557,6 @@ public class FileUtil {
             return false;
         }
     }
-
     private static ContentValues getImageContentValues(String imagePath, long paramLong) {
         File imageFile = new File(imagePath);
         ContentValues contentValues = new ContentValues();
