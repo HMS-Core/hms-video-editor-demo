@@ -17,9 +17,6 @@ import java.net.HttpURLConnection;
 /**
  * 输入输出对象关闭工具类<BR>
  *
- * @author s00197405
- * @version [V1.0.0.300, 2018/1/5]
- * @since V1.0.0.300
  */
 @KeepOriginal
 public final class CloseUtils {
