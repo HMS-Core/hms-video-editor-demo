@@ -1,5 +1,4 @@
 include ':uidemo'
 include ':sdkdemo'
 include ':screenrecorddemo'
-include ':templatetooldemo'
 rootProject.name = "VideoEditDemo"
